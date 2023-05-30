@@ -13,4 +13,6 @@ using DealFortress.Api.Models;
         }
 
         public DbSet<DealFortress.Api.Models.SellAd> SellAds { get; set; } = default!;
+
+        public DbSet<DealFortress.Api.Models.Product> Products { get; set; } = default!;
     }
