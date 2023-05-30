@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DealFortressContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DealFortressContext") ?? throw new InvalidOperationException("Connection string 'DealFortressContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 
