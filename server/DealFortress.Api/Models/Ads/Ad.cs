@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DealFortress.Api.Models
 {
-    public class Ad
+    public abstract class Ad
     {
         [Key]
         public int Id { get; set; }
+        public required string Product { get; set; }
+        public required string Description { get; set; }
     }
 }
