@@ -24,22 +24,22 @@ namespace DealFortress.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SellAd>>> GetSellAd()
         {
-          if (_context.SellAd == null)
+          if (_context.SellAds == null)
           {
               return NotFound();
           }
-            return await _context.SellAd.ToListAsync();
+            return await _context.SellAds.ToListAsync();
         }
 
         // GET: api/SellAds/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SellAd>> GetSellAd(int id)
         {
-          if (_context.SellAd == null)
+          if (_context.SellAds == null)
           {
               return NotFound();
           }
-            var sellAd = await _context.SellAd.FindAsync(id);
+            var sellAd = await _context.SellAds.FindAsync(id);
 
             if (sellAd == null)
             {
@@ -85,11 +85,11 @@ namespace DealFortress.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<SellAd>> PostSellAd(SellAd sellAd)
         {
-          if (_context.SellAd == null)
+          if (_context.SellAds == null)
           {
               return Problem("Entity set 'DealFortressContext.SellAd'  is null.");
           }
-            _context.SellAd.Add(sellAd);
+            _context.SellAds.Add(sellAd);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSellAd", new { id = sellAd.Id }, sellAd);
@@ -99,17 +99,17 @@ namespace DealFortress.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSellAd(int id)
         {
-            if (_context.SellAd == null)
+            if (_context.SellAds == null)
             {
                 return NotFound();
             }
-            var sellAd = await _context.SellAd.FindAsync(id);
+            var sellAd = await _context.SellAds.FindAsync(id);
             if (sellAd == null)
             {
                 return NotFound();
             }
 
-            _context.SellAd.Remove(sellAd);
+            _context.SellAds.Remove(sellAd);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -117,7 +117,7 @@ namespace DealFortress.Api.Controllers
 
         private bool SellAdExists(int id)
         {
-            return (_context.SellAd?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.SellAds?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
