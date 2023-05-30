@@ -1,4 +1,4 @@
-namespace ReputechTests;
+namespace DealFortress.Tests;
 
 public class UnitTest1
 {

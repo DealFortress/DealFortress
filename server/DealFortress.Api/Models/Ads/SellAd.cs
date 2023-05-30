@@ -1,21 +1,23 @@
+using System.ComponentModel.DataAnnotations;
 
-namespace ReputechAPI.Models
+namespace DealFortress.Api.Models
 {
-    public class Ad
+    public class SellAd
     {
         [Key]
         public int Id { get; set; }
         public required string Product { get; set; }
         public required string Description { get; set; }
         public required int Price { get; set; }
-        public required Delivery DeliveryMethod { get; set; } 
+        public required List<DeliveryMethod> DeliveryMethod { get; set; } 
         public required Condition Condition { get; set; }
         public required string City { get; set; }
         public required bool Receipt { get; set; }
+        public required string Payment { get; set; }
         public string Warranty { get; set; }
     }
 
-    public enum Delivery 
+    public enum DeliveryMethod
     {
         Mail,
         Pickup,
@@ -32,9 +34,8 @@ namespace ReputechAPI.Models
         Broken
     }
 
-    public enum Payment
+    public enum PaymentMethod
     {
-        Cash,
-        Swish
+        
     }
 }
