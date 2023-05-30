@@ -7,7 +7,7 @@ namespace DealFortress.Api.Models
 {
     public class Ad
     {
-        // [Key]
-        // public int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
     }
 }
