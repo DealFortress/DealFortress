@@ -7,7 +7,7 @@ namespace DealFortress.Api.Models
         [Key]
         public int Id { get; set; }
         public CategoryName Name { get; set; }
-        public virtual List<Ad>? Ads { get; set; }
+        public virtual List<SellAd>? Ads { get; set; }
     }
 
     public enum CategoryName
