@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Api", "DealFortress.Api\DealFortress.Api.csproj", "{21FD4382-80B7-4C44-9E1F-35CDB4370DD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Tests", "DealFortress.Tests\DealFortress.Tests.csproj", "{B6FB6B0E-BC6C-42D6-81D7-78E681D7B897}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21FD4382-80B7-4C44-9E1F-35CDB4370DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21FD4382-80B7-4C44-9E1F-35CDB4370DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21FD4382-80B7-4C44-9E1F-35CDB4370DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21FD4382-80B7-4C44-9E1F-35CDB4370DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6FB6B0E-BC6C-42D6-81D7-78E681D7B897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6FB6B0E-BC6C-42D6-81D7-78E681D7B897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6FB6B0E-BC6C-42D6-81D7-78E681D7B897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6FB6B0E-BC6C-42D6-81D7-78E681D7B897}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
