@@ -6,29 +6,7 @@ namespace DealFortress.Api.Models
     {
         [Key]
         public int Id { get; set; }
-        public CategoryName Name { get; set; }
-        public virtual List<SellAd>? Ads { get; set; }
-    }
-
-    public enum CategoryName
-    {
-        CPU,
-        GPU,
-        SSDAndHDD,
-        Cases,
-        PSU,
-        Cooling,
-        MiceAndKeyboards,
-        Laptops,
-        PC,
-        PCMisc,
-        MonitorsTvsAndProjectors,
-        PhonesTabletsAndSmartWatches,
-        Network,
-        CamerasAndGear,
-        Audio,
-        ConsolesAndGear,
-        Outdoor,
-        Misc
+        public required string Name { get; set; }
+        public virtual List<Product>? Products { get; set; }
     }
 }
