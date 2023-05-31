@@ -21,13 +21,12 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SellAd>>> GetSellAd()
+        public ActionResult<IEnumerable<SellAdResponse>> GetSellAd()
         {
-          if (_context.SellAds == null)
-          {
-              return NotFound();
-          }
-            return await _context.SellAds.ToListAsync();
+            return _context.SellAds
+                        .Include(ad => ad.Products!)
+                        .ThenInclude(product => (product.Category))
+                        .Select(ad => ToSellAdResponse(ad)).ToList();
         }
 
         [HttpGet("{id}")]
@@ -77,8 +76,9 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SellAd>> PostSellAd(SellAdRequest sellAdrequest)
+        public async Task<ActionResult<SellAdResponse>> PostSellAd(SellAdRequest sellAdrequest)
         {
+            // REFACTOOO
             var sellAd = ToSellAd(sellAdrequest);
 
             if (sellAdrequest.ProductRequests is not null)
@@ -88,8 +88,7 @@ namespace DealFortress.Api.Controllers
                 if (AllCategoriesExists)
                 {
                     var products = sellAdrequest.ProductRequests.Select( productRequest => {
-                        productRequest.SellAd = sellAd;
-                        return _productsController.ToProduct(productRequest);
+                        return _productsController.ToProduct(productRequest, sellAd);
                     });
                     sellAd.Products = products.ToList();
                 }
@@ -98,7 +97,7 @@ namespace DealFortress.Api.Controllers
             _context.SellAds.Add(sellAd);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSellAd", new { id = sellAd.Id }, sellAd);
+            return CreatedAtAction("GetSellAd", new { id = sellAd.Id }, ToSellAdResponse(sellAd));
         }
 
         // DELETE: api/SellAds/5
@@ -126,19 +125,26 @@ namespace DealFortress.Api.Controllers
             return (_context.SellAds?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private SellAdResponse ToResponse(SellAd sellAd)
+        private static SellAdResponse ToSellAdResponse(SellAd sellAd)
         {
-            return new SellAdResponse()
+            var response = new SellAdResponse()
             {
                 Id = sellAd.Id,
                 Title = sellAd.Title,
                 Description = sellAd.Description,
                 City = sellAd.City,
                 Payment = sellAd.Payment,
-                Products = sellAd.Products,
                 DeliveryMethod = sellAd.DeliveryMethod
             };
+
+            if (sellAd.Products is not null)
+            {
+                response.Products = sellAd.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
+            }
+
+            return response;
         }
+
         private SellAd ToSellAd(SellAdRequest request)
         {
           return new SellAd()

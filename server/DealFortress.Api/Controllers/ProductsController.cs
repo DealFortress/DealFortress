@@ -22,20 +22,20 @@ namespace DealFortress.Api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public ActionResult<IEnumerable<ProductResponse>> GetProduct()
         {
-          if (_context.Products == null)
-          {
-              return NotFound();
-          }
-            return await _context.Products.ToListAsync();
+            return _context.Products
+                        .Include(product => product.SellAd)
+                        .Include(product => product.Category)
+                        .Select(product => ToProductResponse(product))
+                        .ToList();
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductResponse>> GetProduct(int id)
         {
-          if (_context.Products == null)
+          if ( _context.Products is null)
           {
               return NotFound();
           }
@@ -46,7 +46,7 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
 
-            return product;
+            return ToProductResponse(product);
         }
 
 
@@ -118,7 +118,8 @@ namespace DealFortress.Api.Controllers
             return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private ProductResponse ToResponse(Product product)
+        [NonAction]
+        public static ProductResponse ToProductResponse(Product product)
         {
           return new ProductResponse()
           {
@@ -127,13 +128,13 @@ namespace DealFortress.Api.Controllers
             Price = product.Price,
             Receipt = product.Receipt,
             Warranty = product.Warranty,
-            Category = product.Category,
+            CategoryId = product.Category.Id,
             Condition = product.Condition,
-            SellAd = product.SellAd
+            SellAdId = product.SellAd.Id
           };
         }
         [NonAction]
-        public Product ToProduct(ProductRequest request)
+        public Product ToProduct(ProductRequest request, SellAd sellAd)
         {
             var category = _context.Categories.Find(request.CategoryId);
 
@@ -145,7 +146,8 @@ namespace DealFortress.Api.Controllers
                 Warranty = request.Warranty,
                 Category = category!,
                 Condition = request.Condition,
-                SellAd = request.SellAd
+
+                SellAd = sellAd
             };
         }
     }

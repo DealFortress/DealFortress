@@ -5,7 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddMvc().AddControllersAsServices();
 
+// can this be removed?
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

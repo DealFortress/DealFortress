@@ -1,4 +1,6 @@
 
+using System.Text.Json.Serialization;
+
 namespace DealFortress.Api.Models
 {
     public class ProductRequest
@@ -9,6 +11,5 @@ namespace DealFortress.Api.Models
         public string? Warranty { get; set; }
         public required int CategoryId { get; set; }
         public required Condition Condition { get; set; }
-        public required SellAd SellAd { get; set; }
     }
 }
