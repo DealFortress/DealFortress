@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
+using DealFortress.Api.Controllers;
 
 namespace DealFortress.Api.Controllers
 {
@@ -14,13 +10,16 @@ namespace DealFortress.Api.Controllers
     public class SellAdsController : ControllerBase
     {
         private readonly DealFortressContext _context;
+        private readonly ProductsController _productsController;
+        private readonly CategoriesController _categoriesController;
 
-        public SellAdsController(DealFortressContext context)
+        public SellAdsController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
         {
             _context = context;
+            _categoriesController = categoriesController;
+            _productsController = productsController;
         }
 
-        // GET: api/SellAds
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SellAd>>> GetSellAd()
         {
@@ -31,7 +30,6 @@ namespace DealFortress.Api.Controllers
             return await _context.SellAds.ToListAsync();
         }
 
-        // GET: api/SellAds/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SellAd>> GetSellAd(int id)
         {
@@ -49,8 +47,6 @@ namespace DealFortress.Api.Controllers
             return sellAd;
         }
 
-        // PUT: api/SellAds/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSellAd(int id, SellAd sellAd)
         {
@@ -80,15 +76,25 @@ namespace DealFortress.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/SellAds
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<SellAd>> PostSellAd(SellAd sellAd)
+        public async Task<ActionResult<SellAd>> PostSellAd(SellAdRequest sellAdrequest)
         {
-          if (_context.SellAds == null)
-          {
-              return Problem("Entity set 'DealFortressContext.SellAd'  is null.");
-          }
+            var sellAd = ToSellAd(sellAdrequest);
+
+            if (sellAdrequest.ProductRequests is not null)
+            {
+                var AllCategoriesExists = sellAdrequest.ProductRequests.All(request => _categoriesController.CategoryExists(request.CategoryId));
+
+                if (AllCategoriesExists)
+                {
+                    var products = sellAdrequest.ProductRequests.Select( productRequest => {
+                        productRequest.SellAd = sellAd;
+                        return _productsController.ToProduct(productRequest);
+                    });
+                    sellAd.Products = products.ToList();
+                }
+            }
+
             _context.SellAds.Add(sellAd);
             await _context.SaveChangesAsync();
 
@@ -119,5 +125,32 @@ namespace DealFortress.Api.Controllers
         {
             return (_context.SellAds?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        private SellAdResponse ToResponse(SellAd sellAd)
+        {
+            return new SellAdResponse()
+            {
+                Id = sellAd.Id,
+                Title = sellAd.Title,
+                Description = sellAd.Description,
+                City = sellAd.City,
+                Payment = sellAd.Payment,
+                Products = sellAd.Products,
+                DeliveryMethod = sellAd.DeliveryMethod
+            };
+        }
+        private SellAd ToSellAd(SellAdRequest request)
+        {
+          return new SellAd()
+          {
+            Title = request.Title,
+            Description = request.Description,
+            City = request.City,
+            Payment = request.Payment,
+            Products = null,
+            DeliveryMethod = request.DeliveryMethod
+          };
+        }
+
     }
 }

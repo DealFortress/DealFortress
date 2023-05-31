@@ -20,7 +20,7 @@ namespace DealFortress.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Products
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
@@ -31,7 +31,7 @@ namespace DealFortress.Api.Controllers
             return await _context.Products.ToListAsync();
         }
 
-        // GET: api/Products/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -49,8 +49,7 @@ namespace DealFortress.Api.Controllers
             return product;
         }
 
-        // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
@@ -80,22 +79,20 @@ namespace DealFortress.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
-        {
-          if (_context.Products == null)
-          {
-              return Problem("Entity set 'DealFortressContext.Product'  is null.");
-          }
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Product>> PostProduct(Product product)
+        // {
+        //   if (_context.Products == null)
+        //   {
+        //       return Problem("Entity set 'DealFortressContext.Product'  is null.");
+        //   }
+        //     _context.Products.Add(productRequest);
+        //     await _context.SaveChangesAsync();
 
-        // DELETE: api/Products/5
+        //     return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        // }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -104,6 +101,7 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
             var product = await _context.Products.FindAsync(id);
+
             if (product == null)
             {
                 return NotFound();
@@ -118,6 +116,37 @@ namespace DealFortress.Api.Controllers
         private bool ProductExists(int id)
         {
             return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private ProductResponse ToResponse(Product product)
+        {
+          return new ProductResponse()
+          {
+            Id = product.Id,
+            Name =product.Name,
+            Price = product.Price,
+            Receipt = product.Receipt,
+            Warranty = product.Warranty,
+            Category = product.Category,
+            Condition = product.Condition,
+            SellAd = product.SellAd
+          };
+        }
+        [NonAction]
+        public Product ToProduct(ProductRequest request)
+        {
+            var category = _context.Categories.Find(request.CategoryId);
+
+            return new Product()
+            {
+                Name = request.Name,
+                Price = request.Price,
+                Receipt = request.Receipt,
+                Warranty = request.Warranty,
+                Category = category!,
+                Condition = request.Condition,
+                SellAd = request.SellAd
+            };
         }
     }
 }
