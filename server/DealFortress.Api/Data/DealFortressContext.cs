@@ -16,5 +16,5 @@ using DealFortress.Api.Models;
 
         public DbSet<DealFortress.Api.Models.Product> Products { get; set; } = default!;
 
-        public DbSet<DealFortress.Api.Models.Category> Category { get; set; } = default!;
+        public DbSet<DealFortress.Api.Models.Category> Categories { get; set; } = default!;
     }

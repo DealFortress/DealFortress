@@ -20,22 +20,22 @@ namespace DealFortress.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Products
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public ActionResult<IEnumerable<ProductResponse>> GetProduct()
         {
-          if (_context.Products == null)
-          {
-              return NotFound();
-          }
-            return await _context.Products.ToListAsync();
+            return _context.Products
+                        .Include(product => product.SellAd)
+                        .Include(product => product.Category)
+                        .Select(product => ToProductResponse(product))
+                        .ToList();
         }
 
-        // GET: api/Products/5
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductResponse>> GetProduct(int id)
         {
-          if (_context.Products == null)
+          if ( _context.Products is null)
           {
               return NotFound();
           }
@@ -46,11 +46,10 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
 
-            return product;
+            return ToProductResponse(product);
         }
 
-        // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
@@ -80,22 +79,20 @@ namespace DealFortress.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
-        {
-          if (_context.Products == null)
-          {
-              return Problem("Entity set 'DealFortressContext.Product'  is null.");
-          }
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Product>> PostProduct(Product product)
+        // {
+        //   if (_context.Products == null)
+        //   {
+        //       return Problem("Entity set 'DealFortressContext.Product'  is null.");
+        //   }
+        //     _context.Products.Add(productRequest);
+        //     await _context.SaveChangesAsync();
 
-        // DELETE: api/Products/5
+        //     return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        // }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -104,6 +101,7 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
             var product = await _context.Products.FindAsync(id);
+
             if (product == null)
             {
                 return NotFound();
@@ -118,6 +116,39 @@ namespace DealFortress.Api.Controllers
         private bool ProductExists(int id)
         {
             return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [NonAction]
+        public static ProductResponse ToProductResponse(Product product)
+        {
+          return new ProductResponse()
+          {
+            Id = product.Id,
+            Name =product.Name,
+            Price = product.Price,
+            Receipt = product.Receipt,
+            Warranty = product.Warranty,
+            CategoryId = product.Category.Id,
+            Condition = product.Condition,
+            SellAdId = product.SellAd.Id
+          };
+        }
+        [NonAction]
+        public Product ToProduct(ProductRequest request, SellAd sellAd)
+        {
+            var category = _context.Categories.Find(request.CategoryId);
+
+            return new Product()
+            {
+                Name = request.Name,
+                Price = request.Price,
+                Receipt = request.Receipt,
+                Warranty = request.Warranty,
+                Category = category!,
+                Condition = request.Condition,
+
+                SellAd = sellAd
+            };
         }
     }
 }
