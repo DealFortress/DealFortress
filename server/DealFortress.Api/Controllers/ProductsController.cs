@@ -130,9 +130,13 @@ namespace DealFortress.Api.Controllers
             Warranty = product.Warranty,
             CategoryId = product.Category.Id,
             Condition = product.Condition,
-            SellAdId = product.SellAd.Id
+            SellAdId = product.SellAd.Id,
+            SellAdCity = product.SellAd.City,
+            SellAdDeliveryMethod = product.SellAd.DeliveryMethod,
+            SellAdPayment = product.SellAd.Payment
           };
         }
+        
         [NonAction]
         public Product ToProduct(ProductRequest request, SellAd sellAd)
         {

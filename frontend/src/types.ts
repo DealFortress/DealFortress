@@ -16,8 +16,11 @@ export type Product = {
     receipt: boolean,
     warranty: string,
     categoryId: number,
-    Condition: Condition,
-    SellAdId: number
+    condition: Condition,
+    sellAdId: number,
+    sellAdCity: string,
+    sellAdPayment: string,
+    sellAdDeliveryMethod: string,
 }      
 
 enum Condition {
@@ -29,4 +32,3 @@ enum Condition {
     Broken
 }
        
-        

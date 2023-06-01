@@ -3,12 +3,12 @@ import { SellAdCard } from "../component/TradePage/SellAdCard"
 import { SellAd } from "../types"
 
 type Props = {
-    SellAds : SellAd[]
+    sellAds : SellAd[]
 }
 
-export const TradePage = ( {SellAds} : Props ) => {
+export const TradePage = ( {sellAds} : Props ) => {
 
-    const SellAdsJSX = SellAds.map(sellAd => <SellAdCard sellAd={sellAd} />)
+    const SellAdsJSX = sellAds.map(sellAd => <SellAdCard key={sellAd.id} sellAd={sellAd} />)
   return (
     <div className="flex justify-evenly flex-wrap w-full gap-8 ">
        {SellAdsJSX}  
