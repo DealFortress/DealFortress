@@ -1,3 +1,5 @@
+import { ProductCard } from "../component/TradePage/ProductCard"
+import { SellAd } from "../types"
 
 type Props = {
   sellAd: SellAd
@@ -5,11 +7,11 @@ type Props = {
 
 export const SellAdPage = ( {sellAd} : Props) => {
 
-  const ProductsJSX = sellAd.product.map( product => <ProductCard product={product} />)
+  const ProductsJSX = sellAd.products.map( product => <ProductCard product={product} />)
 
   return (
     <div>
-
+      {ProductsJSX}
     </div>
   )
 }
