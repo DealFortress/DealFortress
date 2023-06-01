@@ -9,6 +9,7 @@ namespace DealFortress.Api.Models
         public required bool Receipt { get; set; }
         public string? Warranty { get; set; }
         public required int CategoryId { get; set; }
+        public required string CategoryName { get; set; }
         public required Condition Condition { get; set; }
         public required int SellAdId { get; set; }
         public required string SellAdCity { get; set; }
