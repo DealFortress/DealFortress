@@ -4,6 +4,8 @@ import { Navbar } from './component/Navbar'
 import { Footer } from './component/Footer'
 import { TradePage } from './pages/TradePage'
 import { GetSellAdsFromAPI } from './services/DealFortressAPI'
+import { SellAd } from './types'
+import { Main } from './component/Main'
 
 function App() {
 
@@ -22,7 +24,9 @@ function App() {
   return (
     <>
       <Navbar />
-        <TradePage />
+      <Main>
+        <TradePage SellAds={sellAds}/>
+      </Main>
       <Footer />
     </>
   )

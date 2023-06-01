@@ -1,3 +1,4 @@
+import { SellAd } from "../types";
 
 // put in the env
 const sellAdUrl = "https://localhost:5000/api/SellAds";
