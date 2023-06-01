@@ -3,19 +3,25 @@ import './App.css'
 import { Navbar } from './component/Navbar'
 import { Footer } from './component/Footer'
 import { TradePage } from './pages/TradePage'
-import { GetSellAdsFromAPI } from './services/DealFortressAPI'
-import { SellAd } from './types'
+import { GetProductsFromAPI, GetSellAdsFromAPI } from './services/DealFortressAPI'
+import { Product, SellAd} from './types'
 import { Main } from './component/Main'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
+import { SellAdPage } from './pages/SellAdPage'
+import { ProductsPage } from './pages/ProductsPage'
 
 function App() {
 
   const [ sellAds, setSellAds ] = useState<SellAd[]>([]);
+  const [ products, setProducts ] = useState<Product[]>([]);
 
   const GetData = async () => {
     setSellAds(await GetSellAdsFromAPI());
+    setProducts(await GetProductsFromAPI());
   }
+
+  console.log(products)
 
   useEffect(() => {
     GetData();
@@ -23,18 +29,21 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Main>
-        <BrowserRouter> 
+      <BrowserRouter> 
+        <Navbar />
+        <Main>
           <Routes>
-            <Route path="/sellads" element={ <TradePage SellAds={sellAds}/> }/>
-            <Route path="/sellads/:sellAdId" element={ <TradePage SellAds={sellAds}/> }/>
-            <Route path="/" element={ <TradePage SellAds={sellAds}/> }/>
+            <Route path="/sellads" element={ <TradePage sellAds={sellAds}/> }/>
+            <Route path="/products" element={ <ProductsPage products={products}/>} />
+            {/* try to only send one sell ad */}
+            <Route path="/sellads/:id" element={ <SellAdPage sellAds={sellAds}/> }/>
+
+            <Route path="/" element={ <TradePage sellAds={sellAds}/> }/>
             <Route path="*" element={ <NotFound/> }/>
           </Routes>
-        </BrowserRouter>
-      </Main>
-      <Footer />
+        </Main>
+        <Footer />
+      </BrowserRouter>
     </>
   )
 }

@@ -1,16 +1,19 @@
+import { useParams } from "react-router-dom"
 import { ProductCard } from "../component/TradePage/ProductCard"
 import { SellAd } from "../types"
 
 type Props = {
-  sellAd: SellAd
+  sellAds: SellAd[]
 }
 
-export const SellAdPage = ( {sellAd} : Props) => {
+export const SellAdPage = ( {sellAds} : Props) => {
 
-  const ProductsJSX = sellAd.products.map( product => <ProductCard product={product} />)
+  const { id } = useParams();
+  const sellAd = sellAds.find(sellAd => sellAd.id === +id!);
 
+  const ProductsJSX = sellAd?.products.map( product => <ProductCard key={product.id} product={product} />)
   return (
-    <div>
+    <div className="flex flex-wrap gap-8">
       {ProductsJSX}
     </div>
   )
