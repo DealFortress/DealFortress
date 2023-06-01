@@ -1,4 +1,4 @@
-import { SellAdCard } from "../component/TradePage/SellAdCard"
+import { SellAdCard } from "../component/SellAd/SellAdCard"
 import { SellAd } from "../types"
 
 type Props = {

@@ -7,7 +7,7 @@ type Props = {
 
 export const ProductCard = ({product} : Props) => {
   return (
-    <Link to={`/${product.sellAdId}`}> 
+    <Link to={`../sellads/${product.sellAdId}`}> 
     <div className="card flex-basis flex-grow">
         <img src="https://cdn.arstechnica.net/wp-content/uploads/2022/12/IMG_0725.jpeg" className="card-img-top h-40 w-full object-cover" alt="product image"/>
         <div className="card-body">

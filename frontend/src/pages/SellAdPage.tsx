@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { ProductCard } from "../component/TradePage/ProductCard"
+import { ProductCard } from "../component/Product/ProductCard"
 import { SellAd } from "../types"
 
 type Props = {

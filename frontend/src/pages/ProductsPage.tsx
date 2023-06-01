@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ProductFilter } from "../component/Product/ProductFilter"
-import { ProductCard } from "../component/TradePage/ProductCard"
+import { ProductCard } from "../component/Product/ProductCard"
 import { Category, Product, ProductFilterType } from "../types"
 import { ProductSearch } from "../component/Product/ProductSearch"
 
