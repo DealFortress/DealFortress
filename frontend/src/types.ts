@@ -16,12 +16,18 @@ export type Product = {
     receipt: boolean,
     warranty: string,
     categoryId: number,
+    categoryName: string,
     condition: Condition,
     sellAdId: number,
     sellAdCity: string,
     sellAdPayment: string,
     sellAdDeliveryMethod: string,
-}      
+} 
+
+export type Category = {
+    id: number,
+    name: string
+}
 
 enum Condition {
     New,
@@ -32,3 +38,10 @@ enum Condition {
     Broken
 }
        
+
+export type ProductFilterType = {
+    categoryFilter: string,
+    cityFilter: string,
+    // deliveryMethodFilter: string,
+    // conditionFilter: string
+}

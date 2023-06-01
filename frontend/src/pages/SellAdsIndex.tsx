@@ -6,11 +6,11 @@ type Props = {
     sellAds : SellAd[]
 }
 
-export const TradePage = ( {sellAds} : Props ) => {
+export const SellAdsIndex = ( {sellAds} : Props ) => {
 
     const SellAdsJSX = sellAds.map(sellAd => <SellAdCard key={sellAd.id} sellAd={sellAd} />)
   return (
-    <div className="flex justify-evenly flex-wrap w-full gap-8 ">
+    <div className="">
        {SellAdsJSX}  
     </div>
   )

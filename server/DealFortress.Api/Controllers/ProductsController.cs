@@ -129,6 +129,7 @@ namespace DealFortress.Api.Controllers
             Receipt = product.Receipt,
             Warranty = product.Warranty,
             CategoryId = product.Category.Id,
+            CategoryName = product.Category.Name,
             Condition = product.Condition,
             SellAdId = product.SellAd.Id,
             SellAdCity = product.SellAd.City,
