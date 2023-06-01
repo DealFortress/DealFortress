@@ -1,4 +1,3 @@
-import { Main } from "../component/Main"
 import { SellAdCard } from "../component/TradePage/SellAdCard"
 import { SellAd } from "../types"
 
