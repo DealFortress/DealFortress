@@ -1,5 +1,5 @@
 
-type SellAd = {
+export type SellAd = {
     id: number,
     title: string,
     description: string,
@@ -9,7 +9,7 @@ type SellAd = {
     deliveryMethod: string,
 }
 
-type Product = {
+export type Product = {
     id: number,
     name: string,
     price: number,
