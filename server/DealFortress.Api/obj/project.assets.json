@@ -46,6 +46,19 @@
           }
         }
       },
+      "Bogus/34.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Bogus.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Bogus.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -3952,6 +3965,25 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "Bogus/34.0.2": {
+      "sha512": "2KQAuMn3fLAQ2r6jeiffZnpv0bi3GCW3iRB2v1KeHIEBu8MNTh9dBlLTZwGvM0pr+9doKkU8L5JgCURmTmT88A==",
+      "type": "package",
+      "path": "bogus/34.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bogus.34.0.2.nupkg.sha512",
+        "bogus.nuspec",
+        "lib/net40/Bogus.dll",
+        "lib/net40/Bogus.xml",
+        "lib/net6.0/Bogus.dll",
+        "lib/net6.0/Bogus.xml",
+        "lib/netstandard1.3/Bogus.dll",
+        "lib/netstandard1.3/Bogus.xml",
+        "lib/netstandard2.0/Bogus.dll",
+        "lib/netstandard2.0/Bogus.xml"
       ]
     },
     "Humanizer.Core/2.14.1": {
@@ -11396,31 +11428,29 @@
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.5",
       "Microsoft.Extensions.Configuration.UserSecrets >= 7.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.6",
-      "Swashbuckle.AspNetCore >= 6.4.0"
+      "Swashbuckle.AspNetCore >= 6.4.0",
+      "bogus >= 34.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Atte\\.nuget\\packages\\": {}
+    "/home/luc/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\DealFortress.Api.csproj",
+      "projectUniqueName": "/home/luc/DealFortress/server/DealFortress.Api/DealFortress.Api.csproj",
       "projectName": "DealFortress.Api",
-      "projectPath": "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\DealFortress.Api.csproj",
-      "packagesPath": "C:\\Users\\Atte\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\obj\\",
+      "projectPath": "/home/luc/DealFortress/server/DealFortress.Api/DealFortress.Api.csproj",
+      "packagesPath": "/home/luc/.nuget/packages/",
+      "outputPath": "/home/luc/DealFortress/server/DealFortress.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Atte\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/luc/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11470,6 +11500,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.4.0, )"
+          },
+          "bogus": {
+            "target": "Package",
+            "version": "[34.0.2, )"
           }
         },
         "imports": [
@@ -11491,7 +11525,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }

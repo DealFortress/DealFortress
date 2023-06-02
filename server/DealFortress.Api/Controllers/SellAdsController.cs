@@ -78,7 +78,6 @@ namespace DealFortress.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<SellAdResponse>> PostSellAd(SellAdRequest sellAdrequest)
         {
-            // REFACTOOO
             var sellAd = ToSellAd(sellAdrequest);
 
             if (sellAdrequest.ProductRequests is not null)
@@ -87,9 +86,12 @@ namespace DealFortress.Api.Controllers
 
                 if (AllCategoriesExists)
                 {
-                    var products = sellAdrequest.ProductRequests.Select( productRequest => {
-                        return _productsController.ToProduct(productRequest, sellAd);
-                    });
+                    var products = sellAdrequest.ProductRequests
+                                                    .Select( productRequest =>
+                                                    {
+                                                        return _productsController.ToProduct(productRequest, sellAd);
+                                                    });
+
                     sellAd.Products = products.ToList();
                 }
             }
@@ -100,7 +102,6 @@ namespace DealFortress.Api.Controllers
             return CreatedAtAction("GetSellAd", new { id = sellAd.Id }, ToSellAdResponse(sellAd));
         }
 
-        // DELETE: api/SellAds/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSellAd(int id)
         {
@@ -134,7 +135,8 @@ namespace DealFortress.Api.Controllers
                 Description = sellAd.Description,
                 City = sellAd.City,
                 Payment = sellAd.Payment,
-                DeliveryMethod = sellAd.DeliveryMethod
+                DeliveryMethod = sellAd.DeliveryMethod,
+                CreatedAt = sellAd.CreatedAt
             };
 
             if (sellAd.Products is not null)
@@ -154,7 +156,8 @@ namespace DealFortress.Api.Controllers
             City = request.City,
             Payment = request.Payment,
             Products = null,
-            DeliveryMethod = request.DeliveryMethod
+            DeliveryMethod = request.DeliveryMethod,
+            CreatedAt = DateTime.Now
           };
         }
 
