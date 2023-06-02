@@ -10,6 +10,7 @@ namespace DealFortress.Api.Models
         public required string Description { get; set; }
         public required string City { get; set; }
         public required string Payment { get; set; }
+        public required DateTime CreateAt { get; set; }
         public virtual List<Product>? Products { get; set; }
         public required string DeliveryMethod { get; set; }
     }
