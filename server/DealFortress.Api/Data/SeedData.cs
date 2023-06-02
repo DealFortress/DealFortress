@@ -15,18 +15,97 @@ public class SeedData
                 return;
             }
 
-            var cpuNames = new string[]{};
+            var sellAdNames = new string[]
+            {
+                "Selling old pc parts",
+                "Selling sons old pc because he is acting badly",
+                "How do I buy things, I keep accidentally selling my things",
+                "SELLING BEST HARDWARE IN SWEDEN NOT CLICKBAIT!",
+                "Säljer mycket bra datordelar",
+                "Lost and found pc part in need of new owner",
+                "In need of money for cheese, buy my old mining rig parts",
+                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "Mom told me to sell my old parts instead of my kidney for the new 4090",
+                "Selling an electric lawnmower and other stuff, dm for lawnmower info"
+            };
 
-            var products = new Faker<Product>()
-            .RuleFor(a => a.Name, f => f.Name.FirstName())
-            .Generate(75);
+            var payment = new string[]{"swish", "cash", "bank transfer"};
+
+            var delivery = new string[]{"hand delivered", "pick up", "package"};
+
+            var categories = context.Categories.ToList();
+
+            var CPUNames = new string[]{
+                "i3-8540k",
+                "i5-13500KF",
+                "i9-9900k",
+                "i3-13100f",
+                "i7-7700k",
+                "i5-6400",
+                "Ryzen 7 5800x3D",
+                "Ryzen 5 3600x",
+                "Ryzen 9 5950x",
+                "Ryzen 3 2200g",
+                "Ryzen 5 1600x",
+                "AMD Athlon 64 X2 Dual Core 4200+"
+            };
+
+            var GPUNames = new string[]{
+                "GIGABYTE 1080RTX",
+                "4080 ULTRA BLA BLA",
+                "ASUS TUF 2070 super",
+                "EVGA 1080ti",
+                "Electric lawnmower",
+                "ASUS 750ti",
+                "Sapphire Radeon RX 580 Nitro+",
+                "PNY gt 1030",
+                "Hella fast 980ti trust me bro",
+                "ASUS ROG STRIX 960 4GB"
+            };
+
+            var ProductsNameArrays = new Dictionary<string, string[]>();
+                ProductsNameArrays["CPU"] =  CPUNames;
+                ProductsNameArrays["GPU"] =  GPUNames;
+
 
             var sellAds = new Faker<SellAd>()
-            .RuleFor(a => a.Name, f => f.Name.FirstName())
+            .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(sellAdNames))
+            .RuleFor(a => a.Description, bogus => bogus.Lorem.Sentences(bogus.Random.Number(8)))
+            .RuleFor(a => a.City, bogus => bogus.Address.City())
+            .RuleFor(a => a.Payment, bogus => bogus.Random.ArrayElement<string>(payment))
+            .RuleFor(a => a.CreatedAt, bogus => DateTime.Now)
+            .RuleFor(a => a.Products, bogus => null)
+            .RuleFor(a => a.DeliveryMethod, bogus => bogus.Random.ArrayElement<string>(delivery))
             .Generate(75);
 
+            var categoryId = 0;
 
-
+            var products = new Faker<Product>()
+            .RuleFor(a => a.Price, bogus => bogus.Random.Int(200,4000))
+            .RuleFor(a => a.HasReceipt, bogus => bogus.Random.Bool())
+            .RuleFor(a => a.Warranty, bogus => bogus.Random.ArrayElement<string>(new string[]{"yes", "no", "yes, one year left"}))
+            .RuleFor(a => a.IsSold, bogus => bogus.Random.Bool())
+            .RuleFor(a => a.IsSoldSeparately, bogus => bogus.Random.Bool())
+            .RuleFor(a => a.Images, bogus =>
+                {
+                    var image = new Image(){Url="", Description=""};
+                    image.Description = bogus.Lorem.Sentence();
+                    image.Url = bogus.Image.PicsumUrl();
+                    return new List<Image>(){image};
+                })
+            .RuleFor(a => a.Category, bogus => {
+                categoryId = categories[bogus.Random.Number(0, categories.Count! - 1)].Id;
+                return categories.Find(category => category.Id == categoryId);
+                })
+            .RuleFor(a => a.Name, bogus => {
+                var currentCategoryName = categories.Find(category => category.Id == categoryId)!.Name;
+                var NameArray = ProductsNameArrays[currentCategoryName];
+                var randomNameArrayIndex = bogus.Random.Number(0, (NameArray.Length! - 1));
+                return NameArray[randomNameArrayIndex];
+            })
+            .RuleFor(a => a.Condition, bogus => bogus.Random.Enum<Condition>())
+            .RuleFor(a => a.SellAd, bogus => bogus.Random.ListItem<SellAd>(sellAds))
+            .Generate(75);
 
             context.SellAds.AddRange(sellAds);
             context.SaveChanges();
