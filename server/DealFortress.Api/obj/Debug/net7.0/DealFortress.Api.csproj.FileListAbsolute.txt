@@ -583,3 +583,4 @@ C:/Users/Atte/Desktop/DealFortress/server/DealFortress.Api/obj/Debug/net7.0/refi
 C:/Users/Atte/Desktop/DealFortress/server/DealFortress.Api/obj/Debug/net7.0/DealFortress.Api.pdb
 C:/Users/Atte/Desktop/DealFortress/server/DealFortress.Api/obj/Debug/net7.0/DealFortress.Api.genruntimeconfig.cache
 C:/Users/Atte/Desktop/DealFortress/server/DealFortress.Api/obj/Debug/net7.0/ref/DealFortress.Api.dll
+/home/luc/DealFortress/server/DealFortress.Api/bin/Debug/net7.0/Bogus.dll

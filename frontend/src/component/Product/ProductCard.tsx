@@ -4,12 +4,15 @@ import { Product } from "../../types"
 type Props = {
     product: Product
 }
-
+// https://cdn.arstechnica.net/wp-content/uploads/2022/12/IMG_0725.jpeg
 export const ProductCard = ({product} : Props) => {
+
+  // console.log(product.images[0].url);
+
   return (
-    <Link to={`../sellads/${product.sellAdId}`}> 
+    <Link to={`../sellads/${product.sellAdId}`}>
     <div className="card flex-basis flex-grow w-96">
-        <img src="https://cdn.arstechnica.net/wp-content/uploads/2022/12/IMG_0725.jpeg" className="card-img-top h-40 w-full object-cover" alt="product image"/>
+        <img src="hello" className="card-img-top h-40 w-full object-cover" alt="product image"/>
         <div className="card-body">
             <h5 className="card-title">{product.name}</h5>
             <p className="card-text">price: {product.price} receipt: {product.receipt} warranty: {product.warranty} category:{product.categoryId} condition:{product.condition}</p>

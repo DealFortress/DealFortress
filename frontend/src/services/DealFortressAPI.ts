@@ -13,6 +13,7 @@ export const GetSellAdsFromAPI = async () => {
 
 export const GetProductsFromAPI = async () => {
     const response = await fetch(ProductsUrl);
+    // console.log(await response.json());
     return await response.json() as Product[];
 }
 

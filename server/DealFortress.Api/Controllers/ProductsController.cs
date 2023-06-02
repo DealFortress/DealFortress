@@ -27,6 +27,7 @@ namespace DealFortress.Api.Controllers
             return _context.Products
                         .Include(product => product.SellAd)
                         .Include(product => product.Category)
+                        .Include(product => product.Images)
                         .Select(product => ToProductResponse(product))
                         .ToList();
         }
