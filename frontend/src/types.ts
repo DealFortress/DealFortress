@@ -18,15 +18,22 @@ export type Product = {
     categoryId: number,
     categoryName: string,
     condition: Condition,
+    images: Image[]
     sellAdId: number,
     sellAdCity: string,
     sellAdPayment: string,
     sellAdDeliveryMethod: string,
-} 
+}
 
 export type Category = {
     id: number,
     name: string
+}
+
+export type Image = {
+    id: number,
+    url: string,
+    description: string
 }
 
 enum Condition {
@@ -37,7 +44,7 @@ enum Condition {
     Defective,
     Broken
 }
-       
+
 
 export type ProductFilterType = {
     categoryFilter: string,

@@ -63,9 +63,49 @@ public class SeedData
                 "ASUS ROG STRIX 960 4GB"
             };
 
+            var PSUNames = new string[]{
+                "Corsair CV series 650W",
+                "Fract Design ION Gold 850W",
+                "ASUS ROG STRIX 1000W Gold Aura Edition PSU",
+                "ASUS ROG Loki SFX-L 850W PSU"
+            };
+
+            var OutdoorNames = new string[]{
+                "lawnmower",
+                "electric shaver",
+                "tent airblower 34FG",
+                "leafblower 1000",
+            };
+
+            var MouseAndKeyboardNames = new string[]{
+                "Kyria v2 ergo",
+                "Ergodox",
+                "Keychron Q1",
+                "Logitech 900"
+            };
+
+            var MonitorsNames = new string[]{
+                "GP27Q 27\"",
+                "Optix G24C",
+                "Odyssey G7 4k 32\"",
+                "LG M27Q 32\""
+            };
+
+            var RAMNames = new string[]{
+                "Kingston fury 2400mhz 4x2gb",
+                "Kingston Ultra 3200mhz 8gb",
+                "Corsai 4200mhz 16gb"
+            };
+
             var ProductsNameArrays = new Dictionary<string, string[]>();
                 ProductsNameArrays["CPU"] =  CPUNames;
                 ProductsNameArrays["GPU"] =  GPUNames;
+                ProductsNameArrays["PSU"] =  PSUNames;
+                ProductsNameArrays["Outdoor"] =  OutdoorNames;
+                ProductsNameArrays["MouseAndKeyboard"] =  MouseAndKeyboardNames;
+                ProductsNameArrays["Monitors"] =  MonitorsNames;
+                ProductsNameArrays["RAM"] =  RAMNames;
+
 
 
             var sellAds = new Faker<SellAd>()
@@ -91,6 +131,7 @@ public class SeedData
                     var image = new Image(){Url="", Description=""};
                     image.Description = bogus.Lorem.Sentence();
                     image.Url = bogus.Image.PicsumUrl();
+                    context.Images.Add(image);
                     return new List<Image>(){image};
                 })
             .RuleFor(a => a.Category, bogus => {
@@ -108,6 +149,8 @@ public class SeedData
             .Generate(75);
 
             context.SellAds.AddRange(sellAds);
+            context.Products.AddRange(products);
+            context.Images.AddRange()
             context.SaveChanges();
         }
     }

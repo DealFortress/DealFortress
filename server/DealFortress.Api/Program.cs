@@ -1,3 +1,4 @@
+using DealFortress.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    using (var scope = app.Services.CreateScope())
+    {
+    var services = scope.ServiceProvider;
+    SeedData.Initialize(services);
+    }
 }
 
 app.UseCors(policy =>
