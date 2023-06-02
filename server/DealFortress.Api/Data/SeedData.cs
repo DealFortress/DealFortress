@@ -131,7 +131,7 @@ public class SeedData
                     var image = new Image(){Url="", Description=""};
                     image.Description = bogus.Lorem.Sentence();
                     image.Url = bogus.Image.PicsumUrl();
-                    context.Images.Add(image);
+                    // context.Images.Add(image);
                     return new List<Image>(){image};
                 })
             .RuleFor(a => a.Category, bogus => {
@@ -150,7 +150,6 @@ public class SeedData
 
             context.SellAds.AddRange(sellAds);
             context.Products.AddRange(products);
-            context.Images.AddRange()
             context.SaveChanges();
         }
     }
