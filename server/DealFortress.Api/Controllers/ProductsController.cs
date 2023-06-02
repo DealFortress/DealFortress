@@ -126,32 +126,37 @@ namespace DealFortress.Api.Controllers
             Id = product.Id,
             Name =product.Name,
             Price = product.Price,
-            Receipt = product.Receipt,
+            HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
             CategoryId = product.Category.Id,
             CategoryName = product.Category.Name,
             Condition = product.Condition,
+            Images = product.Images,
             SellAdId = product.SellAd.Id,
             SellAdCity = product.SellAd.City,
             SellAdDeliveryMethod = product.SellAd.DeliveryMethod,
             SellAdPayment = product.SellAd.Payment
           };
         }
-        
+
         [NonAction]
         public Product ToProduct(ProductRequest request, SellAd sellAd)
         {
             var category = _context.Categories.Find(request.CategoryId);
 
+            var images = request.Images.Select(image => new Image{Url = image.Url, Description = image.Description}).ToList();
+
             return new Product()
             {
                 Name = request.Name,
                 Price = request.Price,
-                Receipt = request.Receipt,
+                HasReceipt = request.HasReceipt,
                 Warranty = request.Warranty,
+                Images = images,
                 Category = category!,
                 Condition = request.Condition,
-
+                IsSold = false,
+                IsSoldSeparately =false,
                 SellAd = sellAd
             };
         }

@@ -7,8 +7,9 @@ namespace DealFortress.Api.Models
         public required string Description { get; set; }
         public required string City { get; set; }
         public required string Payment { get; set; }
-        public virtual List<ProductResponse>? Products { get; set; }
         public required string DeliveryMethod { get; set; }
+        public required DateTime CreatedAt { get; set; }
+        public virtual List<ProductResponse>? Products { get; set; }
     }
 
 }
