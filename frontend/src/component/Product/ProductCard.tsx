@@ -10,15 +10,15 @@ export const ProductCard = ({product} : Props) => {
   // console.log(product.images[0].url);
 
   return (
-    <Link to={`../sellads/${product.sellAdId}`}>
+    <Link to={`../Notices/${product.NoticeId}`}>
     <div className="card flex-basis flex-grow w-96">
         <img src={product.images[0].url} className="card-img-top h-40 w-full object-cover" alt="product image"/>
         <div className="card-body">
             <h5 className="card-title">{product.name}</h5>
             <p className="card-text">price: {product.price} receipt: {product.receipt} warranty: {product.warranty} category:{product.categoryId} condition:{product.condition}</p>
-            <p>City: {product.sellAdCity}</p>
-            <p>DeliveryMethod: {product.sellAdDeliveryMethod}</p>
-            <p>Payment: {product.sellAdPayment}</p>
+            <p>City: {product.NoticeCity}</p>
+            <p>DeliveryMethod: {product.NoticeDeliveryMethod}</p>
+            <p>Payment: {product.NoticePayment}</p>
         </div>
     </div>
     </ Link>
