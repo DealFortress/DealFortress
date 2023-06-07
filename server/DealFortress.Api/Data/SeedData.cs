@@ -33,8 +33,6 @@ public class SeedData
 
             var delivery = new string[]{"hand delivered", "pick up", "package"};
 
-            var categories = context.Categories.ToList();
-
             var CPUNames = new string[]{
                 "i3-8540k",
                 "i5-13500KF",
@@ -96,6 +94,20 @@ public class SeedData
                 "Kingston Ultra 3200mhz 8gb",
                 "Corsai 4200mhz 16gb"
             };
+
+            var categories = new List<Category>(){
+                new Category(){Name="CPU"},
+                new Category(){Name="GPU"},
+                new Category(){Name="PSU"},
+                new Category(){Name="Outdoor"},
+                new Category(){Name="MouseAndKeyboard"},
+                new Category(){Name="RAM"},
+                new Category(){Name="Monitors"}
+            };
+
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
+
 
             var ProductsNameArrays = new Dictionary<string, string[]>();
                 ProductsNameArrays["CPU"] =  CPUNames;
