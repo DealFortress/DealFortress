@@ -9,157 +9,157 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class NoticesController : ControllerBase
     {
-        private readonly DealFortressContext _context;
-        private readonly ProductsController _productsController;
-        private readonly CategoriesController _categoriesController;
+        // private readonly DealFortressContext _context;
+        // private readonly ProductsController _productsController;
+        // private readonly CategoriesController _categoriesController;
 
-        public NoticesController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
-        {
-            _context = context;
-            _categoriesController = categoriesController;
-            _productsController = productsController;
-        }
+        // public NoticesController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
+        // {
+        //     _context = context;
+        //     _categoriesController = categoriesController;
+        //     _productsController = productsController;
+        // }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<NoticeResponse>> GetNotice()
-        {
-            return _context.Notices
-                        .Include(ad => ad.Products!)
-                        .ThenInclude(product => (product.Category))
-                        .Select(ad => ToNoticeResponse(ad)).ToList();
-        }
+        // [HttpGet]
+        // public ActionResult<IEnumerable<NoticeResponse>> GetNotice()
+        // {
+        //     return _context.Notices
+        //                 .Include(ad => ad.Products!)
+        //                 .ThenInclude(product => (product.Category))
+        //                 .Select(ad => ToNoticeResponse(ad)).ToList();
+        // }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Notice>> GetNotice(int id)
-        {
-          if (_context.Notices == null)
-          {
-              return NotFound();
-          }
-            var Notice = await _context.Notices.FindAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<Notice>> GetNotice(int id)
+        // {
+        //   if (_context.Notices == null)
+        //   {
+        //       return NotFound();
+        //   }
+        //     var Notice = await _context.Notices.FindAsync(id);
 
-            if (Notice == null)
-            {
-                return NotFound();
-            }
+        //     if (Notice == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return Notice;
-        }
+        //     return Notice;
+        // }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotice(int id, Notice Notice)
-        {
-            if (id != Notice.Id)
-            {
-                return BadRequest();
-            }
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutNotice(int id, Notice Notice)
+        // {
+        //     if (id != Notice.Id)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(Notice).State = EntityState.Modified;
+        //     _context.Entry(Notice).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NoticeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         if (!NoticeExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
-        [HttpPost]
-        public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest Noticerequest)
-        {
-            var Notice = ToNotice(Noticerequest);
+        // [HttpPost]
+        // public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest Noticerequest)
+        // {
+        //     var Notice = ToNotice(Noticerequest);
 
-            if (Noticerequest.ProductRequests is not null)
-            {
-                var AllCategoriesExists = Noticerequest.ProductRequests.All(request => _categoriesController.CategoryExists(request.CategoryId));
+        //     if (Noticerequest.ProductRequests is not null)
+        //     {
+        //         var AllCategoriesExists = Noticerequest.ProductRequests.All(request => _categoriesController.CategoryExists(request.CategoryId));
 
-                if (AllCategoriesExists)
-                {
-                    var products = Noticerequest.ProductRequests
-                                                    .Select( productRequest =>
-                                                    {
-                                                        return _productsController.ToProduct(productRequest, Notice);
-                                                    });
+        //         if (AllCategoriesExists)
+        //         {
+        //             var products = Noticerequest.ProductRequests
+        //                                             .Select( productRequest =>
+        //                                             {
+        //                                                 return _productsController.ToProduct(productRequest, Notice);
+        //                                             });
 
-                    Notice.Products = products.ToList();
-                }
-            }
+        //             Notice.Products = products.ToList();
+        //         }
+        //     }
 
-            _context.Notices.Add(Notice);
-            await _context.SaveChangesAsync();
+        //     _context.Notices.Add(Notice);
+        //     await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotice", new { id = Notice.Id }, ToNoticeResponse(Notice));
-        }
+        //     return CreatedAtAction("GetNotice", new { id = Notice.Id }, ToNoticeResponse(Notice));
+        // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotice(int id)
-        {
-            if (_context.Notices == null)
-            {
-                return NotFound();
-            }
-            var Notice = await _context.Notices.FindAsync(id);
-            if (Notice == null)
-            {
-                return NotFound();
-            }
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> DeleteNotice(int id)
+        // {
+        //     if (_context.Notices == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     var Notice = await _context.Notices.FindAsync(id);
+        //     if (Notice == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            _context.Notices.Remove(Notice);
-            await _context.SaveChangesAsync();
+        //     _context.Notices.Remove(Notice);
+        //     await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
-        private bool NoticeExists(int id)
-        {
-            return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        // private bool NoticeExists(int id)
+        // {
+        //     return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
+        // }
 
-        private static NoticeResponse ToNoticeResponse(Notice Notice)
-        {
-            var response = new NoticeResponse()
-            {
-                Id = Notice.Id,
-                Title = Notice.Title,
-                Description = Notice.Description,
-                City = Notice.City,
-                Payment = Notice.Payment,
-                DeliveryMethod = Notice.DeliveryMethod,
-                CreatedAt = Notice.CreatedAt
-            };
+        // private static NoticeResponse ToNoticeResponse(Notice Notice)
+        // {
+        //     var response = new NoticeResponse()
+        //     {
+        //         Id = Notice.Id,
+        //         Title = Notice.Title,
+        //         Description = Notice.Description,
+        //         City = Notice.City,
+        //         Payment = Notice.Payment,
+        //         DeliveryMethod = Notice.DeliveryMethod,
+        //         CreatedAt = Notice.CreatedAt
+        //     };
 
-            if (Notice.Products is not null)
-            {
-                response.Products = Notice.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
-            }
+        //     if (Notice.Products is not null)
+        //     {
+        //         response.Products = Notice.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
+        //     }
 
-            return response;
-        }
+        //     return response;
+        // }
 
-        private Notice ToNotice(NoticeRequest request)
-        {
-          return new Notice()
-          {
-            Title = request.Title,
-            Description = request.Description,
-            City = request.City,
-            Payment = request.Payment,
-            Products = null,
-            DeliveryMethod = request.DeliveryMethod,
-            CreatedAt = DateTime.Now
-          };
-        }
+        // private Notice ToNotice(NoticeRequest request)
+        // {
+        //   return new Notice()
+        //   {
+        //     Title = request.Title,
+        //     Description = request.Description,
+        //     City = request.City,
+        //     Payment = request.Payment,
+        //     Products = null,
+        //     DeliveryMethod = request.DeliveryMethod,
+        //     CreatedAt = DateTime.Now
+        //   };
+        // }
 
     }
 }

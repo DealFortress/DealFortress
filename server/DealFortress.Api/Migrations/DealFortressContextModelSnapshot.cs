@@ -60,52 +60,7 @@ namespace DealFortress.Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Condition")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasReceipt")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSold")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSoldSeparately")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NoticeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Warranty")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("NoticeId");
-
-                    b.ToTable("Products");
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
@@ -144,6 +99,51 @@ namespace DealFortress.Api.Migrations
                     b.ToTable("Notices");
                 });
 
+            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasReceipt")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSold")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSoldSeparately")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoticeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Warranty")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("NoticeId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("DealFortress.Api.Models.Image", b =>
                 {
                     b.HasOne("DealFortress.Api.Models.Product", null)
@@ -175,14 +175,14 @@ namespace DealFortress.Api.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
-                {
-                    b.Navigation("Images");
-                });
-
             modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

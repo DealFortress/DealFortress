@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DealFortress.Api.Migrations
 {
     [DbContext(typeof(DealFortressContext))]
-    [Migration("20230530140313_InitialCreate")]
+    [Migration("20230607085742_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,15 +32,16 @@ namespace DealFortress.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
+            modelBuilder.Entity("DealFortress.Api.Models.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,35 +49,21 @@ namespace DealFortress.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Condition")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Receipt")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NoticeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Warranty")
+                    b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ProductId");
 
-                    b.HasIndex("NoticeId");
-
-                    b.ToTable("Products");
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
@@ -87,12 +74,12 @@ namespace DealFortress.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("DeliveryMethod")
                         .IsRequired()
@@ -112,15 +99,65 @@ namespace DealFortress.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Notices");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasReceipt")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSold")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSoldSeparately")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoticeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Warranty")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("NoticeId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("DealFortress.Api.Models.Image", b =>
+                {
+                    b.HasOne("DealFortress.Api.Models.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
+                {
                     b.HasOne("DealFortress.Api.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -136,21 +173,19 @@ namespace DealFortress.Api.Migrations
                     b.Navigation("Notice");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
-                {
-                    b.HasOne("DealFortress.Api.Models.Category", null)
-                        .WithMany("Ads")
-                        .HasForeignKey("CategoryId");
-                });
-
             modelBuilder.Entity("DealFortress.Api.Models.Category", b =>
                 {
-                    b.Navigation("Ads");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }
