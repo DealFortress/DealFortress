@@ -25,30 +25,13 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<ProductResponse>> GetProduct()
         {
             return _context.Products
-                        .Include(product => product.SellAd)
-                        .Include(product => product.Category)
-                        .Include(product => product.Images)
-                        .Select(product => ToProductResponse(product))
-                        .ToList();
+                .Include(product => product.SellAd)
+                .Include(product => product.Category)
+                .Include(product => product.Images)
+                .Select(product => ToProductResponse(product))
+                .ToList();
         }
 
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ProductResponse>> GetProduct(int id)
-        {
-          if ( _context.Products is null)
-          {
-              return NotFound();
-          }
-            var product = await _context.Products.FindAsync(id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return ToProductResponse(product);
-        }
 
 
         [HttpPut("{id}")]
@@ -80,19 +63,6 @@ namespace DealFortress.Api.Controllers
             return NoContent();
         }
 
-
-        // [HttpPost]
-        // public async Task<ActionResult<Product>> PostProduct(Product product)
-        // {
-        //   if (_context.Products == null)
-        //   {
-        //       return Problem("Entity set 'DealFortressContext.Product'  is null.");
-        //   }
-        //     _context.Products.Add(productRequest);
-        //     await _context.SaveChangesAsync();
-
-        //     return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-        // }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
@@ -163,3 +133,38 @@ namespace DealFortress.Api.Controllers
         }
     }
 }
+
+        // these will probably not be needed
+
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<ProductResponse>> GetProduct(int id)
+        // {
+        //   if ( _context.Products is null)
+        //   {
+        //       return NotFound();
+        //   }
+        //     var product = await _context.Products.FindAsync(id);
+
+        //     if (product == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return ToProductResponse(product);
+        // }
+
+
+
+
+        // [HttpPost]
+        // public async Task<ActionResult<Product>> PostProduct(Product product)
+        // {
+        //   if (_context.Products == null)
+        //   {
+        //       return Problem("Entity set 'DealFortressContext.Product'  is null.");
+        //   }
+        //     _context.Products.Add(productRequest);
+        //     await _context.SaveChangesAsync();
+
+        //     return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        // }
