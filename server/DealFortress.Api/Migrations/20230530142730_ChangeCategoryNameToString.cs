@@ -11,16 +11,16 @@ namespace DealFortress.Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_SellAds_Category_CategoryId",
-                table: "SellAds");
+                name: "FK_Notices_Category_CategoryId",
+                table: "Notices");
 
             migrationBuilder.DropIndex(
-                name: "IX_SellAds_CategoryId",
-                table: "SellAds");
+                name: "IX_Notices_CategoryId",
+                table: "Notices");
 
             migrationBuilder.DropColumn(
                 name: "CategoryId",
-                table: "SellAds");
+                table: "Notices");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -36,7 +36,7 @@ namespace DealFortress.Api.Migrations
         {
             migrationBuilder.AddColumn<int>(
                 name: "CategoryId",
-                table: "SellAds",
+                table: "Notices",
                 type: "int",
                 nullable: true);
 
@@ -49,13 +49,13 @@ namespace DealFortress.Api.Migrations
                 oldType: "nvarchar(max)");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SellAds_CategoryId",
-                table: "SellAds",
+                name: "IX_Notices_CategoryId",
+                table: "Notices",
                 column: "CategoryId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SellAds_Category_CategoryId",
-                table: "SellAds",
+                name: "FK_Notices_Category_CategoryId",
+                table: "Notices",
                 column: "CategoryId",
                 principalTable: "Category",
                 principalColumn: "Id");

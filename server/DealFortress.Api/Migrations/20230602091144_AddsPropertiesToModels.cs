@@ -18,7 +18,7 @@ namespace DealFortress.Api.Migrations
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "CreatedAt",
-                table: "SellAds",
+                table: "Notices",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -71,7 +71,7 @@ namespace DealFortress.Api.Migrations
 
             migrationBuilder.DropColumn(
                 name: "CreatedAt",
-                table: "SellAds");
+                table: "Notices");
 
             migrationBuilder.DropColumn(
                 name: "HasReceipt",

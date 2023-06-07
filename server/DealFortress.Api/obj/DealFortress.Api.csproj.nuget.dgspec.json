@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\DealFortress.Api.csproj": {}
+    "/home/luc/DealFortress/server/DealFortress.Api/DealFortress.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\DealFortress.Api.csproj": {
+    "/home/luc/DealFortress/server/DealFortress.Api/DealFortress.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\DealFortress.Api.csproj",
+        "projectUniqueName": "/home/luc/DealFortress/server/DealFortress.Api/DealFortress.Api.csproj",
         "projectName": "DealFortress.Api",
-        "projectPath": "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\DealFortress.Api.csproj",
-        "packagesPath": "C:\\Users\\Atte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Atte\\Desktop\\DealFortress\\server\\DealFortress.Api\\obj\\",
+        "projectPath": "/home/luc/DealFortress/server/DealFortress.Api/DealFortress.Api.csproj",
+        "packagesPath": "/home/luc/.nuget/packages/",
+        "outputPath": "/home/luc/DealFortress/server/DealFortress.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Atte\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/luc/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -97,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -64,7 +64,7 @@ namespace DealFortress.Api.Migrations
                     b.Property<bool>("Receipt")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SellAdId")
+                    b.Property<int>("NoticeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Warranty")
@@ -74,12 +74,12 @@ namespace DealFortress.Api.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SellAdId");
+                    b.HasIndex("NoticeId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.SellAd", b =>
+            modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace DealFortress.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SellAds");
+                    b.ToTable("Notices");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
@@ -120,15 +120,15 @@ namespace DealFortress.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DealFortress.Api.Models.SellAd", "SellAd")
+                    b.HasOne("DealFortress.Api.Models.Notice", "Notice")
                         .WithMany("Products")
-                        .HasForeignKey("SellAdId")
+                        .HasForeignKey("NoticeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
-                    b.Navigation("SellAd");
+                    b.Navigation("Notice");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Models.Category", b =>
@@ -136,7 +136,7 @@ namespace DealFortress.Api.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.SellAd", b =>
+            modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
                 {
                     b.Navigation("Products");
                 });

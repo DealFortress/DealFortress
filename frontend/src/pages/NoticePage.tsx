@@ -22,7 +22,7 @@ export const NoticePage = ( {Notices} : Props) => {
         <div className="">
           <ul className="font-start">
             <li>{Notice?.city}</li>
-            <li>{Notice?.deliveryMethod}</li> 
+            <li>{Notice?.deliveryMethod}</li>
           </ul>
           <ul className="text-end">
             <li className="font-bold">{Notice?.products.map(product => product.price).reduce( (a, b) => a + b)}SEK</li>

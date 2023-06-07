@@ -7,13 +7,13 @@ namespace DealFortress.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SellAdsController : ControllerBase
+    public class NoticesController : ControllerBase
     {
         private readonly DealFortressContext _context;
         private readonly ProductsController _productsController;
         private readonly CategoriesController _categoriesController;
 
-        public SellAdsController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
+        public NoticesController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
         {
             _context = context;
             _categoriesController = categoriesController;
@@ -21,40 +21,40 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<SellAdResponse>> GetSellAd()
+        public ActionResult<IEnumerable<NoticeResponse>> GetNotice()
         {
-            return _context.SellAds
+            return _context.Notices
                         .Include(ad => ad.Products!)
                         .ThenInclude(product => (product.Category))
-                        .Select(ad => ToSellAdResponse(ad)).ToList();
+                        .Select(ad => ToNoticeResponse(ad)).ToList();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SellAd>> GetSellAd(int id)
+        public async Task<ActionResult<Notice>> GetNotice(int id)
         {
-          if (_context.SellAds == null)
+          if (_context.Notices == null)
           {
               return NotFound();
           }
-            var sellAd = await _context.SellAds.FindAsync(id);
+            var Notice = await _context.Notices.FindAsync(id);
 
-            if (sellAd == null)
+            if (Notice == null)
             {
                 return NotFound();
             }
 
-            return sellAd;
+            return Notice;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSellAd(int id, SellAd sellAd)
+        public async Task<IActionResult> PutNotice(int id, Notice Notice)
         {
-            if (id != sellAd.Id)
+            if (id != Notice.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(sellAd).State = EntityState.Modified;
+            _context.Entry(Notice).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +62,7 @@ namespace DealFortress.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SellAdExists(id))
+                if (!NoticeExists(id))
                 {
                     return NotFound();
                 }
@@ -76,80 +76,80 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SellAdResponse>> PostSellAd(SellAdRequest sellAdrequest)
+        public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest Noticerequest)
         {
-            var sellAd = ToSellAd(sellAdrequest);
+            var Notice = ToNotice(Noticerequest);
 
-            if (sellAdrequest.ProductRequests is not null)
+            if (Noticerequest.ProductRequests is not null)
             {
-                var AllCategoriesExists = sellAdrequest.ProductRequests.All(request => _categoriesController.CategoryExists(request.CategoryId));
+                var AllCategoriesExists = Noticerequest.ProductRequests.All(request => _categoriesController.CategoryExists(request.CategoryId));
 
                 if (AllCategoriesExists)
                 {
-                    var products = sellAdrequest.ProductRequests
+                    var products = Noticerequest.ProductRequests
                                                     .Select( productRequest =>
                                                     {
-                                                        return _productsController.ToProduct(productRequest, sellAd);
+                                                        return _productsController.ToProduct(productRequest, Notice);
                                                     });
 
-                    sellAd.Products = products.ToList();
+                    Notice.Products = products.ToList();
                 }
             }
 
-            _context.SellAds.Add(sellAd);
+            _context.Notices.Add(Notice);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSellAd", new { id = sellAd.Id }, ToSellAdResponse(sellAd));
+            return CreatedAtAction("GetNotice", new { id = Notice.Id }, ToNoticeResponse(Notice));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSellAd(int id)
+        public async Task<IActionResult> DeleteNotice(int id)
         {
-            if (_context.SellAds == null)
+            if (_context.Notices == null)
             {
                 return NotFound();
             }
-            var sellAd = await _context.SellAds.FindAsync(id);
-            if (sellAd == null)
+            var Notice = await _context.Notices.FindAsync(id);
+            if (Notice == null)
             {
                 return NotFound();
             }
 
-            _context.SellAds.Remove(sellAd);
+            _context.Notices.Remove(Notice);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool SellAdExists(int id)
+        private bool NoticeExists(int id)
         {
-            return (_context.SellAds?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private static SellAdResponse ToSellAdResponse(SellAd sellAd)
+        private static NoticeResponse ToNoticeResponse(Notice Notice)
         {
-            var response = new SellAdResponse()
+            var response = new NoticeResponse()
             {
-                Id = sellAd.Id,
-                Title = sellAd.Title,
-                Description = sellAd.Description,
-                City = sellAd.City,
-                Payment = sellAd.Payment,
-                DeliveryMethod = sellAd.DeliveryMethod,
-                CreatedAt = sellAd.CreatedAt
+                Id = Notice.Id,
+                Title = Notice.Title,
+                Description = Notice.Description,
+                City = Notice.City,
+                Payment = Notice.Payment,
+                DeliveryMethod = Notice.DeliveryMethod,
+                CreatedAt = Notice.CreatedAt
             };
 
-            if (sellAd.Products is not null)
+            if (Notice.Products is not null)
             {
-                response.Products = sellAd.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
+                response.Products = Notice.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
             }
 
             return response;
         }
 
-        private SellAd ToSellAd(SellAdRequest request)
+        private Notice ToNotice(NoticeRequest request)
         {
-          return new SellAd()
+          return new Notice()
           {
             Title = request.Title,
             Description = request.Description,

@@ -13,9 +13,9 @@ namespace DealFortress.Api.Models
         public required string CategoryName { get; set; }
         public required Condition Condition { get; set; }
         public required List<Image> Images { get; set; }
-        public required int SellAdId { get; set; }
-        public required string SellAdCity { get; set; }
-        public required string SellAdPayment { get; set; }
-        public required string SellAdDeliveryMethod { get; set; }
+        public required int NoticeId { get; set; }
+        public required string NoticeCity { get; set; }
+        public required string NoticePayment { get; set; }
+        public required string NoticeDeliveryMethod { get; set; }
     }
 }

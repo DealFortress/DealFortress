@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Api.Models
 {
-    public class SellAd
+    public class Notice
     {
         [Key]
         public int Id { get; set; }

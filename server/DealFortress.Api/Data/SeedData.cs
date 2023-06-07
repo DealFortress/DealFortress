@@ -10,12 +10,12 @@ public class SeedData
     {
         using (var context = new DealFortressContext(serviceProvider.GetRequiredService<DbContextOptions<DealFortressContext>>()))
         {
-            if(context.SellAds!.Any())
+            if(context.Notices!.Any())
             {
                 return;
             }
 
-            var sellAdNames = new string[]
+            var NoticeNames = new string[]
             {
                 "Selling old pc parts",
                 "Selling sons old pc because he is acting badly",
@@ -108,8 +108,8 @@ public class SeedData
 
 
 
-            var sellAds = new Faker<SellAd>()
-            .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(sellAdNames))
+            var Notices = new Faker<Notice>()
+            .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(NoticeNames))
             .RuleFor(a => a.Description, bogus => bogus.Lorem.Sentences(bogus.Random.Number(8)))
             .RuleFor(a => a.City, bogus => bogus.Address.City())
             .RuleFor(a => a.Payment, bogus => bogus.Random.ArrayElement<string>(payment))
@@ -145,10 +145,10 @@ public class SeedData
                 return NameArray[randomNameArrayIndex];
             })
             .RuleFor(a => a.Condition, bogus => bogus.Random.Enum<Condition>())
-            .RuleFor(a => a.SellAd, bogus => bogus.Random.ListItem<SellAd>(sellAds))
+            .RuleFor(a => a.Notice, bogus => bogus.Random.ListItem<Notice>(Notices))
             .Generate(75);
 
-            context.SellAds.AddRange(sellAds);
+            context.Notices.AddRange(Notices);
             context.Products.AddRange(products);
             context.SaveChanges();
         }

@@ -24,7 +24,7 @@ namespace DealFortress.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SellAds",
+                name: "Notices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -38,9 +38,9 @@ namespace DealFortress.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SellAds", x => x.Id);
+                    table.PrimaryKey("PK_Notices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SellAds_Category_CategoryId",
+                        name: "FK_Notices_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id");
@@ -58,7 +58,7 @@ namespace DealFortress.Api.Migrations
                     Warranty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
-                    SellAdId = table.Column<int>(type: "int", nullable: false)
+                    NoticeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,9 +70,9 @@ namespace DealFortress.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_SellAds_SellAdId",
-                        column: x => x.SellAdId,
-                        principalTable: "SellAds",
+                        name: "FK_Products_Notices_NoticeId",
+                        column: x => x.NoticeId,
+                        principalTable: "Notices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -83,13 +83,13 @@ namespace DealFortress.Api.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SellAdId",
+                name: "IX_Products_NoticeId",
                 table: "Products",
-                column: "SellAdId");
+                column: "NoticeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SellAds_CategoryId",
-                table: "SellAds",
+                name: "IX_Notices_CategoryId",
+                table: "Notices",
                 column: "CategoryId");
         }
 
@@ -100,7 +100,7 @@ namespace DealFortress.Api.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "SellAds");
+                name: "Notices");
 
             migrationBuilder.DropTable(
                 name: "Category");
