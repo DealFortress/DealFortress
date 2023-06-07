@@ -2,23 +2,23 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { Navbar } from './component/Navbar'
 import { Footer } from './component/Footer'
-import { GetCategoriesFromAPI, GetProductsFromAPI, GetSellAdsFromAPI } from './services/DealFortressAPI'
-import { Category, Product, SellAd} from './types'
+import { GetCategoriesFromAPI, GetProductsFromAPI, GetNoticesFromAPI } from './services/DealFortressAPI'
+import { Category, Product, Notice} from './types'
 import { Main } from './component/Main'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
-import { SellAdPage } from './pages/SellAdPage'
+import { NoticePage } from './pages/NoticePage'
 import { ProductsPage } from './pages/ProductsPage'
-import { SellAdsIndex } from './pages/SellAdsIndex'
+import { NoticesIndex } from './pages/NoticesIndex'
 
 function App() {
 
-  const [ sellAds, setSellAds ] = useState<SellAd[]>([]);
+  const [ Notices, setNotices ] = useState<Notice[]>([]);
   const [ products, setProducts ] = useState<Product[]>([]);
   const [ categories, setCategories ] = useState<Category[]>([]);
 
   const GetData = async () => {
-    setSellAds(await GetSellAdsFromAPI());
+    setNotices(await GetNoticesFromAPI());
     setProducts(await GetProductsFromAPI());
     setCategories(await GetCategoriesFromAPI());
   }
@@ -35,12 +35,12 @@ function App() {
         <Navbar />
         <Main>
           <Routes>
-            <Route path="/sellads" element={ <SellAdsIndex sellAds={sellAds}/> }/>
+            <Route path="/Notices" element={ <NoticesIndex Notices={Notices}/> }/>
             <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
             {/* try to only send one sell ad */}
-            <Route path="/sellads/:id" element={ <SellAdPage sellAds={sellAds}/> }/>
+            <Route path="/Notices/:id" element={ <NoticePage Notices={Notices}/> }/>
 
-            <Route path="/" element={ <SellAdsIndex sellAds={sellAds}/> }/>
+            <Route path="/" element={ <NoticesIndex Notices={Notices}/> }/>
             <Route path="*" element={ <NotFound/> }/>
           </Routes>
         </Main>

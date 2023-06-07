@@ -17,7 +17,7 @@ export const ProductsPage = ( {products, categories} : Props) => {
 
     const filterProduct = (product: Product) => {
       return (product.categoryName === filter.categoryFilter || filter.categoryFilter === "All") 
-        && (product.sellAdCity === filter.cityFilter ||filter.cityFilter === "All")
+        && (product.NoticeCity === filter.cityFilter ||filter.cityFilter === "All")
     }
 
     const filterBySearch = (input : string) => {
