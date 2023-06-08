@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { Navbar } from './component/Navbar'
+import { Navbar } from './component/Navbar/Navbar'
 import { Footer } from './component/Footer'
 import { GetCategoriesFromAPI, GetProductsFromAPI, GetNoticesFromAPI } from './services/DealFortressAPI'
 import { Category, Product, Notice} from './types'
@@ -10,6 +10,8 @@ import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
 import { ProductsPage } from './pages/ProductsPage'
 import { NoticesIndex } from './pages/NoticesIndex'
+import { Favourites } from './pages/Favourites'
+import { Profile } from './pages/Profile'
 
 function App() {
 
@@ -31,15 +33,16 @@ function App() {
 
   return (
     <>
-      <BrowserRouter> 
+      <BrowserRouter>
         <Navbar />
         <Main>
           <Routes>
-            <Route path="/Notices" element={ <NoticesIndex Notices={Notices}/> }/>
+            <Route path="/notices" element={ <NoticesIndex Notices={Notices}/> }/>
             <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
             {/* try to only send one sell ad */}
-            <Route path="/Notices/:id" element={ <NoticePage Notices={Notices}/> }/>
-
+            <Route path="/notices/:id" element={ <NoticePage Notices={Notices}/> }/>
+            <Route path="/favourites" element={ <Favourites/> }/>
+            <Route path="/profile" element={ <Profile/> }/>
             <Route path="/" element={ <NoticesIndex Notices={Notices}/> }/>
             <Route path="*" element={ <NotFound/> }/>
           </Routes>
