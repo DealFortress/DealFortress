@@ -34,10 +34,11 @@ Eraser.io
 
 ## Screenshot
 
-<img src="Excalidraw.PNG" />
-wireframe sketch
-<img src="UML.PNG" />
+Wireframe sketch
+<img src="excalidraw.png" />
+
 UML sketch
+<img src="uml.png" />
 
 
 ## License
