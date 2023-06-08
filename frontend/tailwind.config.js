@@ -6,7 +6,19 @@ export default {
   ],
   theme: {
     extend: {
+        container: {
+            padding: '.5rem',
+          },
     },
-  },
-  plugins: [],
+    colors: {
+        'darkblue': '#27374D',
+        'blue': '#526D82',
+        'greyblue': '#9DB2BF',
+        'lightblue': '#DD56ED',
+        'black': 'black',
+        'transparent': 'transparent',
+        'white': 'white'
+    },
+    plugins: [],
+    }
 }

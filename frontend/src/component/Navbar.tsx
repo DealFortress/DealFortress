@@ -13,18 +13,18 @@ export const Navbar = () => {
   const filterBySearch = (input : string) => {
     setSearchFilter(input);
   }
-  
+
   return (
-    <div className="w-screen py-4 top-0 relative bg-[rgb(42,42,42)] text-white">
-        <div className='container flex justify-between items-center mx-auto gap-8'>
-            <Link to="/" className='flex gap-4 items-center'>
+    <div className="w-screen py-4 top-0 relative bg-darkblue text-white">
+        <div className='container flex justify-between items-center mx-auto'>
+            <Link to="/" className='flex gap-2 items-center'>
               <img src={logo} alt="deal fortress logo" className="logo-s"/>
-              <p className=''>DealFortress</p> 
+              <p className=''>DealFortress</p>
             </Link>
             <div className="flex gap-4 items-center">
                 {! searchInputToggle ?
                   <button onClick={() => setSearchInputToggle(!searchInputToggle)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-                : 
+                :
                   <ProductSearch filterBySearch={filterBySearch} />
                 }
                 <Link to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link>
