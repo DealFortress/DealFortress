@@ -7,10 +7,11 @@ export default {
   theme: {
     extend: {
         container: {
-            padding: '.5rem',
+            padding: '1rem',
           },
     },
     colors: {
+        'bodyblue': '#18222f',
         'darkblue': '#27374D',
         'blue': '#526D82',
         'greyblue': '#9DB2BF',

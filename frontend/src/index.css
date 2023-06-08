@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background: rgb(30,30,30);
-    font-family: 'Quicksand', sans-serif;
-}
-
 @layer components {
     .logo-s {
         width: 50px;
@@ -16,5 +11,12 @@ body{
     }
     .logo-l{
         width: 150px;
+    }
+}
+
+@layer base {
+    body {
+        font-family: 'Quicksand', sans-serif;
+        @apply bg-bodyblue;
     }
 }

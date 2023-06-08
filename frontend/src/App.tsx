@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { Navbar } from './component/Navbar'
+import { Navbar } from './component/Navbar/Navbar'
 import { Footer } from './component/Footer'
 import { GetCategoriesFromAPI, GetProductsFromAPI, GetNoticesFromAPI } from './services/DealFortressAPI'
 import { Category, Product, Notice} from './types'
@@ -33,10 +33,10 @@ function App() {
 
   return (
     <>
-      <BrowserRouter> 
+      <BrowserRouter>
         <Navbar />
         <Main>
-          <Routes> 
+          <Routes>
             <Route path="/notices" element={ <NoticesIndex Notices={Notices}/> }/>
             <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
             {/* try to only send one sell ad */}
