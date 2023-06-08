@@ -4,19 +4,17 @@
 
 body{
     background: rgb(30,30,30);
+    font-family: 'Quicksand', sans-serif;
 }
 
 @layer components {
     .logo-s {
-        width: 30px;
-        height: 30px;
+        width: 50px;
     }
     .logo-m{
-        width: 50px;
-        height: 50px;
+        width: 100px;
     }
     .logo-l{
-        width: 100px;
-        height: 100px;
+        width: 150px;
     }
 }
