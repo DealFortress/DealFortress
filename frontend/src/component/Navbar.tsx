@@ -7,12 +7,13 @@ import { ProductSearch } from './Product/ProductSearch'
 
 export const Navbar = () => {
 
-  const [ searchInputToggle, setSearchInputToggle ] = useState<boolean>(false)
+  const [ navbarToggle, setNavbarToggle ] = useState<boolean>(false)
   const [searchFilter, setSearchFilter] = useState<string>("");
 
   const filterBySearch = (input : string) => {
     setSearchFilter(input);
   }
+
 
   return (
     <div className="w-screen py-4 top-0 relative bg-darkblue text-white">
@@ -24,15 +25,31 @@ export const Navbar = () => {
                 </div>
             </Link>
             <div className="flex gap-4 items-center flex-1 justify-end">
-                {! searchInputToggle ?
-                  <button onClick={() => setSearchInputToggle(!searchInputToggle)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-                :
-                  <ProductSearch filterBySearch={filterBySearch} />
-                }
+                <button onClick={() => setNavbarToggle(!navbarToggle)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                 <Link to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link>
                 <Link to="/profile"><FontAwesomeIcon icon={faCircle} /></Link>
             </div>
         </div>
+        {
+          navbarToggle && (
+            <div className='flex justify-between container mx-auto gap-8'>
+              <div className='flex gap-4'>
+                <ul>
+                  <li className='text-xl'><Link to="/">Market</Link></li>
+                  <li><Link to="/">All</Link></li>
+                  <li><Link to="/">Selling</Link></li>
+                  <li><Link to="/">Buying</Link></li>
+                  <li><Link to="/">Trading</Link></li>
+                </ul>
+                <ul>
+                  <li className='text-xl'><Link to="/">Forum</Link></li>
+                  <li><Link to="/">All</Link></li>
+                </ul>
+              </div>
+              <ProductSearch filterBySearch={filterBySearch} />
+            </div>
+          )
+        }
     </div>
   )
 }
