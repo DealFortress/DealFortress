@@ -1,7 +1,53 @@
+<img align="right" width="300px" height="300px" src="https://cdn.discordapp.com/attachments/1086348202283909260/1116267299079458848/DealFortressLogoDetailed.png"/>
+
 # DealFortress
-The tech market Sweden deserves
+Deal Fortress is a full-stack web application 
+made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 
-Project in pair-programming
+<strong>See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)</strong>
 
-[Figma UML](https://www.figma.com/file/Eu7BmAYWqt9xMA8GsOTn1j/DealFortress?type=whiteboard&node-id=0-1&t=VWK0Mk5uz0sT2Utw-0) <br/>
-[Excalidraw](https://excalidraw.com/#room=2ab6f5d1e7b980f0d720,gnL2G7lG_2TnaVrYLOBTKg)
+
+
+## Context
+
+Sweden is missing a modern marketplace for used computer parts which DealFortress looks to fix
+
+## Tech stack
+
+
+  - .NET with C#
+
+  - Entity Framework
+
+  - React with Vite & Typescript
+
+  - Github Actions & Project
+
+  - Azure Sql DB, Azure web app services & Azure static webpages
+
+## Tools & Libraries:
+
+
+  <!-- - Auth0
+  - Formik -->
+  - Design sketch: [Figma prototype and components](https://www.figma.com/file/6pMA53jsPBJ6p0kguOzKba/Deal-Fortress-prototype?type=design&node-id=0-1&t=9esxib8YXRiofpYN-0)
+  
+  - Wireframe: [Excalidraw](https://excalidraw.com/#room=2ab6f5d1e7b980f0d720,gnL2G7lG_2TnaVrYLOBTKg)
+  
+  - UML and Data sketches: [Eraser](https://app.eraser.io/workspace/ODF2nY7EUHBNB5rJDnyo?origin=share)
+  
+  - Tailwind
+
+<!-- ![Screenshot](./screenshot.png) -->
+
+## Screenshots
+
+Wireframe sketch
+<img src="excalidraw.png" />
+
+UML sketch
+<img src="uml-sketch.png" />
+
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for more information.

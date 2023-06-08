@@ -1,5 +1,5 @@
 
-export type SellAd = {
+export type Notice = {
     id: number,
     title: string,
     description: string,
@@ -19,10 +19,10 @@ export type Product = {
     categoryName: string,
     condition: Condition,
     images: Image[]
-    sellAdId: number,
-    sellAdCity: string,
-    sellAdPayment: string,
-    sellAdDeliveryMethod: string,
+    NoticeId: number,
+    NoticeCity: string,
+    NoticePayment: string,
+    NoticeDeliveryMethod: string,
 }
 
 export type Category = {

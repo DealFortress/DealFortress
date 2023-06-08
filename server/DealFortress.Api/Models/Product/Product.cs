@@ -19,7 +19,7 @@ public class Product
     public required List<Image> Images { get; set; }
     public required Category Category { get; set; }
     public required Condition Condition { get; set; }
-    public required SellAd SellAd { get; set; }
+    public required Notice Notice { get; set; }
 }
 
 public enum Condition

@@ -25,14 +25,12 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<ProductResponse>> GetProduct()
         {
             return _context.Products
-                .Include(product => product.SellAd)
-                .Include(product => product.Category)
-                .Include(product => product.Images)
-                .Select(product => ToProductResponse(product))
-                .ToList();
+                        .Include(product => product.Notice)
+                        .Include(product => product.Category)
+                        .Include(product => product.Images)
+                        .Select(product => ToProductResponse(product))
+                        .ToList();
         }
-
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
@@ -62,7 +60,6 @@ namespace DealFortress.Api.Controllers
 
             return NoContent();
         }
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
@@ -103,15 +100,15 @@ namespace DealFortress.Api.Controllers
             CategoryName = product.Category.Name,
             Condition = product.Condition,
             Images = product.Images,
-            SellAdId = product.SellAd.Id,
-            SellAdCity = product.SellAd.City,
-            SellAdDeliveryMethod = product.SellAd.DeliveryMethod,
-            SellAdPayment = product.SellAd.Payment
+            NoticeId = product.Notice.Id,
+            NoticeCity = product.Notice.City,
+            NoticeDeliveryMethod = product.Notice.DeliveryMethod,
+            NoticePayment = product.Notice.Payment
           };
         }
 
         [NonAction]
-        public Product ToProduct(ProductRequest request, SellAd sellAd)
+        public Product ToProduct(ProductRequest request, Notice Notice)
         {
             var category = _context.Categories.Find(request.CategoryId);
 
@@ -128,13 +125,12 @@ namespace DealFortress.Api.Controllers
                 Condition = request.Condition,
                 IsSold = false,
                 IsSoldSeparately =false,
-                SellAd = sellAd
+                Notice = Notice
             };
         }
     }
 }
 
-        // these will probably not be needed
 
         // [HttpGet("{id}")]
         // public async Task<ActionResult<ProductResponse>> GetProduct(int id)
@@ -152,8 +148,6 @@ namespace DealFortress.Api.Controllers
 
         //     return ToProductResponse(product);
         // }
-
-
 
 
         // [HttpPost]

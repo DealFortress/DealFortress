@@ -10,12 +10,12 @@ public class SeedData
     {
         using (var context = new DealFortressContext(serviceProvider.GetRequiredService<DbContextOptions<DealFortressContext>>()))
         {
-            if(context.SellAds!.Any())
+            if(context.Notices!.Any())
             {
                 return;
             }
 
-            var sellAdNames = new string[]
+            var NoticeNames = new string[]
             {
                 "Selling old pc parts",
                 "Selling sons old pc because he is acting badly",
@@ -32,8 +32,6 @@ public class SeedData
             var payment = new string[]{"swish", "cash", "bank transfer"};
 
             var delivery = new string[]{"hand delivered", "pick up", "package"};
-
-            var categories = context.Categories.ToList();
 
             var CPUNames = new string[]{
                 "i3-8540k",
@@ -97,6 +95,20 @@ public class SeedData
                 "Corsai 4200mhz 16gb"
             };
 
+            var categories = new List<Category>(){
+                new Category(){Name="CPU"},
+                new Category(){Name="GPU"},
+                new Category(){Name="PSU"},
+                new Category(){Name="Outdoor"},
+                new Category(){Name="MouseAndKeyboard"},
+                new Category(){Name="RAM"},
+                new Category(){Name="Monitors"}
+            };
+
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
+
+
             var ProductsNameArrays = new Dictionary<string, string[]>();
                 ProductsNameArrays["CPU"] =  CPUNames;
                 ProductsNameArrays["GPU"] =  GPUNames;
@@ -108,8 +120,8 @@ public class SeedData
 
 
 
-            var sellAds = new Faker<SellAd>()
-            .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(sellAdNames))
+            var Notices = new Faker<Notice>()
+            .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(NoticeNames))
             .RuleFor(a => a.Description, bogus => bogus.Lorem.Sentences(bogus.Random.Number(8)))
             .RuleFor(a => a.City, bogus => bogus.Address.City())
             .RuleFor(a => a.Payment, bogus => bogus.Random.ArrayElement<string>(payment))
@@ -145,10 +157,10 @@ public class SeedData
                 return NameArray[randomNameArrayIndex];
             })
             .RuleFor(a => a.Condition, bogus => bogus.Random.Enum<Condition>())
-            .RuleFor(a => a.SellAd, bogus => bogus.Random.ListItem<SellAd>(sellAds))
+            .RuleFor(a => a.Notice, bogus => bogus.Random.ListItem<Notice>(Notices))
             .Generate(75);
 
-            context.SellAds.AddRange(sellAds);
+            context.Notices.AddRange(Notices);
             context.Products.AddRange(products);
             context.SaveChanges();
         }
