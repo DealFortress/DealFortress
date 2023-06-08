@@ -34,9 +34,9 @@ Eraser.io
 
 ## Screenshot
 
-<img src="excalidraw.png" />
+<img src="Excalidraw.PNG" />
 wireframe sketch
-<img src="uml.png" />
+<img src="UML.PNG" />
 UML sketch
 
 
