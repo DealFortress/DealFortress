@@ -12,7 +12,7 @@ UML and Data sketches: [Erase](https://app.eraser.io/workspace/ODF2nY7EUHBNB5rJD
 
 ## Context
 
-Atte will talk about his love for pc parts
+Sweden is missing a modern marketplace for used computer parts which DealFortress looks to fix
 
 ## Tech stack
 
