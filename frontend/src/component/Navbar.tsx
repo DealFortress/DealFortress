@@ -16,12 +16,14 @@ export const Navbar = () => {
 
   return (
     <div className="w-screen py-4 top-0 relative bg-darkblue text-white">
-        <div className='container flex justify-between items-center mx-auto'>
-            <Link to="/" className='flex gap-2 items-center'>
-              <img src={logo} alt="deal fortress logo" className="logo-s"/>
-              <p className=''>DealFortress</p>
+        <div className='container flex justify-between items-center mx-auto gap-2'>
+            <Link to="/">
+                <div className='flex gap-2 items-center flex-1'>
+                    <img src={logo} alt="deal fortress logo" className="logo-s "/>
+                    <p>DealFortress</p>
+                </div>
             </Link>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center flex-1 justify-end">
                 {! searchInputToggle ?
                   <button onClick={() => setSearchInputToggle(!searchInputToggle)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                 :
