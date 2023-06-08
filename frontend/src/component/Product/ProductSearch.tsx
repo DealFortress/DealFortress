@@ -10,11 +10,11 @@ export const ProductSearch = ({ filterBySearch} : Props) => {
 
 
   return (
-    <form action="" className="w-full text-black">
-        <div className="rounded-full ps-2 w-full bg-white flex px-2 items-center">
-          <input type="text" className="rounded-full w-full" onChange={e => filterBySearch(e.target.value)} placeholder="Search"/>
-          <button>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+    <form action="" className="w-full text-black max-w-xl">
+        <div className="rounded-full w-full bg-white flex items-center relative">
+          <input type="text" className="rounded-full w-full ps-2 py-1" onChange={e => filterBySearch(e.target.value)} placeholder="Search"/>
+          <button className="absolute end-0 hover:bg-[lightgray] rounded-full px-2 py-1">
+            <FontAwesomeIcon icon={faMagnifyingGlass}/>
           </button>
         </div>
     </form>
