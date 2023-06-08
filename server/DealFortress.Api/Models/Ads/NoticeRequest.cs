@@ -1,7 +1,7 @@
 
 namespace DealFortress.Api.Models
 {
-    public class SellAdRequest
+    public class NoticeRequest
     {
         public required string Title { get; set; }
         public required string Description { get; set; }

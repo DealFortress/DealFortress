@@ -5,7 +5,7 @@ type Props = {
     product: Product
 }
 
-export const SellAdProductCard = ({product} : Props) => {
+export const NoticeProductCard = ({product} : Props) => {
     const [isToggled, setIsToggled] = useState<boolean>(false);
 
   return (

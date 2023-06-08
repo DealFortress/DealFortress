@@ -5,7 +5,7 @@
 namespace DealFortress.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class addImageToProduct : Migration
+    public partial class ImageToImages : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

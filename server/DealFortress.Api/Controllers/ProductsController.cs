@@ -25,11 +25,19 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<ProductResponse>> GetProduct()
         {
             return _context.Products
+<<<<<<< HEAD
                 .Include(product => product.SellAd)
                 .Include(product => product.Category)
                 .Include(product => product.Images)
                 .Select(product => ToProductResponse(product))
                 .ToList();
+=======
+                        .Include(product => product.Notice)
+                        .Include(product => product.Category)
+                        .Include(product => product.Images)
+                        .Select(product => ToProductResponse(product))
+                        .ToList();
+>>>>>>> 3549178221372c282746c28e6283cc81d432fa27
         }
 
         [HttpPut("{id}")]
@@ -100,15 +108,15 @@ namespace DealFortress.Api.Controllers
             CategoryName = product.Category.Name,
             Condition = product.Condition,
             Images = product.Images,
-            SellAdId = product.SellAd.Id,
-            SellAdCity = product.SellAd.City,
-            SellAdDeliveryMethod = product.SellAd.DeliveryMethod,
-            SellAdPayment = product.SellAd.Payment
+            NoticeId = product.Notice.Id,
+            NoticeCity = product.Notice.City,
+            NoticeDeliveryMethod = product.Notice.DeliveryMethod,
+            NoticePayment = product.Notice.Payment
           };
         }
 
         [NonAction]
-        public Product ToProduct(ProductRequest request, SellAd sellAd)
+        public Product ToProduct(ProductRequest request, Notice Notice)
         {
             var category = _context.Categories.Find(request.CategoryId);
 
@@ -125,7 +133,7 @@ namespace DealFortress.Api.Controllers
                 Condition = request.Condition,
                 IsSold = false,
                 IsSoldSeparately =false,
-                SellAd = sellAd
+                Notice = Notice
             };
         }
     }
