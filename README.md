@@ -38,7 +38,7 @@ Wireframe sketch
 <img src="excalidraw.png" />
 
 UML sketch
-<img src="uml.png" />
+<img src="uml-sketch.png" />
 
 
 ## License
