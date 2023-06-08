@@ -32,7 +32,7 @@ Eraser.io
 
 <!-- ![Screenshot](./screenshot.png) -->
 
-## Screenshot
+## Screenshots
 
 Wireframe sketch
 <img src="excalidraw.png" />
