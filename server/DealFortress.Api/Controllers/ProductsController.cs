@@ -25,19 +25,11 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<ProductResponse>> GetProduct()
         {
             return _context.Products
-<<<<<<< HEAD
-                .Include(product => product.SellAd)
-                .Include(product => product.Category)
-                .Include(product => product.Images)
-                .Select(product => ToProductResponse(product))
-                .ToList();
-=======
                         .Include(product => product.Notice)
                         .Include(product => product.Category)
                         .Include(product => product.Images)
                         .Select(product => ToProductResponse(product))
                         .ToList();
->>>>>>> 3549178221372c282746c28e6283cc81d432fa27
         }
 
         [HttpPut("{id}")]
