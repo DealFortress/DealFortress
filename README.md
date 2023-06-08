@@ -17,26 +17,26 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 ## Tech stack
 
 
--.NET with C#
+  -.NET with C#
 
--Entity Framework
+  -Entity Framework
 
--React with Vite & Typescript
+  -React with Vite & Typescript
 
--Github Actions & Project
+  -Github Actions & Project
 
--Azure Sql DB, Azure web app services & Azure static webpages
+  -Azure Sql DB, Azure web app services & Azure static webpages
 
 ## Tools & Libraries:
 
 
-<!-- -Auth0
--Formik -->
--Figma & Excalidraw
+  <!-- -Auth0
+  -Formik -->
+  -Figma & Excalidraw
 
--HTML/CSS
+  -HTML/CSS
 
--Eraser.io
+  -Eraser.io
 
 <!-- ![Screenshot](./screenshot.png) -->
 
