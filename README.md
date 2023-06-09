@@ -4,7 +4,8 @@
 Deal Fortress is a full-stack web application 
 made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 
-<strong>See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)</strong>
+<strong>See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)  
+or checkout our 2 minute video on the pitch deck [pitch deck video](https://streamable.com/geq9mt)</strong>
 
 
 
