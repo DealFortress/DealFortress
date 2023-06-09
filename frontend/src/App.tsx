@@ -13,19 +13,67 @@ import { NoticesIndex } from './pages/NoticesIndex'
 import { Favourites } from './pages/Favourites'
 import { Profile } from './pages/Profile'
 
-function App() {
 
-  const [ Notices, setNotices ] = useState<Notice[]>([]);
-  const [ products, setProducts ] = useState<Product[]>([]);
-  const [ categories, setCategories ] = useState<Category[]>([]);
+type LoadingState = {
+    status: "LOADING",
+};
+
+type ErrorState = {
+    status: "ERROR",
+    error: { code: string, message: string}
+};
+
+type OkState = {
+    status: "OK",
+    data: { notices: Notice[], products: Product[], categories: Category[]}
+};
+
+type State = LoadingState | ErrorState | OkState;
+
+function App() {
+  const [ state, setState ] = useState<State>({status: "LOADING"})
 
   const GetData = async () => {
-    setNotices(await GetNoticesFromAPI());
-    setProducts(await GetProductsFromAPI());
-    setCategories(await GetCategoriesFromAPI());
+    const notices = await GetNoticesFromAPI();
+    const products = await GetProductsFromAPI();
+     const categories = await GetCategoriesFromAPI();
+    setState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
   }
 
-  console.log(products)
+  const switchState = () => {
+
+    switch (state.status) {
+    case "LOADING":
+      return (
+        <p>Loading..</p>
+      )
+
+    case "ERROR":
+      return (
+        <p>error</p>
+      )
+
+    case "OK":
+      {const {notices, products, categories} = state.data;
+
+      return (
+          <Main>
+            <Routes>
+              <Route path="/notices" element={ <NoticesIndex notices={notices}/> }/>
+              <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
+              {/* try to only send one sell ad */}
+              <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
+              <Route path="/favourites" element={ <Favourites/> }/>
+              <Route path="/profile" element={ <Profile/> }/>
+              <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
+              <Route path="*" element={ <NotFound/> }/>
+            </Routes>
+          </Main>
+      )
+
+      }
+    }
+  }
 
   useEffect(() => {
     GetData();
@@ -35,20 +83,9 @@ function App() {
     <>
       <BrowserRouter>
         <Navbar />
-        <Main>
-          <Routes>
-            <Route path="/notices" element={ <NoticesIndex Notices={Notices}/> }/>
-            <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
-            {/* try to only send one sell ad */}
-            <Route path="/notices/:id" element={ <NoticePage Notices={Notices}/> }/>
-            <Route path="/favourites" element={ <Favourites/> }/>
-            <Route path="/profile" element={ <Profile/> }/>
-            <Route path="/" element={ <NoticesIndex Notices={Notices}/> }/>
-            <Route path="*" element={ <NotFound/> }/>
-          </Routes>
-        </Main>
+          { switchState() }
         <Footer />
-      </BrowserRouter>
+        </BrowserRouter>
     </>
   )
 }

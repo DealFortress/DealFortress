@@ -2,15 +2,15 @@ import { NoticeCard } from "../component/Notice/NoticeCard"
 import { Notice } from "../types"
 
 type Props = {
-    Notices : Notice[]
+    notices : Notice[]
 }
 
-export const NoticesIndex = ( {Notices} : Props ) => {
+export const NoticesIndex = ( {notices} : Props ) => {
 
-    const NoticesJSX = Notices.map(Notice => <NoticeCard key={Notice.id} Notice={Notice} />)
+    const NoticesJSX = notices.map(notice => <NoticeCard key={notice.id} Notice={notice} />)
   return (
     <div className="">
-       {NoticesJSX}  
+       {NoticesJSX}
     </div>
   )
 }

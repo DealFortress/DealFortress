@@ -3,30 +3,30 @@ import { Notice } from "../types"
 import { NoticeProductCard } from "../component/Notice/NoticeProductCard"
 
 type Props = {
-  Notices: Notice[]
+  notices: Notice[]
 }
 
-export const NoticePage = ( {Notices} : Props) => {
+export const NoticePage = ( {notices} : Props) => {
 
   const { id } = useParams();
-  const Notice = Notices.find(Notice => Notice.id === +id!);
+  const notice = notices.find(notice => notice.id === +id!);
 
-  const ProductsJSX = Notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
+  const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
   return (
     <div className="grid grid-cols-[3fr_6fr] gap-5">
       <aside className="bg-white p-4 flex flex-col justify-between">
         <div>
-          <h2 className="text-3xl mb-5">{Notice?.title}</h2>
-          <p>{Notice?.description}</p>
+          <h2 className="text-3xl mb-5">{notice?.title}</h2>
+          <p>{notice?.description}</p>
         </div>
         <div className="">
           <ul className="font-start">
-            <li>{Notice?.city}</li>
-            <li>{Notice?.deliveryMethod}</li>
+            <li>{notice?.city}</li>
+            <li>{notice?.deliveryMethod}</li>
           </ul>
           <ul className="text-end">
-            <li className="font-bold">{Notice?.products.map(product => product.price).reduce( (a, b) => a + b)}SEK</li>
-            <li>{Notice?.payment}</li>
+            <li className="font-bold">{notice?.products.map(product => product.price).reduce( (a, b) => a + b)}SEK</li>
+            <li>{notice?.payment}</li>
           </ul>
         </div>
       </aside>
