@@ -40,6 +40,41 @@ function App() {
     setState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
   }
 
+  const switchState = () => {
+
+    switch (state.status) {
+    case "LOADING":
+      return (
+        <p>Loading..</p>
+      )
+
+    case "ERROR":
+      return (
+        <p>error</p>
+      )
+
+    case "OK":
+      {const {notices, products, categories} = state.data;
+
+      return (
+          <Main>
+            <Routes>
+              <Route path="/notices" element={ <NoticesIndex notices={notices}/> }/>
+              <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
+              {/* try to only send one sell ad */}
+              <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
+              <Route path="/favourites" element={ <Favourites/> }/>
+              <Route path="/profile" element={ <Profile/> }/>
+              <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
+              <Route path="*" element={ <NotFound/> }/>
+            </Routes>
+          </Main>
+      )
+
+      }
+    }
+  }
+
   useEffect(() => {
     GetData();
   }, [])
@@ -47,26 +82,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <Navbar />
-          {
-            {
-              "LOADING":<p>Loading..</p>,
-              "ERROR": <p>error</p>,
-              "OK":
-                  // <Main>
-                  //   <Routes>
-                  //     <Route path="/notices" element={ <NoticesIndex Notices={state.data}/> }/>
-                  //     <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
-                  //     {/* try to only send one sell ad */}
-                  //     <Route path="/notices/:id" element={ <NoticePage Notices={notices}/> }/>
-                  //     <Route path="/favourites" element={ <Favourites/> }/>
-                  //     <Route path="/profile" element={ <Profile/> }/>
-                  //     <Route path="/" element={ <NoticesIndex Notices={notices}/> }/>
-                  //     <Route path="*" element={ <NotFound/> }/>
-                  //   </Routes>
-                  // </Main>
-            }[state.status]
-          }
+        <Navbar />
+          { switchState() }
         <Footer />
         </BrowserRouter>
     </>
