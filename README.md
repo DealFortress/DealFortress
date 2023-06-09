@@ -1,6 +1,6 @@
 <img align="right" width="300px" height="300px" src="https://cdn.discordapp.com/attachments/1086348202283909260/1116267299079458848/DealFortressLogoDetailed.png"/>
 
-# DealFortress
+# DealFortress <img  width="50px" height="50px" src="https://cdn.discordapp.com/attachments/1114265597551857695/1116650269594366023/simpleInvertedDealFortress.png"/>
 Deal Fortress is a full-stack web application 
 made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 

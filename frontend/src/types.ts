@@ -7,6 +7,7 @@ export type Notice = {
     payment: string,
     products: Product[],
     deliveryMethod: string,
+    createdAt: Date
 }
 
 export type Product = {

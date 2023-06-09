@@ -9,6 +9,7 @@ type Props = {
 export const NoticePage = ( {notices} : Props) => {
 
   const { id } = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const notice = notices.find(notice => notice.id === +id!);
 
   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
