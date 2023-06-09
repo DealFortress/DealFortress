@@ -10,6 +10,7 @@ import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
 import { Favourites } from './pages/Favourites'
 import { Profile } from './pages/Profile'
+import { Loader } from './component/General/Loader'
 
 
 type LoadingState = {
@@ -43,7 +44,7 @@ function App() {
     switch (state.status) {
     case "LOADING":
       return (
-        <p>Loading..</p>
+        <Loader />
       )
 
     case "ERROR":
@@ -65,7 +66,6 @@ function App() {
               <Route path="*" element={ <NotFound/> }/>
             </Routes>
       )
-
       }
     }
   }
