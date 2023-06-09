@@ -19,7 +19,7 @@ export const StaticNavbar = ( { setNavbarToggle, navbarToggle} : Props) => {
             </div>
         </Link>
         <div className="flex gap-4 items-center flex-1 justify-end">
-            <Link className='text-xl' to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link>
+            {/* <Link className='text-xl' to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link> */}
             <Link className='text-3xl' to="/profile"><FontAwesomeIcon icon={faCircle} /></Link>
         </div>
     </div>

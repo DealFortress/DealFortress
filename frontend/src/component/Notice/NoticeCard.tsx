@@ -1,21 +1,29 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Notice } from "../../types"
 import { Link } from "react-router-dom";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { convertMinutesToClosestTimeValue} from "../../services/helperFunction";
 
 
 type Props = {
-  Notice: Notice
+  notice: Notice
 }
 
-export const NoticeCard = ( {Notice} : Props) => {
+export const NoticeCard = ( {notice} : Props) => {
+
+  const minutesSinceCreation = ( new Date().getTime() - new Date(notice.createdAt).getTime()) / 1000 / 60;
+
   return (
-    <Link to={`/Notices/${Notice.id}`}> 
-      <div className="card h-60 w-80 hover:bg-slate-100 ">
-        <div className="card-body flex flex-col justify-between">
-          <h5 className="card-title text-1xl font-semibold">{Notice.title}</h5>
-          <h6 className="card-subtitle mb-2 text-body-secondary">{Notice.city}</h6>
-          <p className="card-text">{Notice.description.slice(0, 200)}</p>
-        </div>
+    <div className="flex flex-col justify-between bg-blue rounded my-2 p-3 gap-4">
+      <div className="flex gap-8">
+        <Link to={`/Notices/${notice.id}`} className="font-semibold hover:underline">{notice.title}...</Link>
       </div>
-    </Link>
+      <div className="flex gap-12 justify-between">
+        <p>{notice.city}</p>
+        <p>{convertMinutesToClosestTimeValue(minutesSinceCreation)} ago</p>
+        {/* <Link className='text-xl' to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link> */}
+      </div>
+    </div>
+
   )
 }

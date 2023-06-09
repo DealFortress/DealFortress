@@ -4,11 +4,9 @@ import { Navbar } from './component/Navbar/Navbar'
 import { Footer } from './component/Footer'
 import { GetCategoriesFromAPI, GetProductsFromAPI, GetNoticesFromAPI } from './services/DealFortressAPI'
 import { Category, Product, Notice} from './types'
-import { Main } from './component/Main'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
-import { ProductsPage } from './pages/ProductsPage'
 import { NoticesIndex } from './pages/NoticesIndex'
 import { Favourites } from './pages/Favourites'
 import { Profile } from './pages/Profile'
@@ -54,13 +52,11 @@ function App() {
       )
 
     case "OK":
-      {const {notices, products, categories} = state.data;
+      {const { notices } = state.data;
 
       return (
-          <Main>
             <Routes>
               <Route path="/notices" element={ <NoticesIndex notices={notices}/> }/>
-              <Route path="/products" element={ <ProductsPage products={products} categories={categories}/>} />
               {/* try to only send one sell ad */}
               <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
               <Route path="/favourites" element={ <Favourites/> }/>
@@ -68,7 +64,6 @@ function App() {
               <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
               <Route path="*" element={ <NotFound/> }/>
             </Routes>
-          </Main>
       )
 
       }
