@@ -7,7 +7,7 @@ type Props = {
 
 export const NoticesIndex = ( {notices} : Props ) => {
 
-    const NoticesJSX = notices.map(notice => <NoticeCard key={notice.id} Notice={notice} />)
+    const NoticesJSX = notices.map(notice => <NoticeCard key={notice.id} notice={notice} />)
   return (
     <div className="">
        {NoticesJSX}
