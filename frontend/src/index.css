@@ -12,10 +12,19 @@
     .logo-l{
         width: 150px;
     }
+    .medieval-font {
+        font-family: 'MedievalSharp', cursive;
+        text-shadow:  4px 4px 2px black;;
+    }
+    .white-box-border {
+        border: 2px solid white;
+        box-shadow: 6px 8px rgba(0,0,0,.6);
+    }
 }
 
 @layer base {
     body {
+        box-sizing: border-box;
         font-family: 'Quicksand', sans-serif;
         @apply bg-bodyblue;
     }

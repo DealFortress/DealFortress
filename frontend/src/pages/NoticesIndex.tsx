@@ -17,9 +17,9 @@ export const NoticesIndex = ( {notices} : Props ) => {
         </div>
         <Main>
         <header>
-            <h2 className="text-2xl">Latest posts</h2>
+            <h2 className="text-2xl medieval-font">Latest posts</h2>
         </header>
-        <section>
+        <section className="flex flex-col gap-3">
             {NoticesJSX}
         </section>
         </Main>
