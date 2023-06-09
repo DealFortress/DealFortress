@@ -25,8 +25,8 @@ export const NoticePage = ( {notices} : Props) => {
       <div className="flex flex-col gap-4">
         <section className="bg-darkblue rounded-lg p-4 flex flex-col justify-between ">
           <div>
-            <h2 className="text-3xl mb-5 truncate">{notice?.title}</h2>
-            <p>{notice?.description}</p>
+            <h2 className="text-3xl mb-5 break-words">{notice?.title}</h2>
+            <p className="break-words">{notice?.description}</p>
           </div>
           <div className="">
             <ul className="font-start">
