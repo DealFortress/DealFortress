@@ -15,7 +15,7 @@ export const NoticeCard = ( {notice} : Props) => {
 
   return (
     <Link to={`/Notices/${notice.id}`} className="flex flex-col justify-between bg-blue rounded my-2 p-3 gap-4 white-box-border">
-      <p className="flex gap-8 font-semibold text-lg break-words">{notice.title}</p>
+      <p className="font-semibold text-lg break-words">{notice.title}</p>
       <div className="flex gap-12 justify-between">
         <p>{notice.city}</p>
         <p>{convertMinutesToClosestTimeValue(minutesSinceCreation)} ago</p>

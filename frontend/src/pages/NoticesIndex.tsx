@@ -12,8 +12,10 @@ export const NoticesIndex = ( {notices} : Props ) => {
     const NoticesJSX = notices.map(notice => <NoticeCard key={notice.id} notice={notice} />)
   return (
     <>
-        <div className="w-full h-[30vh] bg-blue flex justify-center items-center">
+        <div className="w-full h-[30vh] bg-blue flex justify-center items-center ">
             <img src={logo} alt="deal fortress logo" className="logo-l "/>
+            {/* show hom many results */}
+            {/* <p className="absolute text-white font-normal text-5xl">{NoticesJSX.length} posts</p> */}
         </div>
         <Main>
         <header>
