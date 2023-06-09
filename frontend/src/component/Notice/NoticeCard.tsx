@@ -14,14 +14,14 @@ export const NoticeCard = ( {notice} : Props) => {
   const minutesSinceCreation = ( new Date().getTime() - new Date(notice.createdAt).getTime()) / 1000 / 60;
 
   return (
-    <div className="flex justify-between bg-greyblue rounded my-2 p-3">
+    <div className="flex flex-col justify-between bg-blue rounded my-2 p-3 gap-4">
       <div className="flex gap-8">
-        <Link to={`/Notices/${notice.id}`} className="font-semibold hover:underline">{notice.title}</Link>
+        <Link to={`/Notices/${notice.id}`} className="font-semibold hover:underline">{notice.title}...</Link>
       </div>
       <div className="flex gap-12 justify-between">
         <p>{notice.city}</p>
         <p>{convertMinutesToClosestTimeValue(minutesSinceCreation)} ago</p>
-        <Link className='text-xl' to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link>
+        {/* <Link className='text-xl' to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link> */}
       </div>
     </div>
 

@@ -15,14 +15,14 @@ if ( minutesSinceCreation > yearInMinutes) {
 }
 else if ( minutesSinceCreation > monthInMinutes) {
     const month = minutesSinceCreation / monthInMinutes
-    return `${month.toFixed(0)} ${pluralize(month, "year")}`
+    return `${month.toFixed(0)} ${pluralize(month, "month")}`
 }
 else if ( minutesSinceCreation > dayInMinutes) {
     const day = minutesSinceCreation / dayInMinutes
-    return `${day.toFixed(0)} ${pluralize(day, "year")}`
+    return `${day.toFixed(0)} ${pluralize(day, "day")}`
 }
 else if ( minutesSinceCreation > hourInMinutes) {
     const hour = minutesSinceCreation / hourInMinutes
-    return `${hour.toFixed(0)} ${pluralize(hour, "year")}`
+    return `${hour.toFixed(0)} ${pluralize(hour, "hour")}`
 }
 }
