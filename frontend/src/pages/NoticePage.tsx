@@ -23,11 +23,11 @@ export const NoticePage = ( {notices} : Props) => {
   return (
     <Main>
       <div className="flex flex-col gap-4">
-        <section className="bg-darkblue rounded-lg p-4 flex flex-col justify-between ">
-          <div>
-            <h2 className="text-3xl mb-5 break-words">{notice?.title}</h2>
-            <p className="break-words">{notice?.description}</p>
-          </div>
+        <section className="bg-darkblue rounded-lg p-6 flex flex-col justify-between gap-12">
+            <h2 className="text-3xl break-words mt-12 mx-6 text-center">{notice?.title}</h2>
+          <div className="w-full p-4 bg-darkblue text-white rounded-xl mx-auto border border-2 drop-shadow-[10px_10px_rgba(0,0,0,0.25)]">
+            <p className="break-words">{notice?.description}</p> I like this cartoony look tbh, so something like this? 
+          </div> 
           <div className="">
             <ul className="font-start">
               
@@ -41,8 +41,8 @@ export const NoticePage = ( {notices} : Props) => {
           </div>
         </section>
         <section className="bg-darkblue p-4 flex flex-col rounded gap-4">
-          <h3>Items</h3>
-          {/* {ProductsJSX} */}
+          <h3>Items</h3> 
+          {/* {ProductsJSX} */} 
         </section>
       </div>
     </Main>
