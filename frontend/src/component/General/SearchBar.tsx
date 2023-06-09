@@ -6,7 +6,7 @@ type Props = {
     filterBySearch: (input: string) => void
 }
 
-export const ProductSearch = ({ filterBySearch} : Props) => {
+export const SearchBar = ({ filterBySearch} : Props) => {
 
 
   return (
