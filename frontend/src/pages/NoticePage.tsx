@@ -8,9 +8,13 @@ type Props = {
 
 export const NoticePage = ( {notices} : Props) => {
 
+  
+
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const notice = notices.find(notice => notice.id === +id!);
+
+  // const JSX = notice?.products.map(product => product.price).reduce( (a, b) => a + b);
 
   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
   return (
@@ -26,7 +30,7 @@ export const NoticePage = ( {notices} : Props) => {
             <li>{notice?.deliveryMethod}</li>
           </ul>
           <ul className="text-end">
-            <li className="font-bold">{notice?.products.map(product => product.price).reduce( (a, b) => a + b)}SEK</li>
+            <li className="font-bold">{}SEK</li>
             <li>{notice?.payment}</li>
           </ul>
         </div>
