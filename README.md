@@ -59,6 +59,8 @@ UML sketch
 ## Sprint videos:
 
 [First week sprint](https://streamable.com/3ym4bb)
+
+
 [Second week sprint](https://streamable.com/v45qbl)
 
 
