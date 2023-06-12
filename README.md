@@ -56,6 +56,11 @@ UML sketch
 
 ![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
 
+## Sprint videos:
+
+[First week sprint](https://streamable.com/3ym4bb)
+[Second week sprint](https://streamable.com/v45qbl)
+
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more information.
