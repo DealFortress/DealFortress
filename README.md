@@ -41,6 +41,11 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 
 <!-- ![Screenshot](./screenshot.png) -->
 
+## Retro template:
+
+![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
+
+
 ## Screenshots
 
 Wireframe sketch
