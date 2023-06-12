@@ -29,10 +29,10 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 
 ## Sprint videos:
 
-First week sprint 2mn video [here!](https://streamable.com/3ym4bb)
+  - First week sprint 2mn video [here!](https://streamable.com/3ym4bb)
 
 
-Second week sprint 2mn video [here!](https://streamable.com/v45qbl)
+  - Second week sprint 2mn video [here!](https://streamable.com/v45qbl)
 
 ## Tools & Libraries:
 
