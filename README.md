@@ -26,6 +26,14 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 
   - Azure Sql DB, Azure web app services & Azure static webpages
 
+
+## Sprint videos:
+
+First week sprint:[here!](https://streamable.com/3ym4bb)
+
+
+Second week sprint: [here!](https://streamable.com/v45qbl)
+
 ## Tools & Libraries:
 
 
@@ -55,13 +63,6 @@ UML sketch
 [Our retros](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
 
 ![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
-
-## Sprint videos:
-
-[First week sprint](https://streamable.com/3ym4bb)
-
-
-[Second week sprint](https://streamable.com/v45qbl)
 
 
 ## License
