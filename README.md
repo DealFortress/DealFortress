@@ -11,7 +11,15 @@ or checkout our 2 minutes video on the pitch deck [pitch deck video](https://str
 
 ## Context
 
-Sweden is missing a modern marketplace for used computer parts which DealFortress looks to fix
+Sweden is missing a modern marketplace for used computer parts which DealFortress looks to fix.
+
+### MVP plan:
+
+  - Website has authentication
+  - User can post a notice
+  - User can reply to author of post
+  - Website has a notice page
+  - Website has a notices index
 
 ## Tech stack
 
@@ -51,16 +59,16 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 
 ## Screenshots
 
-Wireframe sketch
+### Wireframe sketch
 <img src="excalidraw.png" />
 
-UML sketch
+### UML sketch
 <img src="uml-sketch.png" />
 
 
 ## Retro template:
 
-Check out our retro board [here](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
+### Check out our retro board [here](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
 
 ![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
 
