@@ -15,7 +15,7 @@ export const Navbar = () => {
 
 
   return (
-    <div className="w-screen py-4 top-0 sticky bg-darkblue text-white gap-4 rounded-b-xl flex flex-col">
+    <div className="w-screen py-4 top-0 sticky bg-darkblue text-white gap-4 rounded-b-xl flex flex-col z-index-1 border-b-2 ">
         <StaticNavbar setNavbarToggle={setNavbarToggle} navbarToggle={navbarToggle} />
         {
           navbarToggle && (

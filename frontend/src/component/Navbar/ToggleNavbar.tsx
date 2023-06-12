@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { ProductSearch } from "../Product/ProductSearch"
+import { SearchBar } from "../General/SearchBar"
 
 type Props = {
     filterBySearch: (input: string) => void
@@ -26,7 +26,7 @@ export const ToggleNavbar = ( { filterBySearch} : Props) => {
                         </ul>
                     }
                 </div>
-                <ProductSearch filterBySearch={filterBySearch} />
+                <SearchBar filterBySearch={filterBySearch} />
         </div>
   )
 }

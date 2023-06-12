@@ -7,7 +7,7 @@ type Props = {
     cities?: string[]
 }
 
-export const ProductFilter = ( {handleFilter, categories, filterType} : Props) => {
+export const CategoryFilter = ( {handleFilter, categories, filterType} : Props) => {
 
     
   return (

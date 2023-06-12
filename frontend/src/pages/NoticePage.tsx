@@ -1,6 +1,8 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { Notice } from "../types"
-import { NoticeProductCard } from "../component/Notice/NoticeProductCard"
+import { Main } from "../component/Main"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCashRegister, faCity, faTruckRampBox, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 type Props = {
   notices: Notice[]
@@ -8,32 +10,45 @@ type Props = {
 
 export const NoticePage = ( {notices} : Props) => {
 
+
+
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const notice = notices.find(notice => notice.id === +id!);
 
-  const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
+  // const JSX = notice?.products.map(product => product.price).reduce( (a, b) => a + b);
+
+//   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
   return (
-    <div className="grid grid-cols-[3fr_6fr] gap-5">
-      <aside className="bg-white p-4 flex flex-col justify-between">
-        <div>
-          <h2 className="text-3xl mb-5">{notice?.title}</h2>
-          <p>{notice?.description}</p>
-        </div>
-        <div className="">
-          <ul className="font-start">
-            <li>{notice?.city}</li>
-            <li>{notice?.deliveryMethod}</li>
-          </ul>
-          <ul className="text-end">
-            <li className="font-bold">{notice?.products.map(product => product.price).reduce( (a, b) => a + b)}SEK</li>
-            <li>{notice?.payment}</li>
-          </ul>
-        </div>
-      </aside>
-      <section className="bg-white p-4 flex flex-col rounded gap-4">
-        {ProductsJSX}
-      </section>
-    </div>
+    <Main>
+      <div className="flex flex-col gap-4">
+        <section className="bg-darkblue relative rounded-lg p-6 flex flex-col justify-between gap-12 white-box-border">
+            {/* make it a component */}
+            <div className="border border-b-2 absolute w-full mx-auto top-0 left-0 flex items-center justify-between gap-2 px-2 py-2 text-1xl">
+                <p className="text-xl">Notice {notice?.id}</p>
+                <span className="grow flex flex-col gap-2 mx-1 my-auto" ><hr /><hr /><hr /></span>
+                <Link to="/" className="white-box-border rounded hover:bg-blue"><FontAwesomeIcon className="text-end px-1.5" icon={faXmark} /></Link>
+            </div>
+            <h2 className="text-3xl break-words mt-12 mx-6 text-center">{notice?.title}</h2>
+          <div className="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
+            <p className="break-words">{notice?.description}</p>
+          </div>
+          <div className="flex justify-between">
+            <ul className="font-start">
+              <li><FontAwesomeIcon icon={faCity} /> {notice?.city}</li>
+              <li><FontAwesomeIcon icon={faTruckRampBox}/> {notice?.deliveryMethod}</li>
+            </ul>
+            <ul className="text-end">
+              <li className="font-bold">{}SEK</li>
+              <li>{notice?.payment} <FontAwesomeIcon icon={faCashRegister}/></li>
+            </ul>
+          </div>
+        </section>
+        <section className="bg-darkblue p-4 flex flex-col rounded gap-4 white-box-border">
+          <h3>Items</h3>
+          {/* {ProductsJSX} */}
+        </section>
+      </div>
+    </Main>
   )
 }
