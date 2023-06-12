@@ -52,6 +52,8 @@ UML sketch
 
 ## Retro template:
 
+[excalidraw retros](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
+
 ![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
 
 
