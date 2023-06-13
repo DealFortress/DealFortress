@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { Navbar } from './component/Navbar/Navbar'
 import { Footer } from './component/Footer'
-import { GetCategoriesFromAPI, GetProductsFromAPI, GetNoticesFromAPI } from './services/DealFortressAPI'
+import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
 import { Category, Product, Notice} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
@@ -11,6 +11,7 @@ import { NoticesIndex } from './pages/NoticesIndex'
 import { Favourites } from './pages/Favourites'
 import { Profile } from './pages/Profile'
 import { Loader } from './component/General/Loader'
+import { NoticeForm } from './pages/NoticeForm'
 
 
 type LoadingState = {
@@ -33,9 +34,9 @@ function App() {
   const [ state, setState ] = useState<State>({status: "LOADING"})
 
   const GetData = async () => {
-    const notices = await GetNoticesFromAPI();
-    const products = await GetProductsFromAPI();
-     const categories = await GetCategoriesFromAPI();
+    const notices = await GetNoticesAPI();
+    const products = await GetProductsAPI();
+     const categories = await GetCategoriesAPI();
     setState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
   }
 
@@ -62,6 +63,7 @@ function App() {
               <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
               <Route path="/favourites" element={ <Favourites/> }/>
               <Route path="/profile" element={ <Profile/> }/>
+              <Route path="/createnotice" element={ <NoticeForm/> }/>
               <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
               <Route path="*" element={ <NotFound/> }/>
             </Routes>
@@ -79,7 +81,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
           { switchState() }
-        <Footer />
+        {/* <Footer /> */}
         </BrowserRouter>
     </>
   )
