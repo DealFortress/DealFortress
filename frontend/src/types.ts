@@ -10,6 +10,15 @@ export type Notice = {
     createdAt: Date
 }
 
+export type NoticeRequest = {
+    id: number,
+    title: string,
+    description: string,
+    city: string,
+    payment: string,
+    deliveryMethod: string,
+}
+
 export type Product = {
     id: number,
     name: string,
