@@ -47,7 +47,7 @@ export const NoticePage = ( {notices} : Props) => {
 
       </StyledContainer>
   
-      <section className="bg-darkblue p-4 flex flex-col rounded gap-4 white-box-border">
+      <section className="df-container-style">
         <h3>Items</h3>
         {/* {ProductsJSX} */}
       </section>
