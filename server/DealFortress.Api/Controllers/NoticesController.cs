@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Controllers;
+using DealFortress.Api.Services;
 
 namespace DealFortress.Api.Controllers
 {
@@ -10,14 +11,16 @@ namespace DealFortress.Api.Controllers
     public class NoticesController : ControllerBase
     {
         private readonly DealFortressContext _context;
-        private readonly ProductsController _productsController;
-        private readonly CategoriesController _categoriesController;
+        private readonly ProductService _productService;
+        private readonly CategoryService _categoryService;
+        private readonly NoticeService _noticeService;
 
-        public NoticesController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
+        public NoticesController(DealFortressContext context, ProductService productService, CategoryService categoryService, NoticeService noticeService)
         {
             _context = context;
-            _categoriesController = categoriesController;
-            _productsController = productsController;
+            _categoryService = categoryService;
+            _productService = productService;
+            _noticeService = noticeService;
         }
 
         [HttpGet]
@@ -26,7 +29,7 @@ namespace DealFortress.Api.Controllers
             return _context.Notices
                         .Include(ad => ad.Products!)
                         .ThenInclude(product => (product.Category))
-                        .Select(ad => ToNoticeResponse(ad)).ToList();
+                        .Select(ad => _noticeService.ToNoticeResponse(ad)).ToList();
         }
 
         [HttpGet("{id}")]
@@ -78,18 +81,19 @@ namespace DealFortress.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest Noticerequest)
         {
-            var Notice = ToNotice(Noticerequest);
+            var Notice = _noticeService.ToNotice(Noticerequest);
 
             if (Noticerequest.ProductRequests is not null)
             {
-                var AllCategoriesExists = Noticerequest.ProductRequests.All(request => _categoriesController.CategoryExists(request.CategoryId));
+                var AllCategoriesExists = Noticerequest.ProductRequests.All(request => _categoryService.CategoryExists(request.CategoryId, _context));
 
                 if (AllCategoriesExists)
                 {
                     var products = Noticerequest.ProductRequests
                                                     .Select( productRequest =>
                                                     {
-                                                        return _productsController.ToProduct(productRequest, Notice);
+                                                        var category = _context.Categories.Find(productRequest.CategoryId);
+                                                        return _productService.ToProduct(category!, productRequest, Notice);
                                                     });
 
                     Notice.Products = products.ToList();
@@ -99,7 +103,7 @@ namespace DealFortress.Api.Controllers
             _context.Notices.Add(Notice);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotice", new { id = Notice.Id }, ToNoticeResponse(Notice));
+            return CreatedAtAction("GetNotice", new { id = Notice.Id }, _noticeService.ToNoticeResponse(Notice));
         }
 
         [HttpDelete("{id}")]
@@ -125,41 +129,5 @@ namespace DealFortress.Api.Controllers
         {
             return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
-        private static NoticeResponse ToNoticeResponse(Notice Notice)
-        {
-            var response = new NoticeResponse()
-            {
-                Id = Notice.Id,
-                Title = Notice.Title,
-                Description = Notice.Description,
-                City = Notice.City,
-                Payment = Notice.Payment,
-                DeliveryMethod = Notice.DeliveryMethod,
-                CreatedAt = Notice.CreatedAt
-            };
-
-            if (Notice.Products is not null)
-            {
-                response.Products = Notice.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
-            }
-
-            return response;
-        }
-
-        private Notice ToNotice(NoticeRequest request)
-        {
-          return new Notice()
-          {
-            Title = request.Title,
-            Description = request.Description,
-            City = request.City,
-            Payment = request.Payment,
-            Products = null,
-            DeliveryMethod = request.DeliveryMethod,
-            CreatedAt = DateTime.Now
-          };
-        }
-
     }
 }

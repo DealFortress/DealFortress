@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
+using DealFortress.Api.Services;
 
 namespace DealFortress.Api.Controllers;
 
@@ -15,14 +16,17 @@ public class CategoriesController : ControllerBase
 {
     private readonly DealFortressContext _context;
     private readonly ProductsController _productsController;
+    private readonly ProductService _productService;
+    private readonly CategoryService _categoryService;
 
-    public CategoriesController(DealFortressContext context, ProductsController productsController)
+    public CategoriesController(DealFortressContext context, ProductsController productsController, ProductService productService, CategoryService categoryService)
     {
         _context = context;
         _productsController = productsController;
+        _productService = productService;
+        _categoryService = categoryService;
     }
 
-    // GET: api/Categories
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
     {
@@ -33,7 +37,7 @@ public class CategoriesController : ControllerBase
         return await _context.Categories.ToListAsync();
     }
 
-    // GET: api/Categories/5
+
     [HttpGet("{id}")]
     public async Task<ActionResult<CategoryResponse>> GetCategory(int id)
     {
@@ -48,11 +52,9 @@ public class CategoriesController : ControllerBase
             return NotFound();
         }
 
-        return ToCategoryResponse(category);
+        return _categoryService.ToCategoryResponse(category);
     }
 
-    // PUT: api/Categories/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCategory(int id, Category category)
     {
@@ -69,7 +71,7 @@ public class CategoriesController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CategoryExists(id))
+            if (!_categoryService.CategoryExists(id, _context))
             {
                 return NotFound();
             }
@@ -82,17 +84,16 @@ public class CategoriesController : ControllerBase
         return NoContent();
     }
 
-    // POST: api/Categories
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> PostCategory(CategoryRequest request)
     {
-        var category = ToCategory(request);
+        var category = _categoryService.ToCategory(request);
 
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, ToCategoryResponse(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, _categoryService.ToCategoryResponse(category));
     }
 
     // DELETE: api/Categories/5
@@ -114,21 +115,4 @@ public class CategoriesController : ControllerBase
 
         return NoContent();
     }
-    [NonAction]
-    public bool CategoryExists(int id)
-    {
-        return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
-    }
-
-    private static CategoryResponse ToCategoryResponse(Category category)
-    {
-      return new CategoryResponse()
-      {
-        Id = category.Id,
-        Name = category.Name,
-        Products = category.Products?.Select(product => ProductsController.ToProductResponse(product)).ToList()
-      };
-    }
-
-    private Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
 }

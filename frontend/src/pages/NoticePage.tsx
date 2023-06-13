@@ -13,14 +13,14 @@ type Props = {
 export const NoticePage = ( {notices} : Props) => {
 
 
-
+  
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const notice = notices.find(notice => notice.id === +id!);
 
   // const JSX = notice?.products.map(product => product.price).reduce( (a, b) => a + b);
 
-//   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
+  //   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
   return (
     <Main>
       <StyledContainer barText={`Notice ${notice?.id}`} redirectLink={"/"}>
