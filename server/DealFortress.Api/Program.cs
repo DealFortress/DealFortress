@@ -1,4 +1,5 @@
 using DealFortress.Api.Data;
+using DealFortress.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
@@ -9,11 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// builder.Services.AddMvc().AddControllersAsServices();
 
-// can this be removed?
-builder.Services.AddSingleton<IService>
-builder.Services.AddControllers();
+builder.Services.AddSingleton<ProductService>();
+builder.Services.AddSingleton<CategoryService>();
+builder.Services.AddSingleton<NoticeService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -17,12 +17,14 @@ public class CategoriesController : ControllerBase
     private readonly DealFortressContext _context;
     private readonly ProductsController _productsController;
     private readonly ProductService _productService;
+    private readonly CategoryService _categoryService;
 
-    public CategoriesController(DealFortressContext context, ProductsController productsController, ProductService productService)
+    public CategoriesController(DealFortressContext context, ProductsController productsController, ProductService productService, CategoryService categoryService)
     {
         _context = context;
         _productsController = productsController;
         _productService = productService;
+        _categoryService = categoryService;
     }
 
     [HttpGet]
@@ -50,7 +52,7 @@ public class CategoriesController : ControllerBase
             return NotFound();
         }
 
-        return ToCategoryResponse(category);
+        return _categoryService.ToCategoryResponse(category);
     }
 
     [HttpPut("{id}")]
@@ -69,7 +71,7 @@ public class CategoriesController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CategoryExists(id))
+            if (!_categoryService.CategoryExists(id, _context))
             {
                 return NotFound();
             }
@@ -86,12 +88,12 @@ public class CategoriesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> PostCategory(CategoryRequest request)
     {
-        var category = ToCategory(request);
+        var category = _categoryService.ToCategory(request);
 
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, ToCategoryResponse(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, _categoryService.ToCategoryResponse(category));
     }
 
     // DELETE: api/Categories/5
@@ -113,21 +115,4 @@ public class CategoriesController : ControllerBase
 
         return NoContent();
     }
-    [NonAction]
-    public bool CategoryExists(int id)
-    {
-        return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
-    }
-
-    private CategoryResponse ToCategoryResponse(Category category)
-    {
-      return new CategoryResponse()
-      {
-        Id = category.Id,
-        Name = category.Name,
-        Products = category.Products?.Select(product => _productService.ToProductResponse(product)).ToList()
-      };
-    }
-
-    private Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
 }
