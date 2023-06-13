@@ -11,7 +11,6 @@ export type Notice = {
 }
 
 export type NoticeRequest = {
-    id: number,
     title: string,
     description: string,
     city: string,

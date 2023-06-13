@@ -1,4 +1,4 @@
-import { Category, Product, Notice } from "../types";
+import { Category, Product, Notice, NoticeRequest } from "../types";
 
 // put in the env
 const NoticeUrl = "https://localhost:5000/api/Notices";
@@ -11,8 +11,17 @@ export const GetNoticesAPI = async () => {
     return await response.json() as Notice[];
 }
 
-export const PostNoticeAPI = async () => {
+export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
+    const requestBody = JSON.stringify(noticeRequest);
+    const response = await fetch(NoticeUrl, {
+        method: "POST",
+        headers: {
 
+        },
+        body: requestBody
+    })
+    console.log(response);
+    return response;
 }
 
 export const GetProductsAPI = async () => {
@@ -25,4 +34,3 @@ export const GetCategoriesAPI = async () => {
     const response = await fetch(CategoriesUrl);
     return await response.json() as Category[];
 }
-

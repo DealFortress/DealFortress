@@ -3,49 +3,51 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { StyledContainer } from "../component/General/StyledContainer"
 import { Main } from "../component/Main"
 import { UserInfo } from "../component/General/UserInfo"
-import { Formik } from "formik"
+import { Field, Formik } from "formik"
 import { FormikValues, FormikHelpers } from "formik/dist/types"
+import { NoticeRequest } from "../types"
 
 export const NoticeForm = () => {
-  const initialValues = {
+
+    const handleSubmit = (values: NoticeRequest) => {
+        return null
+    }
+
+  const initialValues: NoticeRequest = {
     title: "",
     description: "",
     city: "",
     payment: "",
     deliveryMethod: ""
-  }
+  };
+
   return (
     <Main>
-      <Formik 
-        initialValues={initialValues} 
-        onSubmit={(values, {setSubmitting}) => {
-          
+      <Formik
+        initialValues={initialValues}
+        onSubmit={ values => {
+            handleSubmit(values)
         }}
       >
-        <StyledContainer barText={``} redirectLink={"/notices"}>
+        <form action="">
+            <StyledContainer barText={``} redirectLink={"/notices"}>
+            <UserInfo />
+            <Field type="text" name="title" placeholder="Title" className="text-3xl break-words mx-6 text-center" />
+            <div className="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
+                <textarea rows={30} name="description" placeholder="Description"  className="break-words"/>
+            </div>
+            <div className="flex justify-between">
+                <ul className="font-start">
+                <li><FontAwesomeIcon icon={faCity} /><Field type="text" name="city" placeholder="City" /></li>
+                <li><FontAwesomeIcon icon={faTruckRampBox}/><Field type="text" name="deliveryMethod" placeholder="Delivery method" /></li>
+                </ul>
+                <ul className="text-end">
+                <li><FontAwesomeIcon icon={faCashRegister}/><Field type="text" name="payment" placeholder="Payment" /></li>
+                </ul>
+            </div>
 
-          <UserInfo />
-          <input className="text-3xl break-words mx-6 text-center" />
-          <div className="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
-            <p className="break-words"></p>
-          </div>
-          <div className="flex justify-between">
-            <ul className="font-start">
-              <li><FontAwesomeIcon icon={faCity} /> </li>
-              <li><FontAwesomeIcon icon={faTruckRampBox}/> </li>
-            </ul>
-            <ul className="text-end">
-              <li className="font-bold">{}SEK</li>
-              <li><FontAwesomeIcon icon={faCashRegister}/></li>
-            </ul>
-          </div>
-
-        </StyledContainer>
-
-        <section className="df-container-style">
-          <h3>Items</h3>
-          {/* {ProductsJSX} */}
-        </section>
+            </StyledContainer>
+        </form>
       </Formik>
 
   </Main>
