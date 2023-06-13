@@ -20,6 +20,16 @@
         border: 2px solid white;
         box-shadow: 6px 8px rgba(0,0,0,.6);
     }
+    .df-container-style {
+      @apply bg-darkblue; 
+      padding: 1rem; 
+      display: flex;
+      flex-direction: column; 
+      border-radius: .25rem;
+      gap: 1rem;
+      border: 2px solid white;
+      box-shadow: 6px 8px rgba(0,0,0,.6);
+    }
 }
 
 @layer base {
