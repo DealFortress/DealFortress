@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
+using DealFortress.Api.Services;
 
 namespace DealFortress.Api.Controllers;
 
@@ -15,14 +16,15 @@ public class CategoriesController : ControllerBase
 {
     private readonly DealFortressContext _context;
     private readonly ProductsController _productsController;
+    private readonly ProductService _productService;
 
-    public CategoriesController(DealFortressContext context, ProductsController productsController)
+    public CategoriesController(DealFortressContext context, ProductsController productsController, ProductService productService)
     {
         _context = context;
         _productsController = productsController;
+        _productService = productService;
     }
 
-    // GET: api/Categories
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
     {
@@ -33,7 +35,7 @@ public class CategoriesController : ControllerBase
         return await _context.Categories.ToListAsync();
     }
 
-    // GET: api/Categories/5
+
     [HttpGet("{id}")]
     public async Task<ActionResult<CategoryResponse>> GetCategory(int id)
     {
@@ -51,8 +53,6 @@ public class CategoriesController : ControllerBase
         return ToCategoryResponse(category);
     }
 
-    // PUT: api/Categories/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCategory(int id, Category category)
     {
@@ -82,8 +82,7 @@ public class CategoriesController : ControllerBase
         return NoContent();
     }
 
-    // POST: api/Categories
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> PostCategory(CategoryRequest request)
     {
@@ -120,13 +119,13 @@ public class CategoriesController : ControllerBase
         return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 
-    private static CategoryResponse ToCategoryResponse(Category category)
+    private CategoryResponse ToCategoryResponse(Category category)
     {
       return new CategoryResponse()
       {
         Id = category.Id,
         Name = category.Name,
-        Products = category.Products?.Select(product => ProductsController.ToProductResponse(product)).ToList()
+        Products = category.Products?.Select(product => _productService.ToProductResponse(product)).ToList()
       };
     }
 

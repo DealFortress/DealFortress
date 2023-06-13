@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Controllers;
+using DealFortress.Api.Services;
 
 namespace DealFortress.Api.Controllers
 {
@@ -10,14 +11,14 @@ namespace DealFortress.Api.Controllers
     public class NoticesController : ControllerBase
     {
         private readonly DealFortressContext _context;
-        private readonly ProductsController _productsController;
+        private readonly ProductService _productService;
         private readonly CategoriesController _categoriesController;
 
-        public NoticesController(DealFortressContext context, ProductsController productsController, CategoriesController categoriesController)
+        public NoticesController(DealFortressContext context, ProductService productService, CategoriesController categoriesController)
         {
             _context = context;
             _categoriesController = categoriesController;
-            _productsController = productsController;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -89,7 +90,8 @@ namespace DealFortress.Api.Controllers
                     var products = Noticerequest.ProductRequests
                                                     .Select( productRequest =>
                                                     {
-                                                        return _productsController.ToProduct(productRequest, Notice);
+                                                        var category = _context.Categories.Find(productRequest.CategoryId);
+                                                        return _productService.ToProduct(category!, productRequest, Notice);
                                                     });
 
                     Notice.Products = products.ToList();
@@ -126,7 +128,7 @@ namespace DealFortress.Api.Controllers
             return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        private static NoticeResponse ToNoticeResponse(Notice Notice)
+        private NoticeResponse ToNoticeResponse(Notice Notice)
         {
             var response = new NoticeResponse()
             {
@@ -141,7 +143,7 @@ namespace DealFortress.Api.Controllers
 
             if (Notice.Products is not null)
             {
-                response.Products = Notice.Products.Select(product => ProductsController.ToProductResponse(product)).ToList();
+                response.Products = Notice.Products.Select(product => _productService.ToProductResponse(product)).ToList();
             }
 
             return response;
