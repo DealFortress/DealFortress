@@ -7,11 +7,12 @@ import { Field, Form, Formik } from "formik"
 import { FormikValues, FormikHelpers, FormikProps } from "formik/dist/types"
 import { Notice, NoticeRequest } from "../types"
 import { render } from "react-dom"
+import { CustomSelect } from "../component/Form/CustomSelect"
 
 export const NoticeForm = () => {
 
     const handleSubmit = (values: NoticeRequest) => {
-        return null
+        console.log(values);
     }
 
   const initialValues: NoticeRequest = {
@@ -22,22 +23,37 @@ export const NoticeForm = () => {
     deliveryMethod: ""
   };
 
-  const renderForm = (formikBag: FormikProps<NoticeRequest>) => (
+  const paymentOptions = [
+    { value: 'swish', label: 'Swish' },
+    { value: 'cash', label: 'Cash' },
+    { value: 'bank transfer', label: 'Bank transfer' }
+  ]
+
+  const deliveryOptions = [
+    { value: 'pick up', label: 'Pick up' },
+    { value: 'hand delivered', label: 'Hand delivered' },
+    { value: 'package', label: 'package' }
+  ]
+
+
+
+
+  const renderForm = () => (
       <Form>
             <StyledContainer barText={``} redirectLink={"/notices"}>
             <UserInfo />
-            <Field 
-              type="text" 
-              name="title" 
-              placeholder="Your title here ✒️" 
-              className="text-3xl break-words mx-6 text-center bg-darkblue" 
+            <Field
+              type="text"
+              name="title"
+              placeholder="Your title here ✒️"
+              className="text-3xl break-words mx-6 text-center bg-darkblue"
             />
             <div className="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
-                <Field 
+                <Field
                   component="textarea"
-                  rows={10} 
-                  name="description" 
-                  placeholder="Write description here ✒️"  
+                  rows={10}
+                  name="description"
+                  placeholder="Write description here ✒️"
                   className="break-words w-full bg-darkblue"
                 />
             </div>
@@ -45,50 +61,32 @@ export const NoticeForm = () => {
                 <ul className="font-start">
                   <li>
                     <FontAwesomeIcon icon={faCity} />
-                    <Field 
-                      type="text" 
-                      name="city" 
-                      placeholder="Your city" 
+                    <Field
+                        className="bg-darkblue"
+                      type="text"
+                      name="city"
+                      placeholder="Your city ✒️"
                     />
                   </li>
                   <li>
                     <FontAwesomeIcon icon={faTruckRampBox}/>
-                    <Field 
-                      className="bg-darkblue" 
-                      type="text" 
-                      name="deliveryMethod" 
-                      placeholder="Delivery method" 
-                      component="select"
-                    >
-                      <option value="swish">Pick up</option>
-                      <option value="cash">Mail</option>
-                      <option value="banktransfer">Hand delivered</option>
-                    </Field>
+                    <CustomSelect selectOptions={deliveryOptions} isMulti={true} name={"deliveryMethod"}/>
                   </li>
                 </ul>
                 <ul className="text-end">
                   <li>
-                    <FontAwesomeIcon icon={faCashRegister}/>
-                    <Field 
-                      className="bg-darkblue" 
-                      type="text" 
-                      name="payment" 
-                      placeholder="Payment" 
-                      component="select"
-                    >
-                    <option value="swish">Swish</option>
-                    <option value="cash">Cash</option>
-                    <option value="banktransfer">Bank transfer</option>
-                    </Field>
+                   <CustomSelect selectOptions={paymentOptions} isMulti={true} name={"payment"}/>
                   </li>
                 </ul>
             </div>
-            <button 
+            <button
               type="submit"
               className="rounded white-box-border"
             >
               Submit
             </button>
+
+
             </StyledContainer>
         </Form>
   )
