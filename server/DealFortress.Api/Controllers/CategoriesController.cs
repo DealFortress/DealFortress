@@ -15,14 +15,12 @@ namespace DealFortress.Api.Controllers;
 public class CategoriesController : ControllerBase
 {
     private readonly DealFortressContext _context;
-    private readonly ProductsController _productsController;
     private readonly ProductService _productService;
     private readonly CategoryService _categoryService;
 
-    public CategoriesController(DealFortressContext context, ProductsController productsController, ProductService productService, CategoryService categoryService)
+    public CategoriesController(DealFortressContext context, ProductService productService, CategoryService categoryService)
     {
         _context = context;
-        _productsController = productsController;
         _productService = productService;
         _categoryService = categoryService;
     }
