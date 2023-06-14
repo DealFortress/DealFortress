@@ -11,7 +11,7 @@ namespace DealFortress.Api.Services
         private readonly ProductService _productService;
         public NoticeService(ProductService productService)
         {
-            _productService = productService; 
+            _productService = productService;
         }
 
         public NoticeResponse ToNoticeResponse(Notice Notice)
@@ -22,8 +22,8 @@ namespace DealFortress.Api.Services
                 Title = Notice.Title,
                 Description = Notice.Description,
                 City = Notice.City,
-                Payment = Notice.Payment,
-                DeliveryMethod = Notice.DeliveryMethod,
+                Payments = Notice.Payment.Split(","),
+                DeliveryMethods = Notice.DeliveryMethod.Split(","),
                 CreatedAt = Notice.CreatedAt
             };
 
@@ -42,9 +42,9 @@ namespace DealFortress.Api.Services
             Title = request.Title,
             Description = request.Description,
             City = request.City,
-            Payment = request.Payment,
+            Payment = string.Join(",", request.Payments),
             Products = null,
-            DeliveryMethod = request.DeliveryMethod,
+            DeliveryMethod = string.Join(",", request.DeliveryMethods),
             CreatedAt = DateTime.Now
           };
         }

@@ -14,9 +14,10 @@ type Props = {
     selectOptions: Option[],
     isMulti?: boolean,
     name: string,
+    placeholder?: string
 }
 
-export const CustomSelect = ( {selectOptions, isMulti = false, name} : Props) => {
+export const CustomSelect = ( {selectOptions, isMulti = false, name, placeholder = "Select..."} : Props) => {
     const [field, meta] = useField(name);
     const { setFieldValue } = useFormikContext();
 
@@ -28,7 +29,8 @@ export const CustomSelect = ( {selectOptions, isMulti = false, name} : Props) =>
   return (
     <>
         <Select
-            className="bg-darkblue text-black"
+            placeholder={placeholder}
+            className=" text-black w-full"
             closeMenuOnSelect={false}
             components={animatedComponents}
             isMulti = {isMulti}
@@ -46,7 +48,7 @@ export const CustomSelect = ( {selectOptions, isMulti = false, name} : Props) =>
                 }
             }
         />
-        {meta.touched && meta.error ? (
+        { meta.touched && meta.error ? (
             <div className='ticket-form__label--error'>{meta.error}</div>) : null
         }
     </>
