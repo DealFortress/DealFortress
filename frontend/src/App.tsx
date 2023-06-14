@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './App.css'
 import { Navbar } from './component/Navbar/Navbar'
-import { Footer } from './component/Footer'
+// import { Footer } from './component/Footer'
 import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
-import { Category, Product, Notice} from './types'
+import { Category, Product, Notice, NoticesContextType} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
@@ -12,6 +12,7 @@ import { Favourites } from './pages/Favourites'
 import { Profile } from './pages/Profile'
 import { Loader } from './component/General/Loader'
 import { NoticeForm } from './pages/NoticeForm'
+import { NoticesContext } from './context/NoticeProvider'
 
 
 type LoadingState = {
@@ -31,14 +32,22 @@ type OkState = {
 type State = LoadingState | ErrorState | OkState;
 
 function App() {
+  const { GetNotices, notices } = useContext(NoticesContext) as NoticesContextType;
   const [ state, setState ] = useState<State>({status: "LOADING"})
 
+  
   const GetData = async () => {
+    
     const notices = await GetNoticesAPI();
     const products = await GetProductsAPI();
      const categories = await GetCategoriesAPI();
     setState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
   }
+  
+  useEffect(() => {
+    GetNotices();
+    GetData();
+  }, [])
 
   const switchState = () => {
 
@@ -72,9 +81,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    GetData();
-  }, [])
 
   return (
     <>

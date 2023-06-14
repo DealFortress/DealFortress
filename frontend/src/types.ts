@@ -18,6 +18,12 @@ export type NoticeRequest = {
     deliveryMethods: string[],
 }
 
+export type NoticesContextType = {
+    notices: Notice[],
+    GetNotices: () => void,
+    PostNotice: (request: NoticeRequest) => Notice
+}
+
 export type Product = {
     id: number,
     name: string,

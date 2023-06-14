@@ -22,7 +22,7 @@ export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
         body: requestBody
     })
     console.log(response);
-    return response;
+    return await response.json() as Notice;
 }
 
 export const GetProductsAPI = async () => {
