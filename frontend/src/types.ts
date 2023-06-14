@@ -14,8 +14,8 @@ export type NoticeRequest = {
     title: string,
     description: string,
     city: string,
-    payment: string[],
-    deliveryMethod: string[],
+    payments: string[],
+    deliveryMethods: string[],
 }
 
 export type Product = {

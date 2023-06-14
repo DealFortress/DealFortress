@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Notice } from "../../types"
 import { Link } from "react-router-dom";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { convertMinutesToClosestTimeValue} from "../../services/helperFunction";
+import { convertMinutesToClosestTimeValue} from "../../services/helperFunctions";
 
 
 type Props = {
@@ -18,7 +18,7 @@ export const NoticeCard = ( {notice} : Props) => {
       <p className="font-semibold text-lg break-words">{notice.title}</p>
       <div className="flex gap-12 justify-between">
         <p>{notice.city}</p>
-        <p>{convertMinutesToClosestTimeValue(minutesSinceCreation)} ago</p>
+        <p>{convertMinutesToClosestTimeValue(minutesSinceCreation)}</p>
         {/* <Link className='text-xl' to="/favourites" ><FontAwesomeIcon icon={faHeart} /></Link> */}
       </div>
     </Link>

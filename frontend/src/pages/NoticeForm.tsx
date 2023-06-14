@@ -5,23 +5,25 @@ import { Main } from "../component/Main"
 import { UserInfo } from "../component/General/UserInfo"
 import { Field, Form, Formik } from "formik"
 import { FormikHelpers} from "formik/dist/types"
-import { NoticeRequest } from "../types"
+import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { PostNoticeAPI } from "../services/DealFortressAPI"
+import { redirect, useNavigate } from "react-router-dom"
 
 export const NoticeForm = () => {
 
-    const handleSubmit = (request: NoticeRequest) => {
-        const response = PostNoticeAPI(request);
-        console.log(response);
+
+    const handleSubmit = async (request: NoticeRequest) => {
+        const response = await PostNoticeAPI(request);
+        return `notices/${(await response.json() as Notice).id}`;
     }
 
   const initialValues: NoticeRequest = {
     title: "",
     description: "",
     city: "",
-    payment: [""],
-    deliveryMethod: [""]
+    payments: [""],
+    deliveryMethods: [""]
   };
 
   const paymentOptions = [
@@ -36,6 +38,7 @@ export const NoticeForm = () => {
     { value: 'package', label: 'package' }
   ]
 
+  const navigate = useNavigate();
 
 
 
@@ -71,11 +74,11 @@ export const NoticeForm = () => {
                     </li>
                     <li className="flex gap-2 items-center">
                       <FontAwesomeIcon icon={faTruckRampBox} className="w-6"/>
-                      <CustomSelect selectOptions={deliveryOptions} isMulti={true} name={"deliveryMethod"} placeholder="Select delivery method(s)"/>
+                      <CustomSelect selectOptions={deliveryOptions} isMulti={true} name={"deliveryMethods"} placeholder="Select delivery method(s)"/>
                     </li>
                     <li className="flex gap-2 items-center">
                       <FontAwesomeIcon icon={faCashRegister} className="w-6"/>
-                    <CustomSelect selectOptions={paymentOptions} isMulti={true} name={"payment"} placeholder="Select payment method(s)"/>
+                    <CustomSelect selectOptions={paymentOptions} isMulti={true} name={"payments"} placeholder="Select payment method(s)"/>
                     </li>
                   </ul>
               </div>
@@ -97,7 +100,8 @@ export const NoticeForm = () => {
         initialValues={initialValues}
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
-          handleSubmit(values)
+          const route = handleSubmit(values);
+          navigate(route);
         }}
       >
         {renderForm}

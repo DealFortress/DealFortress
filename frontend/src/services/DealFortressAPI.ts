@@ -13,10 +13,11 @@ export const GetNoticesAPI = async () => {
 
 export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     const requestBody = JSON.stringify(noticeRequest);
+    console.log(requestBody);
     const response = await fetch(NoticeUrl, {
         method: "POST",
         headers: {
-
+            "Content-Type": "application/json"
         },
         body: requestBody
     })
