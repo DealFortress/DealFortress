@@ -6,10 +6,8 @@ const ProductsUrl = "https://localhost:5000/api/products";
 const CategoriesUrl = "https://localhost:5000/api/categories";
 
 
-export const GetNoticesAPI = async () => {
-    const response = await fetch(NoticeUrl);
-    return await response.json() as Notice[];
-}
+export const GetNoticesAPI = async () => await fetch(NoticeUrl);
+
 
 export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     const requestBody = JSON.stringify(noticeRequest);

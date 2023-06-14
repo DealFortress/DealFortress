@@ -15,7 +15,7 @@ export const NoticeForm = () => {
 
     const handleSubmit = async (request: NoticeRequest) => {
         const response = await PostNoticeAPI(request);
-        return `notices/${(await response.json() as Notice).id}`;
+        return `notices/${(await response).id}`;
     }
 
   const initialValues: NoticeRequest = {
@@ -106,7 +106,6 @@ export const NoticeForm = () => {
       >
         {renderForm}
       </Formik>
-
   </Main>
   )
 }

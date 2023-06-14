@@ -18,7 +18,7 @@ export type NoticeRequest = {
     deliveryMethods: string[],
 }
 
-export type NoticesContextType = {
+export type MarketContextType = {
     notices: Notice[],
     GetNotices: () => void,
     PostNotice: (request: NoticeRequest) => Notice

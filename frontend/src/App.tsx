@@ -3,7 +3,7 @@ import './App.css'
 import { Navbar } from './component/Navbar/Navbar'
 // import { Footer } from './component/Footer'
 import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
-import { Category, Product, Notice, NoticesContextType} from './types'
+import { Category, Product, Notice, MarketContextType, MarketState} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
@@ -12,38 +12,21 @@ import { Favourites } from './pages/Favourites'
 import { Profile } from './pages/Profile'
 import { Loader } from './component/General/Loader'
 import { NoticeForm } from './pages/NoticeForm'
-import { NoticesContext } from './context/NoticeProvider'
+import { MarketContext } from './context/MarketProvider'
 
-
-type LoadingState = {
-    status: "LOADING",
-};
-
-type ErrorState = {
-    status: "ERROR",
-    error: { code: string, message: string}
-};
-
-type OkState = {
-    status: "OK",
-    data: { notices: Notice[], products: Product[], categories: Category[]}
-};
-
-type State = LoadingState | ErrorState | OkState;
 
 function App() {
-  const { GetNotices, notices } = useContext(NoticesContext) as NoticesContextType;
-  const [ state, setState ] = useState<State>({status: "LOADING"})
+  const { GetNotices, notices } = useContext(MarketContext) as MarketContextType;
 
-  
+
   const GetData = async () => {
-    
+
     const notices = await GetNoticesAPI();
     const products = await GetProductsAPI();
      const categories = await GetCategoriesAPI();
-    setState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
+    setMarketState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
   }
-  
+
   useEffect(() => {
     GetNotices();
     GetData();
@@ -51,7 +34,7 @@ function App() {
 
   const switchState = () => {
 
-    switch (state.status) {
+    switch (marketState.status) {
     case "LOADING":
       return (
         <Loader />
@@ -63,7 +46,7 @@ function App() {
       )
 
     case "OK":
-      {const { notices } = state.data;
+      {const { notices } = marketState.data;
 
       return (
             <Routes>
