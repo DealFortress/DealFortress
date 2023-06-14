@@ -13,7 +13,7 @@ type Props = {
 export const NoticePage = ( {notices} : Props) => {
 
 
-  
+
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const notice = notices.find(notice => notice.id === +id!);
@@ -23,8 +23,8 @@ export const NoticePage = ( {notices} : Props) => {
   //   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
   return (
     <Main>
-      <StyledContainer barText={`Notice ${notice?.id}`} redirectLink={"/"}>
-        
+      <StyledContainer barText={`Notice ${notice?.id}`} redirectLink={"/notices"}>
+
         <div className="self-center text-center flex flex-col gap-2">
           <p>User name</p>
           <img className="rounded-full w-[35%] m-auto" src="https://picsum.photos/512" alt="profile picture" />
@@ -46,7 +46,7 @@ export const NoticePage = ( {notices} : Props) => {
         </div>
 
       </StyledContainer>
-  
+
       <section className="df-container-style">
         <h3>Items</h3>
         {/* {ProductsJSX} */}

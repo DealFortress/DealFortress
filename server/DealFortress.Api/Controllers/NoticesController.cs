@@ -33,31 +33,31 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Notice>> GetNotice(int id)
+        public async Task<ActionResult<NoticeResponse>> GetNotice(int id)
         {
           if (_context.Notices == null)
           {
               return NotFound();
           }
-            var Notice = await _context.Notices.FindAsync(id);
+            var notice = await _context.Notices.FindAsync(id);
 
-            if (Notice == null)
+            if (notice == null)
             {
                 return NotFound();
             }
 
-            return Notice;
+            return _noticeService.ToNoticeResponse(notice);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotice(int id, Notice Notice)
+        public async Task<IActionResult> PutNotice(int id, Notice notice)
         {
-            if (id != Notice.Id)
+            if (id != notice.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(Notice).State = EntityState.Modified;
+            _context.Entry(notice).State = EntityState.Modified;
 
             try
             {
@@ -79,31 +79,32 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest Noticerequest)
+        public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest request)
         {
-            var Notice = _noticeService.ToNotice(Noticerequest);
+            Console.WriteLine(request);
+            var notice = _noticeService.ToNotice(request);
 
-            if (Noticerequest.ProductRequests is not null)
+            if (request.ProductRequests is not null)
             {
-                var AllCategoriesExists = Noticerequest.ProductRequests.All(request => _categoryService.CategoryExists(request.CategoryId, _context));
+                var AllCategoriesExists = request.ProductRequests.All(request => _categoryService.CategoryExists(request.CategoryId, _context));
 
                 if (AllCategoriesExists)
                 {
-                    var products = Noticerequest.ProductRequests
+                    var products = request.ProductRequests
                                                     .Select( productRequest =>
                                                     {
                                                         var category = _context.Categories.Find(productRequest.CategoryId);
-                                                        return _productService.ToProduct(category!, productRequest, Notice);
+                                                        return _productService.ToProduct(category!, productRequest, notice);
                                                     });
 
-                    Notice.Products = products.ToList();
+                    notice.Products = products.ToList();
                 }
             }
 
-            _context.Notices.Add(Notice);
+            _context.Notices.Add(notice);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotice", new { id = Notice.Id }, _noticeService.ToNoticeResponse(Notice));
+            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticeService.ToNoticeResponse(notice));
         }
 
         [HttpDelete("{id}")]
@@ -113,13 +114,13 @@ namespace DealFortress.Api.Controllers
             {
                 return NotFound();
             }
-            var Notice = await _context.Notices.FindAsync(id);
-            if (Notice == null)
+            var notice = await _context.Notices.FindAsync(id);
+            if (notice == null)
             {
                 return NotFound();
             }
 
-            _context.Notices.Remove(Notice);
+            _context.Notices.Remove(notice);
             await _context.SaveChangesAsync();
 
             return NoContent();
