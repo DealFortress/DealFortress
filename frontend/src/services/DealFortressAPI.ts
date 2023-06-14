@@ -23,13 +23,6 @@ export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     return await response.json() as Notice;
 }
 
-export const GetProductsAPI = async () => {
-    const response = await fetch(ProductsUrl);
-    // console.log(await response.json());
-    return await response.json() as Product[];
-}
+export const GetProductsAPI = async () => await fetch(ProductsUrl);
 
-export const GetCategoriesAPI = async () => {
-    const response = await fetch(CategoriesUrl);
-    return await response.json() as Category[];
-}
+export const GetCategoriesAPI = async () => await fetch(CategoriesUrl);

@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect} from 'react'
 import './App.css'
 import { Navbar } from './component/Navbar/Navbar'
 // import { Footer } from './component/Footer'
 import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
-import { Category, Product, Notice, MarketContextType, MarketState} from './types'
+import { Category, Product, Notice, MarketContextType} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
@@ -16,19 +16,14 @@ import { MarketContext } from './context/MarketProvider'
 
 
 function App() {
-  const { GetNotices, notices } = useContext(MarketContext) as MarketContextType;
+  const { GetMarketState, marketState } = useContext(MarketContext) as MarketContextType;
 
 
   const GetData = async () => {
-
-    const notices = await GetNoticesAPI();
-    const products = await GetProductsAPI();
-     const categories = await GetCategoriesAPI();
-    setMarketState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
+    GetMarketState()
   }
 
   useEffect(() => {
-    GetNotices();
     GetData();
   }, [])
 
@@ -59,7 +54,7 @@ function App() {
               <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
               <Route path="*" element={ <NotFound/> }/>
             </Routes>
-      )
+        )
       }
     }
   }
