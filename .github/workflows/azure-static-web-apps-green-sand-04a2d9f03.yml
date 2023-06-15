@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - frontend
+      - .github/workflows/azure-static-web-apps-green-sand-04a2d9f03.yml
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
