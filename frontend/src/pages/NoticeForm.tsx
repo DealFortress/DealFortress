@@ -1,14 +1,14 @@
 import { faCity, faTruckRampBox, faCashRegister} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { StyledContainer } from "../component/General/StyledContainer"
-import { Main } from "../component/Main"
+import { MainContainer } from "../component/General/MainContainer"
 import { UserInfo } from "../component/General/UserInfo"
 import { Field, Form, Formik } from "formik"
 import { FormikHelpers} from "formik/dist/types"
 import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { PostNoticeAPI } from "../services/DealFortressAPI"
-import { redirect, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export const NoticeForm = () => {
 
@@ -95,7 +95,7 @@ export const NoticeForm = () => {
   )
 
   return (
-    <Main>
+    <MainContainer>
       <Formik
         initialValues={initialValues}
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
@@ -107,6 +107,6 @@ export const NoticeForm = () => {
         {renderForm}
       </Formik>
 
-  </Main>
+  </MainContainer>
   )
 }

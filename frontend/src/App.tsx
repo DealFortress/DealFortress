@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import { Navbar } from './component/Navbar/Navbar'
-import { Footer } from './component/Footer'
 import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
 import { Category, Product, Notice} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
-import { Favourites } from './pages/Favourites'
-import { Profile } from './pages/Profile'
 import { Loader } from './component/General/Loader'
 import { NoticeForm } from './pages/NoticeForm'
 
@@ -54,20 +50,19 @@ function App() {
       )
 
     case "OK":
-      {const { notices } = state.data;
+      {
+        const { notices } = state.data;
 
-      return (
-            <Routes>
-              <Route path="/notices" element={ <NoticesIndex notices={notices}/> }/>
-              {/* try to only send one sell ad */}
-              <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
-              <Route path="/favourites" element={ <Favourites/> }/>
-              <Route path="/profile" element={ <Profile/> }/>
-              <Route path="/createnotice" element={ <NoticeForm/> }/>
-              <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
-              <Route path="*" element={ <NotFound/> }/>
-            </Routes>
-      )
+        return (
+              <Routes>
+                <Route path="/notices" element={ <NoticesIndex notices={notices}/> }/>
+                {/* try to only send one sell ad */}
+                <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
+                <Route path="/createnotice" element={ <NoticeForm/> }/>
+                <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
+                <Route path="*" element={ <NotFound/> }/>
+              </Routes>
+        )
       }
     }
   }
@@ -81,7 +76,6 @@ function App() {
       <BrowserRouter>
         <Navbar />
           { switchState() }
-        {/* <Footer /> */}
         </BrowserRouter>
     </>
   )
