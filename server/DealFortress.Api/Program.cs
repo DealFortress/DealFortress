@@ -22,19 +22,19 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(policy =>
+    {
+    policy.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+
     using (var scope = app.Services.CreateScope())
     {
     var services = scope.ServiceProvider;
     SeedData.Initialize(services);
     }
 }
-
-app.UseCors(policy =>
-{
-  policy.AllowAnyOrigin()
-  .AllowAnyMethod()
-  .AllowAnyHeader();
-});
 
 app.UseHttpsRedirection();
 
