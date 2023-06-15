@@ -28,10 +28,6 @@ public class CategoriesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
     {
-      if (_context.Categories == null)
-      {
-          return NotFound();
-      }
         return await _context.Categories.ToListAsync();
     }
 
@@ -39,10 +35,6 @@ public class CategoriesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<CategoryResponse>> GetCategory(int id)
     {
-      if (_context.Categories == null)
-      {
-          return NotFound();
-      }
         var category = await _context.Categories.FindAsync(id);
 
         if (category == null)
@@ -52,36 +44,6 @@ public class CategoriesController : ControllerBase
 
         return _categoryService.ToCategoryResponse(category);
     }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutCategory(int id, Category category)
-    {
-        if (id != category.Id)
-        {
-            return BadRequest();
-        }
-
-        _context.Entry(category).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!_categoryService.CategoryExists(id, _context))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return NoContent();
-    }
-
 
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> PostCategory(CategoryRequest request)
@@ -94,15 +56,11 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction("GetCategory", new { id = category.Id }, _categoryService.ToCategoryResponse(category));
     }
 
-    // DELETE: api/Categories/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCategory(int id)
     {
-        if (_context.Categories == null)
-        {
-            return NotFound();
-        }
         var category = await _context.Categories.FindAsync(id);
+
         if (category == null)
         {
             return NotFound();
