@@ -7,9 +7,9 @@ made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pi
 <strong>See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)  
 or checkout our 2 minutes video on the pitch deck [here](https://streamable.com/geq9mt)</strong>
 
-## Project
+## Project board
 
-[Github projectboard for DealFortress](https://github.com/orgs/DealFortress/projects/2/views/1)
+<strong>Github project board for DealFortress can be found <strong>[here](https://github.com/orgs/DealFortress/projects/2/views/1)
 
 ## Context
 
