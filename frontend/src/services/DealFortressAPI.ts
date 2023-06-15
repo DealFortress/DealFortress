@@ -1,17 +1,19 @@
 import { Notice, NoticeRequest } from "../types";
 
-const NoticeUrl = import.meta.env.VITE_NOTICE_URL
-const ProductsUrl = import.meta.env.VITE_PRODUCTS_URL
-const CategoriesUrl = import.meta.env.VITE_CATEGORIES_URL
+const baseUrl = import.meta.env.VITE_API_SERVER_URL;
+
+const noticesUrl = `${baseUrl}/notices`;
+const productsUrl = `${baseUrl}/products`;
+const categoriesUrl = `${baseUrl}/categories`;
 
 
-export const GetNoticesAPI = async () => await fetch(NoticeUrl);
+export const GetNoticesAPI = async () => await fetch(noticesUrl);
 
 
 export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     const requestBody = JSON.stringify(noticeRequest);
     console.log(requestBody);
-    const response = await fetch(NoticeUrl, {
+    const response = await fetch(noticesUrl, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -22,6 +24,6 @@ export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     return await response.json() as Notice;
 }
 
-export const GetProductsAPI = async () => await fetch(ProductsUrl);
+export const GetProductsAPI = async () => await fetch(productsUrl);
 
-export const GetCategoriesAPI = async () => await fetch(CategoriesUrl);
+export const GetCategoriesAPI = async () => await fetch(categoriesUrl);
