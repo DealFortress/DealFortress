@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { Navbar } from './component/Navbar/Navbar'
-import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
-import { Category, Product, Notice, MarketContextType} from './types'
+import { MarketContextType} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
@@ -44,8 +43,6 @@ function App() {
               <Route path="/notices" element={ <NoticesIndex notices={notices}/> }/>
               {/* try to only send one sell ad */}
               <Route path="/notices/:id" element={ <NoticePage notices={notices}/> }/>
-              <Route path="/favourites" element={ <Favourites/> }/>
-              <Route path="/profile" element={ <Profile/> }/>
               <Route path="/createnotice" element={ <NoticeForm/> }/>
               <Route path="/" element={ <NoticesIndex notices={notices}/> }/>
               <Route path="*" element={ <NotFound/> }/>
