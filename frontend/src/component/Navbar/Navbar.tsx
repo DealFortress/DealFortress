@@ -5,7 +5,7 @@ import { ToggleNavbar } from './ToggleNavbar'
 export const Navbar = () => {
 
   const [ navbarToggle, setNavbarToggle ] = useState<boolean>(false)
-  const [searchFilter, setSearchFilter] = useState<string>("");
+  const [ searchFilter, setSearchFilter ] = useState<string>("");
 
 
 

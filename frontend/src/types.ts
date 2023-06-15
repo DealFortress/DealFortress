@@ -66,6 +66,4 @@ enum Condition {
 export type ProductFilterType = {
     categoryFilter: string,
     cityFilter: string,
-    // deliveryMethodFilter: string,
-    // conditionFilter: string
 }

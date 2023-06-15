@@ -1,4 +1,4 @@
-import { Main } from "../component/Main"
+import { MainContainer } from "../component/General/MainContainer"
 import { NoticeCard } from "../component/Notice/NoticeCard"
 import { Notice } from "../types"
 import logo from '../assets/logo.png'
@@ -14,17 +14,15 @@ export const NoticesIndex = ( {notices} : Props ) => {
     <>
         <div className="w-full h-[30vh] bg-blue flex justify-center items-center ">
             <img src={logo} alt="deal fortress logo" className="logo-l "/>
-            {/* show hom many results */}
-            {/* <p className="absolute text-white font-normal text-5xl">{NoticesJSX.length} posts</p> */}
         </div>
-        <Main>
+        <MainContainer>
         <header>
             <h2 className="text-2xl medieval-font">Latest posts</h2>
         </header>
         <section className="flex flex-col gap-3">
             {NoticesJSX}
         </section>
-        </Main>
+        </MainContainer>
     </>
   )
 }

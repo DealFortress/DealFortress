@@ -1,6 +1,5 @@
 import { Category, Product, Notice, NoticeRequest } from "../types";
 
-// put in the env
 const NoticeUrl = "https://localhost:5000/api/Notices";
 const ProductsUrl = "https://localhost:5000/api/products";
 const CategoriesUrl = "https://localhost:5000/api/categories";

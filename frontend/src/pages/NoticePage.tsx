@@ -1,8 +1,8 @@
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Notice } from "../types"
-import { Main } from "../component/Main"
+import { MainContainer } from "../component/General/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCashRegister, faCity, faTruckRampBox, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCashRegister, faCity, faTruckRampBox } from "@fortawesome/free-solid-svg-icons"
 import { StyledContainer } from "../component/General/StyledContainer"
 
 
@@ -12,17 +12,12 @@ type Props = {
 
 export const NoticePage = ( {notices} : Props) => {
 
-
-
   const { id } = useParams();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const notice = notices.find(notice => notice.id === +id!);
 
-  // const JSX = notice?.products.map(product => product.price).reduce( (a, b) => a + b);
-
-  //   const ProductsJSX = notice?.products.map( product => <NoticeProductCard key={product.id} product={product} />)
   return (
-    <Main>
+    <MainContainer>
       <StyledContainer barText={`Notice ${notice?.id}`} redirectLink={"/notices"}>
 
         <div className="self-center text-center flex flex-col gap-2">
@@ -47,11 +42,6 @@ export const NoticePage = ( {notices} : Props) => {
 
       </StyledContainer>
 
-      <section className="df-container-style">
-        <h3>Items</h3>
-        {/* {ProductsJSX} */}
-      </section>
-
-    </Main>
+    </MainContainer>
   )
 }

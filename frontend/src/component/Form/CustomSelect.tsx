@@ -18,11 +18,8 @@ type Props = {
 }
 
 export const CustomSelect = ( {selectOptions, isMulti = false, name, placeholder = "Select..."} : Props) => {
-    const [field, meta] = useField(name);
-    const { setFieldValue } = useFormikContext();
-
-
-
+  const [field, meta] = useField(name);
+  const { setFieldValue } = useFormikContext();
 
   const animatedComponents = makeAnimated();
 
@@ -36,7 +33,6 @@ export const CustomSelect = ( {selectOptions, isMulti = false, name, placeholder
             isMulti = {isMulti}
             options={ selectOptions }
             onChange={(val) => {
-                //here I used explicit typing but there maybe a better way to type the value.
                 const _val = val as Option[] | Option;
                 const isArray = Array.isArray(_val);
                 if (isArray) {
