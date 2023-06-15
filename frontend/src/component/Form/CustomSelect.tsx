@@ -1,4 +1,4 @@
-import { useField, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
@@ -18,7 +18,6 @@ type Props = {
 }
 
 export const CustomSelect = ( {selectOptions, isMulti = false, name, placeholder = "Select..."} : Props) => {
-  const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
   const animatedComponents = makeAnimated();
@@ -44,9 +43,6 @@ export const CustomSelect = ( {selectOptions, isMulti = false, name, placeholder
                 }
             }
         />
-        { meta.touched && meta.error ? (
-            <div className='ticket-form__label--error'>{meta.error}</div>) : null
-        }
     </>
   )
 }

@@ -101,6 +101,7 @@ export const NoticeForm = () => {
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
           const route = handleSubmit(values);
+          console.log(route);
           navigate('/notices');
         }}
       >

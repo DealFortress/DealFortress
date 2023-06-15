@@ -1,4 +1,4 @@
-import { Category, Product, Notice, NoticeRequest } from "../types";
+import { Notice, NoticeRequest } from "../types";
 
 const NoticeUrl = "https://localhost:5000/api/Notices";
 const ProductsUrl = "https://localhost:5000/api/products";

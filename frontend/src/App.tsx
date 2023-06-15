@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     GetData();
-  }, [])
+  })
 
   const switchState = () => {
 

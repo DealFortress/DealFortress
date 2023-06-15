@@ -11,6 +11,7 @@ export const Navbar = () => {
 
   const filterBySearch = (input : string) => {
     setSearchFilter(input);
+    console.log(searchFilter);
   }
 
 
