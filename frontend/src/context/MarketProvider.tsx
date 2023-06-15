@@ -28,14 +28,17 @@ export const MarketContext = createContext({});
 
 export const MarketProvider = ( { children } : Props) => {
 
-    const [ notices, setNotices ] = useState<Notice[]>([]);
     const [ marketState, setMarketState ] = useState<MarketState>({status: "LOADING"})
 
     const GetMarketState = async () => {
         const notices = await GetNotices();
+
         const products = await GetProducts();
+
         const categories = await GetCategories();
+  
         if (marketState.status !== "ERROR") {
+            console.log("bug")
             setMarketState({status: "OK", data:{ notices: notices, products: products, categories: categories}});
         }
     }
@@ -44,6 +47,7 @@ export const MarketProvider = ( { children } : Props) => {
     const GetNotices = async () => {
         const response = await GetNoticesAPI();
         if ( response.status != 200) {
+            console.log(response.status)
             setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
             return [];
         }
@@ -53,6 +57,7 @@ export const MarketProvider = ( { children } : Props) => {
     const GetProducts = async () => {
         const response = await GetProductsAPI();
         if ( response.status != 200) {
+            console.log("error")
             setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
             return [];
         }
@@ -70,11 +75,13 @@ export const MarketProvider = ( { children } : Props) => {
 
     const PostNotice = async ( request: NoticeRequest ) => {
         const response = await PostNoticeAPI(request);
-        setNotices( prevState => [response, ...prevState])
+        if (marketState.status == "OK") {
+            setMarketState({status: "OK", data:{ notices: [response, ...marketState.data.notices], products: marketState.data.products, categories:  marketState.data.categories}});
+        }
     }
 
   return (
-    <MarketContext.Provider value={{notices, GetMarketState, marketState, PostNotice}}>
+    <MarketContext.Provider value={{ GetMarketState, marketState, PostNotice}}>
       { children }
     </MarketContext.Provider>
   )
