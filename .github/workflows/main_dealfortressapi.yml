@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - server/DealFortress.Api/**
+      - .github/workflows/main_dealfortressapi.yml
   workflow_dispatch:
 
 jobs:
@@ -23,10 +26,10 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build server/DealFortress.Api --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish server/DealFortress.Api -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
