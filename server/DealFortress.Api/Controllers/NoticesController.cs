@@ -35,10 +35,6 @@ namespace DealFortress.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<NoticeResponse>> GetNotice(int id)
         {
-          if (_context.Notices == null)
-          {
-              return NotFound();
-          }
             var notice = await _context.Notices.FindAsync(id);
 
             if (notice == null)
@@ -81,7 +77,6 @@ namespace DealFortress.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest request)
         {
-            Console.WriteLine(request);
             var notice = _noticeService.ToNotice(request);
 
             if (request.ProductRequests is not null)
@@ -110,11 +105,8 @@ namespace DealFortress.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNotice(int id)
         {
-            if (_context.Notices == null)
-            {
-                return NotFound();
-            }
             var notice = await _context.Notices.FindAsync(id);
+            
             if (notice == null)
             {
                 return NotFound();
