@@ -1,8 +1,8 @@
 import { Notice, NoticeRequest } from "../types";
 
-const NoticeUrl = "https://localhost:5000/api/Notices";
-const ProductsUrl = "https://localhost:5000/api/products";
-const CategoriesUrl = "https://localhost:5000/api/categories";
+const NoticeUrl = import.meta.env.VITE_NOTICE_URL
+const ProductsUrl = import.meta.env.VITE_PRODUCTS_URL
+const CategoriesUrl = import.meta.env.VITE_CATEGORIES_URL
 
 
 export const GetNoticesAPI = async () => await fetch(NoticeUrl);
