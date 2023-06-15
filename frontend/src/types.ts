@@ -1,3 +1,4 @@
+import { MarketState } from "./context/MarketProvider"
 
 export type Notice = {
     id: number,
@@ -16,6 +17,13 @@ export type NoticeRequest = {
     city: string,
     payments: string[],
     deliveryMethods: string[],
+}
+
+export type MarketContextType = {
+    // notices: Notice[],
+    marketState: MarketState
+    GetMarketState: () => void,
+    PostNotice: (request: NoticeRequest) => Notice
 }
 
 export type Product = {
