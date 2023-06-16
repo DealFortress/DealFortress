@@ -1,6 +1,6 @@
 // import React, { createContext, useState } from "react"
 // import { Notice, NoticeRequest } from "../types";
-// import { GetNoticesAPI, PostNoticeAPI } from "../services/DealFortressAPI";
+// import { getNoticesAPI, postNoticeAPI } from "../services/DealFortressAPI";
 
 
 // type Props = {
@@ -13,18 +13,18 @@
 
 //     const [ notices, setNotices ] = useState<Notice[]>([]);
 
-//     const GetNotices = async () => {
-//         const response = await GetNoticesAPI();
+//     const getNotices = async () => {
+//         const response = await getNoticesAPI();
 //         setNotices(response);
 //     }
 
-//     const PostNotice = async ( request: NoticeRequest ) => {
-//         const response = await PostNoticeAPI(request);
+//     const postNotice = async ( request: NoticeRequest ) => {
+//         const response = await postNoticeAPI(request);
 //         setNotices( prevState => [response, ...prevState])
 //     }
 
 //   return (
-//     <MarketContext.Provider value={{notices, GetNotices, PostNotice}}>
+//     <MarketContext.Provider value={{notices, getNotices, postNotice}}>
 //       { children }
 //     </MarketContext.Provider>
 //   )

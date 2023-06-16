@@ -7,7 +7,7 @@ const productsUrl = `${baseUrl}/products`;
 const categoriesUrl = `${baseUrl}/categories`;
 
 
-export const GetNoticesAPI = async () => {
+export const getNoticesAPI = async () => {
     try {
         const response = await fetch(noticesUrl);
         console.log(response)
@@ -28,7 +28,7 @@ export const GetNoticesAPI = async () => {
 };
 
 
-export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
+export const postNoticeAPI = async (noticeRequest: NoticeRequest) => {
     const requestBody = JSON.stringify(noticeRequest);
     console.log(requestBody);
     const response = await fetch(noticesUrl, {
@@ -42,7 +42,7 @@ export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     return await response.json() as Notice;
 }
 
-export const GetProductsAPI = async () => {
+export const getProductsAPI = async () => {
     try {
         const response = await fetch(productsUrl);
         return response;
@@ -61,7 +61,7 @@ export const GetProductsAPI = async () => {
     
 };
 
-export const GetCategoriesAPI = async () => {
+export const getCategoriesAPI = async () => {
     try {
         const response = await fetch(categoriesUrl);
         return response;

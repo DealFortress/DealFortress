@@ -22,8 +22,8 @@ export type NoticeRequest = {
 export type MarketContextType = {
     // notices: Notice[],
     marketState: MarketState
-    GetMarketState: () => void,
-    PostNotice: (request: NoticeRequest) => Notice
+    getMarketState: () => void,
+    postNotice: (request: NoticeRequest) => Notice
 }
 
 export type Product = {

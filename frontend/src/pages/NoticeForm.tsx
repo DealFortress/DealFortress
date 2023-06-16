@@ -5,18 +5,23 @@ import { MainContainer } from "../component/General/MainContainer"
 import { UserInfo } from "../component/General/UserInfo"
 import { Field, Form, Formik } from "formik"
 import { FormikHelpers} from "formik/dist/types"
-import { NoticeRequest } from "../types"
+import { MarketContextType, Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
-import { PostNoticeAPI } from "../services/DealFortressAPI"
 import { useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { MarketContext } from "../context/MarketProvider"
 
 export const NoticeForm = () => {
 
+  const { postNotice } = useContext(MarketContext) as MarketContextType;
 
-    const handleSubmit = async (request: NoticeRequest) => {
-        const response = await PostNoticeAPI(request);
-        return `notices/${(await response).id}`;
-    }
+  const createRoute = (notice: Notice) => `notices/${notice.id}`
+
+  const handleSubmit = (request: NoticeRequest) => {
+      const response = postNotice(request);
+      console.log(response);
+      return response;
+  }
 
   const initialValues: NoticeRequest = {
     title: "",
@@ -100,9 +105,10 @@ export const NoticeForm = () => {
         initialValues={initialValues}
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
-          const route = handleSubmit(values);
+          const notice = handleSubmit(values);
+          const route = createRoute(notice);
           console.log(route);
-          navigate('/notices');
+          navigate(route);
         }}
       >
         {renderForm}

@@ -75,7 +75,7 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest request)
+        public async Task<ActionResult<NoticeResponse>> postNotice(NoticeRequest request)
         {
             var notice = _noticeService.ToNotice(request);
 
