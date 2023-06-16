@@ -4,6 +4,7 @@ import { MainContainer } from "../component/General/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCashRegister, faCity, faTruckRampBox } from "@fortawesome/free-solid-svg-icons"
 import { StyledContainer } from "../component/General/StyledContainer"
+import { convertDateToMinutes } from "../services/helperFunctions"
 
 
 type Props = {
@@ -14,7 +15,7 @@ export const NoticePage = ( {notices} : Props) => {
 
   const { id } = useParams();
 
-  const notice = notices.find(notice => notice.id === +id!);
+  const notice = notices.sort((a, b) => convertDateToMinutes(a.createdAt) - convertDateToMinutes(b.createdAt) ).find(notice => notice.id === +id!);
 
   return (
     <MainContainer>
