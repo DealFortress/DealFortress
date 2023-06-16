@@ -9,6 +9,10 @@ import { Loader } from './component/General/Loader'
 import { NoticeForm } from './pages/NoticeForm'
 import { MarketContext } from './context/MarketProvider'
 import { ErrorPage } from './pages/ErrorPage'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { Todos } from './services/DealFortressQuery'
+
+const queryClient = new QueryClient();
 
 
 function App() {
@@ -16,7 +20,8 @@ function App() {
 
 
   const getData = async () => {
-    getMarketState()
+    getMarketState();
+    Todos();
   }
 
   useEffect(() => {
@@ -56,10 +61,12 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Navbar />
           { switchState() }
         </BrowserRouter>
+      </QueryClientProvider>
     </>
   )
 }

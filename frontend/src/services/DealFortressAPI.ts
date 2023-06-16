@@ -1,4 +1,4 @@
-import { Notice, NoticeRequest } from "../types";
+import { NoticeRequest } from "../types";
 
 const baseUrl = import.meta.env.VITE_API_SERVER_URL;
 
