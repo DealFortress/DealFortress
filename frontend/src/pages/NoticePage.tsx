@@ -4,6 +4,7 @@ import { MainContainer } from "../component/General/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCashRegister, faCity, faTruckRampBox } from "@fortawesome/free-solid-svg-icons"
 import { StyledContainer } from "../component/General/StyledContainer"
+import { convertDateToMinutes } from "../services/helperFunctions"
 
 
 type Props = {
