@@ -8,7 +8,7 @@ type MarketStateLoading = {
 
 type MarketStateError = {
     status: "ERROR",
-    error: { code: string, message: string}
+    error: { code: number, message: string}
 };
 
 type MarketStateOk = {
@@ -28,14 +28,16 @@ export const MarketContext = createContext({});
 
 export const MarketProvider = ( { children } : Props) => {
 
-    const [ notices, setNotices ] = useState<Notice[]>([]);
     const [ marketState, setMarketState ] = useState<MarketState>({status: "LOADING"})
 
     const GetMarketState = async () => {
         const notices = await GetNotices();
+
         const products = await GetProducts();
+
         const categories = await GetCategories();
-        if (marketState.status !== "ERROR") {
+  
+        if (marketState.status !== "ERROR" && notices.length != 0 && products.length != 0 && categories.length != 0) {
             setMarketState({status: "OK", data:{ notices: notices, products: products, categories: categories}});
         }
     }
@@ -44,7 +46,8 @@ export const MarketProvider = ( { children } : Props) => {
     const GetNotices = async () => {
         const response = await GetNoticesAPI();
         if ( response.status != 200) {
-            setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
+            console.log(response.status)
+            setMarketState({status: "ERROR", error:{ code:(response.status), message:`Notice error: ${response.statusText}`}})
             return [];
         }
         return (await response.json()) as Notice[];
@@ -53,7 +56,8 @@ export const MarketProvider = ( { children } : Props) => {
     const GetProducts = async () => {
         const response = await GetProductsAPI();
         if ( response.status != 200) {
-            setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
+            console.log("error")
+            setMarketState({status: "ERROR", error:{ code:(response.status), message:`Notice error: ${response.statusText}`}})
             return [];
         }
         return (await response.json()) as Product[];
@@ -62,7 +66,7 @@ export const MarketProvider = ( { children } : Props) => {
     const GetCategories = async () => {
         const response = await GetCategoriesAPI();
         if ( response.status != 200) {
-            setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
+            setMarketState({status: "ERROR", error:{ code:(response.status), message:`Notice error: ${response.statusText}`}})
             return [];
         }
         return (await response.json()) as Category[];
@@ -70,11 +74,13 @@ export const MarketProvider = ( { children } : Props) => {
 
     const PostNotice = async ( request: NoticeRequest ) => {
         const response = await PostNoticeAPI(request);
-        setNotices( prevState => [response, ...prevState])
+        if (marketState.status == "OK") {
+            setMarketState({status: "OK", data:{ notices: [response, ...marketState.data.notices], products: marketState.data.products, categories:  marketState.data.categories}});
+        }
     }
 
   return (
-    <MarketContext.Provider value={{notices, GetMarketState, marketState, PostNotice}}>
+    <MarketContext.Provider value={{ GetMarketState, marketState, PostNotice}}>
       { children }
     </MarketContext.Provider>
   )
