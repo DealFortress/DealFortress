@@ -15,7 +15,7 @@ export const NoticePage = ( {notices} : Props) => {
 
   const { id } = useParams();
 
-  const notice = notices.sort((a, b) => convertDateToMinutes(a.createdAt) - convertDateToMinutes(b.createdAt) ).find(notice => notice.id === +id!);
+  const notice = notices.find(notice => notice.id === +id!);
 
   return (
     <MainContainer>
