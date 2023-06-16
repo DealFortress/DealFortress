@@ -73,12 +73,5 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 <img src="uml-sketch.png" />
 
 
-## Retro template:
-
-### Check out our retro board [here](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
-
-![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
-
-
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more information.
