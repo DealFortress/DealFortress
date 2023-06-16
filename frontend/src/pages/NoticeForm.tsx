@@ -23,8 +23,8 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
     }
   }
 
-  const handleSubmit = (request: NoticeRequest) => {
-      const newNotice = postNotice(request);
+  const handleSubmit = async (request: NoticeRequest) => {
+      const newNotice = await postNotice(request);
       setCreatedNotice(newNotice);
   }
 
@@ -111,8 +111,7 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
           handleSubmit(values);
-          console.log(createdNotice);
-          const route = navigateToNewRoute();
+          navigateToNewRoute();
         }}
       >
         {renderForm}
