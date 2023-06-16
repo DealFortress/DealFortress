@@ -10,36 +10,45 @@ const categoriesUrl = `${baseUrl}/categories`;
 export const getNoticesAPI = async () => {
     try {
         const response = await fetch(noticesUrl);
-        console.log(response)
         return response;
     } catch (error) {
-        
-        console.log(error);
+
         const myBlob = new Blob();
         const myOptions = {
-            "type":"https://tools.ietf.org/html/rfc7231#section-6.5.4",
-            "title":"Not Found",
-            "status":404,
-            "traceId":"00-ea327592d3895108d594ac4e3092e6fb-5820732527f81a92-00"
+            "type":"",
+            "title":"Server error",
+            "status":500,
+            "traceId":""
         }
         return new Response(myBlob, myOptions)
     }
-    
+
 };
 
 
 export const postNoticeAPI = async (noticeRequest: NoticeRequest) => {
-    const requestBody = JSON.stringify(noticeRequest);
-    console.log(requestBody);
-    const response = await fetch(noticesUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: requestBody
-    })
-    console.log(response);
-    return await response.json() as Notice;
+    try {
+        const requestBody = JSON.stringify(noticeRequest);
+        const response = await fetch(noticesUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: requestBody
+        })
+        return response;
+    } catch (error) {
+
+        const myBlob = new Blob();
+        const myOptions = {
+            "type":"",
+            "title":"Server error",
+            "status":500,
+            "traceId":""
+        }
+        return new Response(myBlob, myOptions)
+    }
+
 }
 
 export const getProductsAPI = async () => {
@@ -47,18 +56,17 @@ export const getProductsAPI = async () => {
         const response = await fetch(productsUrl);
         return response;
     } catch (error) {
-        
-        console.log(error);
+
         const myBlob = new Blob();
         const myOptions = {
-            "type":"https://tools.ietf.org/html/rfc7231#section-6.5.4",
-            "title":"Not Found",
-            "status":404,
-            "traceId":"00-ea327592d3895108d594ac4e3092e6fb-5820732527f81a92-00"
+            "type":"",
+            "title":"Server error",
+            "status":500,
+            "traceId":""
         }
         return new Response(myBlob, myOptions)
     }
-    
+
 };
 
 export const getCategoriesAPI = async () => {
@@ -66,16 +74,15 @@ export const getCategoriesAPI = async () => {
         const response = await fetch(categoriesUrl);
         return response;
     } catch (error) {
-        
-        console.log(error);
+
         const myBlob = new Blob();
         const myOptions = {
-            "type":"https://tools.ietf.org/html/rfc7231#section-6.5.4",
-            "title":"Not Found",
-            "status":404,
-            "traceId":"00-ea327592d3895108d594ac4e3092e6fb-5820732527f81a92-00"
+            "type":"",
+            "title":"Server error",
+            "status":500,
+            "traceId":""
         }
         return new Response(myBlob, myOptions)
     }
-    
+
 };

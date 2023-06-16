@@ -36,12 +36,11 @@ export const MarketProvider = ( { children } : Props) => {
         const products = await getProducts();
 
         const categories = await getCategories();
-  
+
         if (marketState.status !== "ERROR" && notices.length != 0 && products.length != 0 && categories.length != 0) {
             setMarketState({status: "OK", data:{ notices: notices, products: products, categories: categories}});
         }
     }
-
 
     const getNotices = async () => {
         const response = await getNoticesAPI();
@@ -52,6 +51,17 @@ export const MarketProvider = ( { children } : Props) => {
         }
         return (await response.json()) as Notice[];
     }
+
+    const postNotice = async ( request: NoticeRequest ) => {
+        const response = await postNoticeAPI(request);
+        const newNotice = await response.json() as Notice;
+
+        if (marketState.status == "OK") {
+            setMarketState({status: "OK", data:{ notices: [newNotice, ...marketState.data.notices], products: marketState.data.products, categories:  marketState.data.categories}});
+        }
+        return newNotice;
+    }
+
 
     const getProducts = async () => {
         const response = await getProductsAPI();
@@ -72,12 +82,6 @@ export const MarketProvider = ( { children } : Props) => {
         return (await response.json()) as Category[];
     }
 
-    const postNotice = async ( request: NoticeRequest ) => {
-        const response = await postNoticeAPI(request);
-        if (marketState.status == "OK") {
-            setMarketState({status: "OK", data:{ notices: [response, ...marketState.data.notices], products: marketState.data.products, categories:  marketState.data.categories}});
-        }
-    }
 
 
 

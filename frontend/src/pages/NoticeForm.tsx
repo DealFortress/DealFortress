@@ -8,19 +8,24 @@ import { FormikHelpers} from "formik/dist/types"
 import { MarketContextType, Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { MarketContext } from "../context/MarketProvider"
 
 export const NoticeForm = () => {
+const [createdNotice, setCreatedNotice ] = useState<Notice>();
 
   const { postNotice } = useContext(MarketContext) as MarketContextType;
 
-  const createRoute = (notice: Notice) => `notices/${notice.id}`
+  const navigateToNewRoute = () => {
+    console.log(createdNotice);
+    if ( createdNotice ) {
+        navigate(`notices/${createdNotice?.id}`)
+    }
+  }
 
   const handleSubmit = (request: NoticeRequest) => {
-      const response = postNotice(request);
-      console.log(response);
-      return response;
+      const newNotice = postNotice(request);
+      setCreatedNotice(newNotice);
   }
 
   const initialValues: NoticeRequest = {
@@ -105,10 +110,9 @@ export const NoticeForm = () => {
         initialValues={initialValues}
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
-          const notice = handleSubmit(values);
-          const route = createRoute(notice);
-          console.log(route);
-          navigate(route);
+          handleSubmit(values);
+          console.log(createdNotice);
+          const route = navigateToNewRoute();
         }}
       >
         {renderForm}
