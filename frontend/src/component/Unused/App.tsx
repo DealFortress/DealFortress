@@ -2,7 +2,7 @@
 // import './App.css'
 // import { Navbar } from './component/Navbar/Navbar'
 // // import { Footer } from './component/Footer'
-// import { GetCategoriesAPI, GetProductsAPI, GetNoticesAPI } from './services/DealFortressAPI'
+// import { getCategoriesAPI, getProductsAPI, getNoticesAPI } from './services/DealFortressAPI'
 // import { Category, Product, Notice, MarketContextType} from './types'
 // import { BrowserRouter, Route, Routes } from 'react-router-dom'
 // import { NotFound } from './pages/NotFound'
@@ -32,21 +32,21 @@
 // type State = LoadingState | ErrorState | OkState;
 
 // function App() {
-//   const { GetNotices, notices } = useContext(MarketContext) as MarketContextType;
+//   const { getNotices, notices } = useContext(MarketContext) as MarketContextType;
 //   const [ state, setState ] = useState<State>({status: "LOADING"})
 
 
-//   const GetData = async () => {
+//   const getData = async () => {
 
-//     const notices = await GetNoticesAPI();
-//     const products = await GetProductsAPI();
-//      const categories = await GetCategoriesAPI();
+//     const notices = await getNoticesAPI();
+//     const products = await getProductsAPI();
+//      const categories = await getCategoriesAPI();
 //     setState({data: { notices: notices, products: products, categories: categories}, status: "OK"})
 //   }
 
 //   useEffect(() => {
-//     GetNotices();
-//     GetData();
+//     getNotices();
+//     getData();
 //   }, [])
 
 //   const switchState = () => {

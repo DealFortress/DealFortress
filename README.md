@@ -4,8 +4,13 @@
 Deal Fortress is a full-stack web application 
 made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 
-<strong>See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)  
-or checkout our 2 minutes video on the pitch deck [here](https://streamable.com/geq9mt)</strong>
+<strong>
+  
+  Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/)  
+</strong>
+
+See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)  
+or checkout our 2 minutes video on the pitch deck [here](https://streamable.com/geq9mt)
 
 ## Project board
 
@@ -66,13 +71,6 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 
 ### UML sketch
 <img src="uml-sketch.png" />
-
-
-## Retro template:
-
-### Check out our retro board [here](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
-
-![image](https://github.com/DealFortress/DealFortress/assets/95415989/e72281aa-f769-407b-874c-0227da729e03)
 
 
 ## License

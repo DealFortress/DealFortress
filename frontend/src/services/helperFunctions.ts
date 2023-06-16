@@ -32,3 +32,5 @@ else if ( minutesSinceCreation > 0 ) {
     return "just now";
 }
 }
+
+export const convertDateToMinutes = (date : Date) => ( new Date().getTime() - new Date(date).getTime()) / 1000 / 60;

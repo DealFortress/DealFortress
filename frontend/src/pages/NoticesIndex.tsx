@@ -2,6 +2,7 @@ import { MainContainer } from "../component/General/MainContainer"
 import { NoticeCard } from "../component/Notice/NoticeCard"
 import { Notice } from "../types"
 import logo from '../assets/logo.png'
+import { convertDateToMinutes } from "../services/helperFunctions"
 
 type Props = {
     notices : Notice[]
@@ -9,7 +10,7 @@ type Props = {
 
 export const NoticesIndex = ( {notices} : Props ) => {
 
-    const NoticesJSX = notices.map(notice => <NoticeCard key={notice.id} notice={notice} />)
+    const NoticesJSX = notices.sort((a, b) => convertDateToMinutes(a.createdAt) - convertDateToMinutes(b.createdAt) ).map(notice => <NoticeCard key={notice.id} notice={notice} />)
   return (
     <>
         <div className="w-full h-[30vh] bg-blue flex justify-center items-center ">

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - frontend
+      - frontend/**
       - .github/workflows/azure-static-web-apps-green-sand-04a2d9f03.yml
   pull_request:
     types: [opened, synchronize, reopened, closed]
@@ -33,6 +33,8 @@ jobs:
           app_location: "frontend" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "dist" # Built app content directory - optional
+        env:
+          VITE_API_SERVER_URL: ${{secrets.VITE_API_SERVER_URL}}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

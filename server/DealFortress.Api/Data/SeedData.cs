@@ -17,16 +17,20 @@ public class SeedData
 
             var NoticeNames = new string[]
             {
-                "Selling old pc parts",
-                "Selling sons old pc because he is acting badly",
-                "How do I buy things, I keep accidentally selling my things",
-                "SELLING BEST HARDWARE IN SWEDEN NOT CLICKBAIT!",
-                "Säljer mycket bra datordelar",
-                "Lost and found pc part in need of new owner",
-                "In need of money for cheese, buy my old mining rig parts",
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                "Mom told me to sell my old parts instead of my kidney for the new 4090",
-                "Selling an electric lawnmower and other stuff, dm for lawnmower info"
+                "For Sale - Acer XR34 Ultrawide Monitor",
+                "Nintendo Wii Bundle & Nintendo Switch Lite",
+                "Corsair dominator 5600 cl36 2x16gb",
+                "GIGABYTE RX 6800 XT 5000kr + SHIPPING. PRICE DROP!",
+                "PNY NVIDIA GeForce GTX 1080 Ti",
+                "Ducky x ONEofZERO, Watercooling radiators",
+                "Gigabyte Aurus 1080ti XTreme Ed.",
+                "Ryzen 7700X BNIB, Ryzen 5600 LNIB",
+                "i7-8700k with 64 DDR4 3200MHz RAM with MSI Z370 Gaming Pro Carbon AC Motherboard, RTX 2080 (FREE SHIPPING)",
+                "Selling an electric lawnmower and other stuff, dm for lawnmower info",
+                "CORSAIR Vengeance 32GB (2x16GB) DDR5 5600MHz CL36 Black 1.25V (CMK32GX5M2B5600C36)",
+                "3070FE, HP t740, iPad Pro, 27inch LCD, P1000, EVGA PSUs",
+                "Ryzen 7600X with Box - 2400kr shipped",
+                "Custom MNPC Tech HWC Black Anodized 140mm fan grill 300kr each"
             };
 
             var payment = new string[]{"swish", "cash", "bank transfer"};
