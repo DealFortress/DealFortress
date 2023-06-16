@@ -12,15 +12,15 @@ import { ErrorPage } from './pages/ErrorPage'
 
 
 function App() {
-  const { GetMarketState, marketState } = useContext(MarketContext) as MarketContextType;
+  const { getMarketState, marketState } = useContext(MarketContext) as MarketContextType;
 
 
-  const GetData = async () => {
-    GetMarketState()
+  const getData = async () => {
+    getMarketState()
   }
 
   useEffect(() => {
-    GetData();
+    getData();
   }, [])
 
   const switchState = () => {
