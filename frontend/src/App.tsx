@@ -8,6 +8,7 @@ import { NoticesIndex } from './pages/NoticesIndex'
 import { Loader } from './component/General/Loader'
 import { NoticeForm } from './pages/NoticeForm'
 import { MarketContext } from './context/MarketProvider'
+import { ErrorPage } from './pages/ErrorPage'
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
 
     case "ERROR":
       return (
-        <p>error</p>
+        <ErrorPage></ErrorPage>
       )
 
     case "OK":

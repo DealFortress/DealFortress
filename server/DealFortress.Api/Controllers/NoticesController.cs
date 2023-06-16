@@ -26,7 +26,6 @@ namespace DealFortress.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<NoticeResponse>> GetNotice()
         {
-            return NotFound();
             return _context.Notices
                         .Include(ad => ad.Products!)
                         .ThenInclude(product => (product.Category))

@@ -7,7 +7,25 @@ const productsUrl = `${baseUrl}/products`;
 const categoriesUrl = `${baseUrl}/categories`;
 
 
-export const GetNoticesAPI = async () => await fetch(noticesUrl);
+export const GetNoticesAPI = async () => {
+    try {
+        const response = await fetch(noticesUrl);
+        console.log(response)
+        return response;
+    } catch (error) {
+        
+        console.log(error);
+        const myBlob = new Blob();
+        const myOptions = {
+            "type":"https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            "title":"Not Found",
+            "status":404,
+            "traceId":"00-ea327592d3895108d594ac4e3092e6fb-5820732527f81a92-00"
+        }
+        return new Response(myBlob, myOptions)
+    }
+    
+};
 
 
 export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
@@ -24,6 +42,40 @@ export const PostNoticeAPI = async (noticeRequest: NoticeRequest) => {
     return await response.json() as Notice;
 }
 
-export const GetProductsAPI = async () => await fetch(productsUrl);
+export const GetProductsAPI = async () => {
+    try {
+        const response = await fetch(productsUrl);
+        return response;
+    } catch (error) {
+        
+        console.log(error);
+        const myBlob = new Blob();
+        const myOptions = {
+            "type":"https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            "title":"Not Found",
+            "status":404,
+            "traceId":"00-ea327592d3895108d594ac4e3092e6fb-5820732527f81a92-00"
+        }
+        return new Response(myBlob, myOptions)
+    }
+    
+};
 
-export const GetCategoriesAPI = async () => await fetch(categoriesUrl);
+export const GetCategoriesAPI = async () => {
+    try {
+        const response = await fetch(categoriesUrl);
+        return response;
+    } catch (error) {
+        
+        console.log(error);
+        const myBlob = new Blob();
+        const myOptions = {
+            "type":"https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            "title":"Not Found",
+            "status":404,
+            "traceId":"00-ea327592d3895108d594ac4e3092e6fb-5820732527f81a92-00"
+        }
+        return new Response(myBlob, myOptions)
+    }
+    
+};

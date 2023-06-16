@@ -8,7 +8,7 @@ type MarketStateLoading = {
 
 type MarketStateError = {
     status: "ERROR",
-    error: { code: string, message: string}
+    error: { code: number, message: string}
 };
 
 type MarketStateOk = {
@@ -37,8 +37,7 @@ export const MarketProvider = ( { children } : Props) => {
 
         const categories = await GetCategories();
   
-        if (marketState.status !== "ERROR") {
-            console.log("bug")
+        if (marketState.status !== "ERROR" && notices.length != 0 && products.length != 0 && categories.length != 0) {
             setMarketState({status: "OK", data:{ notices: notices, products: products, categories: categories}});
         }
     }
@@ -48,7 +47,7 @@ export const MarketProvider = ( { children } : Props) => {
         const response = await GetNoticesAPI();
         if ( response.status != 200) {
             console.log(response.status)
-            setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
+            setMarketState({status: "ERROR", error:{ code:(response.status), message:`Notice error: ${response.statusText}`}})
             return [];
         }
         return (await response.json()) as Notice[];
@@ -58,7 +57,7 @@ export const MarketProvider = ( { children } : Props) => {
         const response = await GetProductsAPI();
         if ( response.status != 200) {
             console.log("error")
-            setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
+            setMarketState({status: "ERROR", error:{ code:(response.status), message:`Notice error: ${response.statusText}`}})
             return [];
         }
         return (await response.json()) as Product[];
@@ -67,7 +66,7 @@ export const MarketProvider = ( { children } : Props) => {
     const GetCategories = async () => {
         const response = await GetCategoriesAPI();
         if ( response.status != 200) {
-            setMarketState({status: "ERROR", error:{ code:(response.status).toString(), message:`Notice error: ${response.statusText}`}})
+            setMarketState({status: "ERROR", error:{ code:(response.status), message:`Notice error: ${response.statusText}`}})
             return [];
         }
         return (await response.json()) as Category[];
