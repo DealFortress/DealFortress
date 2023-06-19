@@ -9,20 +9,13 @@ import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { PostNoticeMutation } from "../services/DealFortressQueries"
 
 export const NoticeForm = () => {
-const [createdNotice, setCreatedNotice ] = useState<Notice>();
 
-
-  const navigateToNewRoute = () => {
-    console.log(createdNotice);
-    if ( createdNotice ) {
-        navigate(`notices/${createdNotice?.id}`)
-    }
-  }
 
   const handleSubmit = async (request: NoticeRequest) => {
-    
+    PostNoticeMutation()?.mutate(request)
   }
 
   const initialValues: NoticeRequest = {
@@ -108,7 +101,6 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
           handleSubmit(values);
-          navigateToNewRoute();
         }}
       >
         {renderForm}

@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategoriesAPI, getNoticesAPI, postNoticeAPI } from "./DealFortressAPI";
+import { useNavigate } from "react-router-dom";
+import { Notice } from "../types";
 
 
 
@@ -16,11 +18,16 @@ export const CategoriesQuery = () =>  useQuery({
 
 export const PostNoticeMutation = () => {
     const queryClient = useQueryClient();
-    useMutation({
+    const navigate = useNavigate();
+
+    return useMutation({
 
             mutationFn: postNoticeAPI,
-            onSuccess: () => {
+            onSuccess: (data : Notice) => {
                 queryClient.invalidateQueries(["notices"], {exact: true})
+                navigate(`notices/${data?.id}`)
             }
+
         })
+    return
 }
