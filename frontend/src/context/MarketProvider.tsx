@@ -1,6 +1,5 @@
-import React, { createContext, useState } from "react"
-import { Category, Notice, NoticeRequest, Product } from "../types";
-import { getCategoriesAPI, getNoticesAPI, getProductsAPI, postNoticeAPI } from "../services/DealFortressAPI";
+import React, { createContext } from "react"
+import { getCategoriesAPI, getNoticesAPI } from "../services/DealFortressAPI";
 import { useQuery } from "@tanstack/react-query";
 
 type Props = {
@@ -12,22 +11,18 @@ export const MarketContext = createContext({});
 export const MarketProvider = ( { children } : Props) => {
 
     const noticesQuery = useQuery({
-        queryKey: ['notices'],
-        queryFn: getNoticesAPI
+      queryKey: ["notices"],
+      queryFn: getNoticesAPI
+    });
+
+    const categoriesQuery = useQuery({
+      queryKey: ["categories"],
+      queryFn: getCategoriesAPI
     });
 
 
-
-
-
-
-
-
-
-
-
   return (
-    <MarketContext.Provider value={{noticesQuery}}>
+    <MarketContext.Provider value={{noticesQuery, categoriesQuery}}>
       { children }
     </MarketContext.Provider>
   )

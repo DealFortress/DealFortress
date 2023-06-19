@@ -1,32 +1,22 @@
 import { useContext, useEffect } from 'react'
 import { Navbar } from './component/Navbar/Navbar'
-import { MarketContextType, Notice} from './types'
+import { MarketContextType, Notice } from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { MarketContext } from './context/MarketProvider'
+import { Loader } from './component/General/Loader'
+import { ErrorPage } from './pages/ErrorPage'
 import { NotFound } from './pages/NotFound'
+import { NoticeForm } from './pages/NoticeForm'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
-import { Loader } from './component/General/Loader'
-import { NoticeForm } from './pages/NoticeForm'
-import { MarketContext } from './context/MarketProvider'
-import { ErrorPage } from './pages/ErrorPage'
-import { Todos } from './services/DealFortressQuery'
+
 
 
 
 function App() {
   const { noticeQuery } = useContext(MarketContext) as MarketContextType;
 
-
-  const getData = async () => {
-    Todos();
-  }
-
-  useEffect(() => {
-    getData();
-  }, [])
-
   const switchState = () => {
-
     switch (noticeQuery.status) {
     case "loading":
       return (

@@ -4,7 +4,6 @@ import  axios from 'axios';
 const baseUrl = import.meta.env.VITE_API_SERVER_URL;
 
 const noticesUrl = `${baseUrl}/notices`;
-const productsUrl = `${baseUrl}/products`;
 const categoriesUrl = `${baseUrl}/categories`;
 
 
@@ -12,6 +11,12 @@ export const getNoticesAPI = async () => {
     const response = await axios.get(noticesUrl);
     return response.data;
 };
+
+export const getCategoriesAPI = async () => {
+    const response = await axios.get(categoriesUrl);
+    return response.data;
+};
+
 
 
 export const postNoticeAPI = async (noticeRequest: NoticeRequest) => {
@@ -39,38 +44,4 @@ export const postNoticeAPI = async (noticeRequest: NoticeRequest) => {
 
 }
 
-export const getProductsAPI = async () => {
-    try {
-        const response = await fetch(productsUrl);
-        return response;
-    } catch (error) {
 
-        const myBlob = new Blob();
-        const myOptions = {
-            "type":"",
-            "title":"Server error",
-            "status":500,
-            "traceId":""
-        }
-        return new Response(myBlob, myOptions)
-    }
-
-};
-
-export const getCategoriesAPI = async () => {
-    try {
-        const response = await fetch(categoriesUrl);
-        return response;
-    } catch (error) {
-
-        const myBlob = new Blob();
-        const myOptions = {
-            "type":"",
-            "title":"Server error",
-            "status":500,
-            "traceId":""
-        }
-        return new Response(myBlob, myOptions)
-    }
-
-};
