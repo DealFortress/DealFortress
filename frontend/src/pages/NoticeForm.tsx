@@ -22,7 +22,7 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
   }
 
   const handleSubmit = async (request: NoticeRequest) => {
-
+    
   }
 
   const initialValues: NoticeRequest = {

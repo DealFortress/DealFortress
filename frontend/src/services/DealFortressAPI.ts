@@ -19,29 +19,12 @@ export const getCategoriesAPI = async () => {
 
 
 
-export const postNoticeAPI = async (noticeRequest: NoticeRequest) => {
-    try {
-        const requestBody = JSON.stringify(noticeRequest);
-        const response = await fetch(noticesUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: requestBody
-        })
-        return response;
-    } catch (error) {
+export const postNoticeAPI = async ({noticeRequest} :  any) => {
 
-        const myBlob = new Blob();
-        const myOptions = {
-            "type":"",
-            "title":"Server error",
-            "status":500,
-            "traceId":""
-        }
-        return new Response(myBlob, myOptions)
-    }
-
+    console.log(noticeRequest);
+    const requestBody = JSON.stringify(noticeRequest);
+    const response = await axios.post(noticesUrl, {
+        body: requestBody
+    })
+    return response.data;
 }
-
-
