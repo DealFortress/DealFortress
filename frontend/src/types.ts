@@ -1,4 +1,4 @@
-import { MarketState } from "./context/MarketProvider"
+import { UseQueryResult } from "@tanstack/react-query"
 
 export type Notice = {
     id: number,
@@ -20,10 +20,7 @@ export type NoticeRequest = {
 }
 
 export type MarketContextType = {
-    // notices: Notice[],
-    marketState: MarketState
-    getMarketState: () => void,
-    postNotice: (request: NoticeRequest) => Notice
+    noticeQuery: UseQueryResult
 }
 
 export type Product = {

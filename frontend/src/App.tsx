@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { Navbar } from './component/Navbar/Navbar'
-import { MarketContextType} from './types'
+import { MarketContextType, Notice} from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/NotFound'
 import { NoticePage } from './pages/NoticePage'
@@ -9,18 +9,15 @@ import { Loader } from './component/General/Loader'
 import { NoticeForm } from './pages/NoticeForm'
 import { MarketContext } from './context/MarketProvider'
 import { ErrorPage } from './pages/ErrorPage'
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Todos } from './services/DealFortressQuery'
 
-const queryClient = new QueryClient();
 
 
 function App() {
-  const { getMarketState, marketState } = useContext(MarketContext) as MarketContextType;
+  const { noticeQuery } = useContext(MarketContext) as MarketContextType;
 
 
   const getData = async () => {
-    getMarketState();
     Todos();
   }
 
@@ -30,19 +27,19 @@ function App() {
 
   const switchState = () => {
 
-    switch (marketState.status) {
-    case "LOADING":
+    switch (noticeQuery.status) {
+    case "loading":
       return (
         <Loader />
       )
 
-    case "ERROR":
+    case "error":
       return (
-        <ErrorPage></ErrorPage>
+        <ErrorPage />
       )
 
-    case "OK":
-      {const { notices } = marketState.data;
+    case "success":
+      {const  notices  = noticeQuery.data as Notice[] ;
 
       return (
             <Routes>
@@ -61,12 +58,10 @@ function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Navbar />
           { switchState() }
         </BrowserRouter>
-      </QueryClientProvider>
     </>
   )
 }
