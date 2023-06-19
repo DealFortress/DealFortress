@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { Navbar } from './component/Navbar/Navbar'
 import { MarketContextType, Notice } from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -14,10 +14,11 @@ import { NoticesIndex } from './pages/NoticesIndex'
 
 
 function App() {
-  const { noticeQuery } = useContext(MarketContext) as MarketContextType;
+  const { noticesQuery } = useContext(MarketContext) as MarketContextType;
 
   const switchState = () => {
-    switch (noticeQuery.status) {
+
+    switch (noticesQuery.status) {
     case "loading":
       return (
         <Loader />
@@ -29,7 +30,7 @@ function App() {
       )
 
     case "success":
-      {const  notices  = noticeQuery.data as Notice[] ;
+      {const  notices  = noticesQuery.data as Notice[] ;
 
       return (
             <Routes>

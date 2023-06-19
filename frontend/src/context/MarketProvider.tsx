@@ -1,6 +1,7 @@
 import React, { createContext } from "react"
 import { getCategoriesAPI, getNoticesAPI } from "../services/DealFortressAPI";
 import { useQuery } from "@tanstack/react-query";
+import { Notice } from "../types";
 
 type Props = {
     children: React.ReactNode
@@ -19,6 +20,9 @@ export const MarketProvider = ( { children } : Props) => {
       queryKey: ["categories"],
       queryFn: getCategoriesAPI
     });
+
+    console.log(noticesQuery.data as Notice[]);
+    console.log(categoriesQuery.status);
 
 
   return (

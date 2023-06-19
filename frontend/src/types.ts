@@ -20,7 +20,7 @@ export type NoticeRequest = {
 }
 
 export type MarketContextType = {
-    noticeQuery: UseQueryResult,
+    noticesQuery: UseQueryResult,
     categoriesQuery: UseQueryResult
 }
 
