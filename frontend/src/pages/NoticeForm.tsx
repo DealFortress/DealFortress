@@ -9,12 +9,10 @@ import { MarketContextType, Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { useContext, useState } from "react"
-import { MarketContext } from "../context/MarketProvider"
 
 export const NoticeForm = () => {
 const [createdNotice, setCreatedNotice ] = useState<Notice>();
 
-  const { postNotice } = useContext(MarketContext) as MarketContextType;
 
   const navigateToNewRoute = () => {
     console.log(createdNotice);
@@ -24,8 +22,7 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
   }
 
   const handleSubmit = async (request: NoticeRequest) => {
-      const newNotice = await postNotice(request);
-      setCreatedNotice(newNotice);
+
   }
 
   const initialValues: NoticeRequest = {
