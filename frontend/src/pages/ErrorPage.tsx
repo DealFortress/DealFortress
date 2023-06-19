@@ -1,6 +1,3 @@
-import { useContext } from "react"
-import { MarketContextType } from "../types";
-
 import { MainContainer } from "../component/General/MainContainer";
 import { StyledContainer } from "../component/General/StyledContainer";
 
