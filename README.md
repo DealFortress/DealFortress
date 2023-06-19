@@ -72,6 +72,10 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 ### UML sketch
 <img src="uml-sketch.png" />
 
+##Retros
+
+Check out our weekly retros [here!](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
+
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more information.
