@@ -19,9 +19,8 @@ export const getCategoriesAPI = async () => {
 
 
 
-export const postNoticeAPI = async ({noticeRequest} :  any) => {
+export const postNoticeAPI = async (noticeRequest : NoticeRequest) => {
 
-    console.log(noticeRequest);
     const requestBody = JSON.stringify(noticeRequest);
     const response = await axios.post(noticesUrl, {
         body: requestBody

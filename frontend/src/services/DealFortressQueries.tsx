@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategoriesAPI, getNoticesAPI, postNoticeAPI } from "./DealFortressAPI";
-import { Notice, NoticeRequest } from "../types";
 
 
 
