@@ -9,7 +9,7 @@ import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
-import { Loader } from "../component/General/Loader"
+
 
 export const NoticeForm = () => {
 

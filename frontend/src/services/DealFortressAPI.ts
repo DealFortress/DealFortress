@@ -1,4 +1,4 @@
-import { Notice, NoticeRequest } from "../types";
+import { NoticeRequest } from "../types";
 import  axios from 'axios';
 
 const baseUrl = import.meta.env.VITE_API_SERVER_URL;
@@ -22,7 +22,7 @@ export const getCategoriesAPI = async () => {
 
 
 export const postNoticeAPI = async (noticeRequest : NoticeRequest) => {
-    
+
     const response = await axios.post(noticesUrl, noticeRequest)
     return response.data;
 }
