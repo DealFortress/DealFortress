@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { MainContainer } from "../component/General/MainContainer";
 import { StyledContainer } from "../component/General/StyledContainer";
 import { GetNoticesQuery } from "../services/DealFortressQueries";
