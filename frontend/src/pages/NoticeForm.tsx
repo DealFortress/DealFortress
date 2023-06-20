@@ -9,26 +9,29 @@ import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
+import { useEffect } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 
 
 export const NoticeForm = () => {
 
-  const {mutate : postNotice, data} = PostNoticeMutation();
+  const {mutate : postNotice, data, isLoading, isError, error} = PostNoticeMutation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
     postNotice(request);
-    if ( data ) {
+  }
+
+  useEffect(() => {
+    if (data) {
+      queryClient.invalidateQueries(["notices"], {exact: true})
       const navigationUrl = createNavigationUrl(data);
       navigate(navigationUrl);
     }
-
-  }
-
-
-
+  }, [data])
 
 
   const initialValues: NoticeRequest = {
@@ -91,13 +94,20 @@ export const NoticeForm = () => {
                     </li>
                   </ul>
               </div>
-              <button
-                type="submit"
-                className="rounded white-box-border"
-                disabled={isDisabled}
-              >
-                Publish
-              </button>
+              <div className="flex flex-col gap-4 w-full">
+                {isError && 
+                  <p className="text-center bg-red rounded  white-box-border">
+                    Something went wrong.
+                  </p>
+                }
+                <button
+                  type="submit"
+                  className="rounded white-box-border disabled:opacity-40 w-full py-1"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading..." : "Publish"}
+                </button>
+              </div>
 
 
             </StyledContainer>
