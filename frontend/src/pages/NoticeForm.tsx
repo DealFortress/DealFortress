@@ -9,29 +9,26 @@ import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
-import { useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 
 
 export const NoticeForm = () => {
 
-  const {mutate : postNotice, data, isLoading, isError, error} = PostNoticeMutation();
+  const {mutate : postNotice, isLoading, isError} = PostNoticeMutation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
-    postNotice(request);
+    postNotice(request, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["notices"], {exact: true})
+        const navigationUrl = createNavigationUrl(data);
+        navigate(navigationUrl);
+      }
+    });
   }
-
-  useEffect(() => {
-    if (data) {
-      queryClient.invalidateQueries(["notices"], {exact: true})
-      const navigationUrl = createNavigationUrl(data);
-      navigate(navigationUrl);
-    }
-  }, [data])
 
 
   const initialValues: NoticeRequest = {
