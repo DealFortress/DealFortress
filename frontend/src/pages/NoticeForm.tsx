@@ -10,13 +10,17 @@ import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
+import { UseMutateFunction, UseMutationResult, useMutation } from "@tanstack/react-query"
+import axios from "axios"
 
 export const NoticeForm = () => {
 
+  const {mutate : postNotice} = PostNoticeMutation();
 
   const handleSubmit = async (request: NoticeRequest) => {
-    PostNoticeMutation()?.mutate(request)
+    postNotice(request);
   }
+
 
   const initialValues: NoticeRequest = {
     title: "",
@@ -37,10 +41,6 @@ export const NoticeForm = () => {
     { value: 'hand delivered', label: 'Hand delivered' },
     { value: 'package', label: 'package' }
   ]
-
-  const navigate = useNavigate();
-
-
 
   const renderForm = () => (
       <Form>

@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { MainContainer } from "../component/General/MainContainer";
 import { StyledContainer } from "../component/General/StyledContainer";
-import { NoticesQuery } from "../services/DealFortressQueries";
+import { GetNoticesQuery } from "../services/DealFortressQueries";
 
 
 export const ErrorPage = () => {
 
-    const {status : noticeStatus} = NoticesQuery();
+    const {status : noticeStatus} = GetNoticesQuery();
 
   return (
     <MainContainer>

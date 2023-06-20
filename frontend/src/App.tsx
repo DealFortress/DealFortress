@@ -7,13 +7,13 @@ import { NotFound } from './pages/NotFound'
 import { NoticeForm } from './pages/NoticeForm'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
-import { NoticesQuery } from './services/DealFortressQueries'
+import { GetNoticesQuery } from './services/DealFortressQueries'
 
 
 export const App = () => {
 
   const switchState = () => {
-    const { data: noticeData, status: noticeStatus } = NoticesQuery();
+    const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
 
     switch (noticeStatus) {
     case "loading":

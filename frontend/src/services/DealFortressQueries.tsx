@@ -1,33 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategoriesAPI, getNoticesAPI, postNoticeAPI } from "./DealFortressAPI";
 import { useNavigate } from "react-router-dom";
-import { Notice } from "../types";
+import { Notice, NoticeRequest } from "../types";
+import axios from "axios";
 
 
 
-export const NoticesQuery = () =>  useQuery({
+export const GetNoticesQuery = () =>  useQuery({
     queryKey: ["notices"],
     queryFn: getNoticesAPI
 });
 
-export const CategoriesQuery = () =>  useQuery({
+export const GetCategoriesQuery = () =>  useQuery({
     queryKey: ["notices"],
     queryFn: getCategoriesAPI
 });
 
 
-export const PostNoticeMutation = () => {
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
+export const PostNoticeMutation = () =>  useMutation({
+    mutationFn: postNoticeAPI,
+    })
 
-    return useMutation({
 
-            mutationFn: postNoticeAPI,
-            onSuccess: (data : Notice) => {
-                queryClient.invalidateQueries(["notices"], {exact: true})
-                navigate(`notices/${data?.id}`)
-            }
-
-        })
-    return
-}
