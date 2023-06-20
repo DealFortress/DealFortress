@@ -5,27 +5,29 @@ import { MainContainer } from "../component/General/MainContainer"
 import { UserInfo } from "../component/General/UserInfo"
 import { Field, Form, Formik } from "formik"
 import { FormikHelpers} from "formik/dist/types"
-import { MarketContextType, Notice, NoticeRequest } from "../types"
+import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
-import { MarketContext } from "../context/MarketProvider"
+import { PostNoticeMutation } from "../services/DealFortressQueries"
+import { useQueryClient } from "@tanstack/react-query"
+
 
 export const NoticeForm = () => {
-const [createdNotice, setCreatedNotice ] = useState<Notice>();
 
-  const { postNotice } = useContext(MarketContext) as MarketContextType;
+  const {mutate : postNotice, isLoading, isError} = PostNoticeMutation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const navigateToNewRoute = () => {
-    console.log(createdNotice);
-    if ( createdNotice ) {
-        navigate(`notices/${createdNotice?.id}`)
-    }
-  }
+  const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
-      const newNotice = await postNotice(request);
-      setCreatedNotice(newNotice);
+    postNotice(request, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["notices"], {exact: true})
+        const navigationUrl = createNavigationUrl(data);
+        navigate(navigationUrl);
+      }
+    });
   }
 
   const initialValues: NoticeRequest = {
@@ -47,10 +49,6 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
     { value: 'hand delivered', label: 'Hand delivered' },
     { value: 'package', label: 'package' }
   ]
-
-  const navigate = useNavigate();
-
-
 
   const renderForm = () => (
       <Form>
@@ -92,12 +90,20 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
                     </li>
                   </ul>
               </div>
-              <button
-                type="submit"
-                className="rounded white-box-border"
-              >
-                Publish
-              </button>
+              <div className="flex flex-col gap-4 w-full">
+                {isError && 
+                  <p className="text-center bg-red rounded  white-box-border">
+                    Something went wrong.
+                  </p>
+                }
+                <button
+                  type="submit"
+                  className="rounded white-box-border disabled:opacity-40 w-full py-1"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading..." : "Publish"}
+                </button>
+              </div>
 
 
             </StyledContainer>
@@ -111,7 +117,6 @@ const [createdNotice, setCreatedNotice ] = useState<Notice>();
         onSubmit={ (values, actions: FormikHelpers<NoticeRequest>) => {
           actions.setSubmitting(false);
           handleSubmit(values);
-          navigateToNewRoute();
         }}
       >
         {renderForm}

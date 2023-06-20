@@ -1,48 +1,33 @@
-import { useContext, useEffect } from 'react'
 import { Navbar } from './component/Navbar/Navbar'
-import { MarketContextType} from './types'
+import { Notice } from './types'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Loader } from './component/General/Loader'
+import { ErrorPage } from './pages/ErrorPage'
 import { NotFound } from './pages/NotFound'
+import { NoticeForm } from './pages/NoticeForm'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
-import { Loader } from './component/General/Loader'
-import { NoticeForm } from './pages/NoticeForm'
-import { MarketContext } from './context/MarketProvider'
-import { ErrorPage } from './pages/ErrorPage'
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { Todos } from './services/DealFortressQuery'
-
-const queryClient = new QueryClient();
+import { GetNoticesQuery } from './services/DealFortressQueries'
 
 
-function App() {
-  const { getMarketState, marketState } = useContext(MarketContext) as MarketContextType;
-
-
-  const getData = async () => {
-    getMarketState();
-    Todos();
-  }
-
-  useEffect(() => {
-    getData();
-  }, [])
+export const App = () => {
 
   const switchState = () => {
+    const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
 
-    switch (marketState.status) {
-    case "LOADING":
+    switch (noticeStatus) {
+    case "loading":
       return (
         <Loader />
       )
 
-    case "ERROR":
+    case "error":
       return (
-        <ErrorPage></ErrorPage>
+        <ErrorPage />
       )
 
-    case "OK":
-      {const { notices } = marketState.data;
+    case "success":
+      {const  notices  = noticeData as Notice[] ;
 
       return (
             <Routes>
@@ -61,15 +46,10 @@ function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Navbar />
           { switchState() }
         </BrowserRouter>
-      </QueryClientProvider>
     </>
   )
 }
-
-
-export default App

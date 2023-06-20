@@ -18,7 +18,8 @@ export default {
         'lightblue': '#DDE6ED',
         'black': 'black',
         'transparent': 'transparent',
-        'white': 'white'
+        'white': 'white',
+        'red': '#9F192F'
     },
     plugins: [],
     }
