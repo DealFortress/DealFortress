@@ -30,7 +30,6 @@ export const NoticeForm = () => {
     });
   }
 
-
   const initialValues: NoticeRequest = {
     title: "",
     description: "",
