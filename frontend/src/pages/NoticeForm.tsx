@@ -5,13 +5,9 @@ import { MainContainer } from "../component/General/MainContainer"
 import { UserInfo } from "../component/General/UserInfo"
 import { Field, Form, Formik } from "formik"
 import { FormikHelpers} from "formik/dist/types"
-import { Notice, NoticeRequest } from "../types"
+import { NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
-import { UseMutateFunction, UseMutationResult, useMutation } from "@tanstack/react-query"
-import axios from "axios"
 
 export const NoticeForm = () => {
 

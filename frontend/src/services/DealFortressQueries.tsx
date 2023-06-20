@@ -1,8 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getCategoriesAPI, getNoticesAPI, postNoticeAPI } from "./DealFortressAPI";
-import { useNavigate } from "react-router-dom";
-import { Notice, NoticeRequest } from "../types";
-import axios from "axios";
+
 
 
 
