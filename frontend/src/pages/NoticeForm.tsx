@@ -13,28 +13,18 @@ import { PostNoticeMutation } from "../services/DealFortressQueries"
 
 export const NoticeForm = () => {
 
-  const {mutate : postNotice, data, status } = PostNoticeMutation();
+  const {mutate : postNotice, data} = PostNoticeMutation();
   const navigate = useNavigate();
 
   const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
-    
     postNotice(request);
-
-    switch (status) {
-      case "loading":
-        console.log("loading")
-        break;
-
-      case "success":
-        const navigationUrl = createNavigationUrl(data);
-        navigate(navigationUrl);
-        break;
-
-      default:
-        break;
+    if ( data ) {
+      const navigationUrl = createNavigationUrl(data);
+      navigate(navigationUrl);
     }
+
   }
 
 
@@ -104,6 +94,7 @@ export const NoticeForm = () => {
               <button
                 type="submit"
                 className="rounded white-box-border"
+                disabled={isDisabled}
               >
                 Publish
               </button>
