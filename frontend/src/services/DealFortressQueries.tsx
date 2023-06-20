@@ -16,8 +16,7 @@ export const GetCategoriesQuery = () =>  useQuery({
     queryFn: getCategoriesAPI
 });
 
-
-export const PostNoticeMutation = () =>  useMutation({
+export const PostNoticeMutation = () => useMutation({
     mutationFn: postNoticeAPI,
     })
 

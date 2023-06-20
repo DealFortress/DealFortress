@@ -8,18 +8,37 @@ import { FormikHelpers} from "formik/dist/types"
 import { Notice, NoticeRequest } from "../types"
 import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
-import { UseMutateFunction, UseMutationResult, useMutation } from "@tanstack/react-query"
-import axios from "axios"
+import { Loader } from "../component/General/Loader"
 
 export const NoticeForm = () => {
 
-  const {mutate : postNotice} = PostNoticeMutation();
+  const {mutate : postNotice, data, status } = PostNoticeMutation();
+  const navigate = useNavigate();
+
+  const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
+    
     postNotice(request);
+
+    switch (status) {
+      case "loading":
+        console.log("loading")
+        break;
+
+      case "success":
+        const navigationUrl = createNavigationUrl(data);
+        navigate(navigationUrl);
+        break;
+
+      default:
+        break;
+    }
   }
+
+
+
 
 
   const initialValues: NoticeRequest = {
