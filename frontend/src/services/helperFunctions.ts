@@ -42,9 +42,9 @@ export const convertDateToMinutes = (date : Date) => {
 
 export const minutesBetweenTodayAndDate = (creationDate : Date) => {
     console.log("_______________");
-    const today = new Date();
-    console.log(`today : ${today}`);
-    today.toLocaleTimeString('de-DE', {timeZone: 'CET'});
-    console.log(`today after mod: ${today}`);
-    return convertDateToMinutes(new Date(today)) - convertDateToMinutes(creationDate);
+    const local = new Date();
+    const offset = local.getTimezoneOffset();
+    const utcToday = new Date(local.getTime() + offset * 60000);
+    console.log(`today : ${utcToday}`);
+    return convertDateToMinutes(new Date(utcToday)) - convertDateToMinutes(creationDate);
 }
