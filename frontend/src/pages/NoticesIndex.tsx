@@ -13,7 +13,7 @@ type Props = {
 
 export const NoticesIndex = ( {notices} : Props ) => {
 
-    const NoticesJSX = notices.sort((a, b) => convertDateToMinutes(a.createdAt) - convertDateToMinutes(b.createdAt) ).map(notice => <NoticeCard key={notice.id} notice={notice} />)
+    const NoticesJSX = notices.sort((a, b) => convertDateToMinutes(b.createdAt) - convertDateToMinutes(a.createdAt) ).map(notice => <NoticeCard key={notice.id} notice={notice} />)
   return (
     <>
         <div className="w-full h-[30vh] bg-blue flex justify-center items-center ">

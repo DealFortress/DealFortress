@@ -45,7 +45,7 @@ namespace DealFortress.Api.Services
             Payment = string.Join(",", request.Payments),
             Products = null,
             DeliveryMethod = string.Join(",", request.DeliveryMethods),
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
           };
         }
     }

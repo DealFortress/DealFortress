@@ -4,25 +4,25 @@ export const pluralize = (num: number, word: string, plural = word + "s") =>
 
 
 export const convertMinutesToClosestTimeValue = (minutesSinceCreation : number) => {
-const yearInMinutes = 525948;
-const monthInMinutes = 43829;
-const dayInMinutes = 1410;
-const hourInMinutes = 24;
+const minutesInAYear = 525600;
+const minutesInAMonth = 43200;
+const minutesInADay = 1440;
+const minutesInAnHour = 60;
 
-if ( minutesSinceCreation > yearInMinutes) {
-    const years = minutesSinceCreation / yearInMinutes
+if ( minutesSinceCreation > minutesInAYear) {
+    const years = minutesSinceCreation / minutesInAYear
     return `${years.toFixed(0)} ${pluralize(years, "year")} ago`
 }
-else if ( minutesSinceCreation > monthInMinutes) {
-    const month = minutesSinceCreation / monthInMinutes
+else if ( minutesSinceCreation > minutesInAMonth) {
+    const month = minutesSinceCreation / minutesInAMonth
     return `${month.toFixed(0)} ${pluralize(month, "month")} ago`
 }
-else if ( minutesSinceCreation > dayInMinutes) {
-    const day = minutesSinceCreation / dayInMinutes
+else if ( minutesSinceCreation > minutesInADay) {
+    const day = minutesSinceCreation / minutesInADay
     return `${day.toFixed(0)} ${pluralize(day, "day")} ago`
 }
-else if ( minutesSinceCreation > hourInMinutes) {
-    const hour = minutesSinceCreation / hourInMinutes
+else if ( minutesSinceCreation > minutesInAnHour) {
+    const hour = minutesSinceCreation / minutesInAnHour
     return `${hour.toFixed(0)} ${pluralize(hour, "hour")} ago`
 }
 else if ( minutesSinceCreation > 1 ) {
@@ -33,4 +33,18 @@ else if ( minutesSinceCreation > 0 ) {
 }
 }
 
-export const convertDateToMinutes = (date : Date) => ( new Date().getTime() - new Date(date).getTime()) / 1000 / 60;
+export const convertDateToMinutes = (date : Date) => {
+    console.log(date)
+    const sup = new Date(date).getTime() / 1000 / 60
+    console.log(sup)
+    return sup;
+}
+
+export const minutesBetweenTodayAndDate = (creationDate : Date) => {
+    console.log("_______________");
+    const local = new Date();
+    const offset = local.getTimezoneOffset();
+    const utcToday = new Date(local.getTime() + offset * 60000);
+    console.log(`today : ${utcToday}`);
+    return convertDateToMinutes(new Date(utcToday)) - convertDateToMinutes(creationDate);
+}
