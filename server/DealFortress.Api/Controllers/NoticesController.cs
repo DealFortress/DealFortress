@@ -46,30 +46,11 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotice(int id, Notice notice)
+        public IActionResult PutNotice(int id, NoticeRequest noticeRequest)
         {
-            if (id != notice.Id)
-            {
-                return BadRequest();
-            }
+            _context.Entry(noticeRequest).State = EntityState.Modified;
 
-            _context.Entry(notice).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NoticeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _context.SaveChanges();
 
             return NoContent();
         }

@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 
 namespace DealFortress.Api.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : class
     {
-        public IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll();
+        T? GetById(int id);
+        void Delete(int id);
 
-        public T GetById(int id);
+        void Add(T entity);
+        void AddRange(IEnumerable<T> entities);
 
-        public T Update(T entity);
-
-        public void Delete(int id);
-
+        void Remove(T entity);
+        void RemoveRange(IEnumerable<T> entities);
     }
 }
