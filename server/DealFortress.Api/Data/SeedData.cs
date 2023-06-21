@@ -129,7 +129,7 @@ public class SeedData
             .RuleFor(a => a.Description, bogus => bogus.Lorem.Sentences(bogus.Random.Number(8)))
             .RuleFor(a => a.City, bogus => bogus.Address.City())
             .RuleFor(a => a.Payment, bogus => bogus.Random.ArrayElement<string>(payment))
-            .RuleFor(a => a.CreatedAt, bogus => DateTime.Now)
+            .RuleFor(a => a.CreatedAt, bogus => DateTime.UtcNow)
             .RuleFor(a => a.Products, bogus => null)
             .RuleFor(a => a.DeliveryMethod, bogus => bogus.Random.ArrayElement<string>(delivery))
             .Generate(75);

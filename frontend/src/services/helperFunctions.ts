@@ -33,5 +33,15 @@ else if ( minutesSinceCreation > 0 ) {
 }
 }
 
-export const convertDateToMinutes = (date : Date) => ( new Date() - new Date(date).getTime()) / 1000 / 60;
-// .toLocaleString("fr-FR", { timeZone: "UTC" })
+export const convertDateToMinutes = (date : Date) => {
+    const sup = new Date(date).getTime() / 1000 / 60
+    console.log(sup)
+    return sup;
+}
+
+export const minutesBetweenTodayAndDate = (creationDate : Date) => {
+    console.log("_______________");
+    console.log(creationDate);
+    const today = new Date().toUTCString();
+    return convertDateToMinutes(new Date(today)) - convertDateToMinutes(creationDate);
+}
