@@ -33,11 +33,11 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<NoticeResponse>> GetNotice(int id)
+        public  ActionResult<NoticeResponse> GetNotice(int id)
         {
-            var notice = await _context.Notices.FindAsync(id);
+            var notice = _noticesRepo.GetById(id);
 
-            if (notice == null)
+            if (notice == null)  
             {
                 return NotFound();
             }

@@ -16,11 +16,13 @@ namespace DealFortress.Api.Repositories
         }
         public IEnumerable<Notice> GetAll()
         {
-             return  _context.Notices
+            return  _context.Notices
                         .Include(ad => ad.Products!)
                         .ThenInclude(product => (product.Category))
                         .ToList();
         }
+
+        public Notice? GetById(int id) => _context.Notices.Find(id);
 
 
     }
