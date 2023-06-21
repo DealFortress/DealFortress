@@ -3,7 +3,7 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Services
 {
-    public class ProductService
+    public class ProductsService
     {
         public ProductResponse ToProductResponse(Product product)
         {

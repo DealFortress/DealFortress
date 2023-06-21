@@ -15,14 +15,14 @@ namespace DealFortress.Api.Controllers;
 public class CategoriesController : ControllerBase
 {
     private readonly DealFortressContext _context;
-    private readonly ProductService _productService;
-    private readonly CategoryService _categoryService;
+    private readonly ProductsService _productsService;
+    private readonly CategoriesService _categoriesService;
 
-    public CategoriesController(DealFortressContext context, ProductService productService, CategoryService categoryService)
+    public CategoriesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService)
     {
         _context = context;
-        _productService = productService;
-        _categoryService = categoryService;
+        _productsService = productsService;
+        _categoriesService = categoriesService;
     }
 
     [HttpGet]
@@ -42,18 +42,18 @@ public class CategoriesController : ControllerBase
             return NotFound();
         }
 
-        return _categoryService.ToCategoryResponse(category);
+        return _categoriesService.ToCategoryResponse(category);
     }
 
     [HttpPost]
     public async Task<ActionResult<CategoryResponse>> PostCategory(CategoryRequest request)
     {
-        var category = _categoryService.ToCategory(request);
+        var category = _categoriesService.ToCategory(request);
 
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, _categoryService.ToCategoryResponse(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, _categoriesService.ToCategoryResponse(category));
     }
 
     [HttpDelete("{id}")]

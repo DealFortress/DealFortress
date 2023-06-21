@@ -6,12 +6,12 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Services
 {
-    public class NoticeService
+    public class NoticesService
     {
-        private readonly ProductService _productService;
-        public NoticeService(ProductService productService)
+        private readonly ProductsService _productsService;
+        public NoticesService(ProductsService productsService)
         {
-            _productService = productService;
+            _productsService = productsService;
         }
 
         public NoticeResponse ToNoticeResponse(Notice Notice)
@@ -29,7 +29,7 @@ namespace DealFortress.Api.Services
 
             if (Notice.Products is not null)
             {
-                response.Products = Notice.Products.Select(product => _productService.ToProductResponse(product)).ToList();
+                response.Products = Notice.Products.Select(product => _productsService.ToProductResponse(product)).ToList();
             }
 
             return response;

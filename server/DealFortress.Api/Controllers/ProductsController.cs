@@ -15,12 +15,12 @@ namespace DealFortress.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly DealFortressContext _context;
-        private readonly ProductService _productService;
+        private readonly ProductsService _productsService;
 
-        public ProductsController(DealFortressContext context, ProductService productService)
+        public ProductsController(DealFortressContext context, ProductsService productsService)
         {
             _context = context;
-            _productService = productService;
+            _productsService = productsService;
         }
 
 
@@ -31,7 +31,7 @@ namespace DealFortress.Api.Controllers
                         .Include(product => product.Notice)
                         .Include(product => product.Category)
                         .Include(product => product.Images)
-                        .Select(product => _productService.ToProductResponse(product))
+                        .Select(product => _productsService.ToProductResponse(product))
                         .ToList();
         }
 

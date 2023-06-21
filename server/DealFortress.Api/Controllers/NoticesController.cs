@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Controllers;
 using DealFortress.Api.Services;
+using DealFortress.Api.Repositories;
 
 namespace DealFortress.Api.Controllers
 {
@@ -11,25 +12,24 @@ namespace DealFortress.Api.Controllers
     public class NoticesController : ControllerBase
     {
         private readonly DealFortressContext _context;
-        private readonly ProductService _productService;
-        private readonly CategoryService _categoryService;
-        private readonly NoticeService _noticeService;
-
-        public NoticesController(DealFortressContext context, ProductService productService, CategoryService categoryService, NoticeService noticeService)
+        private readonly ProductsService _productsService;
+        private readonly CategoriesService _categoriesService;
+        private readonly NoticesService _noticesService;
+        private readonly NoticesRepository _noticesRepo;
+        
+        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, NoticesRepository noticesRepo)
         {
             _context = context;
-            _categoryService = categoryService;
-            _productService = productService;
-            _noticeService = noticeService;
+            _categoriesService = categoriesService;
+            _productsService = productsService;
+            _noticesService = noticesService;
+            _noticesRepo = noticesRepo;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<NoticeResponse>> GetNotice()
+        public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
-            return _context.Notices
-                        .Include(ad => ad.Products!)
-                        .ThenInclude(product => (product.Category))
-                        .Select(ad => _noticeService.ToNoticeResponse(ad)).ToList();
+           return _noticesRepo.GetAll().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
         }
 
         [HttpGet("{id}")]
@@ -42,7 +42,7 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
 
-            return _noticeService.ToNoticeResponse(notice);
+            return _noticesService.ToNoticeResponse(notice);
         }
 
         [HttpPut("{id}")]
@@ -77,11 +77,11 @@ namespace DealFortress.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<NoticeResponse>> postNotice(NoticeRequest request)
         {
-            var notice = _noticeService.ToNotice(request);
+            var notice = _noticesService.ToNotice(request);
 
             if (request.ProductRequests is not null)
             {
-                var AllCategoriesExists = request.ProductRequests.All(request => _categoryService.CategoryExists(request.CategoryId, _context));
+                var AllCategoriesExists = request.ProductRequests.All(request => _categoriesService.CategoryExists(request.CategoryId, _context));
 
                 if (AllCategoriesExists)
                 {
@@ -89,7 +89,7 @@ namespace DealFortress.Api.Controllers
                                                     .Select( productRequest =>
                                                     {
                                                         var category = _context.Categories.Find(productRequest.CategoryId);
-                                                        return _productService.ToProduct(category!, productRequest, notice);
+                                                        return _productsService.ToProduct(category!, productRequest, notice);
                                                     });
 
                     notice.Products = products.ToList();
@@ -99,7 +99,7 @@ namespace DealFortress.Api.Controllers
             _context.Notices.Add(notice);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticeService.ToNoticeResponse(notice));
+            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponse(notice));
         }
 
         [HttpDelete("{id}")]

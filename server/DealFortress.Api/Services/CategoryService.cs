@@ -6,13 +6,13 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Services
 {
-    public class CategoryService
+    public class CategoriesService
     {
 
-        private readonly ProductService _productService;
-        public CategoryService(ProductService productService)
+        private readonly ProductsService _productsService;
+        public CategoriesService(ProductsService productsService)
         {
-            _productService = productService; 
+            _productsService = productsService; 
         }
 
         public CategoryResponse ToCategoryResponse(Category category)
@@ -21,7 +21,7 @@ namespace DealFortress.Api.Services
             {
                 Id = category.Id,
                 Name = category.Name,
-                Products = category.Products?.Select(product => _productService.ToProductResponse(product)).ToList()
+                Products = category.Products?.Select(product => _productsService.ToProductResponse(product)).ToList()
             };
         }
 
