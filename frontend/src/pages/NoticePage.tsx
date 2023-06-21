@@ -15,6 +15,7 @@ export const NoticePage = ( {notices} : Props) => {
   const { id } = useParams();
 
   const notice = notices.find(notice => notice.id === +id!);
+  console.log(notice?.createdAt);
 
   return (
     <MainContainer>
