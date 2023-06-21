@@ -7,23 +7,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Api.Repositories
 {
-    public class NoticesRepository
+    public class NoticesRepository: Repository<Notice>, INoticesRepository
     {
-        private readonly DealFortressContext _context;
-        public NoticesRepository(DealFortressContext context)
+        public NoticesRepository(DealFortressContext context) : base(context)
         {
-            _context = context;
+
         }
-        public IEnumerable<Notice> GetAll()
+        public IEnumerable<Notice> GetAllWithProducts()
         {
-            return  _context.Notices
+            return  DealFortressContext.Notices
                         .Include(ad => ad.Products!)
                         .ThenInclude(product => (product.Category))
                         .ToList();
         }
 
-        public Notice? GetById(int id) => _context.Notices.Find(id);
-
-
+        public DealFortressContext DealFortressContext 
+        {
+            get { return Context as DealFortressContext; }
+        }
     }
 }

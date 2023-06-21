@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Repositories
 {
-    public interface INoticesRepository: IRepository<Notice>
+    public interface IUnitOfWork : IDisposable
     {
-        IEnumerable<Notice> GetAllWithProducts();
+        INoticesRepository Notices { get; }
+        int Complete();
     }
 }
