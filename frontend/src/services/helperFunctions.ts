@@ -34,6 +34,7 @@ else if ( minutesSinceCreation > 0 ) {
 }
 
 export const convertDateToMinutes = (date : Date) => {
+    console.log(date)
     const sup = new Date(date).getTime() / 1000 / 60
     console.log(sup)
     return sup;
@@ -41,7 +42,9 @@ export const convertDateToMinutes = (date : Date) => {
 
 export const minutesBetweenTodayAndDate = (creationDate : Date) => {
     console.log("_______________");
-    console.log(creationDate);
-    const today = new Date().toUTCString();
+    const today = new Date();
+    console.log(`today : ${today}`);
+    today.toLocaleTimeString('de-DE', {timeZone: 'CET'});
+    console.log(`today after mod: ${today}`);
     return convertDateToMinutes(new Date(today)) - convertDateToMinutes(creationDate);
 }
