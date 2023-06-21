@@ -33,4 +33,5 @@ else if ( minutesSinceCreation > 0 ) {
 }
 }
 
-export const convertDateToMinutes = (date : Date) => ( new Date().getTime() - new Date(date).getTime()) / 1000 / 60;
+export const convertDateToMinutes = (date : Date) => ( new Date() - new Date(date).getTime()) / 1000 / 60;
+// .toLocaleString("fr-FR", { timeZone: "UTC" })
