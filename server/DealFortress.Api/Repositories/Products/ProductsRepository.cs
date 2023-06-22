@@ -9,20 +9,13 @@ namespace DealFortress.Api.Repositories
         {
 
         }
-        public IEnumerable<Product> GetAllWithProducts()
+        
+        public IEnumerable<Product> GetAllWithEverything()
         {
             return  DealFortressContext.Products
                             .Include(product => (product.Category!))
                             .Include(product => product.Images)
                             .ToList();
-        }
-
-        public Product? GetByIdWithProducts(int id)
-        {
-            return DealFortressContext.Products
-                            .Include(product => (product.Category!))
-                            .Include(product => product.Images)
-                        .FirstOrDefault(product => product.Id == id);
         }
 
         public DealFortressContext DealFortressContext 

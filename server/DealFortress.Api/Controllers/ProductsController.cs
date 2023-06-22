@@ -1,8 +1,8 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Services;
+using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Controllers
 {
@@ -10,52 +10,39 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly DealFortressContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ProductsService _productsService;
 
-        public ProductsController(DealFortressContext context, ProductsService productsService)
+        public ProductsController(IUnitOfWork unitOfWork, ProductsService productsService)
         {
-            _context = context;
             _productsService = productsService;
+            _unitOfWork = unitOfWork;
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductResponse>> GetProduct()
+        public ActionResult<IEnumerable<ProductResponse>> GetProducts()
         {
-            return _context.Products
-                        .Include(product => product.Notice)
-                        .Include(product => product.Category)
-                        .Include(product => product.Images)
-                        .Select(product => _productsService.ToProductResponse(product))
-                        .ToList();
+            return Ok(_unitOfWork.Products.GetAllWithEverything());
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public IActionResult PutProduct(int id, ProductRequest request)
         {
-            if (id != product.Id)
+            var product = _unitOfWork.Products.GetById(id);
+
+            if(product == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _unitOfWork.Products.Remove(product);
+            var updatedproduct = _productsService.ToProduct(product.Category, request, product.Notice);
+            updatedproduct.Id = product.Id;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _unitOfWork.Products.Add(updatedproduct);
+            _unitOfWork.Complete();
+
 
             return NoContent();
         }
