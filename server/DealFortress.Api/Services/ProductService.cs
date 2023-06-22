@@ -17,7 +17,7 @@ namespace DealFortress.Api.Services
             CategoryId = product.Category.Id,
             CategoryName = product.Category.Name,
             Condition = product.Condition,
-            Images = product.Images,
+            ImageIds = product.Images.Select(image => image.Id).ToList(),
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
             NoticeDeliveryMethod = product.Notice.DeliveryMethod,

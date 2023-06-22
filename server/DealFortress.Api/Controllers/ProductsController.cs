@@ -23,13 +23,15 @@ namespace DealFortress.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ProductResponse>> GetProducts()
         {
-            return Ok(_unitOfWork.Products.GetAllWithEverything());
+            var productsWithProducts = _unitOfWork.Products.GetAllWithEverything();
+            var productsResponse = productsWithProducts.Select(product => _productsService.ToProductResponse(product)).ToList();
+            return Ok(productsResponse);
         }
 
         [HttpPut("{id}")]
         public IActionResult PutProduct(int id, ProductRequest request)
         {
-            var product = _unitOfWork.Products.GetById(id);
+            var product = _unitOfWork.Products.GetByIdWithEverything(id);
 
             if(product == null)
             {

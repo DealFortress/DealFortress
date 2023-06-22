@@ -27,7 +27,7 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
             var noticesWithProducts = _unitOfWork.Notices.GetAllWithProducts();
-            var noticesResponse = noticesWithProducts.Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
+            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponse(notice)).ToList();
             return Ok(noticesResponse);
         }
 
