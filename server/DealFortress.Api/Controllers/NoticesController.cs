@@ -55,29 +55,13 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<NoticeResponse>> postNotice(NoticeRequest request)
+        public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
         {
             var notice = _noticesService.ToNotice(request);
 
-            if (request.ProductRequests is not null)
-            {
-                var AllCategoriesExists = request.ProductRequests.All(request => _categoriesService.CategoryExists(request.CategoryId, _context));
-
-                if (AllCategoriesExists)
-                {
-                    var products = request.ProductRequests
-                                                    .Select( productRequest =>
-                                                    {
-                                                        var category = _context.Categories.Find(productRequest.CategoryId);
-                                                        return _productsService.ToProduct(category!, productRequest, notice);
-                                                    });
-
-                    notice.Products = products.ToList();
-                }
-            }
-
-            _context.Notices.Add(notice);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Notices.Add(notice);
+            
+            _unitOfWork.Complete();
 
             return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponse(notice));
         }
