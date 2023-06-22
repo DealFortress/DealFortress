@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Api.Repositories
 {
-    public class CategoriesRepository: Repository<Notice>, ICategoriesRepository
+    public class CategoriesRepository: Repository<Category>, ICategoriesRepository
     {
         public CategoriesRepository(DealFortressContext context) : base(context)
         {

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DealFortress.Api.Repositories;
 
-namespace DealFortress.Api.Repositories
+namespace DealFortress.Api.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

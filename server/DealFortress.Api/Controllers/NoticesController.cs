@@ -4,6 +4,7 @@ using DealFortress.Api.Models;
 using DealFortress.Api.Controllers;
 using DealFortress.Api.Services;
 using DealFortress.Api.Repositories;
+using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Controllers
 {
@@ -28,7 +29,9 @@ namespace DealFortress.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
-           return Ok(_unitOfWork.Notices.GetAllWithProducts().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList());
+            var noticesWithProducts = _unitOfWork.Notices.GetAllWithProducts();
+            var noticesResponse = noticesWithProducts.Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
+            return Ok(noticesResponse);
         }
 
         [HttpGet("{id}")]

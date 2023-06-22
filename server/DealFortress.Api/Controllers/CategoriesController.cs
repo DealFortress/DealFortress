@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Services;
 using DealFortress.Api.Repositories;
+using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Controllers;
 
@@ -34,44 +35,14 @@ public class CategoriesController : ControllerBase
         return Ok(_unitOfWork.Categories.GetAll());
     }
 
-
-    [HttpGet("{id}")]
-    public ActionResult<CategoryResponse> GetCategory(int id)
-    {
-        var category = _unitOfWork.Categories.GetById(id);
-
-        if (category == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(_categoriesService.ToCategoryResponse(category));
-    }
-
     [HttpPost]
-    public async Task<ActionResult<CategoryResponse>> PostCategory(CategoryRequest request)
+    public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
         var category = _categoriesService.ToCategory(request);
 
-        _context.Categories.Add(category);
-        await _context.SaveChangesAsync();
+        _unitOfWork.Categories.Add(category);
+        _unitOfWork.Complete();
 
         return CreatedAtAction("GetCategory", new { id = category.Id }, _categoriesService.ToCategoryResponse(category));
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCategory(int id)
-    {
-        var category = await _context.Categories.FindAsync(id);
-
-        if (category == null)
-        {
-            return NotFound();
-        }
-
-        _context.Categories.Remove(category);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
     }
 }
