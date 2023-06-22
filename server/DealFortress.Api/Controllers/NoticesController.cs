@@ -11,12 +11,12 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class NoticesController : ControllerBase
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ProductsService _productsService;
         private readonly CategoriesService _categoriesService;
         private readonly NoticesService _noticesService;
         
-        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, UnitOfWork unitOfWork)
+        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, IUnitOfWork unitOfWork)
         {
           
             _categoriesService = categoriesService;
@@ -28,13 +28,13 @@ namespace DealFortress.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
-           return _unitOfWork.Notices.GetAll().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
+           return _unitOfWork.Notices.GetAllWithProducts().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
         }
 
         [HttpGet("{id}")]
         public  ActionResult<NoticeResponse> GetNotice(int id)
         {
-            var notice = _unitOfWork.Notices.GetById(id);
+            var notice = _unitOfWork.Notices.GetByIdWithProducts(id);
 
             if (notice == null)  
             {
@@ -49,13 +49,18 @@ namespace DealFortress.Api.Controllers
         {
             var notice = _unitOfWork.Notices.GetById(id);
             
-            if(notice != null)
+            if(notice == null)
             {
-                _unitOfWork.Notices.Remove(notice);
+                return NotFound();
             }
-            
 
-            _context.SaveChanges();
+            _unitOfWork.Notices.Remove(notice);
+            var updatedNotice = _noticesService.ToNotice(noticeRequest);
+            updatedNotice.Id = notice.Id;
+
+            _unitOfWork.Notices.Add(updatedNotice);
+            _unitOfWork.Complete();
+
 
             return NoContent();
         }
@@ -75,7 +80,7 @@ namespace DealFortress.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteNotice(int id)
         {
-           var notice = _unitOfWork.Notices.GetById(id);
+            var notice = _unitOfWork.Notices.GetByIdWithProducts(id);
            
             if (notice == null)
             {

@@ -8,6 +8,7 @@ namespace DealFortress.Api.Repositories
     public interface IUnitOfWork : IDisposable
     {
         INoticesRepository Notices { get; }
+        ICategoriesRepository Categories {get; }
         int Complete();
     }
 }

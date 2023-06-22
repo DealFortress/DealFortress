@@ -6,8 +6,8 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Repositories
 {
-    public interface INoticesRepository: IRepository<Notice>
+    public interface ICategoriesRepository: IRepository<Notice>
     {
-        IEnumerable<Notice> GetAllWithProducts();
+
     }
 }

@@ -1,4 +1,5 @@
 using DealFortress.Api.Data;
+using DealFortress.Api.Repositories;
 using DealFortress.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ builder.Services.AddDbContext<DealFortressContext>(options =>
 builder.Services.AddSingleton<ProductsService>();
 builder.Services.AddSingleton<CategoriesService>();
 builder.Services.AddSingleton<NoticesService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 

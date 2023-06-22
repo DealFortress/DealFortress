@@ -9,10 +9,13 @@ namespace DealFortress.Api.Repositories
     {
         private readonly DealFortressContext _context;
         public INoticesRepository Notices { get; private set; }
+
+        public ICategoriesRepository Categories { get; private set; }
         public UnitOfWork(DealFortressContext context)
         {
             _context = context;
             Notices = new NoticesRepository(context);
+            Categories = new CategoriesRepository(context);
         }
         public int Complete()
         {
