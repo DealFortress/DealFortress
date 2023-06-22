@@ -48,24 +48,24 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public IActionResult DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-
+            var product = _unitOfWork.Products.GetById(id);
+           
             if (product == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Products.Remove(product);
+            _unitOfWork.Complete();
 
             return NoContent();
         }
 
         private bool ProductExists(int id)
         {
-            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_unitOfWork.Products?.GetAll().Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
