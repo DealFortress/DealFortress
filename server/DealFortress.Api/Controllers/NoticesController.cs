@@ -47,7 +47,13 @@ namespace DealFortress.Api.Controllers
         [HttpPut("{id}")]
         public IActionResult PutNotice(int id, NoticeRequest noticeRequest)
         {
-            _context.Entry(noticeRequest).State = EntityState.Modified;
+            var notice = _unitOfWork.Notices.GetById(id);
+            
+            if(notice != null)
+            {
+                _unitOfWork.Notices.Remove(notice);
+            }
+            
 
             _context.SaveChanges();
 
@@ -60,7 +66,7 @@ namespace DealFortress.Api.Controllers
             var notice = _noticesService.ToNotice(request);
 
             _unitOfWork.Notices.Add(notice);
-            
+
             _unitOfWork.Complete();
 
             return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponse(notice));
