@@ -7,42 +7,45 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Services;
+using DealFortress.Api.Repositories;
 
 namespace DealFortress.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class CategoriesController : ControllerBase
-{
-    private readonly DealFortressContext _context;
+ {
     private readonly ProductsService _productsService;
     private readonly CategoriesService _categoriesService;
 
-    public CategoriesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CategoriesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, IUnitOfWork unitOfWork)
     {
-        _context = context;
+      
         _productsService = productsService;
         _categoriesService = categoriesService;
+        _unitOfWork = unitOfWork;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
+    public ActionResult<IEnumerable<Category>> GetCategory()
     {
-        return await _context.Categories.ToListAsync();
+        return Ok(_unitOfWork.Categories.GetAll());
     }
 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<CategoryResponse>> GetCategory(int id)
+    public ActionResult<CategoryResponse> GetCategory(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = _unitOfWork.Categories.GetById(id);
 
         if (category == null)
         {
             return NotFound();
         }
 
-        return _categoriesService.ToCategoryResponse(category);
+        return Ok(_categoriesService.ToCategoryResponse(category));
     }
 
     [HttpPost]

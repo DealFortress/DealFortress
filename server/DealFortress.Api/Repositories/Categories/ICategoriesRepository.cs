@@ -6,7 +6,7 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Repositories
 {
-    public interface ICategoriesRepository: IRepository<Notice>
+    public interface ICategoriesRepository: IRepository<Category>
     {
 
     }

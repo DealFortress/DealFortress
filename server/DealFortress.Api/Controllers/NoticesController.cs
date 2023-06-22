@@ -28,7 +28,7 @@ namespace DealFortress.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
-           return _unitOfWork.Notices.GetAllWithProducts().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
+           return Ok(_unitOfWork.Notices.GetAllWithProducts().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList());
         }
 
         [HttpGet("{id}")]
@@ -41,7 +41,7 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
 
-            return _noticesService.ToNoticeResponse(notice);
+            return Ok(_noticesService.ToNoticeResponse(notice));
         }
 
         [HttpPut("{id}")]
