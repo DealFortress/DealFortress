@@ -11,31 +11,30 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class NoticesController : ControllerBase
     {
-        private readonly DealFortressContext _context;
+        private readonly UnitOfWork _unitOfWork;
         private readonly ProductsService _productsService;
         private readonly CategoriesService _categoriesService;
         private readonly NoticesService _noticesService;
-        private readonly NoticesRepository _noticesRepo;
         
-        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, NoticesRepository noticesRepo)
+        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, UnitOfWork unitOfWork)
         {
-            _context = context;
+          
             _categoriesService = categoriesService;
             _productsService = productsService;
             _noticesService = noticesService;
-            _noticesRepo = noticesRepo;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
-           return _noticesRepo.GetAll().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
+           return _unitOfWork.Notices.GetAll().Select(ad => _noticesService.ToNoticeResponse(ad)).ToList();
         }
 
         [HttpGet("{id}")]
         public  ActionResult<NoticeResponse> GetNotice(int id)
         {
-            var notice = _noticesRepo.GetById(id);
+            var notice = _unitOfWork.Notices.GetById(id);
 
             if (notice == null)  
             {
@@ -84,24 +83,24 @@ namespace DealFortress.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotice(int id)
+        public IActionResult DeleteNotice(int id)
         {
-            var notice = await _context.Notices.FindAsync(id);
-            
+           var notice = _unitOfWork.Notices.GetById(id);
+           
             if (notice == null)
             {
                 return NotFound();
             }
 
-            _context.Notices.Remove(notice);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Notices.Remove(notice);
+            _unitOfWork.Complete();
 
             return NoContent();
         }
 
         private bool NoticeExists(int id)
         {
-            return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_unitOfWork.Notices?.GetAll().Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
