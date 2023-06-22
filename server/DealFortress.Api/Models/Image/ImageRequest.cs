@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace DealFortress.Api.Models;
 
 public class ImageRequest

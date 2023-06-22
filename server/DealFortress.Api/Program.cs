@@ -1,9 +1,8 @@
 using DealFortress.Api.Data;
-using DealFortress.Api.Repositories;
 using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DealFortressContext>(options =>

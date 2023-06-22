@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
-using DealFortress.Api.Controllers;
 using DealFortress.Api.Services;
-using DealFortress.Api.Repositories;
 using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Controllers
