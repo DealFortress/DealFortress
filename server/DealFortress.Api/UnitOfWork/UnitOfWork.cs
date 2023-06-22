@@ -6,13 +6,15 @@ namespace DealFortress.Api.UnitOfWork
     {
         private readonly DealFortressContext _context;
         public INoticesRepository Notices { get; private set; }
-
         public ICategoriesRepository Categories { get; private set; }
+        public IProductsRepository Products { get; private set; }
+
         public UnitOfWork(DealFortressContext context)
         {
             _context = context;
             Notices = new NoticesRepository(context);
             Categories = new CategoriesRepository(context);
+            Products = new ProductsRepository(context);
         }
         public int Complete()
         {
