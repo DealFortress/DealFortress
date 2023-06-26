@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
-using DealFortress.Api.Controllers;
 using DealFortress.Api.Services;
+using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Controllers
 {
@@ -10,117 +9,93 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class NoticesController : ControllerBase
     {
-        private readonly DealFortressContext _context;
-        private readonly ProductService _productService;
-        private readonly CategoryService _categoryService;
-        private readonly NoticeService _noticeService;
-
-        public NoticesController(DealFortressContext context, ProductService productService, CategoryService categoryService, NoticeService noticeService)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ProductsService _productsService;
+        private readonly CategoriesService _categoriesService;
+        private readonly NoticesService _noticesService;
+        
+        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, IUnitOfWork unitOfWork)
         {
-            _context = context;
-            _categoryService = categoryService;
-            _productService = productService;
-            _noticeService = noticeService;
+          
+            _categoriesService = categoriesService;
+            _productsService = productsService;
+            _noticesService = noticesService;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<NoticeResponse>> GetNotice()
+        public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
-            return _context.Notices
-                        .Include(ad => ad.Products!)
-                        .ThenInclude(product => (product.Category))
-                        .Select(ad => _noticeService.ToNoticeResponse(ad)).ToList();
+            var noticesWithProducts = _unitOfWork.Notices.GetAllWithProducts();
+            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponse(notice)).ToList();
+            return Ok(noticesResponse);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<NoticeResponse>> GetNotice(int id)
+        public  ActionResult<NoticeResponse> GetNotice(int id)
         {
-            var notice = await _context.Notices.FindAsync(id);
+            var notice = _unitOfWork.Notices.GetByIdWithProducts(id);
 
-            if (notice == null)
+            if (notice == null)  
             {
                 return NotFound();
             }
 
-            return _noticeService.ToNoticeResponse(notice);
+            return Ok(_noticesService.ToNoticeResponse(notice));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotice(int id, Notice notice)
+        public IActionResult PutNotice(int id, NoticeRequest noticeRequest)
         {
-            if (id != notice.Id)
+            var notice = _unitOfWork.Notices.GetById(id);
+            
+            if(notice == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(notice).State = EntityState.Modified;
+            _unitOfWork.Notices.Remove(notice);
+            var updatedNotice = _noticesService.ToNotice(noticeRequest);
+            updatedNotice.Id = notice.Id;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NoticeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _unitOfWork.Notices.Add(updatedNotice);
+            _unitOfWork.Complete();
+
 
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<NoticeResponse>> postNotice(NoticeRequest request)
+        public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
         {
-            var notice = _noticeService.ToNotice(request);
+            var notice = _noticesService.ToNotice(request);
 
-            if (request.ProductRequests is not null)
-            {
-                var AllCategoriesExists = request.ProductRequests.All(request => _categoryService.CategoryExists(request.CategoryId, _context));
+            _unitOfWork.Notices.Add(notice);
 
-                if (AllCategoriesExists)
-                {
-                    var products = request.ProductRequests
-                                                    .Select( productRequest =>
-                                                    {
-                                                        var category = _context.Categories.Find(productRequest.CategoryId);
-                                                        return _productService.ToProduct(category!, productRequest, notice);
-                                                    });
+            _unitOfWork.Complete();
 
-                    notice.Products = products.ToList();
-                }
-            }
-
-            _context.Notices.Add(notice);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticeService.ToNoticeResponse(notice));
+            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponse(notice));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotice(int id)
+        public IActionResult DeleteNotice(int id)
         {
-            var notice = await _context.Notices.FindAsync(id);
-            
+            var notice = _unitOfWork.Notices.GetByIdWithProducts(id);
+           
             if (notice == null)
             {
                 return NotFound();
             }
 
-            _context.Notices.Remove(notice);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Notices.Remove(notice);
+            _unitOfWork.Complete();
 
             return NoContent();
         }
 
         private bool NoticeExists(int id)
         {
-            return (_context.Notices?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_unitOfWork.Notices?.GetAll().Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

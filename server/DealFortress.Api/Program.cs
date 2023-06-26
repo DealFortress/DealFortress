@@ -1,15 +1,17 @@
 using DealFortress.Api.Data;
 using DealFortress.Api.Services;
+using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSingleton<ProductService>();
-builder.Services.AddSingleton<CategoryService>();
-builder.Services.AddSingleton<NoticeService>();
+builder.Services.AddSingleton<ProductsService>();
+builder.Services.AddSingleton<CategoriesService>();
+builder.Services.AddSingleton<NoticesService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 

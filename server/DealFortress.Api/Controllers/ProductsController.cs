@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.Models;
 using DealFortress.Api.Services;
+using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Controllers
 {
@@ -14,75 +10,64 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly DealFortressContext _context;
-        private readonly ProductService _productService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ProductsService _productsService;
 
-        public ProductsController(DealFortressContext context, ProductService productService)
+        public ProductsController(IUnitOfWork unitOfWork, ProductsService productsService)
         {
-            _context = context;
-            _productService = productService;
+            _productsService = productsService;
+            _unitOfWork = unitOfWork;
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductResponse>> GetProduct()
+        public ActionResult<IEnumerable<ProductResponse>> GetProducts()
         {
-            return _context.Products
-                        .Include(product => product.Notice)
-                        .Include(product => product.Category)
-                        .Include(product => product.Images)
-                        .Select(product => _productService.ToProductResponse(product))
-                        .ToList();
+            var productsWithProducts = _unitOfWork.Products.GetAllWithEverything();
+            var productsResponse = productsWithProducts.Select(product => _productsService.ToProductResponse(product)).ToList();
+            return Ok(productsResponse);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public IActionResult PutProduct(int id, ProductRequest request)
         {
-            if (id != product.Id)
+            var product = _unitOfWork.Products.GetByIdWithEverything(id);
+
+            if(product == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _unitOfWork.Products.Remove(product);
+            var updatedproduct = _productsService.ToProduct(product.Category, request, product.Notice);
+            updatedproduct.Id = product.Id;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _unitOfWork.Products.Add(updatedproduct);
+            _unitOfWork.Complete();
+
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public IActionResult DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-
+            var product = _unitOfWork.Products.GetById(id);
+           
             if (product == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Products.Remove(product);
+            _unitOfWork.Complete();
 
             return NoContent();
         }
 
         private bool ProductExists(int id)
         {
-            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_unitOfWork.Products?.GetAll().Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,6 +1,3 @@
-
-using System.Text.Json.Serialization;
-
 namespace DealFortress.Api.Models
 {
     public class ProductRequest
