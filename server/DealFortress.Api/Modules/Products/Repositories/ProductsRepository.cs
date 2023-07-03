@@ -1,7 +1,8 @@
-using DealFortress.Api.Models;
+using DealFortress.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DealFortress.Api.Repositories
+
+namespace DealFortress.Api.Products
 {
     public class ProductsRepository: Repository<Product>, IProductsRepository
     {

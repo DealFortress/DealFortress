@@ -1,17 +1,16 @@
-using DealFortress.Api.Models;
 
-namespace DealFortress.Api.Repositories
+using DealFortress.Api.Repositories;
+
+namespace DealFortress.Api.Categories;
+public class CategoriesRepository : Repository<Category>, ICategoriesRepository
 {
-    public class CategoriesRepository: Repository<Category>, ICategoriesRepository
+    public CategoriesRepository(DealFortressContext context) : base(context)
     {
-        public CategoriesRepository(DealFortressContext context) : base(context)
-        {
 
-        }
+    }
 
-        public DealFortressContext DealFortressContext 
-        {
-            get { return Context as DealFortressContext; }
-        }
+    public DealFortressContext DealFortressContext
+    {
+        get { return Context as DealFortressContext; }
     }
 }

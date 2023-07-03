@@ -1,14 +1,16 @@
-namespace DealFortress.Api.Models
+
+using DealFortress.Api.Images;
+
+namespace DealFortress.Api.Products;
+
+public class ProductRequest
 {
-    public class ProductRequest
-    {
-        public required string Name { get; set; }
-        public required int Price { get; set; }
-        public required bool HasReceipt { get; set; }
-        public required bool IsSoldSeparately { get; set; }
-        public string? Warranty { get; set; }
-        public required int CategoryId { get; set; }
-        public required List<ImageRequest> Images { get; set; }
-        public required Condition Condition { get; set; }
-    }
+    public required string Name { get; set; }
+    public required int Price { get; set; }
+    public required bool HasReceipt { get; set; }
+    public required bool IsSoldSeparately { get; set; }
+    public string? Warranty { get; set; }
+    public required int CategoryId { get; set; }
+    public required Condition Condition { get; set; }
 }
+

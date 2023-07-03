@@ -1,10 +1,9 @@
-namespace DealFortress.Api.Models
-{
-    public class CategoryResponse
-    {
+using DealFortress.Api.Products;
 
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public virtual List<ProductResponse>? Products { get; set; }
-    }
+namespace DealFortress.Api.Categories;
+public class CategoryResponse
+{
+
+    public int Id { get; set; }
+    public required string Name { get; set; }
 }

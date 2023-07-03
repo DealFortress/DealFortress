@@ -1,6 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using DealFortress.Api.Images;
+using DealFortress.Api.Categories;
+using DealFortress.Api.Notices;
 
-namespace DealFortress.Api.Models;
+namespace DealFortress.Api.Products;
 public class Product
 {
     [Key]
@@ -11,7 +14,6 @@ public class Product
     public string? Warranty { get; set; }
     public required bool IsSold { get; set; }
     public required bool IsSoldSeparately { get; set; }
-    public required List<Image> Images { get; set; }
     public required Category Category { get; set; }
     public required Condition Condition { get; set; }
     public required Notice Notice { get; set; }

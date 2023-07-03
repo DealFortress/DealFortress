@@ -1,6 +1,7 @@
-using DealFortress.Api.Models;
 
-namespace DealFortress.Api.Repositories
+using DealFortress.Api.Repositories;
+
+namespace DealFortress.Api.Notices
 {
     public interface INoticesRepository: IRepository<Notice>
     {

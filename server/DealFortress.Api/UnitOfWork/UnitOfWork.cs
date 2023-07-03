@@ -1,4 +1,6 @@
-using DealFortress.Api.Repositories;
+using DealFortress.Api.Categories;
+using DealFortress.Api.Notices;
+using DealFortress.Api.Products;
 
 namespace DealFortress.Api.UnitOfWork
 {

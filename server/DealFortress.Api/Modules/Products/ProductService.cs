@@ -1,7 +1,9 @@
 
-using DealFortress.Api.Models;
+using DealFortress.Api.Categories;
+using DealFortress.Api.Images;
+using DealFortress.Api.Notices;
 
-namespace DealFortress.Api.Services
+namespace DealFortress.Api.Products
 {
     public class ProductsService
     {
@@ -17,7 +19,6 @@ namespace DealFortress.Api.Services
             CategoryId = product.Category.Id,
             CategoryName = product.Category.Name,
             Condition = product.Condition,
-            ImageIds = product.Images.Select(image => image.Id).ToList(),
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
             NoticeDeliveryMethod = product.Notice.DeliveryMethod,
@@ -26,7 +27,6 @@ namespace DealFortress.Api.Services
         }
         public Product ToProduct(Category category, ProductRequest request, Notice Notice)
         {
-            var images = request.Images.Select(image => new Image{Url = image.Url, Description = image.Description}).ToList();
 
             return new Product()
             {
@@ -34,7 +34,6 @@ namespace DealFortress.Api.Services
                 Price = request.Price,
                 HasReceipt = request.HasReceipt,
                 Warranty = request.Warranty,
-                Images = images,
                 Category = category!,
                 Condition = request.Condition,
                 IsSold = false,

@@ -1,5 +1,5 @@
 
-namespace DealFortress.Api.Models
+namespace DealFortress.Api.Categories
 {
     public class CategoryRequest
     {

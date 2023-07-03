@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DealFortress.Api.Models;
-using DealFortress.Api.Services;
+
 using DealFortress.Api.UnitOfWork;
 
-namespace DealFortress.Api.Controllers
+
+namespace DealFortress.Api.Products
 {
     [Route("api/[controller]")]
     [ApiController]

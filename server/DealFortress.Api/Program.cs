@@ -1,5 +1,7 @@
+using DealFortress.Api.Categories;
 using DealFortress.Api.Data;
-using DealFortress.Api.Services;
+using DealFortress.Api.Notices;
+using DealFortress.Api.Products;
 using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 

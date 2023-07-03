@@ -1,5 +1,9 @@
+
 using Bogus;
-using DealFortress.Api.Models;
+using DealFortress.Api.Categories;
+using DealFortress.Api.Images;
+using DealFortress.Api.Notices;
+using DealFortress.Api.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Api.Data;
@@ -142,14 +146,14 @@ public class SeedData
             .RuleFor(a => a.Warranty, bogus => bogus.Random.ArrayElement<string>(new string[]{"yes", "no", "yes, one year left"}))
             .RuleFor(a => a.IsSold, bogus => bogus.Random.Bool())
             .RuleFor(a => a.IsSoldSeparately, bogus => bogus.Random.Bool())
-            .RuleFor(a => a.Images, bogus =>
-                {
-                    var image = new Image(){Url="", Description=""};
-                    image.Description = bogus.Lorem.Sentence();
-                    image.Url = bogus.Image.PicsumUrl();
-                    // context.Images.Add(image);
-                    return new List<Image>(){image};
-                })
+            // .RuleFor(a => a.Images, bogus =>
+            //     {
+            //         var image = new Image(){Url="", Description=""};
+            //         image.Description = bogus.Lorem.Sentence();
+            //         image.Url = bogus.Image.PicsumUrl();
+            //         // context.Images.Add(image);
+            //         return new List<Image>(){image};
+            //     })
             .RuleFor(a => a.Category, bogus => {
                 categoryId = categories[bogus.Random.Number(0, categories.Count! - 1)].Id;
                 return categories.Find(category => category.Id == categoryId);

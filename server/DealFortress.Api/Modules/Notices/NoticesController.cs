@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using DealFortress.Api.Models;
-using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
+using DealFortress.Api.Categories;
+using DealFortress.Api.Products;
 
-namespace DealFortress.Api.Controllers
+namespace DealFortress.Api.Notices
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using DealFortress.Api.Models;
-using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
+using DealFortress.Api.Products;
 
-namespace DealFortress.Api.Controllers;
+namespace DealFortress.Api.Categories;
 
 [Route("api/[controller]")]
 [ApiController]
 public class CategoriesController : ControllerBase
- {
+{
     private readonly ProductsService _productsService;
     private readonly CategoriesService _categoriesService;
 

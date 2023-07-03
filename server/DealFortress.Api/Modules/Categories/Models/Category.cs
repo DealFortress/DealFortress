@@ -1,12 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using DealFortress.Api.Products;
 
-namespace DealFortress.Api.Models
+namespace DealFortress.Api.Categories;
+public class Category
 {
-    public class Category
-    {
-        [Key]
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public virtual List<Product>? Products { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
+    public required string Name { get; set; }
 }

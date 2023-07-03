@@ -1,31 +1,28 @@
-using DealFortress.Api.Models;
+using DealFortress.Api.Products;
 
-namespace DealFortress.Api.Services
+namespace DealFortress.Api.Categories;
+public class CategoriesService
 {
-    public class CategoriesService
+
+    private readonly ProductsService _productsService;
+    public CategoriesService(ProductsService productsService)
     {
+        _productsService = productsService;
+    }
 
-        private readonly ProductsService _productsService;
-        public CategoriesService(ProductsService productsService)
+    public CategoryResponse ToCategoryResponse(Category category)
+    {
+        return new CategoryResponse()
         {
-            _productsService = productsService; 
-        }
+            Id = category.Id,
+            Name = category.Name,
+        };
+    }
 
-        public CategoryResponse ToCategoryResponse(Category category)
-        {
-            return new CategoryResponse()
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Products = category.Products?.Select(product => _productsService.ToProductResponse(product)).ToList()
-            };
-        }
+    public Category ToCategory(CategoryRequest request) => new Category() { Name = request.Name };
 
-        public Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
-
-        public bool CategoryExists(int id, DealFortressContext context)
-        {
-            return (context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+    public bool CategoryExists(int id, DealFortressContext context)
+    {
+        return (context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }
