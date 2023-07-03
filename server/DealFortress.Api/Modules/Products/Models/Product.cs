@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using DealFortress.Api.Images;
 using DealFortress.Api.Categories;
 using DealFortress.Api.Notices;
 

@@ -1,6 +1,5 @@
 
 using DealFortress.Api.Categories;
-using DealFortress.Api.Images;
 using DealFortress.Api.Notices;
 
 namespace DealFortress.Api.Products

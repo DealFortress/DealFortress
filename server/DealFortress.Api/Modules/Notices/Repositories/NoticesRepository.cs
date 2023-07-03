@@ -15,8 +15,6 @@ namespace DealFortress.Api.Notices
             return  DealFortressContext.Notices
                         .Include(notice => notice.Products!)
                             .ThenInclude(product => (product.Category!))
-                        .Include(notice => notice.Products!)
-                            .ThenInclude(product => product.Images)
                         .ToList();
         }
 
@@ -25,8 +23,6 @@ namespace DealFortress.Api.Notices
             return DealFortressContext.Notices
                         .Include(notice => notice.Products!)
                             .ThenInclude(product => (product.Category!))
-                        .Include(notice => notice.Products!)
-                            .ThenInclude(product => product.Images)
                         .FirstOrDefault(notice => notice.Id == id);
         }
 

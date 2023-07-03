@@ -1,7 +1,6 @@
 
 using Bogus;
 using DealFortress.Api.Categories;
-using DealFortress.Api.Images;
 using DealFortress.Api.Notices;
 using DealFortress.Api.Products;
 using Microsoft.EntityFrameworkCore;

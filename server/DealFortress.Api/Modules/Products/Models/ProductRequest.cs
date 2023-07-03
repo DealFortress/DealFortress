@@ -1,5 +1,4 @@
 
-using DealFortress.Api.Images;
 
 namespace DealFortress.Api.Products;
 

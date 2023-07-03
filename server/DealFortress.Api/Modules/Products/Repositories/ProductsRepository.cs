@@ -15,7 +15,6 @@ namespace DealFortress.Api.Products
         {
             return DealFortressContext.Products
                             .Include(product => (product.Category!))
-                            .Include(product => product.Images)
                             .Include(product => product.Notice)
                             .ToList();
         }
@@ -24,7 +23,6 @@ namespace DealFortress.Api.Products
         {
             return DealFortressContext.Products
                             .Include(product => (product.Category!))
-                            .Include(product => product.Images)
                             .Include(product => product.Notice)
                             .FirstOrDefault();
         }
