@@ -1,5 +1,5 @@
 
-namespace DealFortress.Api.Products;
+namespace DealFortress.Api.Notices;
 
 public class ProductResponse
 {
@@ -9,7 +9,7 @@ public class ProductResponse
     public required bool HasReceipt { get; set; }
     public string? Warranty { get; set; }
     public required int CategoryId { get; set; }
-    public required string CategoryName { get; set; }
+    // public required string CategoryName { get; set; }
     public required Condition Condition { get; set; }
     public required int NoticeId { get; set; }
     public required string NoticeCity { get; set; }

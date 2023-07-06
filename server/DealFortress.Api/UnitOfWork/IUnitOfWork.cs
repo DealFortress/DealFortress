@@ -1,6 +1,6 @@
 using DealFortress.Api.Categories;
 using DealFortress.Api.Notices;
-using DealFortress.Api.Products;
+using DealFortress.Api.Notices;
 
 namespace DealFortress.Api.UnitOfWork
 {

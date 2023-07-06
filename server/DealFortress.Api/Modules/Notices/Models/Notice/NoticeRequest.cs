@@ -1,4 +1,4 @@
-using DealFortress.Api.Products;
+using DealFortress.Api.Notices;
 
 namespace DealFortress.Api.Notices;
 public class NoticeRequest

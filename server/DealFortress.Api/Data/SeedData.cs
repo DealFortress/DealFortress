@@ -2,7 +2,7 @@
 using Bogus;
 using DealFortress.Api.Categories;
 using DealFortress.Api.Notices;
-using DealFortress.Api.Products;
+using DealFortress.Api.Notices;
 using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Api.Data;

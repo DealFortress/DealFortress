@@ -2,7 +2,7 @@ using DealFortress.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace DealFortress.Api.Products
+namespace DealFortress.Api.Notices
 {
     public class ProductsRepository: Repository<Product>, IProductsRepository
     {

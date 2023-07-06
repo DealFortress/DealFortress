@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using DealFortress.Api.Products;
+using DealFortress.Api.Notices;
 
 namespace DealFortress.Api.Categories;
 public class Category

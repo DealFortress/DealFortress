@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using DealFortress.Api.Categories;
 using DealFortress.Api.Notices;
 
-namespace DealFortress.Api.Products;
+namespace DealFortress.Api.Notices;
 public class Product
 {
     [Key]

@@ -1,6 +1,6 @@
 
 
-namespace DealFortress.Api.Products;
+namespace DealFortress.Api.Notices;
 
 public class ProductRequest
 {

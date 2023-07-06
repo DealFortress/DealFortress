@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DealFortress.Api.UnitOfWork;
-using DealFortress.Api.Products;
+using DealFortress.Api.Notices;
 
 namespace DealFortress.Api.Categories;
 

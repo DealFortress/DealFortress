@@ -7,7 +7,7 @@ public class DealFortressContext : DbContext
     {
     }
 
-    public DbSet<DealFortress.Api.Products.Product> Products { get; set; } = default!;
+    public DbSet<DealFortress.Api.Notices.Product> Products { get; set; } = default!;
     public DbSet<DealFortress.Api.Notices.Notice> Notices { get; set; } = default!;
     public DbSet<DealFortress.Api.Categories.Category> Categories { get; set; } = default!;
 }

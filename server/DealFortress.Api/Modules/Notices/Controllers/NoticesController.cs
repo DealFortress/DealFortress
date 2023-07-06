@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DealFortress.Api.UnitOfWork;
 using DealFortress.Api.Categories;
-using DealFortress.Api.Products;
 
 namespace DealFortress.Api.Notices
 {
@@ -27,7 +26,7 @@ namespace DealFortress.Api.Notices
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
             var noticesWithProducts = _unitOfWork.Notices.GetAllWithProducts();
-            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponse(notice, notice.Products.Select(product => _productsService.ToProductResponse(product)))).ToList();
+            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponse(notice));
             return Ok(noticesResponse);
         }
 

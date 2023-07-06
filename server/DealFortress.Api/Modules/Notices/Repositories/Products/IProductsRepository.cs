@@ -1,7 +1,7 @@
-using DealFortress.Api.Products;
+using DealFortress.Api.Notices;
 using DealFortress.Api.Repositories;
 
-namespace DealFortress.Api.Products
+namespace DealFortress.Api.Notices
 {
     public interface IProductsRepository: IRepository<Product>
     {

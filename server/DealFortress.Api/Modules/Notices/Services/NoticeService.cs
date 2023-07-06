@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DealFortress.Api.Products;
+using DealFortress.Api.Categories;
 
 namespace DealFortress.Api.Notices
 {
     public class NoticesService
     {
-        public NoticeResponse ToNoticeResponse(Notice Notice, List<ProductResponse> products)
+        public NoticeResponse ToNoticeResponse(Notice Notice)
         {
             var response = new NoticeResponse()
             {
@@ -19,7 +19,7 @@ namespace DealFortress.Api.Notices
                 Payments = Notice.Payment.Split(","),
                 DeliveryMethods = Notice.DeliveryMethod.Split(","),
                 CreatedAt = Notice.CreatedAt,
-                Products = products
+                Products = Notice.Products.Select(product => ToProductResponse(product)).ToList()
             };
 
 

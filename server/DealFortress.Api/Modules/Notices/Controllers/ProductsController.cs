@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using DealFortress.Api.UnitOfWork;
 
 
-namespace DealFortress.Api.Products
+namespace DealFortress.Api.Notices
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,11 +25,7 @@ namespace DealFortress.Api.Products
         {
             var products = _unitOfWork.Products.GetAllWithEverything();
             
-            var productsResponse = products.Select(product => 
-                {
-                    var category = _unitOfWork.Categories.GetById(product.CategoryId);
-                    return _productsService.ToProductResponse(product, category!);
-                }).ToList();
+            var productsResponse = products.Select(product => _productsService.ToProductResponse(product)).ToList();
                 
             return Ok(productsResponse);
         }
