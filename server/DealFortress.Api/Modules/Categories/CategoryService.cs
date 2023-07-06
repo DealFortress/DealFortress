@@ -1,16 +1,10 @@
 using DealFortress.Api.Notices;
 
 namespace DealFortress.Api.Categories;
-public class CategoriesService
+public static class CategoriesService
 {
 
-    private readonly ProductsService _productsService;
-    public CategoriesService(ProductsService productsService)
-    {
-        _productsService = productsService;
-    }
-
-    public CategoryResponse ToCategoryResponse(Category category)
+    public static CategoryResponse ToCategoryResponse(Category category)
     {
         return new CategoryResponse()
         {
@@ -19,9 +13,9 @@ public class CategoriesService
         };
     }
 
-    public Category ToCategory(CategoryRequest request) => new Category() { Name = request.Name };
+    public static Category ToCategory(CategoryRequest request) => new Category() { Name = request.Name };
 
-    public bool CategoryExists(int id, DealFortressContext context)
+    public static bool CategoryExists(int id, DealFortressContext context)
     {
         return (context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
     }

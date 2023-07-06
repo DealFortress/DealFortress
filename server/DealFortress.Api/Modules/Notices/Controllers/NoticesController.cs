@@ -9,16 +9,9 @@ namespace DealFortress.Api.Notices
     public class NoticesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ProductsService _productsService;
-        private readonly CategoriesService _categoriesService;
-        private readonly NoticesService _noticesService;
-        
-        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, IUnitOfWork unitOfWork)
+
+        public NoticesController(DealFortressContext context, IUnitOfWork unitOfWork)
         {
-          
-            _categoriesService = categoriesService;
-            _productsService = productsService;
-            _noticesService = noticesService;
             _unitOfWork = unitOfWork;
         }
 
@@ -26,7 +19,7 @@ namespace DealFortress.Api.Notices
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
             var noticesWithProducts = _unitOfWork.Notices.GetAllWithProducts();
-            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponse(notice));
+            var noticesResponse = noticesWithProducts.Select(notice => NoticesService.ToNoticeResponse(notice));
             return Ok(noticesResponse);
         }
 
@@ -40,7 +33,7 @@ namespace DealFortress.Api.Notices
                 return NotFound();
             }
 
-            return Ok(_noticesService.ToNoticeResponse(notice));
+            return Ok(NoticesService.ToNoticeResponse(notice));
         }
 
         [HttpPut("{id}")]
@@ -54,7 +47,7 @@ namespace DealFortress.Api.Notices
             }
 
             _unitOfWork.Notices.Remove(notice);
-            var updatedNotice = _noticesService.ToNotice(noticeRequest);
+            var updatedNotice = NoticesService.ToNotice(noticeRequest);
             updatedNotice.Id = notice.Id;
 
             _unitOfWork.Notices.Add(updatedNotice);
@@ -67,13 +60,13 @@ namespace DealFortress.Api.Notices
         [HttpPost]
         public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
         {
-            var notice = _noticesService.ToNotice(request);
+            var notice = NoticesService.ToNotice(request);
 
             _unitOfWork.Notices.Add(notice);
 
             _unitOfWork.Complete();
 
-            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponse(notice));
+            return CreatedAtAction("GetNotice", new { id = notice.Id }, NoticesService.ToNoticeResponse(notice));
         }
 
         [HttpDelete("{id}")]

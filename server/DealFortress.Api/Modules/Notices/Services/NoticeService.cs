@@ -6,9 +6,9 @@ using DealFortress.Api.Categories;
 
 namespace DealFortress.Api.Notices
 {
-    public class NoticesService
+    public static class NoticesService
     {
-        public NoticeResponse ToNoticeResponse(Notice Notice)
+        public static NoticeResponse ToNoticeResponse(Notice Notice)
         {
             var response = new NoticeResponse()
             {
@@ -19,14 +19,14 @@ namespace DealFortress.Api.Notices
                 Payments = Notice.Payment.Split(","),
                 DeliveryMethods = Notice.DeliveryMethod.Split(","),
                 CreatedAt = Notice.CreatedAt,
-                Products = Notice.Products.Select(product => ToProductResponse(product)).ToList()
+                Products = Notice.Products.Select(product => ProductsService.ToProductResponse(product)).ToList()
             };
 
 
             return response;
         }
 
-        public Notice ToNotice(NoticeRequest request)
+        public static Notice ToNotice(NoticeRequest request)
         {
           return new Notice()
           {

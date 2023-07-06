@@ -11,11 +11,9 @@ namespace DealFortress.Api.Notices
     public class ProductsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ProductsService _productsService;
 
-        public ProductsController(IUnitOfWork unitOfWork, ProductsService productsService)
+        public ProductsController(IUnitOfWork unitOfWork)
         {
-            _productsService = productsService;
             _unitOfWork = unitOfWork;
         }
 
@@ -25,7 +23,7 @@ namespace DealFortress.Api.Notices
         {
             var products = _unitOfWork.Products.GetAllWithEverything();
             
-            var productsResponse = products.Select(product => _productsService.ToProductResponse(product)).ToList();
+            var productsResponse = products.Select(product => ProductsService.ToProductResponse(product)).ToList();
                 
             return Ok(productsResponse);
         }
@@ -41,7 +39,7 @@ namespace DealFortress.Api.Notices
             }
 
             _unitOfWork.Products.Remove(product);
-            var updatedproduct = _productsService.ToProduct(request, product.Notice);
+            var updatedproduct = ProductsService.ToProduct(request, product.Notice);
             updatedproduct.Id = product.Id;
 
             _unitOfWork.Products.Add(updatedproduct);

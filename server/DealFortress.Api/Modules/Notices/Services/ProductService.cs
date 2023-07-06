@@ -2,9 +2,9 @@
 
 namespace DealFortress.Api.Notices
 {
-    public class ProductsService
+    public static class ProductsService
     {
-        public ProductResponse ToProductResponse(Product product)
+        public static ProductResponse ToProductResponse(Product product)
         {
             return new ProductResponse()
             {
@@ -21,7 +21,7 @@ namespace DealFortress.Api.Notices
                 NoticePayment = product.Notice.Payment
             };
         }
-        public Product ToProduct(ProductRequest request, Notice Notice)
+        public static Product ToProduct(ProductRequest request, Notice Notice)
         {
 
             return new Product()
