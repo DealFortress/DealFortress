@@ -8,13 +8,7 @@ namespace DealFortress.Api.Notices
 {
     public class NoticesService
     {
-        private readonly ProductsService _productsService;
-        public NoticesService(ProductsService productsService)
-        {
-            _productsService = productsService;
-        }
-
-        public NoticeResponse ToNoticeResponse(Notice Notice)
+        public NoticeResponse ToNoticeResponse(Notice Notice, List<ProductResponse> products)
         {
             var response = new NoticeResponse()
             {
@@ -24,13 +18,10 @@ namespace DealFortress.Api.Notices
                 City = Notice.City,
                 Payments = Notice.Payment.Split(","),
                 DeliveryMethods = Notice.DeliveryMethod.Split(","),
-                CreatedAt = Notice.CreatedAt
+                CreatedAt = Notice.CreatedAt,
+                Products = products
             };
 
-            if (Notice.Products is not null)
-            {
-                response.Products = Notice.Products.Select(product => _productsService.ToProductResponse(product)).ToList();
-            }
 
             return response;
         }

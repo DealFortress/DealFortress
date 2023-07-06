@@ -13,7 +13,7 @@ public class Product
     public string? Warranty { get; set; }
     public required bool IsSold { get; set; }
     public required bool IsSoldSeparately { get; set; }
-    public required Category Category { get; set; }
+    public required int CategoryId { get; set; }
     public required Condition Condition { get; set; }
     public required Notice Notice { get; set; }
 }

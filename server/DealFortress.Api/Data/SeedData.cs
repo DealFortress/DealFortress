@@ -153,9 +153,8 @@ public class SeedData
             //         // context.Images.Add(image);
             //         return new List<Image>(){image};
             //     })
-            .RuleFor(a => a.Category, bogus => {
-                categoryId = categories[bogus.Random.Number(0, categories.Count! - 1)].Id;
-                return categories.Find(category => category.Id == categoryId);
+            .RuleFor(a => a.CategoryId, bogus => {
+                return categories[bogus.Random.Number(0, categories.Count! - 1)].Id;
                 })
             .RuleFor(a => a.Name, bogus => {
                 var currentCategoryName = categories.Find(category => category.Id == categoryId)!.Name;

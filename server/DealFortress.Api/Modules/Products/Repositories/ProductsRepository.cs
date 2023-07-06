@@ -14,7 +14,6 @@ namespace DealFortress.Api.Products
         public IEnumerable<Product> GetAllWithEverything()
         {
             return DealFortressContext.Products
-                            .Include(product => (product.Category!))
                             .Include(product => product.Notice)
                             .ToList();
         }
@@ -22,7 +21,6 @@ namespace DealFortress.Api.Products
         public Product? GetByIdWithEverything(int id)
         {
             return DealFortressContext.Products
-                            .Include(product => (product.Category!))
                             .Include(product => product.Notice)
                             .FirstOrDefault();
         }

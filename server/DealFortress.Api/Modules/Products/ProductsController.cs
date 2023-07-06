@@ -23,8 +23,14 @@ namespace DealFortress.Api.Products
         [HttpGet]
         public ActionResult<IEnumerable<ProductResponse>> GetProducts()
         {
-            var productsWithProducts = _unitOfWork.Products.GetAllWithEverything();
-            var productsResponse = productsWithProducts.Select(product => _productsService.ToProductResponse(product)).ToList();
+            var products = _unitOfWork.Products.GetAllWithEverything();
+            
+            var productsResponse = products.Select(product => 
+                {
+                    var category = _unitOfWork.Categories.GetById(product.CategoryId);
+                    return _productsService.ToProductResponse(product, category!);
+                }).ToList();
+                
             return Ok(productsResponse);
         }
 
@@ -39,7 +45,7 @@ namespace DealFortress.Api.Products
             }
 
             _unitOfWork.Products.Remove(product);
-            var updatedproduct = _productsService.ToProduct(product.Category, request, product.Notice);
+            var updatedproduct = _productsService.ToProduct(request, product.Notice);
             updatedproduct.Id = product.Id;
 
             _unitOfWork.Products.Add(updatedproduct);

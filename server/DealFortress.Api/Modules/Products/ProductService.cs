@@ -6,7 +6,7 @@ namespace DealFortress.Api.Products
 {
     public class ProductsService
     {
-        public ProductResponse ToProductResponse(Product product)
+        public ProductResponse ToProductResponse(Product product, Category category)
         {
           return new ProductResponse()
           {
@@ -15,8 +15,8 @@ namespace DealFortress.Api.Products
             Price = product.Price,
             HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
-            CategoryId = product.Category.Id,
-            CategoryName = product.Category.Name,
+            CategoryId = product.CategoryId,
+            CategoryName = category.Name,
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
@@ -24,7 +24,7 @@ namespace DealFortress.Api.Products
             NoticePayment = product.Notice.Payment
           };
         }
-        public Product ToProduct(Category category, ProductRequest request, Notice Notice)
+        public Product ToProduct(ProductRequest request, Notice Notice)
         {
 
             return new Product()
@@ -33,7 +33,7 @@ namespace DealFortress.Api.Products
                 Price = request.Price,
                 HasReceipt = request.HasReceipt,
                 Warranty = request.Warranty,
-                Category = category!,
+                CategoryId = request.CategoryId,
                 Condition = request.Condition,
                 IsSold = false,
                 IsSoldSeparately =false,

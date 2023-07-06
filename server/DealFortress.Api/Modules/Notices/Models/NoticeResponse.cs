@@ -10,5 +10,5 @@ public class NoticeResponse
     public required string[] Payments { get; set; }
     public required string[] DeliveryMethods { get; set; }
     public required DateTime CreatedAt { get; set; }
-    public virtual List<ProductResponse>? Products { get; set; }
+    public List<ProductResponse>? Products { get; set; }
 }
