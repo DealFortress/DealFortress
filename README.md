@@ -4,6 +4,8 @@
 Deal Fortress is a full-stack web application 
 made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 
+Frontend is a singlepage application using React and backend is a REST api with a modular monolith architecture. 
+
 <strong>
   
   Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/)  
@@ -31,11 +33,11 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 ## Tech stack
 
 
-  - .NET with C#
+  - .NET with C# 
 
   - Entity Framework
 
-  - React with Vite & Typescript
+  - React with Vite, Typescript & TanStack ReactQuery
 
   - Github Actions & Project
 
