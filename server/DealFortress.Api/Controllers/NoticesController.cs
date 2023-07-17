@@ -11,13 +11,10 @@ namespace DealFortress.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ProductsService _productsService;
-        private readonly CategoriesService _categoriesService;
         private readonly NoticesService _noticesService;
         
-        public NoticesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, NoticesService noticesService, IUnitOfWork unitOfWork)
+        public NoticesController(DealFortressContext context, ProductsService productsService, NoticesService noticesService, IUnitOfWork unitOfWork)
         {
-          
-            _categoriesService = categoriesService;
             _productsService = productsService;
             _noticesService = noticesService;
             _unitOfWork = unitOfWork;

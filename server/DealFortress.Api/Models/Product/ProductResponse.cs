@@ -10,7 +10,6 @@ namespace DealFortress.Api.Models
         public string? Warranty { get; set; }
 
         public required int CategoryId { get; set; }
-        public required string CategoryName { get; set; }
         public required Condition Condition { get; set; }
         public required List<int> ImageIds { get; set; }
         public required int NoticeId { get; set; }

@@ -14,8 +14,7 @@ namespace DealFortress.Api.Services
             Price = product.Price,
             HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
-            CategoryId = product.Category.Id,
-            CategoryName = product.Category.Name,
+            CategoryId = product.CategoryId,
             Condition = product.Condition,
             ImageIds = product.Images.Select(image => image.Id).ToList(),
             NoticeId = product.Notice.Id,
@@ -24,7 +23,7 @@ namespace DealFortress.Api.Services
             NoticePayment = product.Notice.Payment
           };
         }
-        public Product ToProduct(Category category, ProductRequest request, Notice Notice)
+        public Product ToProduct(ProductRequest request, Notice Notice)
         {
             var images = request.Images.Select(image => new Image{Url = image.Url, Description = image.Description}).ToList();
 
@@ -35,7 +34,7 @@ namespace DealFortress.Api.Services
                 HasReceipt = request.HasReceipt,
                 Warranty = request.Warranty,
                 Images = images,
-                Category = category!,
+                CategoryId = request.CategoryId,
                 Condition = request.Condition,
                 IsSold = false,
                 IsSoldSeparately =false,

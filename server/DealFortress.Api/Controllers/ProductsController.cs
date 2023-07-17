@@ -39,7 +39,7 @@ namespace DealFortress.Api.Controllers
             }
 
             _unitOfWork.Products.Remove(product);
-            var updatedproduct = _productsService.ToProduct(product.Category, request, product.Notice);
+            var updatedproduct = _productsService.ToProduct(request, product.Notice);
             updatedproduct.Id = product.Id;
 
             _unitOfWork.Products.Add(updatedproduct);
