@@ -3,22 +3,16 @@ using DealFortress.Api.Models;
 using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
 
-namespace DealFortress.Api.Controllers;
+namespace DealFortress.Api.Modules.Categories;
 
 [Route("api/[controller]")]
 [ApiController]
 public class CategoriesController : ControllerBase
  {
-    private readonly ProductsService _productsService;
-    private readonly CategoriesService _categoriesService;
-
     private readonly IUnitOfWork _unitOfWork;
 
-    public CategoriesController(DealFortressContext context, ProductsService productsService, CategoriesService categoriesService, IUnitOfWork unitOfWork)
+    public CategoriesController(DealFortressContext context, IUnitOfWork unitOfWork)
     {
-      
-        _productsService = productsService;
-        _categoriesService = categoriesService;
         _unitOfWork = unitOfWork;
     }
 
@@ -31,11 +25,11 @@ public class CategoriesController : ControllerBase
     [HttpPost]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
-        var category = _categoriesService.ToCategory(request);
+        var category = CategoriesService.ToCategory(request);
 
         _unitOfWork.Categories.Add(category);
         _unitOfWork.Complete();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, _categoriesService.ToCategoryResponse(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, CategoriesService.ToCategoryResponse(category));
     }
 }

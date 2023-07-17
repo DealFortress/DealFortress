@@ -1,7 +1,7 @@
-using DealFortress.Api.Models;
+using DealFortress.Api.Repositories;
 
-namespace DealFortress.Api.Repositories
-{
+namespace DealFortress.Api.Modules.Categories;
+
     public class CategoriesRepository: Repository<Category>, ICategoriesRepository
     {
         public CategoriesRepository(DealFortressContext context) : base(context)
@@ -14,4 +14,3 @@ namespace DealFortress.Api.Repositories
             get { return Context as DealFortressContext; }
         }
     }
-}

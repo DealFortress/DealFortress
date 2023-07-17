@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using DealFortress.Api.Modules.Categories;
 
     public class DealFortressContext : DbContext
     {
