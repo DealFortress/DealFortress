@@ -1,3 +1,4 @@
+using DealFortress.Api.Modules.Categories;
 using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+var context = app.Services.GetService<DealFortressContext>();
+var unitOfWork = app.Services.GetService<IUnitOfWork>();
+var categoriesModule = new CategoriesModule(context!, unitOfWork!);
 
 if (app.Environment.IsDevelopment())
 {
