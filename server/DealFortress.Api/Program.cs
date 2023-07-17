@@ -1,4 +1,3 @@
-using DealFortress.Api.Data;
 using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSingleton<ProductsService>();
-builder.Services.AddSingleton<CategoriesService>();
 builder.Services.AddSingleton<NoticesService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -34,7 +32,7 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
     var services = scope.ServiceProvider;
-    SeedData.Initialize(services);
+    // SeedData.Initialize(services);
     }
 }
 

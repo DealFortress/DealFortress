@@ -1,4 +1,5 @@
 using DealFortress.Api.Repositories;
+using DealFortress.Api.Modules.Categories;
 
 
 namespace DealFortress.Api.UnitOfWork
