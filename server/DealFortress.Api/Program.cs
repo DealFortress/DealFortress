@@ -1,4 +1,4 @@
-using DealFortress.Api.Data;
+using DealFortress.Api.Modules.Categories;
 using DealFortress.Api.Services;
 using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,6 @@ builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSingleton<ProductsService>();
-builder.Services.AddSingleton<CategoriesService>();
 builder.Services.AddSingleton<NoticesService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -19,6 +18,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+var context = app.Services.GetService<DealFortressContext>();
+var unitOfWork = app.Services.GetService<IUnitOfWork>();
+var categoriesModule = new CategoriesModule(context!, unitOfWork!);
 
 if (app.Environment.IsDevelopment())
 {
@@ -34,7 +37,7 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
     var services = scope.ServiceProvider;
-    SeedData.Initialize(services);
+    // SeedData.Initialize(services);
     }
 }
 
