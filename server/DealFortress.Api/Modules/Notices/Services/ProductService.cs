@@ -2,9 +2,9 @@
 using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Modules.Notices;
-public class ProductsService
+public static class ProductsService
 {
-    public ProductResponse ToProductResponseDTO(Product product)
+    public static ProductResponse ToProductResponseDTO(Product product)
     {
         return new ProductResponse()
         {
@@ -23,7 +23,7 @@ public class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public Product ToProduct(ProductRequest request, Notice Notice)
+    public static Product ToProduct(ProductRequest request, Notice Notice)
     {
         return new Product()
         {

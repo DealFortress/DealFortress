@@ -6,15 +6,10 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Modules.Notices;
 
-public class NoticesService
+public  static class NoticesService
 {
-    private readonly ProductsService _productsService;
-    public NoticesService(ProductsService productsService)
-    {
-        _productsService = productsService;
-    }
 
-    public NoticeResponse ToNoticeResponseDTODTO(Notice Notice)
+    public static NoticeResponse ToNoticeResponseDTO(Notice Notice)
     {
         var response = new NoticeResponse()
         {
@@ -29,13 +24,13 @@ public class NoticesService
 
         if (Notice.Products is not null)
         {
-            response.Products = Notice.Products.Select(product => _productsService.ToProductResponseDTO(product)).ToList();
+            response.Products = Notice.Products.Select(product => ProductsService.ToProductResponseDTO(product)).ToList();
         }
 
         return response;
     }
 
-    public Notice ToNotice(NoticeRequest request)
+    public static Notice ToNotice(NoticeRequest request)
     {
         return new Notice()
         {
