@@ -8,7 +8,7 @@
 // {
 //     public static void Initialize(IServiceProvider serviceProvider)
 //     {
-//         using (var context = new DealFortressContext(serviceProvider.GetRequiredService<DbContextOptions<DealFortressContext>>()))
+//         using (var context = new NoticesContext(serviceProvider.GetRequiredService<DbContextOptions<NoticesContext>>()))
 //         {
 //             if(context.Notices!.Any())
 //             {

@@ -1,8 +1,8 @@
 using DealFortress.Api.Data;
 using Microsoft.EntityFrameworkCore;
-    public class CategoryContext : DbContext, IDbContext
+    public class CategoriesContext : DbContext, IDbContext
     {
-        public CategoryContext (DbContextOptions<CategoryContext> options)
+        public CategoriesContext (DbContextOptions<CategoriesContext> options)
             : base(options)
         {
         }
@@ -10,6 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("category");
+            modelBuilder.HasDefaultSchema("categories");
         }
     }

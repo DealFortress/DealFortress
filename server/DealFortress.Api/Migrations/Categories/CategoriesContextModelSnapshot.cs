@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations.Category
+namespace DealFortress.Api.Migrations.Categories
 {
-    [DbContext(typeof(CategoryContext))]
-    partial class CategoryContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CategoriesContext))]
+    partial class CategoriesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("category")
+                .HasDefaultSchema("categories")
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -35,7 +35,7 @@ namespace DealFortress.Api.Migrations.Category
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", "category");
+                    b.ToTable("Categories", "categories");
                 });
 #pragma warning restore 612, 618
         }

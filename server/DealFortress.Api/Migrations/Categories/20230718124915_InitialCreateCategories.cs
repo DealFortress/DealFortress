@@ -2,20 +2,20 @@
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations.Category
+namespace DealFortress.Api.Migrations.Categories
 {
     /// <inheritdoc />
-    public partial class SplitContext : Migration
+    public partial class InitialCreateCategories : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "category");
+                name: "categories");
 
             migrationBuilder.CreateTable(
                 name: "Categories",
-                schema: "category",
+                schema: "categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,7 +33,7 @@ namespace DealFortress.Api.Migrations.Category
         {
             migrationBuilder.DropTable(
                 name: "Categories",
-                schema: "category");
+                schema: "categories");
         }
     }
 }

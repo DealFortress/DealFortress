@@ -9,38 +9,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DealFortress.Api.Migrations
 {
-    [DbContext(typeof(DealFortressContext))]
-    partial class DealFortressContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(NoticesContext))]
+    partial class NoticesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("dealFortress")
+                .HasDefaultSchema("notices")
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DealFortress.Api.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images", "dealFortress");
-                });
 
             modelBuilder.Entity("DealFortress.Api.Modules.Notices.Notice", b =>
                 {
@@ -75,7 +55,7 @@ namespace DealFortress.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notices", "dealFortress");
+                    b.ToTable("Notices", "notices");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Modules.Notices.Product", b =>
@@ -122,7 +102,7 @@ namespace DealFortress.Api.Migrations
 
                     b.HasIndex("NoticeId");
 
-                    b.ToTable("Products", "dealFortress");
+                    b.ToTable("Products", "notices");
                 });
 
             modelBuilder.Entity("DealFortress.Api.Modules.Notices.Product", b =>

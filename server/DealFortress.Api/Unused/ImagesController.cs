@@ -7,9 +7,9 @@ namespace DealFortress.Api.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        // private readonly DealFortressContext _context;
+        // private readonly NoticesContext _context;
 
-        // public ImagesController(DealFortressContext context)
+        // public ImagesController(NoticesContext context)
         // {
         //     _context = context;
         // }
@@ -81,7 +81,7 @@ namespace DealFortress.Api.Controllers
         // {
         //   if (_context.Images == null)
         //   {
-        //       return Problem("Entity set 'DealFortressContext.Image'  is null.");
+        //       return Problem("Entity set 'NoticesContext.Image'  is null.");
         //   }
         //     _context.Images.Add(image);
         //     await _context.SaveChangesAsync();
