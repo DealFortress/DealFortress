@@ -7,9 +7,8 @@ namespace DealFortress.Api.Modules.Notices;
 public class NoticesRepository : Repository<Notice>, INoticesRepository
 {
     public NoticesRepository(DealFortressContext context) : base(context)
-    {
-
-    }
+    {}
+    
     public IEnumerable<Notice> GetAllWithProducts()
     {
         return DealFortressContext.Notices

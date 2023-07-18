@@ -12,7 +12,6 @@ public class NoticesController : ControllerBase
     public NoticesController(NoticesRepository repository)
     {
         _repo = repository;
-        
     }
 
     [HttpGet]
