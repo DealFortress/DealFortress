@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDbContext<CategoryContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -13,9 +16,12 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-var context = app.Services.GetService<DealFortressContext>();
-
-var categoriesModule = new CategoriesModule(context);
+// using (var scope = app.Services.CreateScope())
+// {
+//     var service = scope.ServiceProvider;
+//     var context = service.GetRequiredService<CategoryContext>();
+//     var categoriesModule = new CategoriesModule(context!);
+// }
 
 if (app.Environment.IsDevelopment())
 {
@@ -28,11 +34,6 @@ if (app.Environment.IsDevelopment())
         .AllowAnyHeader();
     });
 
-    using (var scope = app.Services.CreateScope())
-    {
-    var services = scope.ServiceProvider;
-    // SeedData.Initialize(services);
-    }
 }
 
 app.UseHttpsRedirection();

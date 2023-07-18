@@ -4,13 +4,13 @@ namespace DealFortress.Api.Modules.Categories;
 
     public class CategoriesRepository: Repository<Category>, ICategoriesRepository
     {
-        public CategoriesRepository(DealFortressContext context) : base(context)
+        public CategoriesRepository(CategoryContext context) : base(context)
         {
 
         }
 
-        public DealFortressContext DealFortressContext 
+        public CategoryContext CategoryContext 
         {
-            get { return Context as DealFortressContext; }
+            get { return Context as CategoryContext; }
         }
     }

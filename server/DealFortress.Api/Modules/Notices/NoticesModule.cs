@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DealFortress.Api.Data;
 
 namespace DealFortress.Api.Modules.Notices
 {
@@ -12,8 +13,8 @@ namespace DealFortress.Api.Modules.Notices
 
         private readonly ProductsRepository _productRepo;
         public ProductsController ProductController;
-        
-        public NoticesModule(DealFortressContext context)
+
+        public NoticesModule(IDbContext context)
         {
             _noticeRepo = new NoticesRepository(context);
             NoticeController = new NoticesController(_noticeRepo);

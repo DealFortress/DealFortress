@@ -8,7 +8,7 @@ public class CategoriesController : ControllerBase
  {
     private readonly CategoriesRepository _repo;
 
-    public CategoriesController(DealFortressContext context, CategoriesRepository repo)
+    public CategoriesController(CategoriesRepository repo)
     {
         _repo = repo;
     }

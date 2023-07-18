@@ -1,5 +1,7 @@
+using DealFortress.Api.Data;
 using Microsoft.EntityFrameworkCore;
-    public class DealFortressContext : DbContext
+
+    public class DealFortressContext : DbContext, IDbContext
     {
         public DealFortressContext (DbContextOptions<DealFortressContext> options)
             : base(options)

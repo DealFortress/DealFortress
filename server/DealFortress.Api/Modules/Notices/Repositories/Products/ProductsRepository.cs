@@ -1,3 +1,4 @@
+using DealFortress.Api.Data;
 using DealFortress.Api.Models;
 using DealFortress.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ namespace DealFortress.Api.Modules.Notices;
 
 public class ProductsRepository : Repository<Product>, IProductsRepository
 {
-    public ProductsRepository(DealFortressContext context) : base(context)
+    public ProductsRepository(IDbContext context) : base(context)
     {}
 
     public IEnumerable<Product> GetAllWithEverything()
