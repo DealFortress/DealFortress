@@ -11,7 +11,10 @@ using Microsoft.EntityFrameworkCore;
         public DbSet<DealFortress.Api.Models.Image> Images { get; set; } = default!;
         public DbSet<DealFortress.Api.Modules.Notices.Product> Products { get; set; } = default!;
         public DbSet<DealFortress.Api.Modules.Notices.Notice> Notices { get; set; } = default!;
-        public DbSet<DealFortress.Api.Modules.Categories.Category> Categories { get; set; } = default!;
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("dealFortress");
+        }
 
     }
