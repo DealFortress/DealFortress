@@ -3,13 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DealFortressContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// builder.Services.AddDbContext<DealFortressContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 builder.Services.AddDbContext<CategoryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<CategoriesModule>();
 
-// builder.Services.AddSingleton<CategoriesModule>();
 
 builder.Services.AddControllers();
 
@@ -17,13 +20,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var service = scope.ServiceProvider;
-    var context = service.GetRequiredService<CategoryContext>();
-    var categoriesModule = new CategoriesModule(context!);
-}
 
 if (app.Environment.IsDevelopment())
 {

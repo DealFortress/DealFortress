@@ -16,27 +16,11 @@ namespace DealFortress.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasDefaultSchema("dealFortress")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DealFortress.Api.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
 
             modelBuilder.Entity("DealFortress.Api.Models.Image", b =>
                 {
@@ -49,21 +33,16 @@ namespace DealFortress.Api.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Images");
+                    b.ToTable("Images", "dealFortress");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
+            modelBuilder.Entity("DealFortress.Api.Modules.Notices.Notice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,10 +75,10 @@ namespace DealFortress.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notices");
+                    b.ToTable("Notices", "dealFortress");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
+            modelBuilder.Entity("DealFortress.Api.Modules.Notices.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,6 +88,10 @@ namespace DealFortress.Api.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Condition")
                         .HasColumnType("int");
@@ -137,52 +120,25 @@ namespace DealFortress.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("NoticeId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", "dealFortress");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Image", b =>
+            modelBuilder.Entity("DealFortress.Api.Modules.Notices.Product", b =>
                 {
-                    b.HasOne("DealFortress.Api.Models.Product", null)
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
-                {
-                    b.HasOne("DealFortress.Api.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DealFortress.Api.Models.Notice", "Notice")
+                    b.HasOne("DealFortress.Api.Modules.Notices.Notice", "Notice")
                         .WithMany("Products")
                         .HasForeignKey("NoticeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-
                     b.Navigation("Notice");
                 });
 
-            modelBuilder.Entity("DealFortress.Api.Models.Category", b =>
+            modelBuilder.Entity("DealFortress.Api.Modules.Notices.Notice", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("DealFortress.Api.Models.Notice", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("DealFortress.Api.Models.Product", b =>
-                {
-                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

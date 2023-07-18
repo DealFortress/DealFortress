@@ -6,9 +6,9 @@ namespace DealFortress.Api.Modules.Categories;
 [ApiController]
 public class CategoriesController : ControllerBase
  {
-    private readonly CategoriesRepository _repo;
+    private readonly ICategoriesRepository _repo;
 
-    public CategoriesController(CategoriesRepository repo)
+    public CategoriesController(ICategoriesRepository repo)
     {
         _repo = repo;
     }

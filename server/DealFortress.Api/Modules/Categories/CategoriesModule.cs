@@ -5,12 +5,12 @@ namespace DealFortress.Api.Modules.Categories
     {
         public CategoriesController Controller;
         private CategoryContext _context;
-        private readonly CategoriesRepository _repo;
+        private readonly ICategoriesRepository _repo;
 
-        public CategoriesModule(CategoryContext context)
+        public CategoriesModule(CategoryContext context, ICategoriesRepository repo)
         {
             _context = context;
-            _repo = new CategoriesRepository(context);
+            _repo = repo;
             Controller = new CategoriesController( _repo);
         }
 
