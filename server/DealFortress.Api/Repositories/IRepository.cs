@@ -1,7 +1,7 @@
 
 namespace DealFortress.Api.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> : IDisposable where T : class
     {
         IEnumerable<T> GetAll();
         T? GetById(int id);
@@ -12,5 +12,7 @@ namespace DealFortress.Api.Repositories
 
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
+
+        void Complete();
     }
 }

@@ -24,7 +24,7 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
         {
             var noticesWithProducts = _unitOfWork.Notices.GetAllWithProducts();
-            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponse(notice)).ToList();
+            var noticesResponse = noticesWithProducts.Select(notice => _noticesService.ToNoticeResponseDTO(notice)).ToList();
             return Ok(noticesResponse);
         }
 
@@ -38,7 +38,7 @@ namespace DealFortress.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(_noticesService.ToNoticeResponse(notice));
+            return Ok(_noticesService.ToNoticeResponseDTO(notice));
         }
 
         [HttpPut("{id}")]
@@ -71,7 +71,7 @@ namespace DealFortress.Api.Controllers
 
             _unitOfWork.Complete();
 
-            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponse(notice));
+            return CreatedAtAction("GetNotice", new { id = notice.Id }, _noticesService.ToNoticeResponseDTODTO(notice));
         }
 
         [HttpDelete("{id}")]

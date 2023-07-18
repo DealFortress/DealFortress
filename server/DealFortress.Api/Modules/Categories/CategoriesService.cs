@@ -4,7 +4,7 @@ namespace DealFortress.Api.Modules.Categories;
 
     public static class CategoriesService
     {
-        public static CategoryResponse ToCategoryResponse(Category category)
+        public static CategoryResponse ToCategoryResponseDTO(Category category)
         {
             return new CategoryResponse()
             {

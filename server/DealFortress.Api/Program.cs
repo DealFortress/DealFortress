@@ -1,6 +1,4 @@
 using DealFortress.Api.Modules.Categories;
-using DealFortress.Api.Services;
-using DealFortress.Api.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSingleton<ProductsService>();
-builder.Services.AddSingleton<NoticesService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 
@@ -20,8 +16,8 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 var context = app.Services.GetService<DealFortressContext>();
-var unitOfWork = app.Services.GetService<IUnitOfWork>();
-var categoriesModule = new CategoriesModule(context!, unitOfWork!);
+
+var categoriesModule = new CategoriesModule(context!);
 
 if (app.Environment.IsDevelopment())
 {

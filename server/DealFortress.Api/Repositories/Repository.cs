@@ -45,5 +45,14 @@ namespace DealFortress.Api.Repositories
         {
             Context.Set<T>().RemoveRange(entities);
         }
+        
+        public void Complete()
+        {
+            Context.SaveChanges();
+        }
+        public void Dispose()
+        {
+            Context.Dispose();
+        }
     }
 }

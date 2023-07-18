@@ -24,7 +24,7 @@ namespace DealFortress.Api.Controllers
         public ActionResult<IEnumerable<ProductResponse>> GetProducts()
         {
             var productsWithProducts = _unitOfWork.Products.GetAllWithEverything();
-            var productsResponse = productsWithProducts.Select(product => _productsService.ToProductResponse(product)).ToList();
+            var productsResponse = productsWithProducts.Select(product => _productsService.ToProductResponseDTO(product)).ToList();
             return Ok(productsResponse);
         }
 
