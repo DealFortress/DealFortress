@@ -14,8 +14,6 @@ public class NoticesRepository : Repository<Notice>, INoticesRepository
     {
         return DealFortressContext.Notices
                     .Include(notice => notice.Products!)
-                    .Include(notice => notice.Products!)
-                        .ThenInclude(product => product.Images)
                     .ToList();
     }
 
@@ -23,8 +21,6 @@ public class NoticesRepository : Repository<Notice>, INoticesRepository
     {
         return DealFortressContext.Notices
                     .Include(notice => notice.Products!)
-                    .Include(notice => notice.Products!)
-                        .ThenInclude(product => product.Images)
                     .FirstOrDefault(notice => notice.Id == id);
     }
 

@@ -14,7 +14,6 @@ public class ProductsRepository : Repository<Product>, IProductsRepository
     public IEnumerable<Product> GetAllWithEverything()
     {
         return DealFortressContext.Products
-                        .Include(product => product.Images)
                         .Include(product => product.Notice)
                         .ToList();
     }
@@ -22,7 +21,6 @@ public class ProductsRepository : Repository<Product>, IProductsRepository
     public Product? GetByIdWithEverything(int id)
     {
         return DealFortressContext.Products
-                        .Include(product => product.Images)
                         .Include(product => product.Notice)
                         .FirstOrDefault();
     }
