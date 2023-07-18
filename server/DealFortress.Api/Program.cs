@@ -6,8 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DealFortressContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -17,7 +15,7 @@ var app = builder.Build();
 
 var context = app.Services.GetService<DealFortressContext>();
 
-var categoriesModule = new CategoriesModule(context!);
+var categoriesModule = new CategoriesModule(context);
 
 if (app.Environment.IsDevelopment())
 {
