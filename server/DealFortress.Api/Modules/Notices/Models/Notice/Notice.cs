@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DealFortress.Api.Models
-{
+namespace DealFortress.Api.Modules.Notices;
+
     public class Notice
     {
         [Key]
@@ -16,4 +16,3 @@ namespace DealFortress.Api.Models
         public required string DeliveryMethod { get; set; }
     }
 
-}

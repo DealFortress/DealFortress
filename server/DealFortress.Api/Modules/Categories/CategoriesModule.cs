@@ -1,14 +1,15 @@
-using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Modules.Categories
 {
     public class CategoriesModule
     {
         public CategoriesController Controller;
+        public CategoriesRepository Repo;
 
-        public CategoriesModule(DealFortressContext context, IUnitOfWork unitOfWork)
+        public CategoriesModule(DealFortressContext context)
         {
-            Controller = new CategoriesController(context, unitOfWork);
+            Repo = new CategoriesRepository(context);
+            Controller = new CategoriesController(context, Repo);
         }
 
 

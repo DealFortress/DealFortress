@@ -1,5 +1,5 @@
-namespace DealFortress.Api.Models
-{
+namespace DealFortress.Api.Modules.Notices;
+
     public class NoticeRequest
     {
         public required string Title { get; set; }
@@ -10,4 +10,3 @@ namespace DealFortress.Api.Models
         public virtual List<ProductRequest>? ProductRequests { get; set; }
     }
 
-}

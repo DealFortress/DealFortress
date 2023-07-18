@@ -1,5 +1,5 @@
-namespace DealFortress.Api.Models
-{
+namespace DealFortress.Api.Modules.Notices;
+
     public class NoticeResponse
     {
         public int Id { get; set; }
@@ -12,4 +12,3 @@ namespace DealFortress.Api.Models
         public virtual List<ProductResponse>? Products { get; set; }
     }
 
-}

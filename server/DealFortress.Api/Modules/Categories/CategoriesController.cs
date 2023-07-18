@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using DealFortress.Api.Models;
-using DealFortress.Api.Services;
-using DealFortress.Api.UnitOfWork;
 
 namespace DealFortress.Api.Modules.Categories;
 
@@ -9,17 +6,17 @@ namespace DealFortress.Api.Modules.Categories;
 [ApiController]
 public class CategoriesController : ControllerBase
  {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly CategoriesRepository _repo;
 
-    public CategoriesController(DealFortressContext context, IUnitOfWork unitOfWork)
+    public CategoriesController(DealFortressContext context, CategoriesRepository repo)
     {
-        _unitOfWork = unitOfWork;
+        _repo = repo;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<Category>> GetCategory()
     {
-        return Ok(_unitOfWork.Categories.GetAll());
+        return Ok(_repo.GetAll());
     }
 
     [HttpPost]
@@ -27,9 +24,11 @@ public class CategoriesController : ControllerBase
     {
         var category = CategoriesService.ToCategory(request);
 
-        _unitOfWork.Categories.Add(category);
-        _unitOfWork.Complete();
+        _repo.Add(category);
+        _repo.Complete();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, CategoriesService.ToCategoryResponse(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, CategoriesService.ToCategoryResponseDTO(category));
     }
 }
+
+
