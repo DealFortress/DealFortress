@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DealFortress.Api.Data;
-
 namespace DealFortress.Api.Modules.Notices
 {
     public class NoticesModule
