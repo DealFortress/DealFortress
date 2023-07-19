@@ -59,9 +59,4 @@ public class ProductsController : ControllerBase
 
         return NoContent();
     }
-
-    private bool ProductExists(int id)
-    {
-        return _repo.GetAll().Any(e => e.Id == id);
-    }
 }
