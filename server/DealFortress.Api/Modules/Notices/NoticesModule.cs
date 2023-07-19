@@ -1,3 +1,5 @@
+using DealFortress.Api.Modules.Categories;
+
 namespace DealFortress.Api.Modules.Notices
 {
     public class NoticesModule
@@ -5,10 +7,11 @@ namespace DealFortress.Api.Modules.Notices
         public NoticesController NoticeController;
         public ProductsController ProductController;
 
-        public NoticesModule(NoticesContext context, IProductsRepository productRepo, INoticesRepository noticeRepo)
+        public NoticesModule(NoticesContext context, IProductsRepository productRepo, INoticesRepository noticeRepo, CategoriesModule categoriesModule, ProductsService productsService, NoticesService noticesService)
         {
-            NoticeController = new NoticesController(noticeRepo);
-            ProductController = new ProductsController(productRepo);
+            ProductController = new ProductsController(productRepo, productsService);
+
+            NoticeController = new NoticesController(noticeRepo, noticesService);
         }
     }
 }

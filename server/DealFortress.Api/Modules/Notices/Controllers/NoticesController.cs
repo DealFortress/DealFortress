@@ -8,17 +8,19 @@ namespace DealFortress.Api.Modules.Notices;
 public class NoticesController : ControllerBase
 {
     private readonly INoticesRepository _repo;
+    private readonly NoticesService _service;
 
-    public NoticesController(INoticesRepository repository)
+    public NoticesController(INoticesRepository repository, NoticesService service)
     {
         _repo = repository;
+        _service = service;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
         var noticesWithProducts = _repo.GetAllWithProducts();
-        var noticesResponse = noticesWithProducts.Select(notice => NoticesService.ToNoticeResponseDTO(notice)).ToList();
+        var noticesResponse = noticesWithProducts.Select(notice => _service.ToNoticeResponseDTO(notice)).ToList();
         return Ok(noticesResponse);
     }
 
@@ -32,7 +34,7 @@ public class NoticesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(NoticesService.ToNoticeResponseDTO(notice));
+        return Ok(_service.ToNoticeResponseDTO(notice));
     }
 
     [HttpPut("{id}")]
@@ -46,7 +48,7 @@ public class NoticesController : ControllerBase
         }
 
         _repo.Remove(notice);
-        var updatedNotice = NoticesService.ToNotice(noticeRequest);
+        var updatedNotice = _service.ToNotice(noticeRequest);
         updatedNotice.Id = notice.Id;
 
         _repo.Add(updatedNotice);
@@ -59,13 +61,13 @@ public class NoticesController : ControllerBase
     [HttpPost]
     public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
     {
-        var notice = NoticesService.ToNotice(request);
+        var notice = _service.ToNotice(request);
 
         _repo.Add(notice);
 
         _repo.Complete();
 
-        return CreatedAtAction("GetNotice", new { id = notice.Id }, NoticesService.ToNoticeResponseDTO(notice));
+        return CreatedAtAction("GetNotice", new { id = notice.Id }, _service.ToNoticeResponseDTO(notice));
     }
 
     [HttpDelete("{id}")]
