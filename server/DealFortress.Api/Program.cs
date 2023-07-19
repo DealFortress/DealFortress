@@ -1,13 +1,11 @@
 using DealFortress.Api.Modules.Categories;
+using DealFortress.Api.Modules.Categories.Extensions;
 using DealFortress.Api.Modules.Notices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CategoriesContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
-builder.Services.AddScoped<CategoriesModule>();
+builder.AddCategories();
 
 
 builder.Services.AddDbContext<NoticesContext>(options =>
@@ -19,7 +17,7 @@ builder.Services.AddScoped<NoticesService>();
 builder.Services.AddScoped<NoticesModule>();
 
 
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
