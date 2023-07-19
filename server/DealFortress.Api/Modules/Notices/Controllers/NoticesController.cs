@@ -83,5 +83,10 @@ public class NoticesController : ControllerBase
 
         return NoContent();
     }
+
+    private bool NoticeExists(int id)
+    {
+        return (_repo?.GetAll().Any(e => e.Id == id)).GetValueOrDefault();
+    }
 }
 

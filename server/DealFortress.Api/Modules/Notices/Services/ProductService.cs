@@ -1,14 +1,10 @@
-using DealFortress.Api.Modules.Categories;
+
+using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Modules.Notices;
-public class ProductsService
+public static class ProductsService
 {
-    private readonly CategoriesModule _categoriesModule;
-    public ProductsService(CategoriesModule categoriesModule)
-    {
-        _categoriesModule = categoriesModule;
-    }
-    public ProductResponse ToProductResponseDTO(Product product)
+    public static ProductResponse ToProductResponseDTO(Product product)
     {
         return new ProductResponse()
         {
@@ -18,8 +14,8 @@ public class ProductsService
             HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
-            CategoryName = product.CategoryName,
             ImageUrls = new List<string>() { "" },
+            CategoryName = product.CategoryName,
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
@@ -27,7 +23,7 @@ public class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public Product ToProduct(ProductRequest request, Notice Notice)
+    public static Product ToProduct(ProductRequest request, Notice Notice)
     {
         return new Product()
         {
@@ -36,15 +32,11 @@ public class ProductsService
             HasReceipt = request.HasReceipt,
             Warranty = request.Warranty,
             CategoryId = request.CategoryId,
+            CategoryName = "Not implemented",
             Condition = request.Condition,
             IsSold = false,
             IsSoldSeparately = false,
             Notice = Notice
         };
     }
-
-    private string GetCategoryNameById(int categoryId)
-    {
-        return _categoriesModule.Controller.GetCategory
-    }    
 }

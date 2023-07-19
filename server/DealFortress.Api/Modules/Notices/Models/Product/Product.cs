@@ -13,6 +13,7 @@ public class Product
     public required bool IsSold { get; set; }
     public required bool IsSoldSeparately { get; set; }
     public required int CategoryId { get; set; }
+    public required string CategoryName { get; set; }
     public required Condition Condition { get; set; }
     public required Notice Notice { get; set; }
 }
