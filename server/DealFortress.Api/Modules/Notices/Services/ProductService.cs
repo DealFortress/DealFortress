@@ -1,10 +1,15 @@
 
-using DealFortress.Api.Models;
+using DealFortress.Api.Modules.Categories;
 
 namespace DealFortress.Api.Modules.Notices;
-public static class ProductsService
+public class ProductsService
 {
-    public static ProductResponse ToProductResponseDTO(Product product)
+    private readonly CategoriesModule _categoriesModule;
+    public ProductsService(CategoriesModule categoriesModule)
+    {
+        _categoriesModule = categoriesModule;
+    }
+    public ProductResponse ToProductResponseDTO(Product product)
     {
         return new ProductResponse()
         {
@@ -15,7 +20,7 @@ public static class ProductsService
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
             ImageUrls = new List<string>() { "" },
-            CategoryName = product.CategoryName,
+            CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
@@ -23,7 +28,7 @@ public static class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public static Product ToProduct(ProductRequest request, Notice Notice)
+    public Product ToProduct(ProductRequest request, Notice Notice)
     {
         return new Product()
         {
@@ -32,11 +37,22 @@ public static class ProductsService
             HasReceipt = request.HasReceipt,
             Warranty = request.Warranty,
             CategoryId = request.CategoryId,
-            CategoryName = "Not implemented",
             Condition = request.Condition,
             IsSold = false,
             IsSoldSeparately = false,
             Notice = Notice
         };
+    }
+    
+    private string GetCategoryNameById(int id)
+    {
+        var categoryResponse = _categoriesModule.Controller.GetCategory(id);
+
+        if(categoryResponse.Value is null)
+        {
+            return string.Empty;
+        }
+
+        return categoryResponse.Value.Name;
     }
 }

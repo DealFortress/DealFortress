@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DealFortress.Api.Models;
+
 
 namespace DealFortress.Api.Modules.Notices;
 
-public  static class NoticesService
+public class NoticesService
 {
+    private readonly ProductsService _productsService;
+    public NoticesService(ProductsService productsService)
+    {
+        _productsService = productsService;
+    }
 
-    public static NoticeResponse ToNoticeResponseDTO(Notice Notice)
+    public NoticeResponse ToNoticeResponseDTO(Notice Notice)
     {
         var response = new NoticeResponse()
         {
@@ -24,13 +25,13 @@ public  static class NoticesService
 
         if (Notice.Products is not null)
         {
-            response.Products = Notice.Products.Select(product => ProductsService.ToProductResponseDTO(product)).ToList();
+            response.Products = Notice.Products.Select(product => _productsService.ToProductResponseDTO(product)).ToList();
         }
 
         return response;
     }
 
-    public static Notice ToNotice(NoticeRequest request)
+    public Notice ToNotice(NoticeRequest request)
     {
         return new Notice()
         {

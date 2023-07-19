@@ -14,10 +14,24 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Category>> GetCategory()
+    public ActionResult<IEnumerable<Category>> GetCategories()
     {
         return Ok(_repo.GetAll());
     }
+
+    [HttpGet("{id}")]
+    public ActionResult<CategoryResponse> GetCategory(int id)
+    {
+        var category = _repo.GetById(id);
+
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CategoriesService.ToCategoryResponseDTO(category));
+    }
+
 
     [HttpPost]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)

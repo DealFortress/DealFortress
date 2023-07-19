@@ -8,18 +8,19 @@ namespace DealFortress.Api.Modules.Notices;
 public class ProductsController : ControllerBase
 {
     private IProductsRepository _repo;
+    private ProductsService _service;
 
-    public ProductsController(IProductsRepository repository)
+    public ProductsController(IProductsRepository repository, ProductsService service)
     {
         _repo = repository;
+        _service = service;
     }
-
 
     [HttpGet]
     public ActionResult<IEnumerable<ProductResponse>> GetProducts()
     {
         var productsWithProducts = _repo.GetAllWithEverything();
-        var productsResponse = productsWithProducts.Select(product => ProductsService.ToProductResponseDTO(product)).ToList();
+        var productsResponse = productsWithProducts.Select(product => _service.ToProductResponseDTO(product)).ToList();
         return Ok(productsResponse);
     }
 
@@ -34,7 +35,7 @@ public class ProductsController : ControllerBase
         }
 
         _repo.Remove(product);
-        var updatedproduct = ProductsService.ToProduct(request, product.Notice);
+        var updatedproduct = _service.ToProduct(request, product.Notice);
         updatedproduct.Id = product.Id;
 
         _repo.Add(updatedproduct);
@@ -58,10 +59,5 @@ public class ProductsController : ControllerBase
         _repo.Complete();
 
         return NoContent();
-    }
-
-    private bool ProductExists(int id)
-    {
-        return _repo.GetAll().Any(e => e.Id == id);
     }
 }
