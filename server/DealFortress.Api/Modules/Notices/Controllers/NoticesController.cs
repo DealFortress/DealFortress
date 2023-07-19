@@ -7,9 +7,9 @@ namespace DealFortress.Api.Modules.Notices;
 [ApiController]
 public class NoticesController : ControllerBase
 {
-    private readonly NoticesRepository _repo;
+    private readonly INoticesRepository _repo;
 
-    public NoticesController(NoticesRepository repository)
+    public NoticesController(INoticesRepository repository)
     {
         _repo = repository;
     }

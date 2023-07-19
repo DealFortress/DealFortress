@@ -1,12 +1,21 @@
 using DealFortress.Api.Modules.Categories;
+using DealFortress.Api.Modules.Notices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DealFortressContext>(options =>
+builder.Services.AddDbContext<NoticesContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<INoticesRepository, NoticesRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<NoticesModule>();
 
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddDbContext<CategoriesContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<CategoriesModule>();
+
 
 builder.Services.AddControllers();
 
@@ -14,10 +23,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-var context = app.Services.GetService<DealFortressContext>();
-
-var categoriesModule = new CategoriesModule(context!);
 
 if (app.Environment.IsDevelopment())
 {
@@ -30,11 +35,6 @@ if (app.Environment.IsDevelopment())
         .AllowAnyHeader();
     });
 
-    using (var scope = app.Services.CreateScope())
-    {
-    var services = scope.ServiceProvider;
-    // SeedData.Initialize(services);
-    }
 }
 
 app.UseHttpsRedirection();

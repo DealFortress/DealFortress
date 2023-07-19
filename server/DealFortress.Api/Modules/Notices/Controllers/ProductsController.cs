@@ -7,9 +7,9 @@ namespace DealFortress.Api.Modules.Notices;
 [ApiController]
 public class ProductsController : ControllerBase
 {
-    private ProductsRepository _repo;
+    private IProductsRepository _repo;
 
-    public ProductsController(ProductsRepository repository)
+    public ProductsController(IProductsRepository repository)
     {
         _repo = repository;
     }

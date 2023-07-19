@@ -4,12 +4,10 @@ namespace DealFortress.Api.Modules.Categories
     public class CategoriesModule
     {
         public CategoriesController Controller;
-        public CategoriesRepository Repo;
 
-        public CategoriesModule(DealFortressContext context)
+        public CategoriesModule(CategoriesContext context, ICategoriesRepository repo)
         {
-            Repo = new CategoriesRepository(context);
-            Controller = new CategoriesController(context, Repo);
+            Controller = new CategoriesController(repo);
         }
 
 

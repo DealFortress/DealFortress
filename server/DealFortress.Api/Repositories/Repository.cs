@@ -1,10 +1,12 @@
+using DealFortress.Api.Data;
+
 namespace DealFortress.Api.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    protected readonly DealFortressContext Context;
+    protected readonly IDbContext Context;
 
-    public Repository(DealFortressContext context)
+    public Repository(IDbContext context)
     {
         Context = context;
     }
