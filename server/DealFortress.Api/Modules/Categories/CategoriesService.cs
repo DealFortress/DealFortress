@@ -2,9 +2,9 @@ using DealFortress.Api.Models;
 
 namespace DealFortress.Api.Modules.Categories;
 
-    public static class CategoriesService
+    public class CategoriesService
     {
-        public static CategoryResponse ToCategoryResponseDTO(Category category)
+        public CategoryResponse ToCategoryResponseDTO(Category category)
         {
             return new CategoryResponse()
             {
@@ -13,5 +13,5 @@ namespace DealFortress.Api.Modules.Categories;
             };
         }
 
-        public static Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
+        public Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
     }
