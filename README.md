@@ -11,8 +11,9 @@ Frontend is a singlepage application using React and backend is a REST api with 
   Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/)  
 </strong>
 
-See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)  
-or checkout our 2 minutes video on the pitch deck [here](https://streamable.com/geq9mt)
+See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing),  
+checkout our 2 minutes video on the pitch deck [here](https://streamable.com/geq9mt)  
+or checkout a 30 minute coding session of us working on the project [here](https://youtu.be/bgvt1kpQ9RY)
 
 ## Project board
 
