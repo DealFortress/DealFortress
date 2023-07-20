@@ -8,9 +8,12 @@ public class CategoriesController : ControllerBase
  {
     private readonly ICategoriesRepository _repo;
 
-    public CategoriesController(ICategoriesRepository repo)
+    private readonly CategoriesService _service;
+
+    public CategoriesController(ICategoriesRepository repo, CategoriesService service)
     {
         _repo = repo;
+        _service = service;
     }
 
     [HttpGet]
@@ -29,19 +32,19 @@ public class CategoriesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(CategoriesService.ToCategoryResponseDTO(category));
+        return Ok(_service.ToCategoryResponseDTO(category));
     }
 
 
     [HttpPost]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
-        var category = CategoriesService.ToCategory(request);
+        var category = _service.ToCategory(request);
 
         _repo.Add(category);
         _repo.Complete();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, CategoriesService.ToCategoryResponseDTO(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, _service.ToCategoryResponseDTO(category));
     }
 }
 

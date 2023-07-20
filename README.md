@@ -11,24 +11,32 @@ Frontend is a singlepage application using React and backend is a REST api with 
   Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/)  
 </strong>
 
-See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)  
-or checkout our 2 minutes video on the pitch deck [here](https://streamable.com/geq9mt)
-
-## Project board
-
-<strong>Github project board for DealFortress can be found <strong>[here](https://github.com/orgs/DealFortress/projects/2/views/1)
-
-## Context
+### Context
 
 Sweden is missing a modern marketplace for used computer parts which DealFortress looks to fix.
 
-### MVP plan:
+#### MVP plan:
 
   - Website has authentication
   - User can post a notice
   - User can reply to author of post
   - Website has a notice page
   - Website has a notices index
+
+
+
+
+## Project
+
+<strong>Github project board for DealFortress can be found <strong>[here](https://github.com/orgs/DealFortress/projects/2/views/1)  
+See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)
+
+## Videos
+[2 minute video on the pitch deck](https://streamable.com/geq9mt)  
+[30 minute pair programmed coding session](https://youtu.be/bgvt1kpQ9RY)
+
+
+
 
 ## Tech stack
 
@@ -44,14 +52,7 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
   - Azure Sql DB, Azure web app services & Azure static webpages
 
 
-## Sprint videos:
-
-  - First week sprint 2mn video [here!](https://streamable.com/3ym4bb)
-
-
-  - Second week sprint 2mn video [here!](https://streamable.com/v45qbl)
-
-## Tools & Libraries:
+## Tools & Libraries
 
 
   <!-- - Auth0
@@ -73,8 +74,8 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 
 ### UML sketch
 <img src="uml-sketch.png" />
-
-##Retros
+  
+## Retros  
 
 Check out our weekly retros [here!](https://excalidraw.com/#room=508eb9dcd37a4f56d616,BPYWqjGnqLennZR7ifKXyA)
 

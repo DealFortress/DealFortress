@@ -4,7 +4,6 @@ using DealFortress.Api.Modules.Notices.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddCategories();
-
 builder.AddNotices();
 
 
