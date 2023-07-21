@@ -11,7 +11,7 @@ namespace DealFortress.Modules.Categories.Core.DAL.Repositories;
 
         }
 
-        public CategoriesContext CategoriesContext 
+        public CategoriesContext? CategoriesContext 
         {
             get { return Context as CategoriesContext; }
         }

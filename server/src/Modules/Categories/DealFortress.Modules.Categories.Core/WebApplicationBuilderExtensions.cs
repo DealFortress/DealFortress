@@ -9,17 +9,25 @@ namespace DealFortress.Api.Modules.Categories.Extensions
 {
     public static class WebApplicationBuilderExtensions
     {
-        public static WebApplicationBuilder AddCategories(this WebApplicationBuilder builder)
+        // public static IServiceCollection AddCore(this WebApplicationBuilder builder)
+        // {
+        //     builder.Services.AddDbContext<CategoriesContext>(options =>
+        //         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        //     builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+        //     // builder.Services.AddScoped<CategoriesModule>();
+        //     builder.Services.AddControllers();
+
+        //     return builder.Services;
+        // }
+
+        public static IServiceCollection AddCore(this IServiceCollection services)
         {
-            builder.Services.AddDbContext<CategoriesContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            return services
+                // .AddDbContext<CategoriesContext>(options =>
+                //     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")))
+                .AddScoped<ICategoriesRepository, CategoriesRepository>();
+                // .AddControllers();
             // builder.Services.AddScoped<CategoriesModule>();
-
-
-            builder.Services.AddControllers();
-
-            return builder;
         }
     }
 }

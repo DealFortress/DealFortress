@@ -1,7 +1,8 @@
-
+using DealFortress.Api.Modules.Categories.Extensions;
 using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DealFortress.Modules.Categories.Api
 {
@@ -14,6 +15,10 @@ namespace DealFortress.Modules.Categories.Api
             Controller = new CategoriesController(repo, service);
         }
 
+        public void Register(IServiceCollection services)
+        {
+            services.AddCore();
+        }
 
     }
 }
