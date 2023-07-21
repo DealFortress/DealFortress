@@ -1,8 +1,9 @@
-
-
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DealFortress.Api.Modules.Categories.Extensions
 {
