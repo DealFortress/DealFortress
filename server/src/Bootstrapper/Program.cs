@@ -1,10 +1,11 @@
 using DealFortress.Api.Modules.Categories.Extensions;
-using DealFortress.Api.Modules.Notices.Extensions;
+using DealFortress.Modules.Categories.Api;
+// .Modules.Notices.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddCategories();
-builder.AddNotices();
+// builder.AddNotices();
 
 
 builder.Services.AddEndpointsApiExplorer();

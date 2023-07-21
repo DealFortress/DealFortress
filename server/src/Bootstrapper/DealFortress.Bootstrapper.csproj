@@ -24,4 +24,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Categories\DealFortress.Modules.Categories.Api\DealFortress.Modules.Categories.Api.csproj" />
+  </ItemGroup>
+
 </Project>
