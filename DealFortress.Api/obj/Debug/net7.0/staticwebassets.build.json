@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "bKgyw+yPMrGyE3nJpXvgLNhYfCpwz1R8a2wcVnkUssw=",
+  "Source": "DealFortress.Api",
+  "BasePath": "_content/DealFortress.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
