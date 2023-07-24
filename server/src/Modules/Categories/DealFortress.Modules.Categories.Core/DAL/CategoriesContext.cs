@@ -1,5 +1,9 @@
+using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
+
+[assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
+
 
     internal class CategoriesContext : DbContext, IDbContext
     {

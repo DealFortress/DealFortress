@@ -9,9 +9,9 @@ var configuration = builder.Configuration;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddCategoriesModule(configuration);
 builder.Services.AddNoticesModule(configuration);
-// builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -30,11 +30,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-Console.WriteLine("App running");
 
 app.Run();
 
