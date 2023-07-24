@@ -12,16 +12,8 @@ var configuration = builder.Configuration;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ----------------
-
-var category = new CategoriesModule();
-category.AddCategoriesModule(builder.Services, configuration);
-
-
-// module is static
-// builder.Services.AddCategoriesModule(configuration);
-
-// -----------------
+builder.Services.AddCategoriesModule(configuration);
+// builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -38,16 +30,14 @@ if (app.Environment.IsDevelopment())
 
 }
 
-// -----------------------------------
-
-// --------------------------------
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-
-// app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 app.MapControllers();
 
+Console.WriteLine("App running");
+
 app.Run();
+
+

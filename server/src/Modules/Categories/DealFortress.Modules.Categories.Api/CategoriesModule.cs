@@ -5,23 +5,29 @@ using DealFortress.Modules.Categories.Core.Extensions;
 using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
 
 namespace DealFortress.Modules.Categories.Api;
 
-internal class CategoriesModule
+internal static class CategoriesModule
 {
-    public CategoriesController Controller;
+    // public CategoriesController Controller;
 
-    public CategoriesModule(ICategoriesRepository repo, CategoriesService service)
-    {
-        Controller = new CategoriesController(repo, service);
-    }
+    // public CategoriesModule(ICategoriesRepository repo, CategoriesService service)
+    // {
+    //     Controller = new CategoriesController(repo, service);
+    // }
 
-    public void AddCategoriesModule(IServiceCollection services, IConfiguration configuration)
+    public static void AddCategoriesModule(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddCore(configuration);
+        services
+            .AddCore(configuration)
+            .AddScoped<CategoriesController>()
+            .AddControllers();
+            
+            // .AddApplicationPart(typeof(WebApplicationBuilder).Assembly);
     }
 
 }

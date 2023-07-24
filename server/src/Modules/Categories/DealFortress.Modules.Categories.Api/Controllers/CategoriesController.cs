@@ -12,12 +12,10 @@ internal class CategoriesController : ControllerBase
 {
     private readonly ICategoriesRepository _repo;
 
-    private readonly CategoriesService _service;
-
-    public CategoriesController(ICategoriesRepository repo, CategoriesService service)
+    public CategoriesController(ICategoriesRepository repo)
     {
+        Console.WriteLine("Controller initialized");
         _repo = repo;
-        _service = service;
     }
 
     [HttpGet]
@@ -36,19 +34,19 @@ internal class CategoriesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(_service.ToCategoryResponseDTO(category));
+        return Ok(CategoriesService.ToCategoryResponseDTO(category));
     }
 
 
     [HttpPost]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
-        var category = _service.ToCategory(request);
+        var category = CategoriesService.ToCategory(request);
 
         _repo.Add(category);
         _repo.Complete();
 
-        return CreatedAtAction("GetCategory", new { id = category.Id }, _service.ToCategoryResponseDTO(category));
+        return CreatedAtAction("GetCategory", new { id = category.Id }, CategoriesService.ToCategoryResponseDTO(category));
     }
 }
 

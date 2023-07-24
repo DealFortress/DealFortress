@@ -5,9 +5,9 @@ using DealFortress.Modules.Categories.Core.DTO;
 
 namespace DealFortress.Modules.Categories.Core.Services;
 
-    internal class CategoriesService
+    internal static class CategoriesService
     {
-        public CategoryResponse ToCategoryResponseDTO(Category category)
+        public static CategoryResponse ToCategoryResponseDTO(Category category)
         {
             return new CategoryResponse()
             {
@@ -16,5 +16,5 @@ namespace DealFortress.Modules.Categories.Core.Services;
             };
         }
 
-        public Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
+        public static Category ToCategory(CategoryRequest request) => new Category(){ Name = request.Name };
     }
