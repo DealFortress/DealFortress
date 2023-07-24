@@ -1,7 +1,7 @@
 
 namespace DealFortress.Modules.Categories.Core.DTO;
 
-    public class CategoryRequest
+    internal class CategoryRequest
     {
         public required string Name { get; set; }
     }

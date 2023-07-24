@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -5,9 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DealFortress.Api.Modules.Categories.Extensions
-{
-    public static class WebApplicationBuilderExtensions
+[assembly: InternalsVisibleTo("DealFortress.Modules.Categories.Api")]
+
+namespace DealFortress.Modules.Categories.Core.Extensions;
+    internal static class Extensions
     {
         // public static IServiceCollection AddCore(this WebApplicationBuilder builder)
         // {
@@ -20,14 +22,12 @@ namespace DealFortress.Api.Modules.Categories.Extensions
         //     return builder.Services;
         // }
 
-        public static IServiceCollection AddCore(this IServiceCollection services)
+        public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
         {
             return services
-                // .AddDbContext<CategoriesContext>(options =>
-                //     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")))
+                .AddDbContext<CategoriesContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
                 .AddScoped<ICategoriesRepository, CategoriesRepository>();
-                // .AddControllers();
-            // builder.Services.AddScoped<CategoriesModule>();
+                // .AddScoped<CategoriesModule>();
         }
     }
-}

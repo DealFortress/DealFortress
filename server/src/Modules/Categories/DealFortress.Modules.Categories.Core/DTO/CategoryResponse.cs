@@ -1,6 +1,6 @@
 namespace DealFortress.Modules.Categories.Core.DTO;
 
-    public class CategoryResponse
+    internal class CategoryResponse
     {
 
         public int Id { get; set; }

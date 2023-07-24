@@ -1,24 +1,26 @@
-using DealFortress.Api.Modules.Categories.Extensions;
+using System.Runtime.CompilerServices;
 using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
+using DealFortress.Modules.Categories.Core.Extensions;
 using DealFortress.Modules.Categories.Core.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DealFortress.Modules.Categories.Api
+
+namespace DealFortress.Modules.Categories.Api;
+
+internal class CategoriesModule
 {
-    public class CategoriesModule
+    public CategoriesController Controller;
+
+    public CategoriesModule(ICategoriesRepository repo, CategoriesService service)
     {
-        public CategoriesController Controller;
-
-        public CategoriesModule(CategoriesContext context, ICategoriesRepository repo, CategoriesService service)
-        {
-            Controller = new CategoriesController(repo, service);
-        }
-
-        public void Register(IServiceCollection services)
-        {
-            services.AddCore();
-        }
-
+        Controller = new CategoriesController(repo, service);
     }
+
+    public void AddCategoriesModule(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCore(configuration);
+    }
+
 }

@@ -1,7 +1,7 @@
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-    public class CategoriesContext : DbContext, IDbContext
+    internal class CategoriesContext : DbContext, IDbContext
     {
         public CategoriesContext (DbContextOptions<CategoriesContext> options)
             : base(options)

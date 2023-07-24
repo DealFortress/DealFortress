@@ -8,8 +8,8 @@ namespace DealFortress.Modules.Categories.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoriesController : ControllerBase
- {
+internal class CategoriesController : ControllerBase
+{
     private readonly ICategoriesRepository _repo;
 
     private readonly CategoriesService _service;
