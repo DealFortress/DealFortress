@@ -6,6 +6,7 @@ using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+[assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
 
 namespace DealFortress.Modules.Categories.Api;
 
