@@ -13,21 +13,13 @@ namespace DealFortress.Modules.Categories.Api;
 
 internal static class CategoriesModule
 {
-    // public CategoriesController Controller;
-
-    // public CategoriesModule(ICategoriesRepository repo, CategoriesService service)
-    // {
-    //     Controller = new CategoriesController(repo, service);
-    // }
-
-    public static void AddCategoriesModule(this IServiceCollection services, IConfiguration configuration)
+    public static WebApplicationBuilder AddCategoriesModule(this WebApplicationBuilder builder, IConfiguration configuration)
     {
-        services
-            .AddCore(configuration)
-            .AddScoped<CategoriesController>()
-            .AddControllers();
-            
-            // .AddApplicationPart(typeof(WebApplicationBuilder).Assembly);
-    }
+        
+        builder.Services.AddControllers();
 
+        builder.Services.AddCore(configuration);
+
+        return builder;
+    }
 }

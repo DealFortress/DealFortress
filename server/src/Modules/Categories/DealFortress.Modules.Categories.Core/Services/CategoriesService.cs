@@ -5,7 +5,7 @@ using DealFortress.Modules.Categories.Core.DTO;
 
 namespace DealFortress.Modules.Categories.Core.Services;
 
-    internal static class CategoriesService
+    public static class CategoriesService
     {
         public static CategoryResponse ToCategoryResponseDTO(Category category)
         {

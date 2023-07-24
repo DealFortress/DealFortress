@@ -1,6 +1,10 @@
+using System.Runtime.CompilerServices;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Shared.Abstractions.Repositories;
+
+[assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
+
 
 namespace DealFortress.Modules.Categories.Core.DAL.Repositories;
 
