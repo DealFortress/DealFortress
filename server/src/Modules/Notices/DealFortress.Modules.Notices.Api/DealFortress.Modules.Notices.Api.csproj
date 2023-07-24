@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DealFortress.Modules.Categories.Core\DealFortress.Modules.Categories.Core.csproj" />
+    <ProjectReference Include="..\DealFortress.Modules.Notices.Core\DealFortress.Modules.Notices.Core.csproj" />
   </ItemGroup>
 
 
