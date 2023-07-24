@@ -1,13 +1,14 @@
-
+using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.DTO;
 namespace DealFortress.Modules.Notices.Core.Services;
-public class ProductsService
+internal static class ProductsService
 {
-    private readonly CategoriesModule _categoriesModule;
-    public ProductsService(CategoriesModule categoriesModule)
-    {
-        _categoriesModule = categoriesModule;
-    }
-    public ProductResponse ToProductResponseDTO(Product product)
+    // private readonly CategoriesModule _categoriesModule;
+    // public ProductsService(CategoriesModule categoriesModule)
+    // {
+    //     _categoriesModule = categoriesModule;
+    // }
+    public static ProductResponse ToProductResponseDTO(Product product)
     {
         return new ProductResponse()
         {
@@ -18,7 +19,7 @@ public class ProductsService
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
             ImageUrls = new List<string>() { "" },
-            CategoryName = GetCategoryNameById(product.CategoryId),
+            CategoryName = "CPU",
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
@@ -26,7 +27,7 @@ public class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public Product ToProduct(ProductRequest request, Notice Notice)
+    public static Product ToProduct(ProductRequest request, Notice Notice)
     {
         return new Product()
         {
@@ -42,15 +43,15 @@ public class ProductsService
         };
     }
     
-    private string GetCategoryNameById(int id)
-    {
-        var categoryResponse = _categoriesModule.Controller.GetCategory(id);
+    // private string GetCategoryNameById(int id)
+    // {
+    //     var categoryResponse = _categoriesModule.Controller.GetCategory(id);
 
-        if(categoryResponse.Value is null)
-        {
-            return string.Empty;
-        }
+    //     if(categoryResponse.Value is null)
+    //     {
+    //         return string.Empty;
+    //     }
 
-        return categoryResponse.Value.Name;
-    }
+    //     return categoryResponse.Value.Name;
+    // }
 }

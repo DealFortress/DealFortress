@@ -1,3 +1,6 @@
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -8,19 +11,17 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 public class NoticesController : ControllerBase
 {
     private readonly INoticesRepository _repo;
-    private readonly NoticesService _service;
 
-    public NoticesController(INoticesRepository repository, NoticesService service)
+    public NoticesController(INoticesRepository repository)
     {
         _repo = repository;
-        _service = service;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
         var noticesWithProducts = _repo.GetAllWithProducts();
-        var noticesResponse = noticesWithProducts.Select(notice => _service.ToNoticeResponseDTO(notice)).ToList();
+        var noticesResponse = noticesWithProducts.Select(notice => NoticesService.ToNoticeResponseDTO(notice)).ToList();
         return Ok(noticesResponse);
     }
 
@@ -34,7 +35,7 @@ public class NoticesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(_service.ToNoticeResponseDTO(notice));
+        return Ok(NoticesService.ToNoticeResponseDTO(notice));
     }
 
     [HttpPut("{id}")]
@@ -48,7 +49,7 @@ public class NoticesController : ControllerBase
         }
 
         _repo.Remove(notice);
-        var updatedNotice = _service.ToNotice(noticeRequest);
+        var updatedNotice = NoticesService.ToNotice(noticeRequest);
         updatedNotice.Id = notice.Id;
 
         _repo.Add(updatedNotice);
@@ -61,13 +62,13 @@ public class NoticesController : ControllerBase
     [HttpPost]
     public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
     {
-        var notice = _service.ToNotice(request);
+        var notice = NoticesService.ToNotice(request);
 
         _repo.Add(notice);
 
         _repo.Complete();
 
-        return CreatedAtAction("GetNotice", new { id = notice.Id }, _service.ToNoticeResponseDTO(notice));
+        return CreatedAtAction("GetNotice", new { id = notice.Id }, NoticesService.ToNoticeResponseDTO(notice));
     }
 
     [HttpDelete("{id}")]

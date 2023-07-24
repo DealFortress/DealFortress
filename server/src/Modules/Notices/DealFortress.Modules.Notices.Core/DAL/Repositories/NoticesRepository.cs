@@ -1,9 +1,12 @@
-
+using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.DAL.Repositories;
+using DealFortress.Shared.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Modules.Notices.Core.DAL.Repositories;
 
-public class NoticesRepository : Repository<Notice>, INoticesRepository
+internal class NoticesRepository : Repository<Notice>, INoticesRepository
 {
     public NoticesRepository(NoticesContext context) : base(context)
     {}

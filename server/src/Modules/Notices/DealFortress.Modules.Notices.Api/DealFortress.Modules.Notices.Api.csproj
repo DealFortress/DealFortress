@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DealFortress.Modules.Notices.Core\DealFortress.Modules.Notices.Core.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Abstractions\DealFortress.Shared.Abstractions.csproj" />
   </ItemGroup>
 
 

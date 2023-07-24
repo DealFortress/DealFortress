@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations
+namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 {
     [DbContext(typeof(NoticesContext))]
     [Migration("20230718130104_InitialCreateNotices")]

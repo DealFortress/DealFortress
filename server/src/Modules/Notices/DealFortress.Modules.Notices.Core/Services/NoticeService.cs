@@ -1,16 +1,17 @@
-
+using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.DTO;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
-public class NoticesService
+internal static class NoticesService
 {
-    private readonly ProductsService _productsService;
-    public NoticesService(ProductsService productsService)
-    {
-        _productsService = productsService;
-    }
+    // private readonly ProductsService _productsService;
+    // public NoticesService(ProductsService productsService)
+    // {
+    //     _productsService = productsService;
+    // }
 
-    public NoticeResponse ToNoticeResponseDTO(Notice Notice)
+    public static NoticeResponse ToNoticeResponseDTO(Notice Notice)
     {
         var response = new NoticeResponse()
         {
@@ -25,13 +26,13 @@ public class NoticesService
 
         if (Notice.Products is not null)
         {
-            response.Products = Notice.Products.Select(product => _productsService.ToProductResponseDTO(product)).ToList();
+            response.Products = Notice.Products.Select(product => ProductsService.ToProductResponseDTO(product)).ToList();
         }
 
         return response;
     }
 
-    public Notice ToNotice(NoticeRequest request)
+    public static Notice ToNotice(NoticeRequest request)
     {
         return new Notice()
         {

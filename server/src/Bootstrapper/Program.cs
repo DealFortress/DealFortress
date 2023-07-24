@@ -1,9 +1,6 @@
-// using System.Reflection;
 using DealFortress.Modules.Categories.Api;
-using DealFortress.Shared.Abstractions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using DealFortress.Modules.Notices.Api;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCategoriesModule(configuration);
+builder.Services.AddNoticesModule(configuration);
 // builder.Services.AddControllers();
 
 var app = builder.Build();

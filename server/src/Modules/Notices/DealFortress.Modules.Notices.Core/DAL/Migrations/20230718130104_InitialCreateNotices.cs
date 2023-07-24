@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations
+namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreateNotices : Migration

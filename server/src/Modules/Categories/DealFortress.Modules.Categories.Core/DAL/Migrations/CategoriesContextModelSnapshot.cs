@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations.Categories
+namespace DealFortress.Modules.Categories.Core.DAL.Migrations
 {
     [DbContext(typeof(CategoriesContext))]
     partial class CategoriesContextModelSnapshot : ModelSnapshot
