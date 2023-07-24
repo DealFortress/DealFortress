@@ -14,7 +14,6 @@ public class CategoriesController : ControllerBase
 
     public CategoriesController(ICategoriesRepository repo)
     {
-        Console.WriteLine("Controller initialized");
         _repo = repo;
     }
 

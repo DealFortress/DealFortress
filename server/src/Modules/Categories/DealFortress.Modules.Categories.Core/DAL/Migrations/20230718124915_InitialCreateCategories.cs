@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations.Categories
+namespace DealFortress.Modules.Categories.Core.DAL.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreateCategories : Migration

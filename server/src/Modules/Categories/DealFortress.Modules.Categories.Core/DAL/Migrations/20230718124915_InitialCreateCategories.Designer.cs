@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DealFortress.Api.Migrations.Categories
+namespace DealFortress.Modules.Categories.Core.DAL.Migrations
 {
     [DbContext(typeof(CategoriesContext))]
     [Migration("20230718124915_InitialCreateCategories")]
