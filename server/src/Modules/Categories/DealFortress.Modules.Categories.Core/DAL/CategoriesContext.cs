@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
 
 
-    internal class CategoriesContext : DbContext, IDbContext
+    public class CategoriesContext : DbContext, IDbContext
     {
         public CategoriesContext (DbContextOptions<CategoriesContext> options)
             : base(options)

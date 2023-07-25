@@ -13,13 +13,10 @@ namespace DealFortress.Modules.Categories.Api;
 
 internal static class CategoriesModule
 {
-    public static WebApplicationBuilder AddCategoriesModule(this WebApplicationBuilder builder, IConfiguration configuration)
+    public static void AddCategoriesModule(this IServiceCollection services, IConfiguration configuration)
     {
-        
-        builder.Services.AddControllers();
-
-        builder.Services.AddCore(configuration);
-
-        return builder;
+        services
+            .AddCore(configuration)
+            .AddControllers();
     }
 }
