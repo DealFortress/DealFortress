@@ -4,14 +4,14 @@ using DealFortress.Modules.Notices.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var configuration = builder.Configuration;
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddCategoriesModule(configuration);
-builder.Services.AddNoticesModule(configuration);
+builder.Services.AddCategoriesModule(connectionString);
+builder.Services.AddNoticesModule(connectionString);
 
 var app = builder.Build();
 

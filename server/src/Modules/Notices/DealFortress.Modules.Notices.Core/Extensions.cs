@@ -12,11 +12,11 @@ namespace DealFortress.Api.Modules.Notices.Extensions
 {
     internal static class Extensions
     {
-        public static IServiceCollection AddCore(this IServiceCollection service, IConfiguration configuration)
+        public static IServiceCollection AddCore(this IServiceCollection service, string connectionString)
         {
             return service
                 .AddDbContext<NoticesContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
+                options.UseSqlServer(connectionString))
                 .AddScoped<INoticesRepository, NoticesRepository>()
                 .AddScoped<IProductsRepository, ProductsRepository>();
         }

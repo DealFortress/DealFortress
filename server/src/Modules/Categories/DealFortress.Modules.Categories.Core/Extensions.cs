@@ -11,11 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 namespace DealFortress.Modules.Categories.Core.Extensions;
     internal static class Extensions
     {
-        public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCore(this IServiceCollection services, string connectionString)
         {
             return services
                 .AddDbContext<CategoriesContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
+                    options.UseSqlServer(connectionString))
                 .AddScoped<ICategoriesRepository, CategoriesRepository>();
         }
     }

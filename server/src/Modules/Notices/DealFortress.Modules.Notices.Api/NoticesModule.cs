@@ -20,10 +20,10 @@ internal static class NoticesModule
     //     NoticeController = new NoticesController(noticeRepo, noticesService);
     // }
 
-    public static void AddNoticesModule(this IServiceCollection services, IConfiguration configuration)
+    public static void AddNoticesModule(this IServiceCollection services, string connectionString)
     {
         services
-            .AddCore(configuration)
+            .AddCore(connectionString)
             .AddScoped<NoticesController>()
             .AddScoped<ProductsController>()
             .AddControllers();
