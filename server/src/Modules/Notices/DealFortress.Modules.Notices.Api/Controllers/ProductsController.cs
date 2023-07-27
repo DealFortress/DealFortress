@@ -9,55 +9,32 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 [ApiController]
 public class ProductsController : ControllerBase
 {
-    private IProductsRepository _repo;
+    private ProductsService _service;
 
-    public ProductsController(IProductsRepository repository)
+    public ProductsController(ProductsService service)
     {
-        _repo = repository;
+        _service = service;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<ProductResponse>> GetProducts()
     {
-        var productsWithProducts = _repo.GetAllWithEverything();
-        var productsResponse = productsWithProducts.Select(product => ProductsService.ToProductResponseDTO(product)).ToList();
-        return Ok(productsResponse);
+       return Ok(_service.GetAllDTO());
     }
 
     [HttpPut("{id}")]
     public IActionResult PutProduct(int id, ProductRequest request)
     {
-        var product = _repo.GetByIdWithEverything(id);
+        var response = _service.PutDTOById(id, request);
 
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        _repo.Remove(product);
-        var updatedproduct = ProductsService.ToProduct(request, product.Notice);
-        updatedproduct.Id = product.Id;
-
-        _repo.Add(updatedproduct);
-        _repo.Complete();
-
-
-        return NoContent();
+        return response is null ? NotFound() : NoContent();
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteProduct(int id)
     {
-        var product = _repo.GetById(id);
+       var product = _service.DeleteById(id);
 
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        _repo.Remove(product);
-        _repo.Complete();
-
-        return NoContent();
+       return product is null ? NotFound() : NoContent();
     }
 }
