@@ -10,42 +10,33 @@ namespace DealFortress.Modules.Categories.Api.Controllers;
 [ApiController]
 public class CategoriesController : ControllerBase
 {
-    private readonly ICategoriesRepository _repo;
+    private readonly CategoriesService _service;
 
-    public CategoriesController(ICategoriesRepository repo)
+    public CategoriesController(CategoriesService service)
     {
-        _repo = repo;
+        _service = service;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Category>> GetCategories()
+    public ActionResult<IEnumerable<CategoryResponse>> GetCategories()
     {
-        return Ok(_repo.GetAll());
+        return Ok(_service.GetAllDTO());
     }
 
     [HttpGet("{id}")]
     public ActionResult<CategoryResponse> GetCategory(int id)
     {
-        var category = _repo.GetById(id);
+        var response = _service.GetDTOById(id);
 
-        if (category == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(CategoriesService.ToCategoryResponseDTO(category));
+        return response is null ? NotFound() : Ok(response);
     }
 
 
     [HttpPost]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
-        var category = CategoriesService.ToCategory(request);
-
-        _repo.Add(category);
-        _repo.Complete();
-
-        return CreatedAtAction("GetCategory", new { id = category.Id }, CategoriesService.ToCategoryResponseDTO(category));
+        var response = _service.PostDTO(request);
+        return CreatedAtAction("GetCategory", new { id = response.Id }, response);
     }
 }
 
