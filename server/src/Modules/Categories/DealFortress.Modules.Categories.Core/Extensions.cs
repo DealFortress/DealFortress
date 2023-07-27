@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
+using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,9 +14,9 @@ namespace DealFortress.Modules.Categories.Core.Extensions;
     {
         public static IServiceCollection AddCore(this IServiceCollection services, string connectionString)
         {
-            return services
-                .AddDbContext<CategoriesContext>(options =>
-                    options.UseSqlServer(connectionString))
-                .AddScoped<ICategoriesRepository, CategoriesRepository>();
+            return services.AddDbContext<CategoriesContext>(options =>
+                                options.UseSqlServer(connectionString))
+                            .AddScoped<ICategoriesRepository, CategoriesRepository>()
+                            .AddScoped<CategoriesService>();
         }
     }
