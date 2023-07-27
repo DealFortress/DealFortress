@@ -52,6 +52,32 @@ public class NoticesService
         return ToNoticeResponseDTO(updatedNotice);
     }
 
+    public NoticeResponse PostDTO(NoticeRequest request)
+    {
+        var notice = ToNotice(request);
+
+        _repo.Add(notice);
+
+        _repo.Complete();
+
+        return ToNoticeResponseDTO(notice);
+    }
+
+    public Notice? DeleteById(int id)
+    { // check that products get deleted as well
+        var notice = _repo.GetById(id);
+
+        if (notice is null)
+        {
+            return null;
+        }
+
+        _repo.Remove(notice);
+        _repo.Complete();
+
+        return notice;
+    }
+
 
     public NoticeResponse ToNoticeResponseDTO(Notice Notice)
     {

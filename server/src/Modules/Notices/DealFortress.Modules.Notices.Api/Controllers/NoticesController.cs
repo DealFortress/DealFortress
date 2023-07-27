@@ -42,29 +42,17 @@ public class NoticesController : ControllerBase
     [HttpPost]
     public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
     {
-        var notice = NoticesService.ToNotice(request);
+        var response = _service.PostDTO(request);
 
-        _service.Add(notice);
-
-        _service.Complete();
-
-        return CreatedAtAction("GetNotice", new { id = notice.Id }, NoticesService.ToNoticeResponseDTO(notice));
+        return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteNotice(int id)
     {
-        var notice = _service.GetByIdWithProducts(id);
-
-        if (notice == null)
-        {
-            return NotFound();
-        }
-
-        _service.Remove(notice);
-        _service.Complete();
-
-        return NoContent();
+        var notice = _service.DeleteById(id);
+        
+        return notice is null ? NotFound() : NoContent();
     }
 }
 
