@@ -1,14 +1,16 @@
 using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.DTO;
 namespace DealFortress.Modules.Notices.Core.Services;
-internal static class ProductsService
+
+public class ProductsService
 {
-    // private readonly CategoriesModule _categoriesModule;
-    // public ProductsService(CategoriesModule categoriesModule)
-    // {
-    //     _categoriesModule = categoriesModule;
-    // }
-    public static ProductResponse ToProductResponseDTO(Product product)
+    private readonly IProductsRepository _repo ;
+    public ProductsService(IProductsRepository repo)
+    {
+        _repo = repo;
+    }
+    public ProductResponse ToProductResponseDTO(Product product)
     {
         return new ProductResponse()
         {
@@ -27,7 +29,7 @@ internal static class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public static Product ToProduct(ProductRequest request, Notice Notice)
+    public Product ToProduct(ProductRequest request, Notice Notice)
     {
         return new Product()
         {
