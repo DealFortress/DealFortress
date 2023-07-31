@@ -12,7 +12,12 @@ public class CategoriesService
         _repo = repo;
     }
 
-    public IEnumerable<CategoryResponse> GetAllDTO()
+    // public CategoriesService()
+    // {
+
+    // }
+
+    public virtual IEnumerable<CategoryResponse> GetAllDTO()
     {
         return _repo.GetAll()
                     .Select(category => ToCategoryResponseDTO(category));
