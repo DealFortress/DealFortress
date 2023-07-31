@@ -102,16 +102,22 @@ public class NoticesService
 
     public Notice ToNotice(NoticeRequest request)
     {
-        return new Notice()
+        var notice = new Notice()
         {
             Title = request.Title,
             Description = request.Description,
             City = request.City,
             Payment = string.Join(",", request.Payments),
-            Products = null,
             DeliveryMethod = string.Join(",", request.DeliveryMethods),
             CreatedAt = DateTime.UtcNow
         };
+
+        if (request.ProductRequests is not null)
+        {
+            notice.Products = request.ProductRequests.Select(product => _productsService.ToProduct(product, notice)).ToList();
+        }
+
+        return notice;
     }
 }
 

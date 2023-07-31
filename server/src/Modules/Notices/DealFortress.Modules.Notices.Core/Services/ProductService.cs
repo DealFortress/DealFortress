@@ -77,7 +77,7 @@ public class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public Product ToProduct(ProductRequest request, Notice Notice)
+    public Product ToProduct(ProductRequest request, Notice notice)
     {
         return new Product()
         {
@@ -89,7 +89,7 @@ public class ProductsService
             Condition = request.Condition,
             IsSold = false,
             IsSoldSeparately = false,
-            Notice = Notice
+            Notice = notice
         };
     }
     
