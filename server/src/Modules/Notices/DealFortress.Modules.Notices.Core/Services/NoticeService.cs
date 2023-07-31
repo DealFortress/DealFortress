@@ -64,7 +64,7 @@ public class NoticesService
     }
 
     public Notice? DeleteById(int id)
-    { // check that products get deleted as well
+    {
         var notice = _repo.GetById(id);
 
         if (notice is null)
