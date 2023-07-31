@@ -1,5 +1,6 @@
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealFortress.Modules.Categories.Api.Controllers;
@@ -15,13 +16,17 @@ public class CategoriesController : ControllerBase
         _service = service;
     }
 
+
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<CategoryResponse>> GetCategories()
     {
         return Ok(_service.GetAllDTO());
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<CategoryResponse> GetCategory(int id)
     {
         var response = _service.GetDTOById(id);
@@ -31,6 +36,8 @@ public class CategoriesController : ControllerBase
 
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
         var response = _service.PostDTO(request);

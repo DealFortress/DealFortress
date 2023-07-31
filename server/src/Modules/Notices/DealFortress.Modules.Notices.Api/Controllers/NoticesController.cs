@@ -1,5 +1,6 @@
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -17,12 +18,15 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
         return Ok(_service.GetAllDTO());
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<NoticeResponse> GetNotice(int id)
     {
        var response = _service.GetDTOById(id);
@@ -31,6 +35,8 @@ public class NoticesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutNotice(int id, NoticeRequest request)
     {
         var response = _service.PutDTOById(id, request);
@@ -39,6 +45,8 @@ public class NoticesController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
     {
         var response = _service.PostDTO(request);
@@ -47,6 +55,8 @@ public class NoticesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult DeleteNotice(int id)
     {
         var notice = _service.DeleteById(id);
