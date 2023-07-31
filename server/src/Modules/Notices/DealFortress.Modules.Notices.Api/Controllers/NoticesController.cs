@@ -1,4 +1,3 @@
-using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Mvc;

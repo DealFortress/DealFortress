@@ -1,11 +1,7 @@
-using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-[assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
-
-
-    public class CategoriesContext : DbContext, IDbContext
+    internal class CategoriesContext : DbContext, IDbContext
     {
         public CategoriesContext (DbContextOptions<CategoriesContext> options)
             : base(options)
@@ -15,6 +11,6 @@ using Microsoft.EntityFrameworkCore;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("categories");
+            modelBuilder.HasDefaultSchema("categoriesContext");
         }
     }

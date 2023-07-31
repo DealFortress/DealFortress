@@ -5,17 +5,17 @@
 namespace DealFortress.Modules.Categories.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateCategories : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "categories");
+                name: "categoriesContext");
 
             migrationBuilder.CreateTable(
                 name: "Categories",
-                schema: "categories",
+                schema: "categoriesContext",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,7 +33,7 @@ namespace DealFortress.Modules.Categories.Core.DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Categories",
-                schema: "categories");
+                schema: "categoriesContext");
         }
     }
 }

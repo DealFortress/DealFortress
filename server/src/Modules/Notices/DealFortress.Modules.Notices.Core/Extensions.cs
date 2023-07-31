@@ -17,12 +17,11 @@ namespace DealFortress.Api.Modules.Notices.Extensions
         {
             return service
                 .AddDbContext<NoticesContext>(options =>
-                options.UseSqlServer(connectionString))
+                    options.UseSqlServer(connectionString))
                 .AddScoped<INoticesRepository, NoticesRepository>()
                 .AddScoped<IProductsRepository, ProductsRepository>()
                 .AddScoped<NoticesService>()
                 .AddScoped<ProductsService>();
         }
-
     }
 }
