@@ -1,4 +1,3 @@
-using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,81 +9,49 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 [ApiController]
 public class NoticesController : ControllerBase
 {
-    private readonly INoticesRepository _repo;
+    private readonly NoticesService _service;
 
-    public NoticesController(INoticesRepository repository)
+    public NoticesController(NoticesService service)
     {
-        _repo = repository;
+        _service = service;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
-        var noticesWithProducts = _repo.GetAllWithProducts();
-        var noticesResponse = noticesWithProducts.Select(notice => NoticesService.ToNoticeResponseDTO(notice)).ToList();
-        return Ok(noticesResponse);
+        return Ok(_service.GetAllDTO());
     }
 
     [HttpGet("{id}")]
     public ActionResult<NoticeResponse> GetNotice(int id)
     {
-        var notice = _repo.GetByIdWithProducts(id);
+       var response = _service.GetDTOById(id);
 
-        if (notice == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(NoticesService.ToNoticeResponseDTO(notice));
+       return response is null ? NotFound() : Ok(response);
     }
 
     [HttpPut("{id}")]
-    public IActionResult PutNotice(int id, NoticeRequest noticeRequest)
+    public IActionResult PutNotice(int id, NoticeRequest request)
     {
-        var notice = _repo.GetById(id);
+        var response = _service.PutDTOById(id, request);
 
-        if (notice == null)
-        {
-            return NotFound();
-        }
-
-        _repo.Remove(notice);
-        var updatedNotice = NoticesService.ToNotice(noticeRequest);
-        updatedNotice.Id = notice.Id;
-
-        _repo.Add(updatedNotice);
-        _repo.Complete();
-
-
-        return NoContent();
+        return response is null ? NotFound() : NoContent();
     }
 
     [HttpPost]
     public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
     {
-        var notice = NoticesService.ToNotice(request);
+        var response = _service.PostDTO(request);
 
-        _repo.Add(notice);
-
-        _repo.Complete();
-
-        return CreatedAtAction("GetNotice", new { id = notice.Id }, NoticesService.ToNoticeResponseDTO(notice));
+        return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteNotice(int id)
     {
-        var notice = _repo.GetByIdWithProducts(id);
-
-        if (notice == null)
-        {
-            return NotFound();
-        }
-
-        _repo.Remove(notice);
-        _repo.Complete();
-
-        return NoContent();
+        var notice = _service.DeleteById(id);
+        
+        return notice is null ? NotFound() : NoContent();
     }
 }
 

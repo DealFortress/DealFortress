@@ -10,8 +10,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddCategoriesModule(connectionString);
-builder.Services.AddNoticesModule(connectionString);
+builder.Services.AddCategoriesModule(connectionString!);
+builder.Services.AddNoticesModule(connectionString!);
 
 var app = builder.Build();
 

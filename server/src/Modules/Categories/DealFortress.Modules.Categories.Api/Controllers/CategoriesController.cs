@@ -1,5 +1,3 @@
-using DealFortress.Modules.Categories.Core.Domain.Entities;
-using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.AspNetCore.Mvc;

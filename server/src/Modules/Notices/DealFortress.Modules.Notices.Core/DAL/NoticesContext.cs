@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using DealFortress.Shared.Abstractions.Contexts;
-using DealFortress.Modules.Notices.Core.Domain.Entities;
 
 namespace DealFortress.Modules.Notices.Core.DAL;
 
-    internal class NoticesContext : DbContext, IDbContext
+    public class NoticesContext : DbContext, IDbContext
     {
         public NoticesContext (DbContextOptions<NoticesContext> options)
             : base(options)
@@ -16,7 +15,6 @@ namespace DealFortress.Modules.Notices.Core.DAL;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("notices");
+            modelBuilder.HasDefaultSchema("noticesContext");
         }
-
-    }
+    }    

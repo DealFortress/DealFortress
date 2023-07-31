@@ -1,14 +1,64 @@
 using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.DTO;
 namespace DealFortress.Modules.Notices.Core.Services;
-internal static class ProductsService
+
+public class ProductsService
 {
-    // private readonly CategoriesModule _categoriesModule;
-    // public ProductsService(CategoriesModule categoriesModule)
-    // {
-    //     _categoriesModule = categoriesModule;
-    // }
-    public static ProductResponse ToProductResponseDTO(Product product)
+    private readonly IProductsRepository _repo;
+
+        private readonly INoticesRepository _noticesRepo;
+    public ProductsService(IProductsRepository repo, INoticesRepository noticesRepository)
+    {
+        _repo = repo;
+        _noticesRepo = noticesRepository;
+    }
+
+
+    public IEnumerable<ProductResponse> GetAllDTO()
+    {
+        return _repo.GetAllWithNotice()
+                    .Select(product => ToProductResponseDTO(product));
+    }
+
+      public ProductResponse? PutDTOById(int id, ProductRequest request)
+    {
+        var product = _repo.GetById(id);
+
+        if (product is null)
+        {
+            return null;
+        }
+
+        _repo.Remove(product);
+        var updatedProduct = ToProduct(request, product.Notice);
+        updatedProduct.Id = product.Id;
+
+        _repo.Add(updatedProduct);
+        _repo.Complete();
+
+
+        return ToProductResponseDTO(updatedProduct);
+    }
+
+    public Product? DeleteById(int id)
+    {
+        var product = _repo.GetById(id);
+
+        if (product is null)
+        {
+            return null;
+        }
+
+        _repo.Remove(product);
+        _repo.Complete();
+
+        return product;
+    }
+
+
+    
+    public ProductResponse ToProductResponseDTO(Product product)
     {
         return new ProductResponse()
         {
@@ -27,7 +77,7 @@ internal static class ProductsService
             NoticePayment = product.Notice.Payment
         };
     }
-    public static Product ToProduct(ProductRequest request, Notice Notice)
+    public Product ToProduct(ProductRequest request, Notice notice)
     {
         return new Product()
         {
@@ -39,7 +89,7 @@ internal static class ProductsService
             Condition = request.Condition,
             IsSold = false,
             IsSoldSeparately = false,
-            Notice = Notice
+            Notice = notice
         };
     }
     

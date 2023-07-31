@@ -14,9 +14,10 @@ namespace DealFortress.Modules.Categories.Core.Extensions;
     {
         public static IServiceCollection AddCore(this IServiceCollection services, string connectionString)
         {
-            return services.AddDbContext<CategoriesContext>(options =>
-                                options.UseSqlServer(connectionString))
-                            .AddScoped<ICategoriesRepository, CategoriesRepository>()
-                            .AddScoped<CategoriesService>();
+            return services
+                .AddDbContext<CategoriesContext>(options =>
+                    options.UseSqlServer(connectionString))
+                .AddScoped<ICategoriesRepository, CategoriesRepository>()
+                .AddScoped<CategoriesService>();
         }
     }

@@ -10,6 +10,7 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required bool IsSoldSeparately { get; set; }
         public string? Warranty { get; set; }
         public required int CategoryId { get; set; }
+        
         public required Condition Condition { get; set; }
     }
 

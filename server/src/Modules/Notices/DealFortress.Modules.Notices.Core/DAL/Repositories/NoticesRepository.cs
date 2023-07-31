@@ -13,19 +13,19 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
 
     public IEnumerable<Notice> GetAllWithProducts()
     {
-        return NoticesContext.Notices
+        return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
                     .ToList();
     }
 
     public Notice? GetByIdWithProducts(int id)
     {
-        return NoticesContext.Notices
+        return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
                     .FirstOrDefault(notice => notice.Id == id);
     }
 
-    public NoticesContext NoticesContext
+    public NoticesContext? NoticesContext
     {
         get { return Context as NoticesContext; }
     }

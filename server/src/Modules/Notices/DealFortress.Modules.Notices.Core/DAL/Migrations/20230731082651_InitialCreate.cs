@@ -6,17 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateNotices : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "notices");
+                name: "noticesContext");
 
             migrationBuilder.CreateTable(
                 name: "Notices",
-                schema: "notices",
+                schema: "noticesContext",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -35,7 +35,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Products",
-                schema: "notices",
+                schema: "noticesContext",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -47,7 +47,6 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
                     IsSold = table.Column<bool>(type: "bit", nullable: false),
                     IsSoldSeparately = table.Column<bool>(type: "bit", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
                     NoticeId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -57,7 +56,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
                     table.ForeignKey(
                         name: "FK_Products_Notices_NoticeId",
                         column: x => x.NoticeId,
-                        principalSchema: "notices",
+                        principalSchema: "noticesContext",
                         principalTable: "Notices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -65,7 +64,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_NoticeId",
-                schema: "notices",
+                schema: "noticesContext",
                 table: "Products",
                 column: "NoticeId");
         }
@@ -75,11 +74,11 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Products",
-                schema: "notices");
+                schema: "noticesContext");
 
             migrationBuilder.DropTable(
                 name: "Notices",
-                schema: "notices");
+                schema: "noticesContext");
         }
     }
 }
