@@ -10,14 +10,14 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
     public ProductsRepository(NoticesContext context) : base(context)
     {}
 
-    public IEnumerable<Product> GetAllWithEverything()
+    public IEnumerable<Product> GetAllWithNotice()
     {
         return NoticesContext!.Products
                         .Include(product => product.Notice)
                         .ToList();
     }
 
-    public Product? GetByIdWithEverything(int id)
+    public Product? GetByIdWithNotice(int id)
     {
         return NoticesContext!.Products
                         .Include(product => product.Notice)

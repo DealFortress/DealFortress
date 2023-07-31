@@ -17,7 +17,7 @@ public class ProductsService
 
     public IEnumerable<ProductResponse> GetAllDTO()
     {
-        return _repo.GetAll()
+        return _repo.GetAllWithNotice()
                     .Select(product => ToProductResponseDTO(product));
     }
 
@@ -42,7 +42,7 @@ public class ProductsService
     }
 
     public Product? DeleteById(int id)
-    { // check that products get deleted as well
+    {
         var product = _repo.GetById(id);
 
         if (product is null)

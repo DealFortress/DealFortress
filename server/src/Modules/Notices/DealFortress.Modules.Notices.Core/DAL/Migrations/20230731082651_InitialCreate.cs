@@ -11,8 +11,12 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "noticesContext");
+
             migrationBuilder.CreateTable(
                 name: "Notices",
+                schema: "noticesContext",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -31,6 +35,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Products",
+                schema: "noticesContext",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -51,6 +56,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
                     table.ForeignKey(
                         name: "FK_Products_Notices_NoticeId",
                         column: x => x.NoticeId,
+                        principalSchema: "noticesContext",
                         principalTable: "Notices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -58,6 +64,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_NoticeId",
+                schema: "noticesContext",
                 table: "Products",
                 column: "NoticeId");
         }
@@ -66,10 +73,12 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Products",
+                schema: "noticesContext");
 
             migrationBuilder.DropTable(
-                name: "Notices");
+                name: "Notices",
+                schema: "noticesContext");
         }
     }
 }

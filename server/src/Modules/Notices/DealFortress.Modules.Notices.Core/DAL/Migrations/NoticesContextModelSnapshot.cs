@@ -17,6 +17,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("noticesContext")
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -55,7 +56,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notices");
+                    b.ToTable("Notices", "noticesContext");
                 });
 
             modelBuilder.Entity("DealFortress.Modules.Notices.Core.Domain.Entities.Product", b =>
@@ -98,7 +99,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
                     b.HasIndex("NoticeId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", "noticesContext");
                 });
 
             modelBuilder.Entity("DealFortress.Modules.Notices.Core.Domain.Entities.Product", b =>

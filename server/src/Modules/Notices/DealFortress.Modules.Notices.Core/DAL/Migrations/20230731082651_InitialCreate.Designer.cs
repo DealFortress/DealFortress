@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 {
     [DbContext(typeof(NoticesContext))]
-    [Migration("20230728093853_InitialCreate")]
+    [Migration("20230731082651_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("noticesContext")
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -58,7 +59,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notices");
+                    b.ToTable("Notices", "noticesContext");
                 });
 
             modelBuilder.Entity("DealFortress.Modules.Notices.Core.Domain.Entities.Product", b =>
@@ -101,7 +102,7 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
                     b.HasIndex("NoticeId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", "noticesContext");
                 });
 
             modelBuilder.Entity("DealFortress.Modules.Notices.Core.Domain.Entities.Product", b =>
