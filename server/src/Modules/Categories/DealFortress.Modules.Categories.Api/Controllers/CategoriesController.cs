@@ -36,6 +36,12 @@ public class CategoriesController : ControllerBase
         var response = _service.PostDTO(request);
         return CreatedAtAction("GetCategory", new { id = response.Id }, response);
     }
+
+    [NonAction]
+    public string? GetCategoryNameById(int id)
+    {
+        return _service.GetDTOById(id)?.Name;
+    }
 }
 
 
