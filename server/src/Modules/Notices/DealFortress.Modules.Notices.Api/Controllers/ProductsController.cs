@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 
@@ -35,6 +34,11 @@ public class ProductsController : ControllerBase
     {
        var product = _service.DeleteById(id);
 
-       return product is null ? NotFound() : NoContent();
+    //    return product is null ? NotFound() : NoContent();
+        return product switch
+        {
+            null => NotFound(),
+            not null => NoContent()
+        };
     }
 }

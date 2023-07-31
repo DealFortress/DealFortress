@@ -12,19 +12,19 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
 
     public IEnumerable<Product> GetAllWithEverything()
     {
-        return NoticesContext.Products
+        return NoticesContext!.Products
                         .Include(product => product.Notice)
                         .ToList();
     }
 
     public Product? GetByIdWithEverything(int id)
     {
-        return NoticesContext.Products
+        return NoticesContext!.Products
                         .Include(product => product.Notice)
                         .FirstOrDefault();
     }
 
-    public NoticesContext NoticesContext
+    public NoticesContext? NoticesContext
     {
         get { return Context as NoticesContext; }
     }
