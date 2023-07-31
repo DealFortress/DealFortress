@@ -1,17 +1,23 @@
+using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.DTO;
+
 namespace DealFortress.Modules.Notices.Core.Services;
 
 public class ProductsService
 {
     private readonly IProductsRepository _repo;
+    private readonly INoticesRepository _noticesRepo;
+    private readonly CategoriesController _categoriesController;
 
-        private readonly INoticesRepository _noticesRepo;
-    public ProductsService(IProductsRepository repo, INoticesRepository noticesRepository)
+
+
+    public ProductsService(IProductsRepository repo, INoticesRepository noticesRepository, CategoriesController categoriesController)
     {
         _repo = repo;
         _noticesRepo = noticesRepository;
+        _categoriesController = categoriesController;
     }
 
 
@@ -69,7 +75,7 @@ public class ProductsService
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
             ImageUrls = new List<string>() { "" },
-            CategoryName = "CPU",
+            CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
             NoticeCity = product.Notice.City,
@@ -93,15 +99,15 @@ public class ProductsService
         };
     }
     
-    // private string GetCategoryNameById(int id)
-    // {
-    //     var categoryResponse = _categoriesModule.Controller.GetCategory(id);
+    private string GetCategoryNameById(int id)
+    {
+        var categoryName = _categoriesController.GetCategoryNameById(id);
 
-    //     if(categoryResponse.Value is null)
-    //     {
-    //         return string.Empty;
-    //     }
+        if(categoryName is null)
+        {
+            return string.Empty;
+        }
 
-    //     return categoryResponse.Value.Name;
-    // }
+        return categoryName;
+    }
 }
