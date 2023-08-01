@@ -4,7 +4,7 @@ using DealFortress.Modules.Categories.Core.DTO;
 
 namespace DealFortress.Modules.Categories.Core.Services;
 
-public class CategoriesService
+public class CategoriesService : ICategoriesService
 {
     private readonly ICategoriesRepository _repo;
     public CategoriesService(ICategoriesRepository repo)
@@ -17,7 +17,7 @@ public class CategoriesService
 
     // }
 
-    public virtual IEnumerable<CategoryResponse> GetAllDTO()
+    public IEnumerable<CategoryResponse> GetAllDTO()
     {
         return _repo.GetAll()
                     .Select(category => ToCategoryResponseDTO(category));

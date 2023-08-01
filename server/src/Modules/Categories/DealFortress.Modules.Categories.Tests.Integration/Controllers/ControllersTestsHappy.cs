@@ -8,7 +8,7 @@ namespace DealFortress.Modules.Categories.Tests.Unit;
 
 public class ControllersTestsHappy
 {
-    private readonly CategoriesService _service;
+    private readonly ICategoriesService _service;
     private readonly CategoriesController _controller;
 
     public ControllersTestsHappy()
@@ -27,8 +27,5 @@ public class ControllersTestsHappy
     [Fact]
     public void get_all_returns_ok()
     {
-        var dto = _service.GetDTOById(1);
-        dto.
-
     }
 }
