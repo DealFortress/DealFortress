@@ -1,6 +1,7 @@
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
+using FluentAssertions;
 using Moq;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
@@ -24,8 +25,15 @@ public class ServicesTestsSad
     }
 
     [Fact]
-    public void Test1()
+    public void GetDTOById_returns_null_when_id_doesnt_exist()
     {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
 
+        // act
+        var response = _service.GetDTOById(1);
+
+        // assert
+        response.Should().Be(null);
     }
 }

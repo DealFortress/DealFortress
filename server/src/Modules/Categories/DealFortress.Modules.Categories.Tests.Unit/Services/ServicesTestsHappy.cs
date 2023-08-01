@@ -14,7 +14,6 @@ public class ServicesTestsHappy
     private readonly ICategoriesService _service;
     private readonly Mock<ICategoriesRepository> _repo;
     private readonly CategoryRequest _request;
-    private readonly CategoryResponse _response;
     private readonly Category _category;
 
     public ServicesTestsHappy()
@@ -24,8 +23,6 @@ public class ServicesTestsHappy
         _service = new CategoriesService(_repo.Object);
 
         _request = new CategoryRequest() { Name = "test" };
-
-        _response = new CategoryResponse() { Name = "test" };
 
         _category = new Category() { Id = 1, Name = "test" };
     }
@@ -55,20 +52,17 @@ public class ServicesTestsHappy
     }
 
     [Fact]
-    public void dsa()
+    public void GetAllDTO_returns_response()
     {
+        // arrange
+        var list = new List<Category>(){ _category }; 
+        _repo.Setup(repo => repo.GetAll()).Returns(list);
 
+        // act
+        var response = _service.GetAllDTO();
+
+        // assert
+        response.Should().BeOfType(typeof(List<CategoryResponse>));
     }
 
-    [Fact]
-    public void sda()
-    {
-
-    }
-
-    [Fact]
-    public void sas()
-    {
-
-    }
 }

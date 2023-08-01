@@ -15,7 +15,8 @@ public class CategoriesService : ICategoriesService
     public IEnumerable<CategoryResponse> GetAllDTO()
     {
         return _repo.GetAll()
-                    .Select(category => ToCategoryResponseDTO(category));
+                    .Select(category => ToCategoryResponseDTO(category))
+                    .ToList();
     }
 
     public CategoryResponse? GetDTOById(int id)
