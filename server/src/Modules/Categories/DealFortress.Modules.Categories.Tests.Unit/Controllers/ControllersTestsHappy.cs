@@ -1,6 +1,4 @@
 using DealFortress.Modules.Categories.Api.Controllers;
-using DealFortress.Modules.Categories.Core.Domain.Entities;
-using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using FluentAssertions;
@@ -31,10 +29,7 @@ public class ControllersTestsHappy
     public void get_all_returns_ok()
     {
         // arrange
-        var content = new List<CategoryResponse>()
-        {
-            new CategoryResponse() { Name = "test" }
-        };
+        var content = new List<CategoryResponse>(){ _response };
         _service.Setup(item => item.GetAllDTO()).Returns(content);
         
         // act
@@ -42,6 +37,21 @@ public class ControllersTestsHappy
 
         // assert
         httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
+    }
+
+    [Fact]
+    public void get_all_returns_list_of_response()
+    {
+        // arrange
+        var list = new List<CategoryResponse>(){ _response };
+        _service.Setup(item => item.GetAllDTO()).Returns(list);
+        
+        // act
+        var httpResponse = _controller.GetCategories();
+
+        // assert
+        var content = httpResponse.Result.As<OkObjectResult>().Value;
+        content.Should().BeOfType(typeof(List<CategoryResponse>));
     }
 
     [Fact]
@@ -68,5 +78,18 @@ public class ControllersTestsHappy
 
         // assert
         httpResponse.Result.Should().BeOfType(typeof(CreatedAtActionResult));
+    }
+
+    [Fact]
+    public void get_category_name_by_id_returns_name_of_category()
+    {
+        // arrange
+        _service.Setup(item => item.GetDTOById(1)).Returns(_response);
+
+        // act
+        var response = _controller.GetCategoryNameById(1);
+
+        //assert
+        response.Should().Be("test");
     }
 }
