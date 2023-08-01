@@ -12,11 +12,6 @@ public class CategoriesService : ICategoriesService
         _repo = repo;
     }
 
-    // public CategoriesService()
-    // {
-
-    // }
-
     public IEnumerable<CategoryResponse> GetAllDTO()
     {
         return _repo.GetAll()

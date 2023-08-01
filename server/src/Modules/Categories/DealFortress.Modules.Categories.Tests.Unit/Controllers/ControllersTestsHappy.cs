@@ -30,7 +30,7 @@ public class ControllersTestsHappy
     {
         // arrange
         var content = new List<CategoryResponse>(){ _response };
-        _service.Setup(item => item.GetAllDTO()).Returns(content);
+        _service.Setup(service => service.GetAllDTO()).Returns(content);
         
         // act
         var httpResponse = _controller.GetCategories();
@@ -40,11 +40,11 @@ public class ControllersTestsHappy
     }
 
     [Fact]
-    public void get_all_returns_list_of_response()
+    public void get_all_returns_list_of_response_when_service_returns_response()
     {
         // arrange
         var list = new List<CategoryResponse>(){ _response };
-        _service.Setup(item => item.GetAllDTO()).Returns(list);
+        _service.Setup(service => service.GetAllDTO()).Returns(list);
         
         // act
         var httpResponse = _controller.GetCategories();
@@ -55,10 +55,10 @@ public class ControllersTestsHappy
     }
 
     [Fact]
-    public void get_one_by_id_returns_ok()
+    public void get_one_by_id_returns_ok_when_service_returns_response()
     {
         // arrange
-        _service.Setup(item => item.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
 
         // act
         var httpResponse = _controller.GetCategory(1);
@@ -68,10 +68,23 @@ public class ControllersTestsHappy
     }
 
     [Fact]
-    public void post_category_returns_created()
+    public void get_one_by_id_returns_category_response_when_service_returns_response()
     {
         // arrange
-        _service.Setup(item => item.PostDTO(_request)).Returns(_response);
+        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+
+        // act
+        var httpResponse = _controller.GetCategory(1);
+
+        // assert
+        httpResponse.Result.As<OkObjectResult>().Value.Should().BeOfType(typeof(CategoryResponse));
+    }
+
+    [Fact]
+    public void post_category_returns_created_when_service_returns_response()
+    {
+        // arrange
+        _service.Setup(service => service.PostDTO(_request)).Returns(_response);
 
         // act
         var httpResponse = _controller.PostCategory(_request);
@@ -81,7 +94,20 @@ public class ControllersTestsHappy
     }
 
     [Fact]
-    public void get_category_name_by_id_returns_name_of_category()
+    public void post_category_returns_categoryResponse_when_service_returns_response()
+    {
+        // arrange
+        _service.Setup(item => item.PostDTO(_request)).Returns(_response);
+
+        // act
+        var httpResponse = _controller.PostCategory(_request);
+
+        // assert
+        httpResponse.Result.As<CreatedAtActionResult>().Value.Should().BeOfType(typeof(CategoryResponse));
+    }
+
+    [Fact]
+    public void get_category_name_by_id_returns_name_of_category_when_service_returns_response()
     {
         // arrange
         _service.Setup(item => item.GetDTOById(1)).Returns(_response);
