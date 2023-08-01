@@ -13,12 +13,18 @@ public class ControllersTestsHappy
 {
     private readonly CategoriesController _controller;
     private readonly Mock<ICategoriesService> _service;
+    private readonly CategoryRequest _request;
+    private readonly CategoryResponse _response;
 
     public ControllersTestsHappy()
     {
         _service = new Mock<ICategoriesService>();
         
         _controller = new CategoriesController(_service.Object);
+
+        _request = new CategoryRequest(){ Name = "test" };
+
+        _response = new CategoryResponse(){ Name = "test" };
     }
     
     [Fact]
@@ -32,23 +38,35 @@ public class ControllersTestsHappy
         _service.Setup(item => item.GetAllDTO()).Returns(content);
         
         // act
-        var dtos = _controller.GetCategories();
+        var httpResponse = _controller.GetCategories();
 
         // assert
-        dtos.Result.Should().BeOfType(typeof(OkObjectResult));
+        httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
     }
 
     [Fact]
     public void get_one_by_id_returns_ok()
     {
         // arrange
-        var content = new CategoryResponse(){Name = "test"};
-        _service.Setup(item => item.GetDTOById(1)).Returns(content);
+        _service.Setup(item => item.GetDTOById(1)).Returns(_response);
 
         // act
-        var dto = _controller.GetCategory(1);
+        var httpResponse = _controller.GetCategory(1);
 
         // assert
-        dto.Result.Should().BeOfType(typeof(OkObjectResult));
+        httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
+    }
+
+    [Fact]
+    public void post_category_returns_created()
+    {
+        // arrange
+        _service.Setup(item => item.PostDTO(_request)).Returns(_response);
+
+        // act
+        var httpResponse = _controller.PostCategory(_request);
+
+        // assert
+        httpResponse.Result.Should().BeOfType(typeof(CreatedAtActionResult));
     }
 }
