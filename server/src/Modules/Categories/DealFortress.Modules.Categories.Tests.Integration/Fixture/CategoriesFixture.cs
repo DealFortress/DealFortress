@@ -24,9 +24,6 @@ public class CategoriesFixture : IDisposable
 
     public void Dispose()
     {
-        context.Categories.Remove(context.Categories.Find(1));
-        context.Categories.Remove(context.Categories.Find(2));
-        context.SaveChanges();
         context.Dispose();
     }
 }

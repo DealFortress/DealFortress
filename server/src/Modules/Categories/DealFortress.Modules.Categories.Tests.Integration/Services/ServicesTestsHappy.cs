@@ -11,7 +11,7 @@ using DealFortress.Modules.Categories.Core.DAL.Repositories;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsHappy
+public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
 {
     private readonly ICategoriesService _service;
     private readonly CategoriesRepository _repo;
@@ -19,9 +19,9 @@ public class ServicesTestsHappy
     private readonly Category _category;
     public CategoriesFixture Fixture;
 
-    public ServicesTestsHappy()
+    public ServicesTestsHappy(CategoriesFixture fixture)
     {
-        Fixture = new CategoriesFixture();
+        Fixture = fixture;
 
         _repo = new CategoriesRepository(Fixture.context);
 
@@ -40,7 +40,6 @@ public class ServicesTestsHappy
 
         // Assert 
         categoryResponses.Count().Should().Be(2);
-        Fixture.Dispose();
     }
 
     [Fact]
@@ -52,7 +51,6 @@ public class ServicesTestsHappy
 
         // Assert 
         categoryResponses.Count().Should().Be(2);
-        Fixture.Dispose();
     }
 
 }
