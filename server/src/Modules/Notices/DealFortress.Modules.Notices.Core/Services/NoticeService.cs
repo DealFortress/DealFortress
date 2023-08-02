@@ -88,8 +88,8 @@ public class NoticesService : INoticesService
             Title = Notice.Title,
             Description = Notice.Description,
             City = Notice.City,
-            Payments = Notice.Payment.Split(","),
-            DeliveryMethods = Notice.DeliveryMethod.Split(","),
+            Payments = Notice.Payments.Split(","),
+            DeliveryMethods = Notice.DeliveryMethods.Split(","),
             CreatedAt = Notice.CreatedAt
         };
 
@@ -108,8 +108,8 @@ public class NoticesService : INoticesService
             Title = request.Title,
             Description = request.Description,
             City = request.City,
-            Payment = string.Join(",", request.Payments),
-            DeliveryMethod = string.Join(",", request.DeliveryMethods),
+            Payments = string.Join(",", request.Payments),
+            DeliveryMethods = string.Join(",", request.DeliveryMethods),
             CreatedAt = DateTime.UtcNow
         };
 

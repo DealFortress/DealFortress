@@ -10,9 +10,9 @@ namespace DealFortress.Modules.Notices.Core.Domain.Entities;
         public required string Description { get; set; }
         public required string City { get; set; }
 
-        public required string Payment { get; set; }
+        public required string Payments { get; set; }
         public required DateTime CreatedAt { get; set; }
         public virtual List<Product>? Products { get; set; }
-        public required string DeliveryMethod { get; set; }
+        public required string DeliveryMethods { get; set; }
     }
 

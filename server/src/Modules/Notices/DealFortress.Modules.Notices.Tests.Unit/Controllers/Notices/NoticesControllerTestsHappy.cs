@@ -15,6 +15,8 @@ public class NoticeControllersTestsHappy
     private readonly NoticeRequest _request;
     private readonly NoticeResponse _response;
 
+    private readonly Notice _notice;
+
     public NoticeControllersTestsHappy()
     {
         _service = new Mock<INoticesService>();
@@ -24,6 +26,8 @@ public class NoticeControllersTestsHappy
         _request = CreateNoticeRequest();
 
         _response = CreateNoticeResponse();
+
+        _notice = CreateNotice();
     }
 
     public NoticeRequest CreateNoticeRequest()
@@ -42,6 +46,7 @@ public class NoticeControllersTestsHappy
                     Name = "test",
                     Price = 1,
                     HasReceipt = true,
+                    IsSold = false,
                     IsSoldSeparately = false,
                     Warranty = "month",
                     CategoryId = 1,
@@ -52,6 +57,7 @@ public class NoticeControllersTestsHappy
     }
 
     public NoticeResponse CreateNoticeResponse()
+
     {
         return new NoticeResponse()
         {
@@ -82,15 +88,100 @@ public class NoticeControllersTestsHappy
         };
     }
 
+    public Notice CreateNotice()
+
+    {
+        return new Notice()
+        {
+            Id = 1,
+            Title = "test title",
+            Description = "test description",
+            City = "test city",
+            Payments = "cast,swish",
+            DeliveryMethods = "mail,delivered",
+            CreatedAt = new DateTime(),
+            Products = new List<Product>
+            {
+                new Product()
+                {
+                    Id = 1,
+                    Name = "test",
+                    Price = 1,
+                    HasReceipt = true,
+                    IsSold = false,
+                    IsSoldSeparately = false,
+                    Warranty = "month",
+                    CategoryId = 1,
+                    Condition = Condition.New,
+                    Notice = this._notice
+                }
+            }
+        };
+    }
     [Fact]
     public void GetNotices_should_return_ok()
     {
         // Arrange
-        var content = new List<NoticeResponse>{_response};
+        var content = new List<NoticeResponse> { _response };
         _service.Setup(service => service.GetAllDTO()).Returns(content);
         // Act
         var httpResponses = _controller.GetNotices();
         // Assert 
         httpResponses.Result.Should().BeOfType<OkObjectResult>();
+    }
+
+    [Fact]
+    public void GetNotices_return_list_of_response_when_server_returns_responses()
+    {
+        // Arrange
+        var list = new List<NoticeResponse> { _response };
+        _service.Setup(service => service.GetAllDTO()).Returns(list);
+        // Act
+        var httpResponses = _controller.GetNotices();
+        // Assert 
+        var content = httpResponses.Result.As<OkObjectResult>().Value;
+        content.Should().BeOfType<List<NoticeResponse>>();
+    }
+    [Fact]
+    public void GetNotice_return_ok_when_service_return_response()
+    {
+        // Arrange
+        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        // Act
+        var httpResponse = _controller.GetNotice(1);
+        // Assert 
+        httpResponse.Result.Should().BeOfType<OkObjectResult>();
+    }
+
+    [Fact]
+    public void GetNotice_return_response_when_server_returns_response()
+    {
+        // Arrange
+        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        // Act
+        var httpResponse = _controller.GetNotice(1);
+        // Assert 
+        var content = httpResponse.Result.As<OkObjectResult>().Value;
+        content.Should().BeOfType<NoticeResponse>();
+    }
+    [Fact]
+    public void PutNotice_return_no_content_when_service_return_response()
+    {
+        // Arrange
+        _service.Setup(service => service.PutDTOById(1, _request)).Returns(_response);
+        // Act
+        var httpResponse = _controller.PutNotice(1, _request);
+        // Assert 
+        httpResponse.Should().BeOfType<NoContentResult>();
+    }
+    [Fact]
+    public void DeleteNotice_should_return_no_content()
+    {
+        // Arrange
+        _service.Setup(service => service.DeleteById(1)).Returns(_notice);
+        // Act
+        var httpResponse = _controller.DeleteNotice(1);
+        // Assert 
+        httpResponse.Should().BeOfType<NoContentResult>();
     }
 }

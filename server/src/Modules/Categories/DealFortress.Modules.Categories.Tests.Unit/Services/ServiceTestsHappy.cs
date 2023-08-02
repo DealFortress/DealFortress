@@ -47,7 +47,7 @@ public class ServiceTestsHappy
         var response = _service.GetDTOById(1);
 
         // assert
-        response.Should().BeOfType(typeof(CategoryResponse));
+        response.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class ServiceTestsHappy
         var response = _service.GetAllDTO();
 
         // assert
-        response.Should().BeOfType(typeof(List<CategoryResponse>));
+        response.Should().BeOfType<List<CategoryResponse>>();
     }
 
 }

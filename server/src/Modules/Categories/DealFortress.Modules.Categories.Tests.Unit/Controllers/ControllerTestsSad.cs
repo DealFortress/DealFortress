@@ -37,6 +37,6 @@ public class ControllerTestsSad
 
         // Assert 
 
-        httpResponse.Result.Should().BeOfType(typeof(NotFoundResult));
+        httpResponse.Result.Should().BeOfType<NotFoundResult>();
     }
 }

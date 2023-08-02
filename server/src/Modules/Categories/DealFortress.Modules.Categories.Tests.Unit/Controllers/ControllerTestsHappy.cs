@@ -36,7 +36,7 @@ public class ControllerTestsHappy
         var httpResponse = _controller.GetCategories();
 
         // assert
-        httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
+        httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public class ControllerTestsHappy
 
         // assert
         var content = httpResponse.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType(typeof(List<CategoryResponse>));
+        content.Should().BeOfType<List<CategoryResponse>>();
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class ControllerTestsHappy
         var httpResponse = _controller.GetCategory(1);
 
         // assert
-        httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
+        httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public class ControllerTestsHappy
         var httpResponse = _controller.GetCategory(1);
 
         // assert
-        httpResponse.Result.As<OkObjectResult>().Value.Should().BeOfType(typeof(CategoryResponse));
+        httpResponse.Result.As<OkObjectResult>().Value.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class ControllerTestsHappy
         var httpResponse = _controller.PostCategory(_request);
 
         // assert
-        httpResponse.Result.Should().BeOfType(typeof(CreatedAtActionResult));
+        httpResponse.Result.Should().BeOfType<CreatedAtActionResult>();
     }
 
     [Fact]
@@ -103,7 +103,7 @@ public class ControllerTestsHappy
         var httpResponse = _controller.PostCategory(_request);
 
         // assert
-        httpResponse.Result.As<CreatedAtActionResult>().Value.Should().BeOfType(typeof(CategoryResponse));
+        httpResponse.Result.As<CreatedAtActionResult>().Value.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
