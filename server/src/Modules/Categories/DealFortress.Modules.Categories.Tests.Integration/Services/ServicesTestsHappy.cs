@@ -1,11 +1,7 @@
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
-using DealFortress.Modules.Categories.Api.Controllers;
-using Moq;
-using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using FluentAssertions;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 using DealFortress.Modules.Categories.Tests.Integration.Fixture;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 
@@ -33,7 +29,7 @@ public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
     }
 
     [Fact]
-    public void GetAll_should_return_all_categories()
+    public void GetAllDTO_should_return_all_categories()
     {
         // Act
         var categoryResponses = _service.GetAllDTO();
@@ -43,14 +39,24 @@ public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
     }
 
     [Fact]
-    public void GetAll_should_return_all_categoriess()
+    public void GetDTOById_should_return_the_category_matching_id()
     {
         // Act
 
-        var categoryResponses = _service.GetAllDTO();
+        var categoryResponse = _service.GetDTOById(1);
 
         // Assert 
-        categoryResponses.Count().Should().Be(2);
+        categoryResponse?.Name.Should().Be("test1");
+        categoryResponse?.Id.Should().Be(1);
     }
 
+    [Fact]
+    public void PostDTO_should_add_category_in_db()
+    {
+        // Act
+        var postResponse = _service.PostDTO(_request);
+        var categoryResponse = _service.GetDTOById(postResponse.Id);
+        // Assert
+        categoryResponse?.Name.Should().Be(_request.Name);
+    }
 }
