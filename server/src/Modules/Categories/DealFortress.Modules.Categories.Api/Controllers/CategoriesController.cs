@@ -9,9 +9,9 @@ namespace DealFortress.Modules.Categories.Api.Controllers;
 [ApiController]
 public class CategoriesController : ControllerBase
 {
-    private readonly CategoriesService _service;
+    private readonly ICategoriesService _service;
 
-    public CategoriesController(CategoriesService service)
+    public CategoriesController(ICategoriesService service)
     {
         _service = service;
     }

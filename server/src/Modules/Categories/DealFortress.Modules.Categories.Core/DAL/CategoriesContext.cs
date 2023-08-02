@@ -1,7 +1,10 @@
+using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-    internal class CategoriesContext : DbContext, IDbContext
+// [assembly: InternalsVisibleTo("DealFortress.Modules.Categories.Tests.Integration")]
+
+    public class CategoriesContext : DbContext, IDbContext
     {
         public CategoriesContext (DbContextOptions<CategoriesContext> options)
             : base(options)

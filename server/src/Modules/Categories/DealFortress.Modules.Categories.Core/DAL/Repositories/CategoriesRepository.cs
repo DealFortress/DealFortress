@@ -4,6 +4,7 @@ using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Shared.Abstractions.Repositories;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
+[assembly: InternalsVisibleTo("DealFortress.Modules.Categories.Tests.Integration")]
 
 
 namespace DealFortress.Modules.Categories.Core.DAL.Repositories;
