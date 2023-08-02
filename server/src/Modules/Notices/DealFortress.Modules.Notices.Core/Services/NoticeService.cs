@@ -1,10 +1,11 @@
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
-public class NoticesService
+public class NoticesService : INoticesService
 {
     private readonly ProductsService _productsService;
     private readonly INoticesRepository _repo;

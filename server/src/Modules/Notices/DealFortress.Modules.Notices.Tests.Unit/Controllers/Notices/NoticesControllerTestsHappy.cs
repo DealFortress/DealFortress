@@ -1,7 +1,7 @@
 using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
-using DealFortress.Modules.Notices.Core.Services;
 using Moq;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;

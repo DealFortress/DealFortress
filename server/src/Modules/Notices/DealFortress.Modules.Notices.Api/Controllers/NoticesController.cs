@@ -1,5 +1,5 @@
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
-using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +10,9 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 [ApiController]
 public class NoticesController : ControllerBase
 {
-    private readonly NoticesService _service;
+    private readonly INoticesService _service;
 
-    public NoticesController(NoticesService service)
+    public NoticesController(INoticesService service)
     {
         _service = service;
     }
