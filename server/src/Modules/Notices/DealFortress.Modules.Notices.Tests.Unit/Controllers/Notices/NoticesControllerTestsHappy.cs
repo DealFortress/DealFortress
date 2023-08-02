@@ -2,6 +2,8 @@ using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
@@ -16,7 +18,7 @@ public class NoticeControllersTestsHappy
     public NoticeControllersTestsHappy()
     {
         _service = new Mock<INoticesService>();
-        
+
         _controller = new NoticesController(_service.Object);
 
         _request = CreateNoticeRequest();
@@ -27,12 +29,12 @@ public class NoticeControllersTestsHappy
     public NoticeRequest CreateNoticeRequest()
     {
         return new NoticeRequest()
-        { 
+        {
             Title = "test title",
             Description = "test description",
             City = "test city",
-            Payments = new []{"cast", "swish"},
-            DeliveryMethods = new []{"mail", "delivered"},
+            Payments = new[] { "cast", "swish" },
+            DeliveryMethods = new[] { "mail", "delivered" },
             ProductRequests = new List<ProductRequest>
             {
                 new ProductRequest()
@@ -52,13 +54,13 @@ public class NoticeControllersTestsHappy
     public NoticeResponse CreateNoticeResponse()
     {
         return new NoticeResponse()
-        { 
+        {
             Id = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
-            Payments = new []{"cast", "swish"},
-            DeliveryMethods = new []{"mail", "delivered"},
+            Payments = new[] { "cast", "swish" },
+            DeliveryMethods = new[] { "mail", "delivered" },
             CreatedAt = new DateTime(),
             Products = new List<ProductResponse>
             {
@@ -81,8 +83,14 @@ public class NoticeControllersTestsHappy
     }
 
     [Fact]
-    public void Test1()
+    public void GetNotices_should_return_ok()
     {
-
+        // Arrange
+        var content = new List<NoticeResponse>{_response};
+        _service.Setup(service => service.GetAllDTO()).Returns(content);
+        // Act
+        var httpResponses = _controller.GetNotices();
+        // Assert 
+        httpResponses.Result.Should().BeOfType<OkObjectResult>();
     }
 }
