@@ -1,22 +1,21 @@
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
-using DealFortress.Modules.Categories.Api.Controllers;
-
 using Moq;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using FluentAssertions;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsHappy
+public class ServiceTestsHappy
 {
     private readonly ICategoriesService _service;
     private readonly Mock<ICategoriesRepository> _repo;
     private readonly CategoryRequest _request;
     private readonly Category _category;
 
-    public ServicesTestsHappy()
+    public ServiceTestsHappy()
     {
         _repo = new Mock<ICategoriesRepository>();
 

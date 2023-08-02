@@ -9,14 +9,11 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required int Price { get; set; }
         public required bool HasReceipt { get; set; }
         public string? Warranty { get; set; }
-
+        public bool IsSoldSeparately { get; set; }
         public required int CategoryId { get; set; }
         public required string CategoryName { get; set; }
         public required Condition Condition { get; set; }
         public required List<string> ImageUrls { get; set; }
         public required int NoticeId { get; set; }
-        public required string NoticeCity { get; set; }
-        public required string NoticePayment { get; set; }
-        public required string NoticeDeliveryMethod { get; set; }
     }
 

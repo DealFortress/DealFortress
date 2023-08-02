@@ -4,6 +4,7 @@ using FluentAssertions;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Tests.Integration.Fixture;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 

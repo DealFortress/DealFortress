@@ -1,20 +1,20 @@
 using DealFortress.Modules.Categories.Api.Controllers;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
-using DealFortress.Modules.Categories.Core.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ControllersTestsHappy
+public class ControllerTestsHappy
 {
     private readonly CategoriesController _controller;
     private readonly Mock<ICategoriesService> _service;
     private readonly CategoryRequest _request;
     private readonly CategoryResponse _response;
 
-    public ControllersTestsHappy()
+    public ControllerTestsHappy()
     {
         _service = new Mock<ICategoriesService>();
         

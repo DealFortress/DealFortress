@@ -1,5 +1,6 @@
 using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
 
 namespace DealFortress.Modules.Categories.Core.Services;

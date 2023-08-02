@@ -78,9 +78,7 @@ public class ProductsService
             CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
-            NoticeCity = product.Notice.City,
-            NoticeDeliveryMethod = product.Notice.DeliveryMethod,
-            NoticePayment = product.Notice.Payment
+            IsSoldSeparately = product.IsSoldSeparately
         };
     }
     public Product ToProduct(ProductRequest request, Notice notice)

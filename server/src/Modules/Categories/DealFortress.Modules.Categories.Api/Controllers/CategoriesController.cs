@@ -1,3 +1,4 @@
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.AspNetCore.Http;

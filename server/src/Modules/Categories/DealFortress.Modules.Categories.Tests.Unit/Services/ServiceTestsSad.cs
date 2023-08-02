@@ -1,4 +1,5 @@
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using FluentAssertions;
@@ -6,14 +7,14 @@ using Moq;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsSad
+public class ServiceTestsSad
 {
     private readonly ICategoriesService _service;
     private readonly Mock<ICategoriesRepository> _repo;
     private readonly CategoryRequest _request;
     private readonly CategoryResponse _response;
 
-    public ServicesTestsSad()
+    public ServiceTestsSad()
     {
         _repo = new Mock<ICategoriesRepository>();
         
