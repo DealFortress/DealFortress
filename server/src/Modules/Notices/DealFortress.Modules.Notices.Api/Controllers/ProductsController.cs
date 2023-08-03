@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -9,9 +10,9 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 [ApiController]
 public class ProductsController : ControllerBase
 {
-    private ProductsService _service;
+    private IProductsService _service;
 
-    public ProductsController(ProductsService service)
+    public ProductsController(IProductsService service)
     {
         _service = service;
     }

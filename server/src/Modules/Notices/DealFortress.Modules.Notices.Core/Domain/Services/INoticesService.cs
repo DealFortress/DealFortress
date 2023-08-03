@@ -11,7 +11,7 @@ public interface INoticesService
 
     NoticeResponse PostDTO(NoticeRequest request);
 
-    NoticeResponse PutDTOById(int id, NoticeRequest request);
+    NoticeResponse? PutDTOById(int id, NoticeRequest request);
 
     Notice? DeleteById(int id);
 

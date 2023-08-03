@@ -1,11 +1,12 @@
 using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
-public class ProductsService
+public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
     private readonly INoticesRepository _noticesRepo;
@@ -27,7 +28,7 @@ public class ProductsService
                     .Select(product => ToProductResponseDTO(product));
     }
 
-      public ProductResponse? PutDTOById(int id, ProductRequest request)
+    public ProductResponse? PutDTOById(int id, ProductRequest request)
     {
         var product = _repo.GetById(id);
 
