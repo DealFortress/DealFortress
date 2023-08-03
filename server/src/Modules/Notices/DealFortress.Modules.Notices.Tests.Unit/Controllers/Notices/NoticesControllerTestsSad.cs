@@ -139,10 +139,10 @@ public class NoticeControllersTestsSad
         _service.Setup(service => service.PutDTOById(1, _request));
 
         // Act
-        var httpResponse = _controller.GetNotice(1);
+        var httpResponse = _controller.PutNotice(1, _request);
 
         // Assert 
-        httpResponse.Result.Should().BeOfType<NotFoundResult>();
+        httpResponse.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
