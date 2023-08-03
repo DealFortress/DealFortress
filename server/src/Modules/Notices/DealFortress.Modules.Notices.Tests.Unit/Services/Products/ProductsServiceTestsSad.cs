@@ -60,15 +60,69 @@ public class ProductsServiceTestsSad
     }
 
     [Fact]
-    public void GetAllDTO_retur()
+    public void PutDTO_should_not_replace_data_if_product_not_found()
     {
         // arrange
-        _repo.Setup(repo => repo.GetAllWithNotice());
+        _repo.Setup(repo => repo.GetById(1));
 
-        // act
-        var response = _service.GetAllDTO();
+        // Act
+        _service.PutDTOById(1, _request);
 
-        // assert
-        response.Should().BeOfType<List<ProductResponse>>();
+        // Assert 
+        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
+    }
+
+    [Fact]
+    public void PutDTO_should_not_complete_if_product_not_found()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        _service.PutDTOById(1, _request);
+
+        // Assert 
+        _repo.Verify(repo => repo.Complete(), Times.Never());
+    }
+
+    [Fact]
+    public void PutDTO_should_return_null_if_product_not_found()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        var response = _service.PutDTOById(1, _request);
+
+        // Assert 
+        response.Should().Be(null);
+    }
+
+    [Fact]
+    public void DeleteById_should_not_remove_data_and_complete_if_id_doesnt_exist()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        _service.DeleteById(1);
+
+        // Assert 
+        _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.Complete(), Times.Never());
+    }
+
+    [Fact]
+    public void DeleteById_should_not_return_product_if_id_doesnt_exist()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        var response = _service.DeleteById(1);
+
+        // Assert 
+        response.Should().Be(null);
     }
 }
