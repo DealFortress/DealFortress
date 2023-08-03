@@ -1,35 +1,36 @@
-using DealFortress.Modules.Notices.Api.Controllers;
+using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Notices.Core.Services;
+using Moq;
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using FluentAssertions;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
-using DealFortress.Modules.Notices.Core.DTO;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
-public class NoticeControllersTestsHappy
+public class NoticesServiceTestsHappy
 {
-    private readonly NoticesController _controller;
-    private readonly Mock<INoticesService> _service;
+    private readonly INoticesService _service;
+    private readonly Mock<INoticesRepository> _repo;
     private readonly NoticeRequest _request;
-    private readonly NoticeResponse _response;
-
     private readonly Notice _notice;
 
-    public NoticeControllersTestsHappy()
+    public NoticesServiceTestsHappy()
     {
-        _service = new Mock<INoticesService>();
+        _repo = new Mock<INoticesRepository>();
 
-        _controller = new NoticesController(_service.Object);
+        var productsService = new Mock<ProductsService>();
+
+        _service = new NoticesService(productsService.Object, _repo.Object);
 
         _request = CreateNoticeRequest();
 
-        _response = CreateNoticeResponse();
-
         _notice = CreateNotice();
+
+        _request = CreateNoticeRequest();
     }
 
+    
     public NoticeRequest CreateNoticeRequest()
     {
         return new NoticeRequest()
@@ -119,71 +120,42 @@ public class NoticeControllersTestsHappy
         };
     }
     
-    
     [Fact]
-    public void GetNotices_should_return_ok()
+    public void PostDTO_should_complete_to_save_to_db()
     {
-        // Arrange
-        var content = new List<NoticeResponse> { _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(content);
         // Act
-        var httpResponses = _controller.GetNotices();
+        _service.PostDTO(_request);
+
         // Assert 
-        httpResponses.Result.Should().BeOfType<OkObjectResult>();
+        _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
+
     }
 
     [Fact]
-    public void GetNotices_return_list_of_response_when_server_returns_responses()
+    public void GetDTOById_returns_response_when_repo_returns_a_notice()
     {
-        // Arrange
-        var list = new List<NoticeResponse> { _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(list);
-        // Act
-        var httpResponses = _controller.GetNotices();
-        // Assert 
-        var content = httpResponses.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType<List<NoticeResponse>>();
-    }
-    [Fact]
-    public void GetNotice_return_ok_when_service_return_response()
-    {
-        // Arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
-        // Act
-        var httpResponse = _controller.GetNotice(1);
-        // Assert 
-        httpResponse.Result.Should().BeOfType<OkObjectResult>();
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+
+        // act
+        var response = _service.GetDTOById(1);
+
+        // assert
+        response.Should().BeOfType<NoticeResponse>();
     }
 
     [Fact]
-    public void GetNotice_return_response_when_server_returns_response()
+    public void GetAllDTO_returns_response()
     {
-        // Arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
-        // Act
-        var httpResponse = _controller.GetNotice(1);
-        // Assert 
-        var content = httpResponse.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType<NoticeResponse>();
+        // arrange
+        var list = new List<Notice>(){ _notice }; 
+        _repo.Setup(repo => repo.GetAll()).Returns(list);
+
+        // act
+        var response = _service.GetAllDTO();
+
+        // assert
+        response.Should().BeOfType<List<NoticeResponse>>();
     }
-    [Fact]
-    public void PutNotice_return_no_content_when_service_return_response()
-    {
-        // Arrange
-        _service.Setup(service => service.PutDTOById(1, _request)).Returns(_response);
-        // Act
-        var httpResponse = _controller.PutNotice(1, _request);
-        // Assert 
-        httpResponse.Should().BeOfType<NoContentResult>();
-    }
-    [Fact]
-    public void DeleteNotice_should_return_no_content()
-    {
-        // Arrange
-        _service.Setup(service => service.DeleteById(1)).Returns(_notice);
-        // Act
-        var httpResponse = _controller.DeleteNotice(1);
-        // Assert 
-        httpResponse.Should().BeOfType<NoContentResult>();
-    }
+
 }

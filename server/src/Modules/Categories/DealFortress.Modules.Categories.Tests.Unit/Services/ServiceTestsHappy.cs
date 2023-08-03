@@ -27,7 +27,7 @@ public class ServiceTestsHappy
     }
 
     [Fact]
-    public void PostDTO_should_complete_to_save_to_db()
+    public void PostDTO_should_complete_before_sending_back_DTO()
     {
         // Act
         _service.PostDTO(_request);
