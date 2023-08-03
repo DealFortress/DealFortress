@@ -19,7 +19,7 @@ public class NoticesServiceTestsHappy
     {
         _repo = new Mock<INoticesRepository>();
 
-        var productsService = new Mock<ProductsService>();
+        var productsService = new Mock<IProductsService>();
 
         _service = new NoticesService(productsService.Object, _repo.Object);
 
@@ -30,7 +30,7 @@ public class NoticesServiceTestsHappy
         _request = CreateNoticeRequest();
     }
 
-    
+
     public NoticeRequest CreateNoticeRequest()
     {
         return new NoticeRequest()
@@ -119,9 +119,36 @@ public class NoticesServiceTestsHappy
             }
         };
     }
-    
+
     [Fact]
-    public void PostDTO_should_complete_to_save_to_db()
+    public void GetAllDTO_returns_response()
+    {
+        // arrange
+        var list = new List<Notice>() { _notice };
+        _repo.Setup(repo => repo.GetAllWithProducts()).Returns(list);
+
+        // act
+        var response = _service.GetAllDTO();
+
+        // assert
+        response.Should().BeOfType<List<NoticeResponse>>();
+    }
+
+    [Fact]
+    public void GetDTOById_returns_response_when_repo_returns_a_notice()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
+
+        // act
+        var response = _service.GetDTOById(1);
+
+        // assert
+        response.Should().BeOfType<NoticeResponse>();
+    }
+
+    [Fact]
+    public void PostDTO_should_complete_before_sending_back_DTO()
     {
         // Act
         _service.PostDTO(_request);
@@ -132,30 +159,43 @@ public class NoticesServiceTestsHappy
     }
 
     [Fact]
-    public void GetDTOById_returns_response_when_repo_returns_a_notice()
+    public void PutDTO_should_replace_data()
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
-        // act
-        var response = _service.GetDTOById(1);
+        // Act
+        _service.PutDTOById(1, _request);
 
-        // assert
-        response.Should().BeOfType<NoticeResponse>();
+        // Assert 
+        _repo.Verify(repo => repo.Add(It.IsAny<Notice>()), Times.AtLeastOnce());
+        _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.AtLeastOnce());
     }
 
     [Fact]
-    public void GetAllDTO_returns_response()
+    public void PutDTO_should_complete_before_sending_back_DTO()
     {
         // arrange
-        var list = new List<Notice>(){ _notice }; 
-        _repo.Setup(repo => repo.GetAll()).Returns(list);
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
-        // act
-        var response = _service.GetAllDTO();
+        // Act
+        _service.PutDTOById(1, _request);
 
-        // assert
-        response.Should().BeOfType<List<NoticeResponse>>();
+        // Assert 
+        _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void PutDTO_should_return_response()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+
+        // Act
+        var response = _service.PutDTOById(1, _request);
+
+        // Assert 
+        response.Should().BeOfType<NoticeResponse>();
     }
 
 }

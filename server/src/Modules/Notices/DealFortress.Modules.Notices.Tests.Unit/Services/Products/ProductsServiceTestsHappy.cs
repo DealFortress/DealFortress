@@ -22,7 +22,7 @@ public class ProductsServiceTestsHappy
 
         var noticeRepo = new Mock<INoticesRepository>();
 
-        var categoriesController = new Mock<CategoriesController>();
+        var categoriesController = new Mock<CategoriesController>(null);
 
         _service = new ProductsService(_repo.Object, noticeRepo.Object, categoriesController.Object);
 

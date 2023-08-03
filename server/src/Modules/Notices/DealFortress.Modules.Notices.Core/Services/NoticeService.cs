@@ -7,9 +7,9 @@ namespace DealFortress.Modules.Notices.Core.Services;
 
 public class NoticesService : INoticesService
 {
-    private readonly ProductsService _productsService;
+    private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
-    public NoticesService(ProductsService productsService, INoticesRepository repo)
+    public NoticesService(IProductsService productsService, INoticesRepository repo)
     {
         _productsService = productsService;
         _repo = repo;
@@ -18,7 +18,8 @@ public class NoticesService : INoticesService
     public IEnumerable<NoticeResponse> GetAllDTO()
     {
         return _repo.GetAllWithProducts()
-                    .Select(notice => ToNoticeResponseDTO(notice));
+                    .Select(notice => ToNoticeResponseDTO(notice))
+                    .ToList();
     }
 
     public NoticeResponse? GetDTOById(int id)
