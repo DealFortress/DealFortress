@@ -46,7 +46,7 @@ public class CategoriesController : ControllerBase
     }
 
     [NonAction]
-    public string? GetCategoryNameById(int id)
+    public virtual string? GetCategoryNameById(int id)
     {
         return _service.GetDTOById(id)?.Name;
     }

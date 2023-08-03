@@ -1,35 +1,130 @@
-using DealFortress.Modules.Categories.Core.Domain.Repositories;
-using DealFortress.Modules.Categories.Core.Domain.Services;
-using DealFortress.Modules.Categories.Core.DTO;
-using DealFortress.Modules.Categories.Core.Services;
-using FluentAssertions;
+using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Notices.Core.Services;
 using Moq;
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using FluentAssertions;
+using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 
-namespace DealFortress.Modules.Categories.Tests.Unit;
+namespace DealFortress.Modules.Notices.Tests.Unit;
 
 public class NoticesServiceTestsSad
 {
-    private readonly ICategoriesService _service;
-    private readonly Mock<ICategoriesRepository> _repo;
-    private readonly CategoryRequest _request;
-    private readonly CategoryResponse _response;
+    private readonly INoticesService _service;
+    private readonly Mock<INoticesRepository> _repo;
+    private readonly NoticeRequest _request;
+    private readonly Notice _notice;
 
     public NoticesServiceTestsSad()
     {
-        _repo = new Mock<ICategoriesRepository>();
-        
-        _service = new CategoriesService(_repo.Object);
+        _repo = new Mock<INoticesRepository>();
 
-        _request = new CategoryRequest(){ Name = "test" };
+        var productsService = new Mock<IProductsService>();
 
-        _response = new CategoryResponse(){ Name = "test" };
+        _service = new NoticesService(productsService.Object, _repo.Object);
+
+        _request = CreateNoticeRequest();
+
+        _notice = CreateNotice();
+
+        _request = CreateNoticeRequest();
+    }
+
+
+    public NoticeRequest CreateNoticeRequest()
+    {
+        return new NoticeRequest()
+        {
+            Title = "test title",
+            Description = "test description",
+            City = "test city",
+            Payments = new[] { "cast", "swish" },
+            DeliveryMethods = new[] { "mail", "delivered" },
+            ProductRequests = new List<ProductRequest>
+            {
+                new ProductRequest()
+                {
+                    Name = "test",
+                    Price = 1,
+                    HasReceipt = true,
+                    IsSold = false,
+                    IsSoldSeparately = false,
+                    Warranty = "month",
+                    CategoryId = 1,
+                    Condition = Condition.New
+                }
+            }
+        };
+    }
+
+    public NoticeResponse CreateNoticeResponse()
+
+    {
+        return new NoticeResponse()
+        {
+            Id = 1,
+            Title = "test title",
+            Description = "test description",
+            City = "test city",
+            Payments = new[] { "cast", "swish" },
+            DeliveryMethods = new[] { "mail", "delivered" },
+            CreatedAt = new DateTime(),
+            Products = new List<ProductResponse>
+            {
+                new ProductResponse()
+                {
+                    Id = 1,
+                    Name = "test",
+                    Price = 1,
+                    HasReceipt = true,
+                    IsSoldSeparately = false,
+                    Warranty = "month",
+                    CategoryId = 1,
+                    Condition = Condition.New,
+                    CategoryName = "test category",
+                    ImageUrls = new List<string>{"https://test"},
+                    NoticeId = 1,
+                }
+            }
+        };
+    }
+
+    public Notice CreateNotice()
+
+    {
+        return new Notice()
+        {
+            Id = 1,
+            Title = "test title",
+            Description = "test description",
+            City = "test city",
+            Payments = "cast,swish",
+            DeliveryMethods = "mail,delivered",
+            CreatedAt = new DateTime(),
+            Products = new List<Product>
+            {
+                new Product()
+                {
+                    Id = 1,
+                    Name = "test",
+                    Price = 1,
+                    HasReceipt = true,
+                    IsSold = false,
+                    IsSoldSeparately = false,
+                    Warranty = "month",
+                    CategoryId = 1,
+                    Condition = Condition.New,
+                    Notice = this._notice
+                }
+            }
+        };
     }
 
     [Fact]
-    public void GetDTOById_returns_null_when_id_doesnt_exist()
+    public void GetDTOById_returns_null_when_notice_is_not_found()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdWithProducts(1));
 
         // act
         var response = _service.GetDTOById(1);
@@ -37,4 +132,72 @@ public class NoticesServiceTestsSad
         // assert
         response.Should().Be(null);
     }
+
+    [Fact]
+    public void PutDTO_should_not_replace_data_if_notice_not_found()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        _service.PutDTOById(1, _request);
+
+        // Assert 
+        _repo.Verify(repo => repo.Add(It.IsAny<Notice>()), Times.Never());
+        _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.Never());
+    }
+
+    [Fact]
+    public void PutDTO_should_not_complete_if_notice_not_found()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        _service.PutDTOById(1, _request);
+
+        // Assert 
+        _repo.Verify(repo => repo.Complete(), Times.Never());
+    }
+
+    [Fact]
+    public void PutDTO_should_return_null_if_notice_not_found()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        var response = _service.PutDTOById(1, _request);
+
+        // Assert 
+        response.Should().Be(null);
+    }
+
+    [Fact]
+    public void DeleteById_should_not_remove_data_and_complete_if_id_doesnt_exist()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        _service.DeleteById(1);
+
+        // Assert 
+        _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.Never());
+        _repo.Verify(repo => repo.Complete(), Times.Never());
+    }
+
+    [Fact]
+    public void DeleteById_should_not_return_Notice_if_id_doesnt_exist()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1));
+
+        // Act
+        var response = _service.DeleteById(1);
+
+        // Assert 
+        response.Should().Be(null);
+    }
+
 }

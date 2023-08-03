@@ -198,4 +198,30 @@ public class NoticesServiceTestsHappy
         response.Should().BeOfType<NoticeResponse>();
     }
 
+    [Fact]
+    public void DeleteById_should_remove_data_and_complete()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+
+        // Act
+        _service.DeleteById(1);
+
+        // Assert 
+        _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.AtLeastOnce());
+        _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void DeleteById_should_return_Notice()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+
+        // Act
+        var response = _service.DeleteById(1);
+
+        // Assert 
+        response.Should().Be(_notice);
+    }
 }

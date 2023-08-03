@@ -58,4 +58,17 @@ public class ProductsServiceTestsSad
         // assert
         response.Should().Be(null);
     }
+
+    [Fact]
+    public void GetAllDTO_retur()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetAllWithNotice());
+
+        // act
+        var response = _service.GetAllDTO();
+
+        // assert
+        response.Should().BeOfType<List<ProductResponse>>();
+    }
 }

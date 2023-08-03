@@ -15,6 +15,7 @@ public class ProductsServiceTestsHappy
     private readonly Mock<IProductsRepository> _repo;
     private readonly ProductRequest _request;
     private readonly Product _product;
+    private readonly Mock<CategoriesController> _categoriesController;
 
     public ProductsServiceTestsHappy()
     {
@@ -22,9 +23,9 @@ public class ProductsServiceTestsHappy
 
         var noticeRepo = new Mock<INoticesRepository>();
 
-        var categoriesController = new Mock<CategoriesController>(null);
+        _categoriesController = new Mock<CategoriesController>(null);
 
-        _service = new ProductsService(_repo.Object, noticeRepo.Object, categoriesController.Object);
+        _service = new ProductsService(_repo.Object, noticeRepo.Object, _categoriesController.Object);
 
         _request = CreateProductRequest();
 
@@ -101,13 +102,81 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         var list = new List<Product>() { _product };
-        _repo.Setup(repo => repo.GetAll()).Returns(list);
+        _repo.Setup(repo => repo.GetAllWithNotice()).Returns(list);
+        _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns("CPU");
 
         // act
         var response = _service.GetAllDTO();
 
         // assert
         response.Should().BeOfType<List<ProductResponse>>();
+    }
+
+    [Fact]
+    public void PutDTO_should_replace_data()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        _service.PutDTOById(1, _request);
+
+        // Assert 
+        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.AtLeastOnce());
+        _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void PutDTO_should_complete_before_sending_back_DTO()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        _service.PutDTOById(1, _request);
+
+        // Assert 
+        _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void PutDTO_should_return_response()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        var response = _service.PutDTOById(1, _request);
+
+        // Assert 
+        response.Should().BeOfType<ProductResponse>();
+    }
+
+    [Fact]
+    public void DeleteById_should_remove_data_and_complete()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        _service.DeleteById(1);
+
+        // Assert 
+        _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.AtLeastOnce());
+        _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void DeleteById_should_return_Product()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        var response = _service.DeleteById(1);
+
+        // Assert 
+        response.Should().Be(_product);
     }
 
 }

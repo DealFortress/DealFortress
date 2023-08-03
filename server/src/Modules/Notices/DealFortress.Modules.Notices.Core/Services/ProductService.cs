@@ -25,7 +25,8 @@ public class ProductsService: IProductsService
     public IEnumerable<ProductResponse> GetAllDTO()
     {
         return _repo.GetAllWithNotice()
-                    .Select(product => ToProductResponseDTO(product));
+                    .Select(product => ToProductResponseDTO(product))
+                    .ToList();
     }
 
     public ProductResponse? PutDTOById(int id, ProductRequest request)
