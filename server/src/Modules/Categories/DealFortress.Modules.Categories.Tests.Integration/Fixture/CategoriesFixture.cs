@@ -17,8 +17,8 @@ public class CategoriesFixture : IDisposable
                                             .UseInMemoryDatabase(databaseName: "tests")
                                             .Options);
         
-        context.Categories.Add(new Category{ Id = 1, Name = "test1"});
-        context.Categories.Add(new Category{ Id = 2, Name = "test2"});
+        context.Categories.Add(new Category{ Id = 1, Name = "Name 1"});
+        context.Categories.Add(new Category{ Id = 2, Name = "Name 2"});
         context.SaveChanges();
     }
 

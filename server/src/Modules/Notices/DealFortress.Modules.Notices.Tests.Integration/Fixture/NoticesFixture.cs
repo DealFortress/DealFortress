@@ -22,9 +22,9 @@ public class NoticesFixture : IDisposable
             new Notice
             {
                 Id = 1,
-                Title = "test title 1",
-                Description = "test description",
-                City = "test city",
+                Title = "title 1",
+                Description = "description",
+                City = "city",
                 Payments = "cast,swish",
                 DeliveryMethods = "mail,delivered",
                 CreatedAt = new DateTime()
@@ -34,9 +34,9 @@ public class NoticesFixture : IDisposable
             new Notice
             {
                 Id = 2,
-                Title = "test title 2",
-                Description = "test description",
-                City = "test city",
+                Title = "title 2",
+                Description = "description",
+                City = "city",
                 Payments = "cast,swish",
                 DeliveryMethods = "mail,delivered",
                 CreatedAt = new DateTime()

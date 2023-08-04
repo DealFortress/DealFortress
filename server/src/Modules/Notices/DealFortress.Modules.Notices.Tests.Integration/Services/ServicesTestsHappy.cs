@@ -17,7 +17,6 @@ public class ServicesTestsHappy : IClassFixture<NoticesFixture>
     private readonly INoticesService _service;
     private readonly INoticesRepository _repo;
     private readonly NoticeRequest _request;
-    private readonly Notice _notice;
     public NoticesFixture Fixture;
 
     public ServicesTestsHappy(NoticesFixture fixture)
@@ -32,22 +31,11 @@ public class ServicesTestsHappy : IClassFixture<NoticesFixture>
 
         _request = new NoticeRequest
         {
-            Title = "test title 1",
+            Title = "test title",
             Description = "test description",
             City = "test city",
             Payments = new[] { "cast", "swish" },
             DeliveryMethods = new[] { "mail", "delivered" }
-        };
-
-        _notice = new Notice
-        {
-            Id = 1,
-            Title = "test title 1",
-            Description = "test description",
-            City = "test city",
-            Payments = "cast,swish",
-            DeliveryMethods = "mail,delivered",
-            CreatedAt = new DateTime()
         };
     }
 
@@ -83,4 +71,15 @@ public class ServicesTestsHappy : IClassFixture<NoticesFixture>
         // Assert
         noticeResponse?.Title.Should().Be(_request.Title);
     }
+    
+    [Fact]
+    public void PutDtoById_should_replace_notice_in_db()
+    {
+        // Arrange
+        // var putResponse = _service.
+        // Act
+
+        // Assert 
+    }
+
 }

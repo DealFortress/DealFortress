@@ -9,15 +9,13 @@ namespace DealFortress.Modules.Notices.Core.Services;
 public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
-    private readonly INoticesRepository _noticesRepo;
     private readonly CategoriesController _categoriesController;
 
 
 
-    public ProductsService(IProductsRepository repo, INoticesRepository noticesRepository, CategoriesController categoriesController)
+    public ProductsService(IProductsRepository repo, CategoriesController categoriesController)
     {
         _repo = repo;
-        _noticesRepo = noticesRepository;
         _categoriesController = categoriesController;
     }
 

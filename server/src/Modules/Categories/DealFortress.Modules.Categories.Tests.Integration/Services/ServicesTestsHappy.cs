@@ -13,7 +13,6 @@ public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
     private readonly ICategoriesService _service;
     private readonly CategoriesRepository _repo;
     private readonly CategoryRequest _request;
-    private readonly Category _category;
     public CategoriesFixture Fixture;
 
     public ServicesTestsHappy(CategoriesFixture fixture)
@@ -25,8 +24,6 @@ public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
         _service = new CategoriesService(_repo);
 
         _request = new CategoryRequest() { Name = "test" };
-
-        _category = new Category() { Id = 1, Name = "test" };
     }
 
     [Fact]
@@ -47,7 +44,7 @@ public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
         var categoryResponse = _service.GetDTOById(1);
 
         // Assert 
-        categoryResponse?.Name.Should().Be("test1");
+        categoryResponse?.Name.Should().Be("Name 1");
         categoryResponse?.Id.Should().Be(1);
     }
 

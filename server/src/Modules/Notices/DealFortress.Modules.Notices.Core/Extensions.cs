@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,8 +21,8 @@ namespace DealFortress.Api.Modules.Notices.Extensions
                     options.UseSqlServer(connectionString))
                 .AddScoped<INoticesRepository, NoticesRepository>()
                 .AddScoped<IProductsRepository, ProductsRepository>()
-                .AddScoped<NoticesService>()
-                .AddScoped<ProductsService>();
+                .AddScoped<INoticesService, NoticesService>()
+                .AddScoped<IProductsService, ProductsService>();
         }
     }
 }
