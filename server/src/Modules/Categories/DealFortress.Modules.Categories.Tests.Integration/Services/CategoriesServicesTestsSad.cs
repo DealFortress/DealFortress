@@ -7,13 +7,13 @@ using Moq;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsSad
+public class CategoriesServicesTestsSad
 {
     private readonly ICategoriesService _service;
     private readonly Mock<ICategoriesRepository> _repo;
 
 
-    public ServicesTestsSad()
+    public CategoriesServicesTestsSad()
     {
         _repo = new Mock<ICategoriesRepository>();
         

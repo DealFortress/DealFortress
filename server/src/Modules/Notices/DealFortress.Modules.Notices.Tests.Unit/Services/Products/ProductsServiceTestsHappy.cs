@@ -21,11 +21,9 @@ public class ProductsServiceTestsHappy
     {
         _repo = new Mock<IProductsRepository>();
 
-        var noticeRepo = new Mock<INoticesRepository>();
-
         _categoriesController = new Mock<CategoriesController>(null);
 
-        _service = new ProductsService(_repo.Object, noticeRepo.Object, _categoriesController.Object);
+        _service = new ProductsService(_repo.Object, _categoriesController.Object);
 
         _request = CreateProductRequest();
 
@@ -35,7 +33,7 @@ public class ProductsServiceTestsHappy
     }
 
 
-    public ProductRequest CreateProductRequest()
+    public static ProductRequest CreateProductRequest()
     {
         return new ProductRequest()
         {
@@ -50,7 +48,7 @@ public class ProductsServiceTestsHappy
         };
     }
 
-    public ProductResponse CreateProductResponse()
+    public static ProductResponse CreateProductResponse()
 
     {
         return new ProductResponse()
@@ -69,7 +67,7 @@ public class ProductsServiceTestsHappy
         };
     }
 
-    public Product CreateProduct()
+    public static Product CreateProduct()
 
     {
 

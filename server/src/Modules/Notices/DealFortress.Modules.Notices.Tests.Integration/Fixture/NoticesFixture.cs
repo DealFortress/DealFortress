@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +6,15 @@ namespace DealFortress.Modules.Notices.Tests.Integration.Fixture;
 
 public class NoticesFixture : IDisposable
 {
-    public NoticesContext context { get; set; }
+    public NoticesContext Context { get; set; }
 
     public NoticesFixture()
     {
-        context = new NoticesContext(new DbContextOptionsBuilder<NoticesContext>()
+        Context = new NoticesContext(new DbContextOptionsBuilder<NoticesContext>()
                                             .UseInMemoryDatabase(databaseName: "tests")
                                             .Options);
 
-        context.Notices.Add(
+        Context.Notices.Add(
             new Notice
             {
                 Id = 1,
@@ -30,7 +26,7 @@ public class NoticesFixture : IDisposable
                 CreatedAt = new DateTime()
             }
         );
-        context.Notices.Add(
+        Context.Notices.Add(
             new Notice
             {
                 Id = 2,
@@ -42,11 +38,11 @@ public class NoticesFixture : IDisposable
                 CreatedAt = new DateTime()
             }
         );
-        context.SaveChanges();
+        Context.SaveChanges();
     }
 
     public void Dispose()
     {
-        context.Dispose();
+        Context.Dispose();
     }
 }

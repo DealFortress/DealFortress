@@ -1,29 +1,26 @@
+using Moq;
+using FluentAssertions;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
-using FluentAssertions;
-using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Tests.Integration.Fixture;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
-using DealFortress.Modules.Categories.Core.DTO;
-using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
-using Moq;
 
-namespace DealFortress.Modules.Notices.Tests.Unit;
+namespace DealFortress.Modules.Notices.Tests.Integration;
 
-public class ServicesTestsHappy : IClassFixture<NoticesFixture>
+public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
 {
     private readonly INoticesService _service;
     private readonly INoticesRepository _repo;
     private readonly NoticeRequest _request;
     public NoticesFixture Fixture;
 
-    public ServicesTestsHappy(NoticesFixture fixture)
+    public NoticesServicesTestsHappy(NoticesFixture fixture)
     {
         Fixture = fixture;
 
-        _repo = new NoticesRepository(Fixture.context);
+        _repo = new NoticesRepository(Fixture.Context);
 
         var productsService = new Mock<IProductsService>();
 
@@ -57,7 +54,7 @@ public class ServicesTestsHappy : IClassFixture<NoticesFixture>
         var noticeResponse = _service.GetDTOById(1);
 
         // Assert 
-        noticeResponse?.Title.Should().Be("test title 1");
+        noticeResponse?.Title.Should().Be("test title");
         noticeResponse?.Id.Should().Be(1);
     }
 
@@ -76,10 +73,13 @@ public class ServicesTestsHappy : IClassFixture<NoticesFixture>
     public void PutDtoById_should_replace_notice_in_db()
     {
         // Arrange
-        // var putResponse = _service.
-        // Act
 
-        // Assert 
+        // Act
+        var putResponse = _service.PutDTOById(1, _request);
+        var noticeResponse = _service.GetDTOById(putResponse!.Id);
+        // Assert
+        noticeResponse?.Title.Should().Be(_request.Title);
     }
+    
 
 }

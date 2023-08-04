@@ -8,14 +8,14 @@ using DealFortress.Modules.Categories.Core.Domain.Services;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
+public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
 {
     private readonly ICategoriesService _service;
     private readonly CategoriesRepository _repo;
     private readonly CategoryRequest _request;
     public CategoriesFixture Fixture;
 
-    public ServicesTestsHappy(CategoriesFixture fixture)
+    public CategoriesServicesTestsHappy(CategoriesFixture fixture)
     {
         Fixture = fixture;
 
@@ -57,4 +57,5 @@ public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
         // Assert
         categoryResponse?.Name.Should().Be(_request.Name);
     }
+
 }

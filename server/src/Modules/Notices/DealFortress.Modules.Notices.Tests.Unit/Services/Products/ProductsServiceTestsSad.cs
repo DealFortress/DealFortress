@@ -14,23 +14,19 @@ public class ProductsServiceTestsSad
     private readonly IProductsService _service;
     private readonly Mock<IProductsRepository> _repo;
     private readonly ProductRequest _request;
-    // private readonly ProductResponse _response;
 
     public ProductsServiceTestsSad()
     {
         _repo = new Mock<IProductsRepository>();
 
-        var noticeRepo = new Mock<INoticesRepository>();
-
         var categoriesController = new Mock<CategoriesController>(null);
 
-        _service = new ProductsService(_repo.Object, noticeRepo.Object, categoriesController.Object);
+        _service = new ProductsService(_repo.Object, categoriesController.Object);
 
         _request = CreateProductRequest();
-        // _response = new ProductResponse(){ Name = "test" };
     }
 
-    public ProductRequest CreateProductRequest()
+    public static ProductRequest CreateProductRequest()
     {
         return new ProductRequest()
         {
