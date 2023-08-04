@@ -12,32 +12,38 @@ public class NoticesFixture : IDisposable
     {
         Context = new NoticesContext(new DbContextOptionsBuilder<NoticesContext>()
                                             .UseInMemoryDatabase(databaseName: "tests")
-                                            .Options);
+                                            .Options); 
+    }
 
-        Context.Notices.Add(
-            new Notice
-            {
-                Id = 1,
-                Title = "title 1",
-                Description = "description",
-                City = "city",
-                Payments = "cast,swish",
-                DeliveryMethods = "mail,delivered",
-                CreatedAt = new DateTime()
-            }
-        );
-        Context.Notices.Add(
-            new Notice
-            {
-                Id = 2,
-                Title = "title 2",
-                Description = "description",
-                City = "city",
-                Payments = "cast,swish",
-                DeliveryMethods = "mail,delivered",
-                CreatedAt = new DateTime()
-            }
-        );
+    public void Initialize()
+    {
+        if (Context.Notices.Any())
+        {
+            Context.Notices.RemoveRange(Context.Notices);
+            Context.SaveChanges();
+        }
+
+        CreateTestNotices(2);
+    }
+
+    public void CreateTestNotices(int numberOfInstances)
+    {
+        for (int i = 1; i < numberOfInstances + 1; i++)
+        {
+            Context.Notices.Add(
+                new Notice
+                {
+                    Id = i,
+                    Title = $"title {i}",
+                    Description = "description",
+                    City = "city",
+                    Payments = "cast,swish",
+                    DeliveryMethods = "mail,delivered",
+                    CreatedAt = new DateTime()
+                }
+            );
+
+        }
         Context.SaveChanges();
     }
 

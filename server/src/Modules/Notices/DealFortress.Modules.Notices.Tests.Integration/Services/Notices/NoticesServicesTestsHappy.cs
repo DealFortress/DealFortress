@@ -19,6 +19,7 @@ public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
     public NoticesServicesTestsHappy(NoticesFixture fixture)
     {
         Fixture = fixture;
+        Fixture.Initialize();
 
         _repo = new NoticesRepository(Fixture.Context);
 
@@ -54,7 +55,7 @@ public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
         var noticeResponse = _service.GetDTOById(1);
 
         // Assert 
-        noticeResponse?.Title.Should().Be("test title");
+        noticeResponse?.Title.Should().Be("title 1");
         noticeResponse?.Id.Should().Be(1);
     }
 

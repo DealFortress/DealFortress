@@ -18,8 +18,9 @@ public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
     public CategoriesServicesTestsHappy(CategoriesFixture fixture)
     {
         Fixture = fixture;
-
-        _repo = new CategoriesRepository(Fixture.context);
+        Fixture.Initialize();
+        
+        _repo = new CategoriesRepository(Fixture.Context);
 
         _service = new CategoriesService(_repo);
 
