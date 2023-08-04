@@ -1,35 +1,40 @@
+using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
+using DealFortress.Modules.Categories.Tests.Integration.Fixture;
 using FluentAssertions;
 using Moq;
 
-namespace DealFortress.Modules.Categories.Tests.Unit;
+namespace DealFortress.Modules.Categories.Tests.Integration;
 
 public class CategoriesServicesTestsSad
 {
     private readonly ICategoriesService _service;
-    private readonly Mock<ICategoriesRepository> _repo;
+    private readonly CategoriesRepository _repo;
+    private readonly CategoryRequest _request;
+    public CategoriesFixture Fixture;
 
-
-    public CategoriesServicesTestsSad()
+    public CategoriesServicesTestsSad(CategoriesFixture fixture)
     {
-        _repo = new Mock<ICategoriesRepository>();
+        Fixture = fixture;
+        Fixture.Initialize();
         
-        _service = new CategoriesService(_repo.Object);
+        _repo = new CategoriesRepository(Fixture.Context);
+
+        _service = new CategoriesService(_repo);
+
+        _request = new CategoryRequest() { Name = "test" };
     }
 
     [Fact]
-    public void GetDTOById_returns_null_when_id_doesnt_exist()
+    public void GetAllDTO_should_return_all_notices()
     {
-        // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        // Act
+        var noticeResponses = _service.GetDTOById(1);
 
-        // act
-        var response = _service.GetDTOById(1);
-
-        // assert
-        response.Should().Be(null);
+        // Assert 
+        noticeResponses.Should().Be(null);
     }
 }
