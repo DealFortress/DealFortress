@@ -11,19 +11,14 @@ public class NoticesFixture : IDisposable
     public NoticesFixture()
     {
         Context = new NoticesContext(new DbContextOptionsBuilder<NoticesContext>()
-                                            .UseInMemoryDatabase(databaseName: "tests")
+                                            .UseInMemoryDatabase(databaseName: $"tests {new DateTime()}")
                                             .Options);
+
+        this.Initialize();
     }
 
     public void Initialize()
     {
-
-        if (Context.Notices.Any())
-        {
-            Context.Notices.RemoveRange(Context.Notices);
-            Context.SaveChanges();
-        }
-        
         CreateTestNotices(2);
         Context.SaveChanges();
 
@@ -75,5 +70,6 @@ public class NoticesFixture : IDisposable
     public void Dispose()
     {
         Context.Dispose();
+        Context.Database.EnsureDeleted();
     }
 }

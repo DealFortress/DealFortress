@@ -97,7 +97,7 @@ public class ProductsServiceTestsHappy
 
     [Fact]
     public void GetAllDTO_returns_response()
-    {
+    {   
         // arrange
         var list = new List<Product>() { _product };
         _repo.Setup(repo => repo.GetAllWithNotice()).Returns(list);

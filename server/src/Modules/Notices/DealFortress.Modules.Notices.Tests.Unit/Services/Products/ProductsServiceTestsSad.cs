@@ -52,7 +52,7 @@ public class ProductsServiceTestsSad
         var response = _service.PutDTOById(1, _request);
 
         // assert
-        response.Should().Be(null);
+        response.Should().BeNull();
     }
 
     [Fact]
@@ -92,7 +92,7 @@ public class ProductsServiceTestsSad
         var response = _service.PutDTOById(1, _request);
 
         // Assert 
-        response.Should().Be(null);
+        response.Should().BeNull();
     }
 
     [Fact]
@@ -119,6 +119,6 @@ public class ProductsServiceTestsSad
         var response = _service.DeleteById(1);
 
         // Assert 
-        response.Should().Be(null);
+        response.Should().BeNull();
     }
 }

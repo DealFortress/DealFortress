@@ -16,10 +16,9 @@ public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
     private readonly NoticeRequest _request;
     public NoticesFixture Fixture;
 
-    public NoticesServicesTestsHappy(NoticesFixture fixture)
+    public NoticesServicesTestsHappy()
     {
-        Fixture = fixture;
-        Fixture.Initialize();
+        Fixture = new NoticesFixture();
 
         _repo = new NoticesRepository(Fixture.Context);
 
@@ -77,10 +76,24 @@ public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
 
         // Act
         var putResponse = _service.PutDTOById(1, _request);
-        var noticeResponse = _service.GetDTOById(putResponse!.Id);
+        // var noticeResponse = _service.GetDTOById(putResponse!.Id);
         // Assert
-        noticeResponse?.Title.Should().Be(_request.Title);
+        Fixture.Context.Notices.Find(putResponse.Id)?.Title.Should().Be(_request.Title);
 
     }  
+
+    [Fact]
+    public void DeleteById_should_remove_notice_in_db()
+    {
+        // Arrange
+        var notices = _service.GetAllDTO();
+        var testId = notices.First().Id;
+
+        // Act
+        _service.DeleteById(testId);
+
+        // Assert 
+        _service.GetDTOById(testId).Should().BeNull();
+    }
 
 }

@@ -130,7 +130,7 @@ public class NoticesServiceTestsSad
         var response = _service.GetDTOById(1);
 
         // assert
-        response.Should().Be(null);
+        response.Should().BeNull();
     }
 
     [Fact]
@@ -170,7 +170,7 @@ public class NoticesServiceTestsSad
         var response = _service.PutDTOById(1, _request);
 
         // Assert 
-        response.Should().Be(null);
+        response.Should().BeNull();
     }
 
     [Fact]
@@ -197,7 +197,7 @@ public class NoticesServiceTestsSad
         var response = _service.DeleteById(1);
 
         // Assert 
-        response.Should().Be(null);
+        response.Should().BeNull();
     }
 
 }
