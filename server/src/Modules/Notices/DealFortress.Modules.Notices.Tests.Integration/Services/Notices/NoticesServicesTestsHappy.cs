@@ -69,10 +69,9 @@ public class NoticesServicesTestsHappy
     {
         // Act
         var postResponse = _service.PostDTO(_request);
-        var noticeResponse = _service.GetDTOById(postResponse.Id);
 
         // Assert
-        noticeResponse?.Title.Should().Be(_request.Title);
+        Fixture?.Context.Notices.Find(postResponse?.Id)?.Title.Should().Be(_request.Title);
     }
     
     [Fact]
@@ -82,7 +81,7 @@ public class NoticesServicesTestsHappy
 
         // Act
         var putResponse = _service.PutDTOById(1, _request);
-        // var noticeResponse = _service.GetDTOById(putResponse!.Id);
+
         // Assert
         Fixture?.Context.Notices.Find(putResponse?.Id)?.Title.Should().Be(_request.Title);
 
@@ -91,15 +90,11 @@ public class NoticesServicesTestsHappy
     [Fact]
     public void DeleteById_should_remove_notice_in_db()
     {
-        // Arrange
-        var notices = _service.GetAllDTO();
-        var testId = notices.First().Id;
-
         // Act
-        _service.DeleteById(testId);
+        _service.DeleteById(1);
 
         // Assert 
-        _service.GetDTOById(testId).Should().BeNull();
+        Fixture?.Context.Notices.Find(1).Should().BeNull();
     }
 
 }
