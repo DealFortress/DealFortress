@@ -11,18 +11,12 @@ public class ServiceTestsSad
 {
     private readonly ICategoriesService _service;
     private readonly Mock<ICategoriesRepository> _repo;
-    private readonly CategoryRequest _request;
-    private readonly CategoryResponse _response;
 
     public ServiceTestsSad()
     {
         _repo = new Mock<ICategoriesRepository>();
         
         _service = new CategoriesService(_repo.Object);
-
-        _request = new CategoryRequest(){ Name = "test" };
-
-        _response = new CategoryResponse(){ Name = "test" };
     }
 
     [Fact]
