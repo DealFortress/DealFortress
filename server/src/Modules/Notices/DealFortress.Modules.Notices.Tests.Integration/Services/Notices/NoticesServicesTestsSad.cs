@@ -9,17 +9,17 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
-public class NoticesServicesTestsSad : IClassFixture<NoticesFixture>
+public class NoticesServicesTestsSad
 {
     private readonly INoticesService _service;
     private readonly INoticesRepository _repo;
     private readonly NoticeRequest _request;
     public NoticesFixture Fixture;
 
-    public NoticesServicesTestsSad(NoticesFixture fixture)
+    public NoticesServicesTestsSad()
     {
-        Fixture = fixture;
-        Fixture.Initialize();
+        Fixture?.Dispose();
+        Fixture = new NoticesFixture();
 
         _repo = new NoticesRepository(Fixture.Context);
 

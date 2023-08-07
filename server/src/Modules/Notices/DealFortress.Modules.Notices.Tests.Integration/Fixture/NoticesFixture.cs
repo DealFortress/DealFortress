@@ -10,8 +10,10 @@ public class NoticesFixture : IDisposable
 
     public NoticesFixture()
     {
+        var dbName = $"tests {new DateTime().Microsecond}";
+        Console.WriteLine(dbName);
         Context = new NoticesContext(new DbContextOptionsBuilder<NoticesContext>()
-                                            .UseInMemoryDatabase(databaseName: $"tests {new DateTime()}")
+                                            .UseInMemoryDatabase(databaseName: dbName)
                                             .Options);
 
         this.Initialize();
@@ -19,14 +21,10 @@ public class NoticesFixture : IDisposable
 
     public void Initialize()
     {
-        CreateTestNotices(2);
-        Context.SaveChanges();
-
-        CreateTestProducts(2);
-        Context.SaveChanges();
+        CreateTestEntities(2);
     }
 
-    public void CreateTestNotices(int numberOfInstances)
+    public void CreateTestEntities(int numberOfInstances)
     {
         for (int i = 1; i < numberOfInstances + 1; i++)
         {
@@ -43,9 +41,9 @@ public class NoticesFixture : IDisposable
             );
 
         }
-    }
-    public void CreateTestProducts(int numberOfInstances)
-    {
+
+        Context.SaveChanges();
+
         for (int i = 1; i < numberOfInstances + 1; i++)
         {
             Context.Products.Add(
@@ -64,8 +62,9 @@ public class NoticesFixture : IDisposable
             );
 
         }
-    }
 
+        Context.SaveChanges();
+    }
 
     public void Dispose()
     {

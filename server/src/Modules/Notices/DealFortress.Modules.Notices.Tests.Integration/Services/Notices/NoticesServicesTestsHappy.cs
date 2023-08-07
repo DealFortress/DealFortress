@@ -9,22 +9,15 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
-public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
+public class NoticesServicesTestsHappy
 {
     private readonly INoticesService _service;
-    private readonly INoticesRepository _repo;
     private readonly NoticeRequest _request;
-    public NoticesFixture Fixture;
+    public NoticesFixture? Fixture;
 
     public NoticesServicesTestsHappy()
     {
-        Fixture = new NoticesFixture();
-
-        _repo = new NoticesRepository(Fixture.Context);
-
-        var productsService = new Mock<IProductsService>();
-
-        _service = new NoticesService(productsService.Object, _repo);
+        _service = CreateNewService();
 
         _request = new NoticeRequest
         {
@@ -34,6 +27,18 @@ public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
             Payments = new[] { "cast", "swish" },
             DeliveryMethods = new[] { "mail", "delivered" }
         };
+    }
+
+    public INoticesService CreateNewService()
+    {
+        Fixture?.Dispose();
+        Fixture = new NoticesFixture();
+
+        var repo = new NoticesRepository(Fixture.Context);
+
+        var productsService = new Mock<IProductsService>();
+
+        return new NoticesService(productsService.Object, repo);
     }
 
     [Fact]
