@@ -84,7 +84,7 @@ public class NoticesServicesTestsHappy
         var putResponse = _service.PutDTOById(1, _request);
         // var noticeResponse = _service.GetDTOById(putResponse!.Id);
         // Assert
-        Fixture.Context.Notices.Find(putResponse.Id)?.Title.Should().Be(_request.Title);
+        Fixture?.Context.Notices.Find(putResponse?.Id)?.Title.Should().Be(_request.Title);
 
     }  
 

@@ -26,7 +26,7 @@ public class ControllerTestsHappy
     }
     
     [Fact]
-    public void get_all_returns_ok()
+    public void GetCategories_returns_ok()
     {
         // arrange
         var content = new List<CategoryResponse>(){ _response };
@@ -40,7 +40,7 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void get_all_returns_list_of_response_when_service_returns_response()
+    public void GetCategories_list_of_response_when_service_returns_response()
     {
         // arrange
         var list = new List<CategoryResponse>(){ _response };
@@ -55,7 +55,7 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void get_one_by_id_returns_ok_when_service_returns_response()
+    public void GetCategory_returns_ok_when_service_returns_response()
     {
         // arrange
         _service.Setup(service => service.GetDTOById(1)).Returns(_response);
@@ -68,7 +68,7 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void get_one_by_id_returns_category_response_when_service_returns_response()
+    public void GetCategory_returns_category_response_when_service_returns_response()
     {
         // arrange
         _service.Setup(service => service.GetDTOById(1)).Returns(_response);
@@ -81,7 +81,7 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void post_category_returns_created_when_service_returns_response()
+    public void PostCategory_returns_created_when_service_returns_response()
     {
         // arrange
         _service.Setup(service => service.PostDTO(_request)).Returns(_response);
@@ -94,7 +94,7 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void post_category_returns_categoryResponse_when_service_returns_response()
+    public void PostCategory_returns_categoryResponse_when_service_returns_response()
     {
         // arrange
         _service.Setup(item => item.PostDTO(_request)).Returns(_response);
@@ -107,7 +107,7 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void get_category_name_by_id_returns_name_of_category_when_service_returns_response()
+    public void GetCategoryNameById_returns_name_of_category_when_service_returns_response()
     {
         // arrange
         _service.Setup(item => item.GetDTOById(1)).Returns(_response);

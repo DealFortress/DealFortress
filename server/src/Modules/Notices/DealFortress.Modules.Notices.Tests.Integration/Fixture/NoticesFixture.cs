@@ -30,6 +30,7 @@ public class NoticesFixture : IDisposable
             Context.Notices.Add(
                 new Notice
                 {
+                    Id = i,
                     Title = $"title {i}",
                     Description = "description",
                     City = "city",
