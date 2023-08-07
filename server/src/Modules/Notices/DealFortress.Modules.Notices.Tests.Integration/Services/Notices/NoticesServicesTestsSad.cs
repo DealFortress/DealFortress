@@ -41,7 +41,7 @@ public class NoticesServicesTestsSad : IClassFixture<NoticesFixture>
     public void GetAllDTO_should_return_all_notices()
     {
         // Act
-        var noticeResponses = _service.GetDTOById(1);
+        var noticeResponses = _service.GetDTOById(-1);
 
         // Assert 
         noticeResponses.Should().Be(null);

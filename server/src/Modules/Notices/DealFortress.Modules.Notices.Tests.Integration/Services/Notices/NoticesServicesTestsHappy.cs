@@ -80,7 +80,7 @@ public class NoticesServicesTestsHappy : IClassFixture<NoticesFixture>
         var noticeResponse = _service.GetDTOById(putResponse!.Id);
         // Assert
         noticeResponse?.Title.Should().Be(_request.Title);
-    }
-    
+
+    }  
 
 }

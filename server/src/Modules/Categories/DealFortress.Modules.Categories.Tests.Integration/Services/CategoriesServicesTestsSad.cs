@@ -1,15 +1,13 @@
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
-using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using DealFortress.Modules.Categories.Tests.Integration.Fixture;
 using FluentAssertions;
-using Moq;
 
 namespace DealFortress.Modules.Categories.Tests.Integration;
 
-public class CategoriesServicesTestsSad
+public class CategoriesServicesTestsSad : IClassFixture<CategoriesFixture>
 {
     private readonly ICategoriesService _service;
     private readonly CategoriesRepository _repo;
@@ -32,7 +30,7 @@ public class CategoriesServicesTestsSad
     public void GetAllDTO_should_return_all_notices()
     {
         // Act
-        var noticeResponses = _service.GetDTOById(1);
+        var noticeResponses = _service.GetDTOById(-1);
 
         // Assert 
         noticeResponses.Should().Be(null);

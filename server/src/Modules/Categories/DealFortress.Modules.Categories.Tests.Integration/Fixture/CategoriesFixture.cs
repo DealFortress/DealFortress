@@ -18,7 +18,7 @@ public class CategoriesFixture : IDisposable
                                             .Options);
         
     }
-
+    
     public void Initialize()
     {
         if (Context.Categories.Any())
