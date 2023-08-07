@@ -43,13 +43,13 @@ public class ProductsServiceTestsSad
 
 
     [Fact]
-    public void PutDTOById_returns_null_when_id_doesnt_exist()
+    public void PutById_returns_null_when_id_doesnt_exist()
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
 
         // act
-        var response = _service.PutDTOById(1, _request);
+        var response = _service.PutById(1, _request);
 
         // assert
         response.Should().BeNull();
@@ -62,7 +62,7 @@ public class ProductsServiceTestsSad
         _repo.Setup(repo => repo.GetById(1));
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
@@ -76,7 +76,7 @@ public class ProductsServiceTestsSad
         _repo.Setup(repo => repo.GetById(1));
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
@@ -89,7 +89,7 @@ public class ProductsServiceTestsSad
         _repo.Setup(repo => repo.GetById(1));
 
         // Act
-        var response = _service.PutDTOById(1, _request);
+        var response = _service.PutById(1, _request);
 
         // Assert 
         response.Should().BeNull();

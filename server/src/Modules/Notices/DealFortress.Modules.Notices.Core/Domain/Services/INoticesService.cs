@@ -5,13 +5,13 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface INoticesService
 {
-    IEnumerable<NoticeResponse> GetAllDTO();
+    IEnumerable<NoticeResponse> GetAll();
 
-    NoticeResponse? GetDTOById(int id);
+    NoticeResponse? GetById(int id);
 
-    NoticeResponse PostDTO(NoticeRequest request);
+    NoticeResponse Post(NoticeRequest request);
 
-    NoticeResponse? PutDTOById(int id, NoticeRequest request);
+    NoticeResponse? PutById(int id, NoticeRequest request);
 
     Notice? DeleteById(int id);
 

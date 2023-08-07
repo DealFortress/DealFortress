@@ -20,13 +20,13 @@ public class ServiceTestsSad
     }
 
     [Fact]
-    public void GetDTOById_returns_null_when_id_doesnt_exist()
+    public void GetById_returns_null_when_id_doesnt_exist()
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
 
         // act
-        var response = _service.GetDTOById(1);
+        var response = _service.GetById(1);
 
         // assert
         response.Should().Be(null);

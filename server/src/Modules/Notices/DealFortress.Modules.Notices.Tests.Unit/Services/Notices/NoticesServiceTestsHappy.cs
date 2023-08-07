@@ -121,37 +121,37 @@ public class NoticesServiceTestsHappy
     }
 
     [Fact]
-    public void GetAllDTO_returns_response()
+    public void GetAll_returns_response()
     {
         // arrange
         var list = new List<Notice>() { _notice };
         _repo.Setup(repo => repo.GetAllWithProducts()).Returns(list);
 
         // act
-        var response = _service.GetAllDTO();
+        var response = _service.GetAll();
 
         // assert
         response.Should().BeOfType<List<NoticeResponse>>();
     }
 
     [Fact]
-    public void GetDTOById_returns_response_when_repo_returns_a_notice()
+    public void GetById_returns_response_when_repo_returns_a_notice()
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
 
         // act
-        var response = _service.GetDTOById(1);
+        var response = _service.GetById(1);
 
         // assert
         response.Should().BeOfType<NoticeResponse>();
     }
 
     [Fact]
-    public void PostDTO_should_complete_before_sending_back_DTO()
+    public void Post_should_complete_before_sending_back_DTO()
     {
         // Act
-        _service.PostDTO(_request);
+        _service.Post(_request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -165,7 +165,7 @@ public class NoticesServiceTestsHappy
         _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Notice>()), Times.AtLeastOnce());
@@ -179,7 +179,7 @@ public class NoticesServiceTestsHappy
         _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -192,7 +192,7 @@ public class NoticesServiceTestsHappy
         _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // Act
-        var response = _service.PutDTOById(1, _request);
+        var response = _service.PutById(1, _request);
 
         // Assert 
         response.Should().BeOfType<NoticeResponse>();

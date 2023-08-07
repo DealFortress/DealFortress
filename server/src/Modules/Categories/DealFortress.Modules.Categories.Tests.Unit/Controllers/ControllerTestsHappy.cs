@@ -30,7 +30,7 @@ public class ControllerTestsHappy
     {
         // arrange
         var content = new List<CategoryResponse>(){ _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(content);
+        _service.Setup(service => service.GetAll()).Returns(content);
         
         // act
         var httpResponse = _controller.GetCategories();
@@ -44,7 +44,7 @@ public class ControllerTestsHappy
     {
         // arrange
         var list = new List<CategoryResponse>(){ _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(list);
+        _service.Setup(service => service.GetAll()).Returns(list);
         
         // act
         var httpResponse = _controller.GetCategories();
@@ -58,7 +58,7 @@ public class ControllerTestsHappy
     public void GetCategory_returns_ok_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetById(1)).Returns(_response);
 
         // act
         var httpResponse = _controller.GetCategory(1);
@@ -71,7 +71,7 @@ public class ControllerTestsHappy
     public void GetCategory_returns_category_response_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetById(1)).Returns(_response);
 
         // act
         var httpResponse = _controller.GetCategory(1);
@@ -84,7 +84,7 @@ public class ControllerTestsHappy
     public void PostCategory_returns_created_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.PostDTO(_request)).Returns(_response);
+        _service.Setup(service => service.Post(_request)).Returns(_response);
 
         // act
         var httpResponse = _controller.PostCategory(_request);
@@ -97,7 +97,7 @@ public class ControllerTestsHappy
     public void PostCategory_returns_categoryResponse_when_service_returns_response()
     {
         // arrange
-        _service.Setup(item => item.PostDTO(_request)).Returns(_response);
+        _service.Setup(item => item.Post(_request)).Returns(_response);
 
         // act
         var httpResponse = _controller.PostCategory(_request);
@@ -110,7 +110,7 @@ public class ControllerTestsHappy
     public void GetCategoryNameById_returns_name_of_category_when_service_returns_response()
     {
         // arrange
-        _service.Setup(item => item.GetDTOById(1)).Returns(_response);
+        _service.Setup(item => item.GetById(1)).Returns(_response);
 
         // act
         var response = _controller.GetCategoryNameById(1);

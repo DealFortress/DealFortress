@@ -37,10 +37,10 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public void GetAllDTO_should_return_all_notices()
+    public void GetAll_should_return_all_notices()
     {
         // Act
-        var noticeResponses = _service.GetDTOById(-1);
+        var noticeResponses = _service.GetById(-1);
 
         // Assert 
         noticeResponses.Should().Be(null);

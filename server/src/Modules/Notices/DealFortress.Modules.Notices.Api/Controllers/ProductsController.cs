@@ -21,7 +21,7 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<ProductResponse>> GetProducts()
     {
-        return Ok(_service.GetAllDTO());
+        return Ok(_service.GetAll());
     }
 
     [HttpPut("{id}")]
@@ -29,7 +29,7 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutProduct(int id, ProductRequest request)
     {
-        var response = _service.PutDTOById(id, request);
+        var response = _service.PutById(id, request);
 
         return response is null ? NotFound() : NoContent();
     }

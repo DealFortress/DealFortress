@@ -27,10 +27,10 @@ public class ServiceTestsHappy
     }
 
     [Fact]
-    public void PostDTO_should_complete_before_sending_back_DTO()
+    public void Post_should_complete_before_sending_back_DTO()
     {
         // Act
-        _service.PostDTO(_request);
+        _service.Post(_request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -38,27 +38,27 @@ public class ServiceTestsHappy
     }
 
     [Fact]
-    public void GetDTOById_returns_response_when_repo_returns_a_category()
+    public void GetById_returns_response_when_repo_returns_a_category()
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_category);
 
         // act
-        var response = _service.GetDTOById(1);
+        var response = _service.GetById(1);
 
         // assert
         response.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void GetAllDTO_returns_response()
+    public void GetAll_returns_response()
     {
         // arrange
         var list = new List<Category>(){ _category }; 
         _repo.Setup(repo => repo.GetAll()).Returns(list);
 
         // act
-        var response = _service.GetAllDTO();
+        var response = _service.GetAll();
 
         // assert
         response.Should().BeOfType<List<CategoryResponse>>();

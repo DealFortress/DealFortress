@@ -21,7 +21,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
-        return Ok(_service.GetAllDTO());
+        return Ok(_service.GetAll());
     }
 
     [HttpGet("{id}")]
@@ -29,7 +29,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<NoticeResponse> GetNotice(int id)
     {
-       var response = _service.GetDTOById(id);
+       var response = _service.GetById(id);
 
        return response is null ? NotFound() : Ok(response);
     }
@@ -39,7 +39,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutNotice(int id, NoticeRequest request)
     {
-        var response = _service.PutDTOById(id, request);
+        var response = _service.PutById(id, request);
 
         return response is null ? NotFound() : NoContent();
     }
@@ -49,7 +49,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<NoticeResponse> PostNotice(NoticeRequest request)
     {
-        var response = _service.PostDTO(request);
+        var response = _service.Post(request);
 
         return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }

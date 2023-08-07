@@ -24,7 +24,7 @@ public class ControllerTestsSad
     public void GetCategory_returns_not_found_when_service_returns_null()
     {
         // Arrange
-        _service.Setup(service => service.GetDTOById(1));
+        _service.Setup(service => service.GetById(1));
 
         // Act
         var httpResponse = _controller.GetCategory(1);

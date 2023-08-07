@@ -34,10 +34,10 @@ public class ProductsServicesTestsHappy
     }
 
     [Fact]
-    public void GetAllDTO_should_return_all_Products()
+    public void GetAll_should_return_all_Products()
     {
         // Act
-        var productResponses = _service.GetAllDTO();
+        var productResponses = _service.GetAll();
 
         // Assert 
         productResponses.Count().Should().Be(2);

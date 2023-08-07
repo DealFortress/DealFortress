@@ -121,13 +121,13 @@ public class NoticesServiceTestsSad
     }
 
     [Fact]
-    public void GetDTOById_returns_null_when_notice_is_not_found()
+    public void GetById_returns_null_when_notice_is_not_found()
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdWithProducts(1));
 
         // act
-        var response = _service.GetDTOById(1);
+        var response = _service.GetById(1);
 
         // assert
         response.Should().BeNull();
@@ -140,7 +140,7 @@ public class NoticesServiceTestsSad
         _repo.Setup(repo => repo.GetById(1));
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Notice>()), Times.Never());
@@ -154,7 +154,7 @@ public class NoticesServiceTestsSad
         _repo.Setup(repo => repo.GetById(1));
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
@@ -167,7 +167,7 @@ public class NoticesServiceTestsSad
         _repo.Setup(repo => repo.GetById(1));
 
         // Act
-        var response = _service.PutDTOById(1, _request);
+        var response = _service.PutById(1, _request);
 
         // Assert 
         response.Should().BeNull();

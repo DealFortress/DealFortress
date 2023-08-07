@@ -13,14 +13,14 @@ public class CategoriesService : ICategoriesService
         _repo = repo;
     }
 
-    public IEnumerable<CategoryResponse> GetAllDTO()
+    public IEnumerable<CategoryResponse> GetAll()
     {
         return _repo.GetAll()
                     .Select(category => ToCategoryResponseDTO(category))
                     .ToList();
     }
 
-    public CategoryResponse? GetDTOById(int id)
+    public CategoryResponse? GetById(int id)
     {
         var category = _repo.GetById(id);
         
@@ -32,7 +32,7 @@ public class CategoriesService : ICategoriesService
         return ToCategoryResponseDTO(category);
     }
 
-    public CategoryResponse PostDTO(CategoryRequest request) // Refactor for error handling
+    public CategoryResponse Post(CategoryRequest request) // Refactor for error handling
     {
         var category = ToCategory(request);
 

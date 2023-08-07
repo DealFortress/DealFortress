@@ -20,14 +20,14 @@ public class ProductsService: IProductsService
     }
 
 
-    public IEnumerable<ProductResponse> GetAllDTO()
+    public IEnumerable<ProductResponse> GetAll()
     {
         return _repo.GetAllWithNotice()
                     .Select(product => ToProductResponseDTO(product))
                     .ToList();
     }
 
-    public ProductResponse? PutDTOById(int id, ProductRequest request)
+    public ProductResponse? PutById(int id, ProductRequest request)
     {
         var product = _repo.GetById(id);
 

@@ -43,21 +43,21 @@ public class NoticesServicesTestsHappy
     }
 
     [Fact]
-    public void GetAllDTO_should_return_all_notices()
+    public void GetAll_should_return_all_notices()
     {
         // Act
-        var noticeResponses = _service.GetAllDTO();
+        var noticeResponses = _service.GetAll();
 
         // Assert 
         noticeResponses.Count().Should().Be(2);
     }
 
     [Fact]
-    public void GetDTOById_should_return_the_notice_matching_id()
+    public void GetById_should_return_the_notice_matching_id()
     {
         // Act
 
-        var noticeResponse = _service.GetDTOById(1);
+        var noticeResponse = _service.GetById(1);
 
         // Assert 
         noticeResponse?.Title.Should().Be("title 1");
@@ -65,26 +65,23 @@ public class NoticesServicesTestsHappy
     }
 
     [Fact]
-    public void PostDTO_should_add_notice_in_db()
+    public void Post_should_add_notice_in_db()
     {
         // Act
-        var postResponse = _service.PostDTO(_request);
+        var postResponse = _service.Post(_request);
 
         // Assert
         Fixture?.Context.Notices.Find(postResponse?.Id)?.Title.Should().Be(_request.Title);
     }
     
     [Fact]
-    public void PutDtoById_should_replace_notice_in_db()
+    public void PutById_should_replace_notice_in_db()
     {
-        // Arrange
-
         // Act
-        var putResponse = _service.PutDTOById(1, _request);
+        var putResponse = _service.PutById(1, _request);
 
         // Assert
         Fixture?.Context.Notices.Find(putResponse?.Id)?.Title.Should().Be(_request.Title);
-
     }  
 
     [Fact]

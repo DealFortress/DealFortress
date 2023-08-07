@@ -96,7 +96,7 @@ public class ProductsServiceTestsHappy
     }
 
     [Fact]
-    public void GetAllDTO_returns_response()
+    public void GetAll_returns_response()
     {   
         // arrange
         var list = new List<Product>() { _product };
@@ -104,7 +104,7 @@ public class ProductsServiceTestsHappy
         _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns("CPU");
 
         // act
-        var response = _service.GetAllDTO();
+        var response = _service.GetAll();
 
         // assert
         response.Should().BeOfType<List<ProductResponse>>();
@@ -117,7 +117,7 @@ public class ProductsServiceTestsHappy
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.AtLeastOnce());
@@ -131,7 +131,7 @@ public class ProductsServiceTestsHappy
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-        _service.PutDTOById(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -144,7 +144,7 @@ public class ProductsServiceTestsHappy
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-        var response = _service.PutDTOById(1, _request);
+        var response = _service.PutById(1, _request);
 
         // Assert 
         response.Should().BeOfType<ProductResponse>();

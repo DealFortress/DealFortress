@@ -5,9 +5,9 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface IProductsService
 {
-    IEnumerable<ProductResponse> GetAllDTO();
+    IEnumerable<ProductResponse> GetAll();
 
-    ProductResponse? PutDTOById(int id, ProductRequest request);
+    ProductResponse? PutById(int id, ProductRequest request);
 
     Product? DeleteById(int id);
 

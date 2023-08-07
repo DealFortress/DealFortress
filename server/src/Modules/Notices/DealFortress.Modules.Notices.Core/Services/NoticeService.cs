@@ -15,14 +15,14 @@ public class NoticesService : INoticesService
         _repo = repo;
     }
     
-    public IEnumerable<NoticeResponse> GetAllDTO()
+    public IEnumerable<NoticeResponse> GetAll()
     {
         return _repo.GetAllWithProducts()
                     .Select(notice => ToNoticeResponseDTO(notice))
                     .ToList();
     }
 
-    public NoticeResponse? GetDTOById(int id)
+    public NoticeResponse? GetById(int id)
     {
         var notice = _repo.GetByIdWithProducts(id);
 
@@ -34,7 +34,7 @@ public class NoticesService : INoticesService
         return ToNoticeResponseDTO(notice);
     } 
 
-    public NoticeResponse? PutDTOById(int id, NoticeRequest request)
+    public NoticeResponse? PutById(int id, NoticeRequest request)
     {
         var notice = _repo.GetById(id);
 
@@ -54,7 +54,7 @@ public class NoticesService : INoticesService
         return ToNoticeResponseDTO(updatedNotice);
     }
 
-    public NoticeResponse PostDTO(NoticeRequest request)
+    public NoticeResponse Post(NoticeRequest request)
     {
         var notice = ToNotice(request);
 

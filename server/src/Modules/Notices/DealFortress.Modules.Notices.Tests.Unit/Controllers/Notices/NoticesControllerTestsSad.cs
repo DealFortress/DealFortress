@@ -123,7 +123,7 @@ public class NoticeControllersTestsSad
     public void getNotice_returns_not_found_when_service_returns_null()
     {
         // Arrange
-        _service.Setup(service => service.GetDTOById(1));
+        _service.Setup(service => service.GetById(1));
 
         // Act
         var httpResponse = _controller.GetNotice(1);
@@ -136,7 +136,7 @@ public class NoticeControllersTestsSad
     public void putNotice_returns_not_found_when_service_returns_null()
     {
         // Arrange
-        _service.Setup(service => service.PutDTOById(1, _request));
+        _service.Setup(service => service.PutById(1, _request));
 
         // Act
         var httpResponse = _controller.PutNotice(1, _request);

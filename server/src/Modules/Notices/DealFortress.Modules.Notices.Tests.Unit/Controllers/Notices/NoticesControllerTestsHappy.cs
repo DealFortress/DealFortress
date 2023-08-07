@@ -125,7 +125,7 @@ public class NoticeControllersTestsHappy
     {
         // Arrange
         var content = new List<NoticeResponse> { _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(content);
+        _service.Setup(service => service.GetAll()).Returns(content);
         // Act
         var httpResponses = _controller.GetNotices();
         // Assert 
@@ -137,7 +137,7 @@ public class NoticeControllersTestsHappy
     {
         // Arrange
         var list = new List<NoticeResponse> { _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(list);
+        _service.Setup(service => service.GetAll()).Returns(list);
         // Act
         var httpResponses = _controller.GetNotices();
         // Assert 
@@ -148,7 +148,7 @@ public class NoticeControllersTestsHappy
     public void GetNotice_return_ok_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetById(1)).Returns(_response);
         // Act
         var httpResponse = _controller.GetNotice(1);
         // Assert 
@@ -159,7 +159,7 @@ public class NoticeControllersTestsHappy
     public void GetNotice_return_response_when_server_returns_response()
     {
         // Arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetById(1)).Returns(_response);
         // Act
         var httpResponse = _controller.GetNotice(1);
         // Assert 
@@ -170,7 +170,7 @@ public class NoticeControllersTestsHappy
     public void PutNotice_return_no_content_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.PutDTOById(1, _request)).Returns(_response);
+        _service.Setup(service => service.PutById(1, _request)).Returns(_response);
         // Act
         var httpResponse = _controller.PutNotice(1, _request);
         // Assert 
