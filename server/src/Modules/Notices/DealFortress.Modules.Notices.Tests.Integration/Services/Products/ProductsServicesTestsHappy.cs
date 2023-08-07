@@ -14,24 +14,11 @@ namespace DealFortress.Modules.Notices.Tests.Integration;
 public class ProductsServicesTestsHappy
 {
     private readonly IProductsService _service;
-    private readonly ProductRequest _request;
     public NoticesFixture? Fixture;
 
     public ProductsServicesTestsHappy()
     {
         _service = CreateNewService();
-
-        _request = new ProductRequest
-        {
-             Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            IsSold = false,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New
-        };
     }
 
         public IProductsService CreateNewService()

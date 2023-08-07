@@ -11,7 +11,6 @@ public class CategoriesServicesTestsSad : IClassFixture<CategoriesFixture>
 {
     private readonly ICategoriesService _service;
     private readonly CategoriesRepository _repo;
-    private readonly CategoryRequest _request;
     public CategoriesFixture Fixture;
 
     public CategoriesServicesTestsSad(CategoriesFixture fixture)
@@ -22,8 +21,6 @@ public class CategoriesServicesTestsSad : IClassFixture<CategoriesFixture>
         _repo = new CategoriesRepository(Fixture.Context);
 
         _service = new CategoriesService(_repo);
-
-        _request = new CategoryRequest() { Name = "test" };
     }
 
     [Fact]

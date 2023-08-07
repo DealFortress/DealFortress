@@ -54,9 +54,9 @@ public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
     {
         // Act
         var postResponse = _service.PostDTO(_request);
-        var categoryResponse = _service.GetDTOById(postResponse.Id);
+        
         // Assert
-        categoryResponse?.Name.Should().Be(_request.Name);
+        Fixture?.Context.Categories.Find(postResponse.Id)?.Name.Should().Be(_request.Name);
     }
 
 }
