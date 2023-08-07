@@ -26,8 +26,8 @@ public class CategoriesFixture : IDisposable
             Context.Categories.RemoveRange(Context.Categories);
             Context.SaveChanges();
         }
-        Context.Categories.Add(new Category{ Id = 1, Name = "Name 1"});
-        Context.Categories.Add(new Category{ Id = 2, Name = "Name 2"});
+        Context.Categories.Add(new Category{Name = "Name 1"});
+        Context.Categories.Add(new Category{Name = "Name 2"});
         Context.SaveChanges();
     }
 

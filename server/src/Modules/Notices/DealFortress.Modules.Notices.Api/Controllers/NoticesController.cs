@@ -47,7 +47,7 @@ public class NoticesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
+    public ActionResult<NoticeResponse> PostNotice(NoticeRequest request)
     {
         var response = _service.PostDTO(request);
 

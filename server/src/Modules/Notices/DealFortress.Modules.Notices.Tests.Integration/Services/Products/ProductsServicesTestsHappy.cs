@@ -25,7 +25,7 @@ public class ProductsServicesTestsHappy : IClassFixture<NoticesFixture>
 
         _repo = new ProductsRepository(Fixture.Context);
 
-        var categoriesController = new Mock<CategoriesController>();
+        var categoriesController = new Mock<CategoriesController>(null);
 
         _service = new ProductsService(_repo, categoriesController.Object);
 

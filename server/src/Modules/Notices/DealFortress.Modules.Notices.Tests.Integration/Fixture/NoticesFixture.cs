@@ -17,13 +17,17 @@ public class NoticesFixture : IDisposable
 
     public void Initialize()
     {
-        
+
         if (Context.Notices.Any())
         {
             Context.Notices.RemoveRange(Context.Notices);
             Context.SaveChanges();
         }
+        
         CreateTestNotices(2);
+        Context.SaveChanges();
+
+        CreateTestProducts(2);
         Context.SaveChanges();
     }
 
@@ -34,7 +38,6 @@ public class NoticesFixture : IDisposable
             Context.Notices.Add(
                 new Notice
                 {
-                    // Id = i,
                     Title = $"title {i}",
                     Description = "description",
                     City = "city",
@@ -46,6 +49,28 @@ public class NoticesFixture : IDisposable
 
         }
     }
+    public void CreateTestProducts(int numberOfInstances)
+    {
+        for (int i = 1; i < numberOfInstances + 1; i++)
+        {
+            Context.Products.Add(
+                new Product
+                {
+                    Name = $"Name {i}",
+                    Price = 1,
+                    HasReceipt = true,
+                    IsSold = false,
+                    IsSoldSeparately = false,
+                    Warranty = "month",
+                    CategoryId = 1,
+                    Condition = Condition.New,
+                    Notice = Context.Notices.First()
+                }
+            );
+
+        }
+    }
+
 
     public void Dispose()
     {
