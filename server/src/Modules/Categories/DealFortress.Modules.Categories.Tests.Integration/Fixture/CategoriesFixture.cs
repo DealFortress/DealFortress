@@ -13,10 +13,12 @@ public class CategoriesFixture : IDisposable
 
     public CategoriesFixture()
     {
+        var dbName = DateTime.Now.Ticks.ToString();
         Context = new CategoriesContext(new DbContextOptionsBuilder<CategoriesContext>()
-                                            .UseInMemoryDatabase(databaseName: "tests")
+                                            .UseInMemoryDatabase(databaseName: dbName)
                                             .Options);
-        
+
+        this.Initialize();
     }
     
     public void Initialize()
@@ -34,5 +36,6 @@ public class CategoriesFixture : IDisposable
     public void Dispose()
     {
         Context.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

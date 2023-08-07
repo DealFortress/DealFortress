@@ -11,34 +11,39 @@
 
 // namespace DealFortress.Modules.Notices.Tests.Integration;
 
-// public class CategoriessServicesTestsSad : IClassFixture<NoticesFixture>
+// public class CategoriessServicesTestsSad
 // {
 //     private readonly IProductsService _service;
 //     private readonly IProductsRepository _repo;
 //     private readonly ProductRequest _request;
 //     public NoticesFixture Fixture;
 
-//     public CategoriessServicesTestsSad(NoticesFixture fixture)
-//     {
-//         Fixture = fixture;
-//         Fixture.Initialize();
-
-//         _repo = new ProductsRepository(Fixture.Context);
-
-//         var categoriesController = new Mock<CategoriesController>();
-
-//         _service = new ProductsService(_repo, categoriesController.Object);
-
-//         _request = new ProductRequest
+//     public CategoriessServicesTestsSad()
 //         {
-//              Name = "test",
-//             Price = 1,
-//             HasReceipt = true,
-//             IsSold = false,
-//             IsSoldSeparately = false,
-//             Warranty = "month",
-//             CategoryId = 1,
-//             Condition = Condition.New
-//         };
-//     }
+                // _service = CreateNewService();
+
+                // _request = new ProductRequest
+                // {
+                //     Name = "test",
+                //     Price = 1,
+                //     HasReceipt = true,
+                //     IsSold = false,
+                //     IsSoldSeparately = false,
+                //     Warranty = "month",
+                //     CategoryId = 1,
+                //     Condition = Condition.New
+                // };
+                //     }
+
+                //         public IProductsService CreateNewService()
+                // {
+                //     Fixture = new NoticesFixture();
+
+                //     var repo = new ProductsRepository(Fixture.Context);
+
+                //     var categoriesController = new Mock<CategoriesController>(null);
+
+                //     return new ProductsService(repo, categoriesController.Object);
+
+                // }
 // }

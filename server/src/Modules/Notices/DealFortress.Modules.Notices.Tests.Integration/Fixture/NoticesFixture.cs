@@ -10,8 +10,7 @@ public class NoticesFixture : IDisposable
 
     public NoticesFixture()
     {
-        var dbName = $"tests {new DateTime().Microsecond}";
-        Console.WriteLine(dbName);
+        var dbName = DateTime.Now.Ticks.ToString();
         Context = new NoticesContext(new DbContextOptionsBuilder<NoticesContext>()
                                             .UseInMemoryDatabase(databaseName: dbName)
                                             .Options);
@@ -69,6 +68,6 @@ public class NoticesFixture : IDisposable
     public void Dispose()
     {
         Context.Dispose();
-        Context.Database.EnsureDeleted();
+        GC.SuppressFinalize(this);
     }
 }

@@ -31,7 +31,8 @@ public class NoticesServicesTestsHappy
 
     public INoticesService CreateNewService()
     {
-        Fixture?.Dispose();
+        Fixture?.Dispose();        
+
         Fixture = new NoticesFixture();
 
         var repo = new NoticesRepository(Fixture.Context);

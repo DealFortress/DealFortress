@@ -11,23 +11,15 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
-public class ProductsServicesTestsHappy : IClassFixture<NoticesFixture>
+public class ProductsServicesTestsHappy
 {
     private readonly IProductsService _service;
-    private readonly IProductsRepository _repo;
     private readonly ProductRequest _request;
-    public NoticesFixture Fixture;
+    public NoticesFixture? Fixture;
 
-    public ProductsServicesTestsHappy(NoticesFixture fixture)
+    public ProductsServicesTestsHappy()
     {
-        Fixture = fixture;
-        Fixture.Initialize();
-
-        _repo = new ProductsRepository(Fixture.Context);
-
-        var categoriesController = new Mock<CategoriesController>(null);
-
-        _service = new ProductsService(_repo, categoriesController.Object);
+        _service = CreateNewService();
 
         _request = new ProductRequest
         {
@@ -40,6 +32,18 @@ public class ProductsServicesTestsHappy : IClassFixture<NoticesFixture>
             CategoryId = 1,
             Condition = Condition.New
         };
+    }
+
+        public IProductsService CreateNewService()
+    {
+        Fixture = new NoticesFixture();
+
+        var repo = new ProductsRepository(Fixture.Context);
+
+        var categoriesController = new Mock<CategoriesController>(null);
+
+        return new ProductsService(repo, categoriesController.Object);
+
     }
 
     [Fact]

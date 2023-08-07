@@ -18,7 +18,6 @@ public class NoticesServicesTestsSad
 
     public NoticesServicesTestsSad()
     {
-        Fixture?.Dispose();
         Fixture = new NoticesFixture();
 
         _repo = new NoticesRepository(Fixture.Context);
