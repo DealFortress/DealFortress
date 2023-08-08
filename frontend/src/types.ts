@@ -5,9 +5,9 @@ export type Notice = {
     title: string,
     description: string,
     city: string,
-    payment: string,
+    payments: string,
     products: Product[],
-    deliveryMethod: string,
+    deliveryMethods: string,
     createdAt: Date
 }
 
