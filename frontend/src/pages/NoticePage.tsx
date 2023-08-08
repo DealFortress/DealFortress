@@ -33,11 +33,11 @@ export const NoticePage = ( {notices} : Props) => {
         <div className="flex justify-between">
           <ul className="font-start">
             <li><FontAwesomeIcon icon={faCity} /> {notice?.city}</li>
-            <li><FontAwesomeIcon icon={faTruckRampBox}/> {notice?.deliveryMethod}</li>
+            <li><FontAwesomeIcon icon={faTruckRampBox}/> {notice?.deliveryMethods}</li>
           </ul>
           <ul className="text-end">
             <li className="font-bold">{}SEK</li>
-            <li>{notice?.payment} <FontAwesomeIcon icon={faCashRegister}/></li>
+            <li>{notice?.payments} <FontAwesomeIcon icon={faCashRegister}/></li>
           </ul>
         </div>
 

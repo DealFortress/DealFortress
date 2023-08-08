@@ -28,8 +28,8 @@ else if ( minutesSinceCreation > minutesInAnHour) {
 else if ( minutesSinceCreation > 1 ) {
     return `${minutesSinceCreation.toFixed(0)} ${pluralize(minutesSinceCreation, "minute")} ago`
 }
-else if ( minutesSinceCreation > 0 ) {
-    return "just now";
+else if ( minutesSinceCreation < 1 ) {
+    return "now";
 }
 }
 
