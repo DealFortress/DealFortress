@@ -1,26 +1,28 @@
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
-public class NoticesService
+public class NoticesService : INoticesService
 {
-    private readonly ProductsService _productsService;
+    private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
-    public NoticesService(ProductsService productsService, INoticesRepository repo)
+    public NoticesService(IProductsService productsService, INoticesRepository repo)
     {
         _productsService = productsService;
         _repo = repo;
     }
     
-    public IEnumerable<NoticeResponse> GetAllDTO()
+    public IEnumerable<NoticeResponse> GetAll()
     {
         return _repo.GetAllWithProducts()
-                    .Select(notice => ToNoticeResponseDTO(notice));
+                    .Select(notice => ToNoticeResponseDTO(notice))
+                    .ToList();
     }
 
-    public NoticeResponse? GetDTOById(int id)
+    public NoticeResponse? GetById(int id)
     {
         var notice = _repo.GetByIdWithProducts(id);
 
@@ -32,7 +34,7 @@ public class NoticesService
         return ToNoticeResponseDTO(notice);
     } 
 
-    public NoticeResponse? PutDTOById(int id, NoticeRequest request)
+    public NoticeResponse? PutById(int id, NoticeRequest request)
     {
         var notice = _repo.GetById(id);
 
@@ -52,7 +54,7 @@ public class NoticesService
         return ToNoticeResponseDTO(updatedNotice);
     }
 
-    public NoticeResponse PostDTO(NoticeRequest request)
+    public NoticeResponse Post(NoticeRequest request)
     {
         var notice = ToNotice(request);
 
@@ -87,8 +89,8 @@ public class NoticesService
             Title = Notice.Title,
             Description = Notice.Description,
             City = Notice.City,
-            Payments = Notice.Payment.Split(","),
-            DeliveryMethods = Notice.DeliveryMethod.Split(","),
+            Payments = Notice.Payments.Split(","),
+            DeliveryMethods = Notice.DeliveryMethods.Split(","),
             CreatedAt = Notice.CreatedAt
         };
 
@@ -107,8 +109,8 @@ public class NoticesService
             Title = request.Title,
             Description = request.Description,
             City = request.City,
-            Payment = string.Join(",", request.Payments),
-            DeliveryMethod = string.Join(",", request.DeliveryMethods),
+            Payments = string.Join(",", request.Payments),
+            DeliveryMethods = string.Join(",", request.DeliveryMethods),
             CreatedAt = DateTime.UtcNow
         };
 

@@ -1,20 +1,20 @@
 using DealFortress.Modules.Categories.Api.Controllers;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
-using DealFortress.Modules.Categories.Core.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ControllersTestsHappy
+public class ControllerTestsHappy
 {
     private readonly CategoriesController _controller;
     private readonly Mock<ICategoriesService> _service;
     private readonly CategoryRequest _request;
     private readonly CategoryResponse _response;
 
-    public ControllersTestsHappy()
+    public ControllerTestsHappy()
     {
         _service = new Mock<ICategoriesService>();
         
@@ -26,91 +26,91 @@ public class ControllersTestsHappy
     }
     
     [Fact]
-    public void get_all_returns_ok()
+    public void GetCategories_returns_ok()
     {
         // arrange
         var content = new List<CategoryResponse>(){ _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(content);
+        _service.Setup(service => service.GetAll()).Returns(content);
         
         // act
         var httpResponse = _controller.GetCategories();
 
         // assert
-        httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
+        httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void get_all_returns_list_of_response_when_service_returns_response()
+    public void GetCategories_list_of_response_when_service_returns_response()
     {
         // arrange
         var list = new List<CategoryResponse>(){ _response };
-        _service.Setup(service => service.GetAllDTO()).Returns(list);
+        _service.Setup(service => service.GetAll()).Returns(list);
         
         // act
         var httpResponse = _controller.GetCategories();
 
         // assert
         var content = httpResponse.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType(typeof(List<CategoryResponse>));
+        content.Should().BeOfType<List<CategoryResponse>>();
     }
 
     [Fact]
-    public void get_one_by_id_returns_ok_when_service_returns_response()
+    public void GetCategory_returns_ok_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetById(1)).Returns(_response);
 
         // act
         var httpResponse = _controller.GetCategory(1);
 
         // assert
-        httpResponse.Result.Should().BeOfType(typeof(OkObjectResult));
+        httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void get_one_by_id_returns_category_response_when_service_returns_response()
+    public void GetCategory_returns_category_response_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.GetDTOById(1)).Returns(_response);
+        _service.Setup(service => service.GetById(1)).Returns(_response);
 
         // act
         var httpResponse = _controller.GetCategory(1);
 
         // assert
-        httpResponse.Result.As<OkObjectResult>().Value.Should().BeOfType(typeof(CategoryResponse));
+        httpResponse.Result.As<OkObjectResult>().Value.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void post_category_returns_created_when_service_returns_response()
+    public void PostCategory_returns_created_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.PostDTO(_request)).Returns(_response);
+        _service.Setup(service => service.Post(_request)).Returns(_response);
 
         // act
         var httpResponse = _controller.PostCategory(_request);
 
         // assert
-        httpResponse.Result.Should().BeOfType(typeof(CreatedAtActionResult));
+        httpResponse.Result.Should().BeOfType<CreatedAtActionResult>();
     }
 
     [Fact]
-    public void post_category_returns_categoryResponse_when_service_returns_response()
+    public void PostCategory_returns_categoryResponse_when_service_returns_response()
     {
         // arrange
-        _service.Setup(item => item.PostDTO(_request)).Returns(_response);
+        _service.Setup(item => item.Post(_request)).Returns(_response);
 
         // act
         var httpResponse = _controller.PostCategory(_request);
 
         // assert
-        httpResponse.Result.As<CreatedAtActionResult>().Value.Should().BeOfType(typeof(CategoryResponse));
+        httpResponse.Result.As<CreatedAtActionResult>().Value.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void get_category_name_by_id_returns_name_of_category_when_service_returns_response()
+    public void GetCategoryNameById_returns_name_of_category_when_service_returns_response()
     {
         // arrange
-        _service.Setup(item => item.GetDTOById(1)).Returns(_response);
+        _service.Setup(item => item.GetById(1)).Returns(_response);
 
         // act
         var response = _controller.GetCategoryNameById(1);

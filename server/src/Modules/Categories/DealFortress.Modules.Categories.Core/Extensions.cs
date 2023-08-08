@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,6 @@ namespace DealFortress.Modules.Categories.Core.Extensions;
                 .AddDbContext<CategoriesContext>(options =>
                     options.UseSqlServer(connectionString))
                 .AddScoped<ICategoriesRepository, CategoriesRepository>()
-                .AddScoped<CategoriesService>();
+                .AddScoped<ICategoriesService, CategoriesService>();
         }
     }

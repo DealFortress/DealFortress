@@ -1,3 +1,4 @@
+using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<CategoryResponse>> GetCategories()
     {
-        return Ok(_service.GetAllDTO());
+        return Ok(_service.GetAll());
     }
 
     [HttpGet("{id}")]
@@ -29,7 +30,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<CategoryResponse> GetCategory(int id)
     {
-        var response = _service.GetDTOById(id);
+        var response = _service.GetById(id);
 
         return response is null ? NotFound() : Ok(response);
     }
@@ -40,14 +41,14 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
     {
-        var response = _service.PostDTO(request);
+        var response = _service.Post(request);
         return CreatedAtAction("GetCategory", new { id = response.Id }, response);
     }
 
     [NonAction]
-    public string? GetCategoryNameById(int id)
+    public virtual string? GetCategoryNameById(int id)
     {
-        return _service.GetDTOById(id)?.Name;
+        return _service.GetById(id)?.Name;
     }
 }
 

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -9,9 +10,9 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 [ApiController]
 public class ProductsController : ControllerBase
 {
-    private ProductsService _service;
+    private IProductsService _service;
 
-    public ProductsController(ProductsService service)
+    public ProductsController(IProductsService service)
     {
         _service = service;
     }
@@ -20,7 +21,7 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<ProductResponse>> GetProducts()
     {
-        return Ok(_service.GetAllDTO());
+        return Ok(_service.GetAll());
     }
 
     [HttpPut("{id}")]
@@ -28,7 +29,7 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutProduct(int id, ProductRequest request)
     {
-        var response = _service.PutDTOById(id, request);
+        var response = _service.PutById(id, request);
 
         return response is null ? NotFound() : NoContent();
     }

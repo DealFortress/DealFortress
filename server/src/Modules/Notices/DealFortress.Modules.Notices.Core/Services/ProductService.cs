@@ -1,33 +1,33 @@
 using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
-public class ProductsService
+public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
-    private readonly INoticesRepository _noticesRepo;
     private readonly CategoriesController _categoriesController;
 
 
 
-    public ProductsService(IProductsRepository repo, INoticesRepository noticesRepository, CategoriesController categoriesController)
+    public ProductsService(IProductsRepository repo, CategoriesController categoriesController)
     {
         _repo = repo;
-        _noticesRepo = noticesRepository;
         _categoriesController = categoriesController;
     }
 
 
-    public IEnumerable<ProductResponse> GetAllDTO()
+    public IEnumerable<ProductResponse> GetAll()
     {
         return _repo.GetAllWithNotice()
-                    .Select(product => ToProductResponseDTO(product));
+                    .Select(product => ToProductResponseDTO(product))
+                    .ToList();
     }
 
-      public ProductResponse? PutDTOById(int id, ProductRequest request)
+    public ProductResponse? PutById(int id, ProductRequest request)
     {
         var product = _repo.GetById(id);
 
@@ -78,9 +78,7 @@ public class ProductsService
             CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
-            NoticeCity = product.Notice.City,
-            NoticeDeliveryMethod = product.Notice.DeliveryMethod,
-            NoticePayment = product.Notice.Payment
+            IsSoldSeparately = product.IsSoldSeparately
         };
     }
     public Product ToProduct(ProductRequest request, Notice notice)

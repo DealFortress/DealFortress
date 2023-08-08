@@ -4,59 +4,59 @@ using FluentAssertions;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Tests.Integration.Fixture;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsHappy: IClassFixture<CategoriesFixture>
+public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
 {
     private readonly ICategoriesService _service;
     private readonly CategoriesRepository _repo;
     private readonly CategoryRequest _request;
-    private readonly Category _category;
     public CategoriesFixture Fixture;
 
-    public ServicesTestsHappy(CategoriesFixture fixture)
+    public CategoriesServicesTestsHappy(CategoriesFixture fixture)
     {
         Fixture = fixture;
-
-        _repo = new CategoriesRepository(Fixture.context);
+        Fixture.Initialize();
+        
+        _repo = new CategoriesRepository(Fixture.Context);
 
         _service = new CategoriesService(_repo);
 
         _request = new CategoryRequest() { Name = "test" };
-
-        _category = new Category() { Id = 1, Name = "test" };
     }
 
     [Fact]
-    public void GetAllDTO_should_return_all_categories()
+    public void GetAll_should_return_all_categories()
     {
         // Act
-        var categoryResponses = _service.GetAllDTO();
+        var categoryResponses = _service.GetAll();
 
         // Assert 
         categoryResponses.Count().Should().Be(2);
     }
 
     [Fact]
-    public void GetDTOById_should_return_the_category_matching_id()
+    public void GetById_should_return_the_category_matching_id()
     {
         // Act
 
-        var categoryResponse = _service.GetDTOById(1);
+        var categoryResponse = _service.GetById(1);
 
         // Assert 
-        categoryResponse?.Name.Should().Be("test1");
+        categoryResponse?.Name.Should().Be("Name 1");
         categoryResponse?.Id.Should().Be(1);
     }
 
     [Fact]
-    public void PostDTO_should_add_category_in_db()
+    public void Post_should_add_category_in_db()
     {
         // Act
-        var postResponse = _service.PostDTO(_request);
-        var categoryResponse = _service.GetDTOById(postResponse.Id);
+        var postResponse = _service.Post(_request);
+
         // Assert
-        categoryResponse?.Name.Should().Be(_request.Name);
+        Fixture?.Context.Categories.Find(postResponse.Id)?.Name.Should().Be(_request.Name);
     }
+
 }

@@ -1,5 +1,5 @@
+using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
-using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +10,9 @@ namespace DealFortress.Modules.Notices.Api.Controllers;
 [ApiController]
 public class NoticesController : ControllerBase
 {
-    private readonly NoticesService _service;
+    private readonly INoticesService _service;
 
-    public NoticesController(NoticesService service)
+    public NoticesController(INoticesService service)
     {
         _service = service;
     }
@@ -21,7 +21,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
-        return Ok(_service.GetAllDTO());
+        return Ok(_service.GetAll());
     }
 
     [HttpGet("{id}")]
@@ -29,7 +29,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<NoticeResponse> GetNotice(int id)
     {
-       var response = _service.GetDTOById(id);
+       var response = _service.GetById(id);
 
        return response is null ? NotFound() : Ok(response);
     }
@@ -39,7 +39,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutNotice(int id, NoticeRequest request)
     {
-        var response = _service.PutDTOById(id, request);
+        var response = _service.PutById(id, request);
 
         return response is null ? NotFound() : NoContent();
     }
@@ -47,9 +47,9 @@ public class NoticesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<NoticeResponse> postNotice(NoticeRequest request)
+    public ActionResult<NoticeResponse> PostNotice(NoticeRequest request)
     {
-        var response = _service.PostDTO(request);
+        var response = _service.Post(request);
 
         return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }

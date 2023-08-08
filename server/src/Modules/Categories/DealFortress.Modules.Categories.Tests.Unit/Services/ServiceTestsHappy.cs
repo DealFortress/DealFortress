@@ -1,22 +1,21 @@
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
-using DealFortress.Modules.Categories.Api.Controllers;
-
 using Moq;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using FluentAssertions;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
+using DealFortress.Modules.Categories.Core.Domain.Services;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
-public class ServicesTestsHappy
+public class ServiceTestsHappy
 {
     private readonly ICategoriesService _service;
     private readonly Mock<ICategoriesRepository> _repo;
     private readonly CategoryRequest _request;
     private readonly Category _category;
 
-    public ServicesTestsHappy()
+    public ServiceTestsHappy()
     {
         _repo = new Mock<ICategoriesRepository>();
 
@@ -28,10 +27,10 @@ public class ServicesTestsHappy
     }
 
     [Fact]
-    public void PostDTO_should_complete_to_save_to_db()
+    public void Post_should_complete_before_sending_back_DTO()
     {
         // Act
-        _service.PostDTO(_request);
+        _service.Post(_request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -39,30 +38,30 @@ public class ServicesTestsHappy
     }
 
     [Fact]
-    public void GetDTOById_returns_response_when_repo_returns_a_category()
+    public void GetById_returns_response_when_repo_returns_a_category()
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_category);
 
         // act
-        var response = _service.GetDTOById(1);
+        var response = _service.GetById(1);
 
         // assert
-        response.Should().BeOfType(typeof(CategoryResponse));
+        response.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void GetAllDTO_returns_response()
+    public void GetAll_returns_response()
     {
         // arrange
         var list = new List<Category>(){ _category }; 
         _repo.Setup(repo => repo.GetAll()).Returns(list);
 
         // act
-        var response = _service.GetAllDTO();
+        var response = _service.GetAll();
 
         // assert
-        response.Should().BeOfType(typeof(List<CategoryResponse>));
+        response.Should().BeOfType<List<CategoryResponse>>();
     }
 
 }
