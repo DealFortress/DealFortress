@@ -8,9 +8,12 @@ import { NoticeForm } from './pages/NoticeForm'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
 import { GetNoticesQuery } from './services/DealFortressQueries'
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 export const App = () => {
+
+  const { isLoading } = useAuth0()
 
   const switchState = () => {
     const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
@@ -43,6 +46,9 @@ export const App = () => {
     }
   }
 
+  if (isLoading) { 
+    return <Loader />; 
+  }
 
   return (
     <>
