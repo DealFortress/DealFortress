@@ -50,10 +50,12 @@ export const NoticeForm = () => {
     { value: 'package', label: 'package' }
   ]
 
+  const userFeaturesFlag = false;
+
   const renderForm = () => (
       <Form>
             <StyledContainer barText={`Create notice`} redirectLink={"/notices"}>
-              <UserInfo />
+            {userFeaturesFlag && <UserInfo /> }
               <Field
                 type="text"
                 name="title"
