@@ -13,7 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 export const App = () => {
 
-  const { isLoading } = useAuth0()
+  const { isLoading} = useAuth0()
 
   const switchState = () => {
     const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
