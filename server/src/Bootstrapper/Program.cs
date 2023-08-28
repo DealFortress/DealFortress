@@ -1,5 +1,6 @@
 using DealFortress.Modules.Categories.Api;
 using DealFortress.Modules.Notices.Api;
+using Bootstrapper.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.AddAuthentication();
 
 builder.Services.AddCategoriesModule(connectionString!);
 builder.Services.AddNoticesModule(connectionString!);
@@ -26,6 +29,10 @@ if (app.Environment.IsDevelopment())
     });
 
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.UseHttpsRedirection();
 
