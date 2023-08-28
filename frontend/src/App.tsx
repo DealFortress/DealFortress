@@ -12,11 +12,12 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 
 export const App = () => {
-
   const { isLoading } = useAuth0()
+  const { getAccessTokenSilently } = useAuth0();
+  const token = getAccessTokenSilently();
+  const { data: noticeData, status: noticeStatus } = GetNoticesQuery(token);
 
   const switchState = () => {
-    const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
 
     switch (noticeStatus) {
     case "loading":

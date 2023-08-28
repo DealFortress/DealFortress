@@ -27,7 +27,6 @@ if (app.Environment.IsDevelopment())
         .AllowAnyMethod()
         .AllowAnyHeader();
     });
-
 }
 
 app.UseAuthentication();
