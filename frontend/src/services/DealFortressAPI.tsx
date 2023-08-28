@@ -6,7 +6,8 @@ const noticesUrl = `${baseUrl}/notices`;
 const categoriesUrl = `${baseUrl}/categories`;
 
 export const getNoticesAPI = async (accessToken: Promise<string>) => {
-    const response = await axios.get(noticesUrl, {headers: {Authorization: await accessToken}});
+    const AuthStr = 'Bearer '.concat(await accessToken);
+    const response = await axios.get(noticesUrl, {headers: {Authorization: AuthStr}});
     return response.data;
 };
 
