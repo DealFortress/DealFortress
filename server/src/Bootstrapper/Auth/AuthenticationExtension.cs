@@ -24,7 +24,6 @@ public static class AuthenticationExtension
       };
     });
 
-
     // builder.Services.AddAuthorization(options =>
     // {
     // options.AddPolicy("read:notices", policy => policy.Requirements.Add(new
