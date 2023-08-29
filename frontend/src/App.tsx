@@ -1,6 +1,6 @@
 import { Navbar } from './component/Navbar/Navbar'
 import { Notice } from './types'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Loader } from './component/General/Loader'
 import { ErrorPage } from './pages/ErrorPage'
 import { NotFound } from './pages/NotFound'
