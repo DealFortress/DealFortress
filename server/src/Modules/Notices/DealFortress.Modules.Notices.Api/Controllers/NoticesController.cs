@@ -19,7 +19,7 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
-    // [Authorize]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {

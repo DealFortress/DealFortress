@@ -9,13 +9,27 @@ import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
 import { GetNoticesQuery } from './services/DealFortressQueries'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useEffect, useState } from 'react'
 
 
 export const App = () => {
-  const { isLoading } = useAuth0()
+  const { isLoading, user } = useAuth0()
   const { getAccessTokenSilently } = useAuth0();
-  const token = getAccessTokenSilently();
-  const { data: noticeData, status: noticeStatus } = GetNoticesQuery(token);
+  const [ accessToken, setAccessToken ] = useState<string>("none");
+
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        setAccessToken(await getAccessTokenSilently());
+        console.log(accessToken);
+      } catch (e: any) {
+        console.log(e.message);
+      }
+    };
+    getAccessToken();
+  }, [getAccessTokenSilently, user?.sub]);
+
+  const { data: noticeData, status: noticeStatus } = GetNoticesQuery(accessToken);
 
   const switchState = () => {
 
@@ -53,10 +67,9 @@ export const App = () => {
 
   return (
     <>
-        <BrowserRouter>
+        
           <Navbar />
           { switchState() }
-        </BrowserRouter>
     </>
   )
 }
