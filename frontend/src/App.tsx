@@ -22,8 +22,8 @@ export const App = () => {
       try {
         setAccessToken(await getAccessTokenSilently());
         console.log(accessToken);
-      } catch (e: any) {
-        console.log(e.message);
+      } catch (e) {
+        console.log(e);
       }
     };
     getAccessToken();

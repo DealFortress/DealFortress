@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Bootstrapper.Auth;
@@ -22,6 +23,11 @@ public static class AuthenticationExtension
         ValidateLifetime = true
       };
     });
-  }
 
+      builder.Services.AddAuthorization(options =>
+      {
+        options.AddPolicy("CreateNotices", policy => 
+                          policy.RequireClaim("permissions", "create:notices"));
+      });
+  }
 }
