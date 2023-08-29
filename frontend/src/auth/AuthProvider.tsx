@@ -23,7 +23,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             authorizationParams={{
                 audience: import.meta.env.VITE_AUTH0_AUDIENCE,
                 redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL,
-                // scope: "read:notices create:notices"
             }}
             onRedirectCallback={onRedirectCallback}
         >
