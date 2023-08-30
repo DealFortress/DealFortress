@@ -38,6 +38,7 @@ public class CategoriesController : ControllerBase
 
 
     [HttpPost]
+    [Authorize(Policy = "PostCategories")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
