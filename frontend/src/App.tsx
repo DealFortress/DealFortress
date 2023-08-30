@@ -16,20 +16,9 @@ export const App = () => {
   const { isLoading, user } = useAuth0()
   const { getAccessTokenSilently } = useAuth0();
   const [ accessToken, setAccessToken ] = useState<string>("none");
-
-  useEffect(() => {
-    const getAccessToken = async () => {
-      try {
-        setAccessToken(await getAccessTokenSilently());
-        console.log(accessToken);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getAccessToken();
-  }, [getAccessTokenSilently, user?.sub]);
-
   const { data: noticeData, status: noticeStatus } = GetNoticesQuery(accessToken);
+
+ 
 
   const switchState = () => {
 
@@ -61,15 +50,25 @@ export const App = () => {
     }
   }
 
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        setAccessToken(await getAccessTokenSilently());
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getAccessToken();
+  }, [getAccessTokenSilently, user?.sub]);
+
   if (isLoading) { 
     return <Loader />; 
   }
 
   return (
     <>
-        
-          <Navbar />
-          { switchState() }
+      <Navbar />
+      { switchState() }
     </>
   )
 }
