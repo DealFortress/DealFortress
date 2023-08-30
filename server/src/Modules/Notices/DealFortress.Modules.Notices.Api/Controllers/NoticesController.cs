@@ -19,7 +19,6 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
     {
@@ -37,6 +36,7 @@ public class NoticesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutNotice(int id, NoticeRequest request)
@@ -58,6 +58,7 @@ public class NoticesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult DeleteNotice(int id)

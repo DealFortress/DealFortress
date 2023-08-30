@@ -28,6 +28,10 @@ public static class AuthenticationExtension
       {
         options.AddPolicy("CreateNotices", policy => 
                           policy.RequireClaim("permissions", "create:notices"));
+        options.AddPolicy("EditNotices", policy => 
+                          policy.RequireClaim("permissions", "update:notices"));
+        options.AddPolicy("DeleteNotices", policy => 
+                          policy.RequireClaim("permissions", "delete:notices"));
       });
   }
 }
