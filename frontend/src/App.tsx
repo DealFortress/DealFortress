@@ -1,6 +1,6 @@
 import { Navbar } from './component/Navbar/Navbar'
 import { Notice } from './types'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Loader } from './component/General/Loader'
 import { ErrorPage } from './pages/ErrorPage'
 import { NotFound } from './pages/NotFound'
@@ -9,14 +9,29 @@ import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
 import { GetNoticesQuery } from './services/DealFortressQueries'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useEffect, useState } from 'react'
 
 
 export const App = () => {
+  const { isLoading, user } = useAuth0()
+  const { getAccessTokenSilently } = useAuth0();
+  const [ accessToken, setAccessToken ] = useState<string>("none");
 
-  const { isLoading } = useAuth0()
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        setAccessToken(await getAccessTokenSilently());
+        console.log(accessToken);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getAccessToken();
+  }, [getAccessTokenSilently, user?.sub]);
+
+  const { data: noticeData, status: noticeStatus } = GetNoticesQuery(accessToken);
 
   const switchState = () => {
-    const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
 
     switch (noticeStatus) {
     case "loading":
@@ -52,10 +67,9 @@ export const App = () => {
 
   return (
     <>
-        <BrowserRouter>
+        
           <Navbar />
           { switchState() }
-        </BrowserRouter>
     </>
   )
 }

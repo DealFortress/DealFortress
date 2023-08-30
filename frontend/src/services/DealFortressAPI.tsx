@@ -5,8 +5,9 @@ const baseUrl = import.meta.env.VITE_API_SERVER_URL;
 const noticesUrl = `${baseUrl}/notices`;
 const categoriesUrl = `${baseUrl}/categories`;
 
-export const getNoticesAPI = async () => {
-    const response = await axios.get(noticesUrl);
+export const getNoticesAPI = async (accessToken: string) => {
+    const AuthStr = `Bearer ${accessToken}`;
+    const response = await axios.get(noticesUrl, {headers: {Authorization: AuthStr}});
     return response.data;
 };
 
