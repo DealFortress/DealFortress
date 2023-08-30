@@ -3,6 +3,7 @@ using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Notices.Core.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -25,6 +26,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PutProduct(int id, ProductRequest request)
@@ -35,6 +37,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult DeleteProduct(int id)
