@@ -29,6 +29,8 @@ export const App = () => {
     getAccessToken();
   }, [getAccessTokenSilently, user?.sub]);
 
+  console.log(import.meta.env.VITE_AUTH0_CLIENT_ID);
+
   const { data: noticeData, status: noticeStatus } = GetNoticesQuery(accessToken);
 
   const switchState = () => {
