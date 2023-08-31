@@ -53,7 +53,8 @@ export const App = () => {
   useEffect(() => {
     const getAccessToken = async () => {
       try {
-        setAccessToken(await getAccessTokenSilently());
+        const token = await getAccessTokenSilently();
+        setAccessToken(`Bearer ${token}`);
       } catch (e) {
         console.log(e);
       }

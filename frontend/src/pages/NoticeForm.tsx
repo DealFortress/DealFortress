@@ -21,7 +21,7 @@ export const NoticeForm = () => {
   const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
-    postNotice(request, {
+    postNotice((request), {
       onSuccess: (data) => {
         queryClient.invalidateQueries(["notices"], {exact: true})
         const navigationUrl = createNavigationUrl(data);
