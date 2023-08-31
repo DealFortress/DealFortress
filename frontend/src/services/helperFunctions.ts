@@ -41,3 +41,4 @@ export const minutesBetweenTodayAndDate = (creationDate : Date) => {
     const utcToday = new Date(local.getTime() + offset * 60000);
     return convertDateToMinutes(new Date(utcToday)) - convertDateToMinutes(creationDate);
 }
+

@@ -5,9 +5,8 @@ const baseUrl = import.meta.env.VITE_API_SERVER_URL;
 const noticesUrl = `${baseUrl}/notices`;
 const categoriesUrl = `${baseUrl}/categories`;
 
-export const getNoticesAPI = async (accessToken: string) => {
-    const AuthStr = `Bearer ${accessToken}`;
-    const response = await axios.get(noticesUrl, {headers: {Authorization: AuthStr}});
+export const getNoticesAPI = async () => {
+    const response = await axios.get(noticesUrl);
     return response.data;
 };
 
@@ -16,7 +15,12 @@ export const getCategoriesAPI = async () => {
     return response.data;
 };
 
-export const postNoticeAPI = async (noticeRequest : NoticeRequest) => {
-    const response = await axios.post(noticesUrl, noticeRequest)
+export const postNoticeAPI = async ({request, accessToken}: {request: NoticeRequest, accessToken: string}) => {
+    const response = await axios.post(noticesUrl, request, {headers: {Authorization: addBearerScheme(accessToken)}})
     return response.data;
 };
+
+const addBearerScheme = (accessToken: string) => {
+    return `Bearer ${accessToken}`;
+}
+

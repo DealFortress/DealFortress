@@ -10,6 +10,7 @@ import { CustomSelect } from "../component/Form/CustomSelect"
 import { useNavigate } from "react-router-dom"
 import { PostNoticeMutation } from "../services/DealFortressQueries"
 import { useQueryClient } from "@tanstack/react-query"
+import { useAuth0 } from "@auth0/auth0-react"
 
 
 export const NoticeForm = () => {
@@ -17,11 +18,14 @@ export const NoticeForm = () => {
   const {mutate : postNotice, isLoading, isError} = PostNoticeMutation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { getAccessTokenSilently } = useAuth0();
+
 
   const createNavigationUrl = (notice: Notice) => `/notices/${notice.id}`;
 
   const handleSubmit = async (request: NoticeRequest) => {
-    postNotice(request, {
+    const accessToken = await getAccessTokenSilently();
+    postNotice({request, accessToken}, {
       onSuccess: (data) => {
         queryClient.invalidateQueries(["notices"], {exact: true})
         const navigationUrl = createNavigationUrl(data);
