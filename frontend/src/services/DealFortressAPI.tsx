@@ -1,4 +1,4 @@
-import { NoticeRequest } from "../types";
+import { NoticeRequest, PostRequestType, PutRequestType } from "../types";
 import  axios from 'axios';
 
 const baseUrl = import.meta.env.VITE_API_SERVER_URL;
@@ -10,17 +10,31 @@ export const getNoticesAPI = async () => {
     return response.data;
 };
 
+export const getNoticeAPI = async ( id: number ) => {
+  const response = await axios.get(`${noticesUrl}/${id}`);
+  return response.data;
+}
+
+export const postNoticeAPI = async ({request, accessToken}: PostRequestType<NoticeRequest>) => {
+  const response = await axios.post(noticesUrl, request, {headers: {Authorization: `Bearer ${accessToken}`}})
+  return response.data;
+};
+
+export const putNoticeAPI = async ({id, request, accessToken}: PutRequestType<NoticeRequest>) => {
+  const response = await axios.put(`${noticesUrl}/${id}`, request, {headers: {Authorization: `Bearer ${accessToken}`}})
+  return response.data;
+}
+
+export const deleteNoticeAPI = async (id : number) => {
+  const response = await axios.delete(`${noticesUrl}/${id}`);
+  return response.data;
+}
+
+
+
 export const getCategoriesAPI = async () => {
     const response = await axios.get(categoriesUrl);
     return response.data;
 };
 
-export const postNoticeAPI = async ({request, accessToken}: {request: NoticeRequest, accessToken: string}) => {
-    const response = await axios.post(noticesUrl, request, {headers: {Authorization: addBearerScheme(accessToken)}})
-    return response.data;
-};
-
-const addBearerScheme = (accessToken: string) => {
-    return `Bearer ${accessToken}`;
-}
 
