@@ -65,3 +65,14 @@ export type ProductFilterType = {
     categoryFilter: string,
     cityFilter: string,
 }
+
+export type PutRequestType<T> = {
+  id: number,
+  request: T,
+  accessToken: string
+}
+
+export type PostRequestType<T> = {
+  request: T,
+  accessToken: string
+}

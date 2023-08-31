@@ -13,10 +13,11 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 export const App = () => {
   const { isLoading } = useAuth0()
-  const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
+  const { data: noticesData, status: noticesStatus } = GetNoticesQuery();
+
 
   const switchState = () => {
-    switch (noticeStatus) {
+    switch (noticesStatus) {
     case "loading":
       return (
         <Loader />
@@ -28,7 +29,7 @@ export const App = () => {
       )
 
     case "success":
-      {const  notices  = noticeData as Notice[] ;
+      {const  notices  = noticesData as Notice[] ;
 
       return (
             <Routes>
