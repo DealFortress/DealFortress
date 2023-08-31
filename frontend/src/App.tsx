@@ -7,7 +7,7 @@ import { NotFound } from './pages/NotFound'
 import { NoticeForm } from './pages/NoticeForm'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
-import { GetNoticeQuery, GetNoticesQuery } from './services/DealFortressQueries'
+import { GetNoticesQuery } from './services/DealFortressQueries'
 import { useAuth0 } from '@auth0/auth0-react'
 
 

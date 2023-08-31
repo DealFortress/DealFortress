@@ -1,4 +1,3 @@
-import { Query, QueryCache, QueryClient, QueryFilters, QueryFunction, QueryFunctionContext, QueryKey } from "@tanstack/react-query";
 import { NoticeRequest, PostRequestType, PutRequestType } from "../types";
 import  axios from 'axios';
 
@@ -30,6 +29,7 @@ export const deleteNoticeAPI = async (id : number) => {
   const response = await axios.delete(`${noticesUrl}/${id}`);
   return response.data;
 }
+
 
 
 
