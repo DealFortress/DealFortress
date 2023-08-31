@@ -6,8 +6,8 @@ export const GetNoticesQuery = () =>  useQuery({
   queryFn:  getNoticesAPI
 });
 
-export const GetNoticeQuery = () => useQuery({
-  queryKey: ["notice"],
+export const GetNoticeQuery = (id: number) => useQuery({
+  queryKey: ["notice", id],
   queryFn: getNoticeAPI
 })
 

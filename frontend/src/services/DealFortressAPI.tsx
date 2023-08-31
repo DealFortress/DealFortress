@@ -1,3 +1,4 @@
+import { Query, QueryCache, QueryClient, QueryFilters, QueryFunction, QueryFunctionContext, QueryKey } from "@tanstack/react-query";
 import { NoticeRequest, PostRequestType, PutRequestType } from "../types";
 import  axios from 'axios';
 
@@ -10,7 +11,8 @@ export const getNoticesAPI = async () => {
     return response.data;
 };
 
-export const getNoticeAPI = async ( id: number ) => {
+export const getNoticeAPI = async ( {queryKey} : { queryKey: QueryKey, id: number}) => {
+  const [id] = queryKey
   const response = await axios.get(`${noticesUrl}/${id}`);
   return response.data;
 }
