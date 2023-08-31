@@ -9,14 +9,11 @@ import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
 import { GetNoticesQuery } from './services/DealFortressQueries'
 import { useAuth0 } from '@auth0/auth0-react'
-import { useEffect } from 'react'
 
 
 export const App = () => {
-  const { isLoading, user } = useAuth0()
+  const { isLoading } = useAuth0()
   const { data: noticeData, status: noticeStatus } = GetNoticesQuery();
-
- 
 
   const switchState = () => {
     switch (noticeStatus) {
