@@ -11,8 +11,7 @@ export const getNoticesAPI = async () => {
     return response.data;
 };
 
-export const getNoticeAPI = async ( {queryKey} : { queryKey: QueryKey, id: number}) => {
-  const [id] = queryKey
+export const getNoticeAPI = async ( id : number) => {
   const response = await axios.get(`${noticesUrl}/${id}`);
   return response.data;
 }

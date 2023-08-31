@@ -7,13 +7,14 @@ import { NotFound } from './pages/NotFound'
 import { NoticeForm } from './pages/NoticeForm'
 import { NoticePage } from './pages/NoticePage'
 import { NoticesIndex } from './pages/NoticesIndex'
-import { GetNoticesQuery } from './services/DealFortressQueries'
+import { GetNoticeQuery, GetNoticesQuery } from './services/DealFortressQueries'
 import { useAuth0 } from '@auth0/auth0-react'
 
 
 export const App = () => {
   const { isLoading } = useAuth0()
   const { data: noticesData, status: noticesStatus } = GetNoticesQuery();
+
 
   const switchState = () => {
     switch (noticesStatus) {
