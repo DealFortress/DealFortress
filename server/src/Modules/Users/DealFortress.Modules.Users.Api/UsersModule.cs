@@ -1,8 +1,6 @@
 using System.Runtime.CompilerServices;
-using DealFortress.Api.Modules.Users.Extensions;
-using DealFortress.Modules.Users.Api.Controllers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DealFortress.Modules.Users.Core.Extensions;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
 
@@ -14,10 +12,8 @@ internal static class UsersModule
     public static void AddUsersModule(this IServiceCollection services, string connectionString)
     {
         services
-            .AddCore(connectionString)
-            .AddScoped<UsersController>()
-            .AddScoped<ProductsController>()
-            .AddControllers();
-
+            .AddCore(connectionString);
+            // .AddScoped<UsersController>()
+            // .AddControllers();
     }
 }

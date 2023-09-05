@@ -10,8 +10,8 @@ namespace DealFortress.Modules.Notices.Core.DAL;
         {
         }
 
-        public DbSet<DealFortress.Modules.Notices.Core.Domain.Entities.Product> Products { get; set; } = default!;
-        public DbSet<DealFortress.Modules.Notices.Core.Domain.Entities.Notice> Notices { get; set; } = default!;
+        public DbSet<Domain.Entities.Product> Products { get; set; } = default!;
+        public DbSet<Domain.Entities.Notice> Notices { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,8 +1,9 @@
-using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 // [assembly: InternalsVisibleTo("DealFortress.Modules.Categories.Tests.Integration")]
+
+namespace DealFortress.Modules.Categories.Core.DAL;
 
     public class CategoriesContext : DbContext, IDbContext
     {
@@ -10,7 +11,8 @@ using Microsoft.EntityFrameworkCore;
             : base(options)
         {
         }
-        public DbSet<DealFortress.Modules.Categories.Core.Domain.Entities.Category> Categories { get; set; } = default!;
+
+        public DbSet<Domain.Entities.Category> Categories { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
