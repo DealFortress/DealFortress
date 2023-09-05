@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace server.src.Modules.Users.DealFortress.Modules.Users.Core.Domain.Entities
+namespace DealFortress.Modules.Users.DealFortress.Modules.Users.Core.Domain.Entities
 {
     public class User
     {
