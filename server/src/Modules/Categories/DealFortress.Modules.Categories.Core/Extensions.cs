@@ -1,11 +1,10 @@
 using System.Runtime.CompilerServices;
+using DealFortress.Modules.Categories.Core.DAL;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.Services;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Modules.Categories.Api")]
