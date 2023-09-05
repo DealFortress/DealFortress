@@ -27,6 +27,4 @@
     <ProjectReference Include="..\..\..\Shared\Abstractions\DealFortress.Shared.Abstractions.csproj" />
   </ItemGroup>
 
-
-
 </Project>

@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{D1D01265
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Users.Api", "src\Modules\Users\DealFortress.Modules.Users.Api\DealFortress.Modules.Users.Api.csproj", "{C8E8A787-1976-4E6E-AB46-B6A50EEAB276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Users.Core", "src\Modules\Users\DealFortress.Modules.Users.Core\DealFortress.Modules.Users.Core.csproj", "{FF830E86-E780-4FE8-94C7-EA752D865AF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{C8E8A787-1976-4E6E-AB46-B6A50EEAB276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8E8A787-1976-4E6E-AB46-B6A50EEAB276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8E8A787-1976-4E6E-AB46-B6A50EEAB276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF830E86-E780-4FE8-94C7-EA752D865AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF830E86-E780-4FE8-94C7-EA752D865AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF830E86-E780-4FE8-94C7-EA752D865AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF830E86-E780-4FE8-94C7-EA752D865AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C65AE11A-6EE9-4C8E-9CC0-5E61CB69F9BA} = {80039F3A-82DF-4105-B72F-62248FCF9AE0}
@@ -108,5 +114,6 @@ Global
 		{11D2CDC8-BBAF-4614-BE92-B83D251FE8B1} = {CB900889-76AE-479E-90BE-C1228A2EFA88}
 		{D1D01265-5C7B-4AE7-AD9A-2BEF43D96ADB} = {0B0C3C96-08CB-40F8-B8A2-4ECB9792D841}
 		{C8E8A787-1976-4E6E-AB46-B6A50EEAB276} = {D1D01265-5C7B-4AE7-AD9A-2BEF43D96ADB}
+		{FF830E86-E780-4FE8-94C7-EA752D865AF7} = {D1D01265-5C7B-4AE7-AD9A-2BEF43D96ADB}
 	EndGlobalSection
 EndGlobal

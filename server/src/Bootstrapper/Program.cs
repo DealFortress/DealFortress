@@ -53,7 +53,6 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-
 app.Run();
 
 

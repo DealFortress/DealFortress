@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealFortress.Modules.Users.Api.Controllers

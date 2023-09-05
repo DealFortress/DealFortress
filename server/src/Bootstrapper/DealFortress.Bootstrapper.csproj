@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="../Modules/Categories/DealFortress.Modules.Categories.Api/DealFortress.Modules.Categories.Api.csproj" />
     <ProjectReference Include="../Modules/Notices/DealFortress.Modules.Notices.Api/DealFortress.Modules.Notices.Api.csproj" />
+    <ProjectReference Include="../Modules/Users/DealFortress.Modules.Users.Api/DealFortress.Modules.Users.Api.csproj" />
   </ItemGroup>
 
 </Project>

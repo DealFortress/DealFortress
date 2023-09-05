@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DealFortress.Shared.Abstractions.Contexts;
+using Microsoft.EntityFrameworkCore;
 
-namespace DealFortress.Modules.Users.DealFortress.Modules.Users.Core.DAL
+namespace DealFortress.Modules.Users.Core.DAL
 {
     public class UsersContext : DbContext, IDbContext
     {
@@ -11,11 +9,12 @@ namespace DealFortress.Modules.Users.DealFortress.Modules.Users.Core.DAL
           : base(options)
       {
       }
+
       public DbSet<DealFortress.Modules.Users.Core.Domain.Entities.User> Users  { get; set; } = default!;
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)      
       {
-        modelBuilder.HasDefaultSchema("usersContext")
+        modelBuilder.HasDefaultSchema("usersContext");
       }
     }
 }

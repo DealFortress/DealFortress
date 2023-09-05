@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
             : base(options)
         {
         }
+
         public DbSet<DealFortress.Modules.Categories.Core.Domain.Entities.Category> Categories { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
