@@ -10,7 +10,7 @@ namespace DealFortress.Modules.Users.Core.DAL
       {
       }
 
-      public DbSet<DealFortress.Modules.Users.Core.Domain.Entities.User> Users  { get; set; } = default!;
+      public DbSet<Domain.Entities.User> Users  { get; set; } = default!;
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)      
       {
