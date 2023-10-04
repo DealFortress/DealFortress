@@ -38,5 +38,4 @@ jobs:
     needs: build
     steps:
       - name: Test
-        working-directory: src
         run: dotnet test server.sln --no-restore --verbosity normal
