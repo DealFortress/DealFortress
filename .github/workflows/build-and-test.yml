@@ -38,4 +38,6 @@ jobs:
     needs: build
     steps:
       - name: Test
-        run: dotnet test server/ 
+        run: |
+          cd server
+          dotnet test
