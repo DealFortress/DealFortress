@@ -33,5 +33,4 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
       - name: Test
-        working-directory: ..\
-        run: dotnet test server.sln --no-restore --verbosity normal
+        run: dotnet test server/server.sln --no-restore --verbosity normal
