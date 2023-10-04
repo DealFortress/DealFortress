@@ -39,4 +39,4 @@ jobs:
     needs: build
     steps:
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --no-restore --verbosity normal  --directory server/
