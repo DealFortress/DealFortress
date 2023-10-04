@@ -38,5 +38,4 @@ jobs:
     needs: build
     steps:
       - name: Test
-        working-directory: server
         run: dotnet test
