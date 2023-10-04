@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - server/**
-      - .github/workflows/main_dealfortressapi.yml
   workflow_dispatch:
 
 jobs:
