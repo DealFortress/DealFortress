@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
 
     steps:
@@ -32,9 +32,6 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
-  test:
-    runs-on: windows-latest
-    steps:
       - name: Test
         working-directory: ..\
         run: dotnet test server.sln --no-restore --verbosity normal
