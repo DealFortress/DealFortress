@@ -38,6 +38,5 @@ jobs:
     needs: build
     steps:
       - name: Test
-        run: |
-          cd ../server
-          dotnet test
+        working-directory: ./server
+        run: dotnet test
