@@ -39,4 +39,4 @@ jobs:
     steps:
       - name: Test
         working-directory: src
-        run: dotnet test
+        run: dotnet test server.sln
