@@ -5,16 +5,13 @@ on:
     branches:
       - main
     paths:
-      - server/src/**
+      - server/**
       - .github/workflows/main_dealfortressapi.yml
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: server
     steps:
       - name: Build with dotnet
         run: dotnet build server --configuration Release
