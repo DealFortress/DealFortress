@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 
 namespace DealFortress.Modules.Users.Core.DTO
 {
