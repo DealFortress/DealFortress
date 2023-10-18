@@ -16,7 +16,7 @@ on:
       - main
     paths:
       - server/src/**
-      - .github/workflows/build-and-test.yml
+      - .github/workflows/main_dealfortressapi.yml
 
 jobs:
   build:
