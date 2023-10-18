@@ -8,7 +8,7 @@ const categoriesUrl = `${baseUrl}/categories`;
 export const getNoticesAPI = async () => {
     const response = await axios.get(noticesUrl);
     return response.data;
-}
+};
 
 export const getNoticeAPI = async ( id : number) => {
   const response = await axios.get(`${noticesUrl}/${id}`);
@@ -18,7 +18,7 @@ export const getNoticeAPI = async ( id : number) => {
 export const postNoticeAPI = async ({request, accessToken}: PostRequestType<NoticeRequest>) => {
   const response = await axios.post(noticesUrl, request, {headers: {Authorization: `Bearer ${accessToken}`}})
   return response.data;
-}
+};
 
 export const putNoticeAPI = async ({id, request, accessToken}: PutRequestType<NoticeRequest>) => {
   const response = await axios.put(`${noticesUrl}/${id}`, request, {headers: {Authorization: `Bearer ${accessToken}`}})
