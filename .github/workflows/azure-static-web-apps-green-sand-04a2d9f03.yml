@@ -11,6 +11,9 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+    paths:
+      - frontend/**
+      - .github/workflows/azure-static-web-apps-green-sand-04a2d9f03.yml
 
 jobs:
   build_and_deploy_job:
