@@ -1,6 +1,5 @@
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
-using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Shared.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
