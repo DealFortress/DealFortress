@@ -24,11 +24,16 @@ public class UsersService : IUsersService
 
         return ToUserResponseDTO(user);
     }
+    public UserResponse Post(UserRequest request)
+    {
+        var user = ToUser(request);
 
-    // public UserResponse Post(UserRequest request)
-    // {
-    //     return new UserResponse();
-    // }
+        _repo.Add(user);
+
+        _repo.Complete();
+
+        return ToUserResponseDTO(user);
+    }
 
     public UserResponse ToUserResponseDTO(User user)
     {
