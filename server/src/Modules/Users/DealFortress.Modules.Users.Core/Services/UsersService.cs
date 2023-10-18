@@ -13,27 +13,7 @@ public class UsersService : IUsersService
         _repo = repo;
     }
 
-    public UserResponse? GetById(int id)
-    {
-        var user = _repo.GetById(id);
-
-        if (user is null)
-        {
-            return null;
-        }
-
-        return ToUserResponseDTO(user);
-    }
-    public UserResponse Post(UserRequest request)
-    {
-        var user = ToUser(request);
-
-        _repo.Add(user);
-
-        _repo.Complete();
-
-        return ToUserResponseDTO(user);
-    }
+    
 
     public UserResponse ToUserResponseDTO(User user)
     {
