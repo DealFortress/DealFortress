@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - frontend/**
+      - frontend/src/**
       - .github/workflows/azure-static-web-apps-green-sand-04a2d9f03.yml
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
     paths:
-      - frontend/**
+      - frontend/src/**
       - .github/workflows/azure-static-web-apps-green-sand-04a2d9f03.yml
 
 jobs:
