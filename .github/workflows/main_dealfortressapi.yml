@@ -10,7 +10,13 @@ on:
     paths:
       - server/src/**
       - .github/workflows/main_dealfortressapi.yml
-  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+    paths:
+      - server/src/**
+      - .github/workflows/build-and-test.yml
 
 jobs:
   build:
