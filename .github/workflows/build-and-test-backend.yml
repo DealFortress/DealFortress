@@ -32,4 +32,4 @@ jobs:
         run: dotnet build server --configuration Release
 
       - name: Test
-        run: dotnet test server/server.sln --no-restore --verbosity normal
+        run: dotnet test server/ --no-restore --verbosity quiet
