@@ -43,7 +43,7 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public void GetAll_should_return_all_notices()
+    public void GetById_returns_null_when_notice_is_not_found()
     {
         // Act
         var noticeResponses = _service.GetById(-1);
@@ -53,7 +53,7 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public void PutById_returns_null_when_product_is_not_found()
+    public void PutById_returns_null_when_notice_is_not_found()
     {
         // Act
         var response = _service.PutById(-1, _request);
@@ -63,7 +63,7 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public void DeleteById_returns_null_when_product_is_not_found()
+    public void DeleteById_returns_null_when_notice_is_not_found()
     {
         // Act
         var response = _service.DeleteById(-1);

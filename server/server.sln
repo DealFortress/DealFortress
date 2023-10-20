@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Users.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Users.Tests.Unit", "src\Modules\Users\DealFortress.Modules.Users.Tests.Unit\DealFortress.Modules.Users.Tests.Unit.csproj", "{233663EE-573B-4C47-AC0E-9766A42872ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Users.Tests.Integration", "src\Modules\Users\DealFortress.Modules.Users.Tests.Integration\DealFortress.Modules.Users.Tests.Integration.csproj", "{233663EE-573B-4C47-AC0E-9766A42872ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
