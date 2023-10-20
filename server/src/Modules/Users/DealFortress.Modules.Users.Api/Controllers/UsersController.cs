@@ -1,5 +1,5 @@
+using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
-using DealFortress.Modules.Users.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +9,8 @@ namespace DealFortress.Modules.Users.Api.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    public readonly UsersService _service;
-    public UsersController(UsersService usersService)
+    public readonly IUsersService _service;
+    public UsersController(IUsersService usersService)
     {
         _service = usersService;
     }
