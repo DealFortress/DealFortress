@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<UserResponse> GetUserByAuthId(string authId)
     {
-    var response = _service.GetByAuthId(id);
+    var response = _service.GetByAuthId(authId);
 
     return response is null ? NotFound() : Ok(response);
     }

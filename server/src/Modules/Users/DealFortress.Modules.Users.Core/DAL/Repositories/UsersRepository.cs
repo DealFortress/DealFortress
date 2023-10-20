@@ -14,7 +14,7 @@ internal class UsersRepository : Repository<User>, IUsersRepository
 
     public User? GetByAuthId(string authId)
     {
-        return Context.Users.Find(user => user.authId == authId);
+        return UsersContext?.Users.FirstOrDefault(user => user.AuthId == authId);
     }
 
     public UsersContext? UsersContext
