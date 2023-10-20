@@ -85,6 +85,7 @@ public class ProductsServiceTestsHappy
             Notice = new Notice()
             {
                 Id = 1,
+                UserId = 1,
                 Title = "test title",
                 Description = "test description",
                 City = "test city",

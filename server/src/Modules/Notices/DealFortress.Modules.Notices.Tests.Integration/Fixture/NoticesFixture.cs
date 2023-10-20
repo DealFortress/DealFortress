@@ -31,6 +31,7 @@ public class NoticesFixture : IDisposable
                 new Notice
                 {
                     Id = i,
+                    UserId = i,
                     Title = $"title {i}",
                     Description = "description",
                     City = "city",

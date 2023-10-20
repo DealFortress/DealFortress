@@ -35,6 +35,7 @@ public class NoticesServiceTestsSad
     {
         return new NoticeRequest()
         {
+            UserId = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
@@ -63,6 +64,7 @@ public class NoticesServiceTestsSad
         return new NoticeResponse()
         {
             Id = 1,
+            UserId = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
@@ -95,6 +97,7 @@ public class NoticesServiceTestsSad
         return new Notice()
         {
             Id = 1,
+            UserId = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
