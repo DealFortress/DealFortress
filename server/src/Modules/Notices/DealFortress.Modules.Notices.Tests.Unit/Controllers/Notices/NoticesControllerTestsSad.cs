@@ -35,6 +35,7 @@ public class NoticeControllersTestsSad
         return new NoticeRequest()
         {
             Title = "test title",
+            UserId = 1,
             Description = "test description",
             City = "test city",
             Payments = new[] { "cast", "swish" },
@@ -62,6 +63,7 @@ public class NoticeControllersTestsSad
         return new NoticeResponse()
         {
             Id = 1,
+            UserId = "test userId",
             Title = "test title",
             Description = "test description",
             City = "test city",
@@ -94,6 +96,7 @@ public class NoticeControllersTestsSad
         return new Notice()
         {
             Id = 1,
+            UserId = "test userId",
             Title = "test title",
             Description = "test description",
             City = "test city",

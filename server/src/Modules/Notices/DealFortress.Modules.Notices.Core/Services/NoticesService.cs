@@ -86,6 +86,7 @@ public class NoticesService : INoticesService
         var response = new NoticeResponse()
         {
             Id = Notice.Id,
+            UserId = Notice.UserId,
             Title = Notice.Title,
             Description = Notice.Description,
             City = Notice.City,
@@ -106,6 +107,7 @@ public class NoticesService : INoticesService
     {
         var notice = new Notice()
         {
+            UserId = request.UserId,
             Title = request.Title,
             Description = request.Description,
             City = request.City,

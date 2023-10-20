@@ -21,6 +21,7 @@ public class NoticesServicesTestsSad
 
         _request = new NoticeRequest
         {
+            UserId = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
