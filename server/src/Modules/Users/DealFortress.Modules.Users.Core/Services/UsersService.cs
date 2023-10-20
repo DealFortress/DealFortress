@@ -39,6 +39,7 @@ public class UsersService : IUsersService
     {
         var response = new UserResponse()
         {
+            Id = user.Id,
             Email = user.Email,
             Username = user.Username,
             Avatar = user.Avatar
@@ -51,6 +52,7 @@ public class UsersService : IUsersService
     {
         var user = new User()
         {
+            AuthId = request.AuthId,
             Email = request.Email,
             Username = request.Username,
             Avatar = request.Avatar

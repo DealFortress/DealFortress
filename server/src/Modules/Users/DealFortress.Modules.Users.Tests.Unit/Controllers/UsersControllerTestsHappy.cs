@@ -33,6 +33,7 @@ public class UsersControllersTestsHappy
     {
         return new UserRequest()
         {
+            AuthId = "testauthid123",
             Email= "testRequest@email.com",
             Username="testRequestUsername",
             Avatar="testRequestAvatar"
@@ -44,6 +45,7 @@ public class UsersControllersTestsHappy
     {
         return new UserResponse()
         {
+            Id = 1,
             Email= "testResponse@email.com",
             Username="testResponseUsername",
             Avatar="testResponseAvatar"
@@ -56,6 +58,7 @@ public class UsersControllersTestsHappy
         return new User()
         {
             Id=1,
+            AuthId= "testauthid123",
             Email= "test@email.com",
             Username="testUsername",
             Avatar="testAvatar" 

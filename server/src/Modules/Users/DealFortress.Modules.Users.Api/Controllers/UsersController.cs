@@ -1,5 +1,6 @@
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,5 +24,16 @@ public class UsersController : ControllerBase
     var response = _service.GetById(id);
 
     return response is null ? NotFound() : Ok(response);
+    }
+
+    [HttpPost]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<UserResponse> PostUser(UserRequest request)
+    {
+        var response = _service.Post(request);
+
+        return CreatedAtAction("GetUser", new { id = response.Id }, response);
     }
 }
