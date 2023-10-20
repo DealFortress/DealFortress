@@ -24,6 +24,18 @@ public class UsersService : IUsersService
 
         return ToUserResponseDTO(user);
     }
+
+    public UserResponse? GetByAuthId(string authId)
+    {
+        var user = _repo.GetByAuthId(authId);
+
+        if (user is null)
+        {
+            return null;
+        }
+
+        return ToUserResponseDTO(user);
+    }
     public UserResponse Post(UserRequest request)
     {
         var user = ToUser(request);

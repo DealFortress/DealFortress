@@ -8,6 +8,8 @@ public interface IUsersService
 
     UserResponse? GetById(int id);
 
+    UserResponse? GetByAuthId(string authId);
+
     UserResponse Post(UserRequest request);
 
     UserResponse ToUserResponseDTO(User user);

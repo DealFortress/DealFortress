@@ -12,6 +12,11 @@ internal class UsersRepository : Repository<User>, IUsersRepository
     public UsersRepository(UsersContext context) : base(context)
     {}
 
+    public User? GetByAuthId(string authId)
+    {
+        return UsersContext?.Users.FirstOrDefault(user => user.AuthId == authId);
+    }
+
     public UsersContext? UsersContext
     {
         get { return Context as UsersContext; }

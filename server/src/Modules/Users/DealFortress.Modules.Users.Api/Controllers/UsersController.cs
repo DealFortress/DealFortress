@@ -26,6 +26,16 @@ public class UsersController : ControllerBase
     return response is null ? NotFound() : Ok(response);
     }
 
+    [HttpGet("{authId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<UserResponse> GetUserByAuthId(string authId)
+    {
+    var response = _service.GetByAuthId(authId);
+
+    return response is null ? NotFound() : Ok(response);
+    }
+
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -36,4 +46,6 @@ public class UsersController : ControllerBase
 
         return CreatedAtAction("GetUser", new { id = response.Id }, response);
     }
+
+
 }
