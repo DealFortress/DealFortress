@@ -63,7 +63,7 @@ public class NoticeControllersTestsSad
         return new NoticeResponse()
         {
             Id = 1,
-            UserId = "test userId",
+            UserId = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
@@ -96,7 +96,7 @@ public class NoticeControllersTestsSad
         return new Notice()
         {
             Id = 1,
-            UserId = "test userId",
+            UserId = 1,
             Title = "test title",
             Description = "test description",
             City = "test city",
