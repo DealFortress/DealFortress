@@ -26,7 +26,7 @@ public class UsersController : ControllerBase
     return response is null ? NotFound() : Ok(response);
     }
 
-    [HttpGet("{authId}")]
+    [HttpGet("authid/{authId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<UserResponse> GetUserByAuthId(string authId)

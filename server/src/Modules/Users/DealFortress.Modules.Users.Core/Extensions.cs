@@ -1,5 +1,9 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Modules.Users.Core.DAL;
+using DealFortress.Modules.Users.Core.DAL.Repositories;
+using DealFortress.Modules.Users.Core.Domain.Repositories;
+using DealFortress.Modules.Users.Core.Domain.Services;
+using DealFortress.Modules.Users.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +16,8 @@ internal static class Extensions
     {
         return services
             .AddDbContext<UsersContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString))
+            .AddScoped<IUsersService, UsersService>()
+            .AddScoped<IUsersRepository, UsersRepository>();
     }
 }
