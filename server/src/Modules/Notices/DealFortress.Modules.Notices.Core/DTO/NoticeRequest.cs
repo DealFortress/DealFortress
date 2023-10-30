@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace DealFortress.Modules.Notices.Core.DTO;
 
     public class NoticeRequest
@@ -13,8 +15,9 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         [StringLength(40, MinimumLength = 1 , ErrorMessage = "City cannot be longer than 40 characters or less than 1 characters")]
         public required string City { get; set; }
 
-        [StringLength(50, MinimumLength = 4 , ErrorMessage = "Payments cannot be longer than 50 characters or less than 4 characters")]
+        [MinLength(1, ErrorMessage = "It needs to be at least one payment type")]
         public required string[] Payments { get; set; }
+        [MinLength(1, ErrorMessage = "It needs to be at least one delivery method")]
         public required string[] DeliveryMethods { get; set; }
         public virtual List<ProductRequest>? ProductRequests { get; set; }
     }

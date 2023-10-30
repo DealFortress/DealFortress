@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 
 namespace DealFortress.Modules.Notices.Core.DTO;
