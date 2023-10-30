@@ -53,7 +53,7 @@ public class NoticesController : ControllerBase
     public ActionResult<NoticeResponse> PostNotice(NoticeRequest request)
     {
         var response = _service.Post(request);
-
+        
         return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }
 
