@@ -78,10 +78,10 @@ import { AuthInterceptorService } from './shared/auth/auth-interceptor/auth-inte
     HttpClientModule,
     AsyncPipe,
     AuthModule.forRoot({
-      domain: environment.auth0Domain,
-      clientId: environment.auth0ClientId,
+      domain: process.env.auth0Domain,
+      clientId: process.env.auth0ClientId,
       authorizationParams: {
-        audience: environment.auth0Audience,
+        audience: process.env.auth0Audience,
         redirect_uri: window.location.origin
       }
     }),

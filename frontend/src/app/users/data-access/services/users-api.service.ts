@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
 @Injectable()
 export class UsersApiService {
 
-    private baseUrl = environment.apiServerUrl;
+    private baseUrl = process.env.apiServerUrl;
     private usersUrl = `${this.baseUrl}/users`;
 
     constructor(private httpClient: HttpClient) {}
