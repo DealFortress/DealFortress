@@ -1,0 +1,24 @@
+<app-main-container>
+    <app-styled-container barText="Notice {{(notice | async)?.id }}" redirectLink="/notices">
+        <div class="self-center text-center flex flex-col gap-2 w-full">
+          <p>{{( this.creator | async )?.username}}</p>
+          <img class="rounded-full w-[75px] m-auto" [src]="( this.creator | async )?.avatar" alt="profile picture" />
+        </div>
+      <h2 class="text-3xl break-words mx-6 text-center">{{(notice | async)?.title}}</h2>
+      <div class="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
+        <p class="break-words">{{(notice | async)?.description}}</p>
+      </div>
+      <div class="flex justify-between">
+        <ul class="font-start">
+          <li><fa-icon [icon]="['fas','city']" /> {{(notice | async)?.city}}</li>
+          <li><fa-icon [icon]="['fas','truck-ramp-box']"/> {{(notice | async)?.deliveryMethods}}</li>
+        </ul>
+        <ul class="text-end">
+          <li class="font-bold">SEK</li>
+          <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+        </ul>
+      </div>
+
+    </app-styled-container>
+
+  </app-main-container>

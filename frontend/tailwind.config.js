@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{html,ts}",
   ],
   theme: {
     extend: {
@@ -19,7 +18,9 @@ export default {
         'black': 'black',
         'transparent': 'transparent',
         'white': 'white',
-        'red': '#9F192F'
+        'red': '#9F192F',
+        'green': '#7dac99',
+        'lighttexthover': 'lightblue'
     },
     plugins: [],
     }
