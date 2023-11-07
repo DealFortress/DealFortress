@@ -1,0 +1,8 @@
+<section class="bg-darkblue relative rounded-lg p-6 pt-20 flex flex-col justify-between gap-12 white-box-border text-white">
+    <div class="border border-b-2 absolute w-full mx-auto top-0 left-0 flex items-center justify-between gap-2 px-2 py-2 text-1xl">
+        <p class="text-xl">{{barText}}</p>
+        <span class="grow flex flex-col gap-2 mx-1 my-auto" ><hr /><hr /><hr /></span>
+        <a [routerLink]="redirectLink" class="white-box-border rounded hover:bg-blue"><fa-icon class="text-end px-1.5" [icon]="faXmark" /></a>
+    </div>
+    <ng-content></ng-content>
+</section>

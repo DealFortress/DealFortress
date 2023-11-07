@@ -1,0 +1,7 @@
+<a [routerLink]="['/notices', notice.id]" class="flex flex-col justify-between bg-blue rounded my-2 p-3 gap-4 white-box-border">
+    <p class="font-semibold text-lg break-words">{{notice.title}}</p>
+    <div class="flex gap-12 justify-between">
+        <p>{{notice.city}}</p>
+        <p>{{minutesSinceCreation}}</p>
+    </div>
+</a>
