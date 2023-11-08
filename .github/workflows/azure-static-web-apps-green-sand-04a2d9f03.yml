@@ -37,11 +37,11 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "dist" # Built app content directory - optional
         env:
-          apiServelUrl: ${{secrets.VITE_API_SERVER_URL}}
-          auth0Domain: ${{secrets.VITE_AUTH0_DOMAIN}}
-          auth0ClientId: ${{secrets.VITE_AUTH0_CLIENT_ID}}
-          auth0Audience: ${{secrets.VITE_AUTH0_AUDIENCE}}
-          redirectUri: ${{secrets.VITE_AUTH0_CALLBACK_URL}}
+          VITE_API_SERVER_URL: ${{secrets.VITE_API_SERVER_URL}}
+          VITE_AUTH0_DOMAIN: ${{secrets.VITE_AUTH0_DOMAIN}}
+          VITE_AUTH0_CLIENT_ID: ${{secrets.VITE_AUTH0_CLIENT_ID}}
+          VITE_AUTH0_AUDIENCE: ${{secrets.VITE_AUTH0_AUDIENCE}}
+          VITE_AUTH0_CALLBACK_URL: ${{secrets.VITE_AUTH0_CALLBACK_URL}}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
