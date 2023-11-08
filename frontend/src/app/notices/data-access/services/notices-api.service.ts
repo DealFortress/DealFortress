@@ -8,7 +8,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class NoticesApiService {
-    private baseUrl = process.env.apiServerUrl;
+    private baseUrl = environment.apiServerUrl;
     private noticesUrl = `${this.baseUrl}/notices`;
 
     constructor(private httpClient: HttpClient) {
