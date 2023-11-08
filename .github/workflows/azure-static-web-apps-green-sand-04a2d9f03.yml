@@ -12,7 +12,7 @@ on:
     branches:
       - main
     paths:
-      - frontend/src/**
+      - frontend/**
       - .github/workflows/azure-static-web-apps-green-sand-04a2d9f03.yml
 
 jobs:
