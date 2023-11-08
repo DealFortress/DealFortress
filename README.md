@@ -43,9 +43,9 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
   - .NET with C# 
 
-  - Entity Framework
+  - Entity Framework Library
 
-  - React with Vite, Typescript & TanStack ReactQuery
+  - Angular 2 with NGRX
 
   - Github Actions & Project
 
