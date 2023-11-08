@@ -6,7 +6,7 @@
 /out-tsc
 /bazel-out
 .vscode
-src/.env
+.env
 src/process-env.d.ts
 
 # Node
