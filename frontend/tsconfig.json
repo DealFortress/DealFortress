@@ -4,12 +4,14 @@
   "compilerOptions": {
     "baseUrl": "./src/",
     "paths": {
-      "@app/*": [
-          "app/*"
-      ],
-      "@assets/*": [
-          "assets/*"
-      ]
+      "@app/*": ["app/*"],
+      "crypto": ["./node_modules/crypto-browserify"],
+      "stream": ["./node_modules/stream-browserify"],
+      "assert": ["./node_modules/assert"],
+      "http": ["./node_modules/stream-http"],
+      "https": ["./node_modules/https-browserify"],
+      "os": ["./node_modules/os-browserify"],
+      "@assets/*": ["assets/*"]
     },
     "rootDir": "./src/",
     "outDir": "./dist/out-tsc",
