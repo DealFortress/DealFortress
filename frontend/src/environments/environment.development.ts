@@ -1,8 +1,8 @@
 export const environment = {
     production: false,
-    apiServerUrl: process.env['APISERVERURL'],
-    auth0Domain: process.env['AUTH0DOMAIN'],
-    auth0ClientId: process.env['AUTH0CLIENTID'],
-    redirectUri: process.env['REDIRECTURI'],
-    auth0Audience: process.env['AUTH0AUDIENCE']
+    apiServerUrl: process.env['API_SERVER_URL'],
+    auth0Domain: process.env['AUTH0_DOMAIN'],
+    auth0ClientId: process.env['AUTH0_CLIENT_ID'],
+    redirectUri: process.env['REDIRECT_URI'],
+    auth0Audience: process.env['AUTH0_AUDIENCE']
 };
