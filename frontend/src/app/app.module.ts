@@ -44,7 +44,8 @@ import { MaterialModule } from './material.module';
 import { AppEffects } from './shared/store/app.effects';
 import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
-import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
 
 
 @NgModule({
@@ -92,7 +93,13 @@ import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
     }),
     EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect]),
   ],
-  providers: [NoticesApiService, NavbarService, UsersApiService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [
+    NoticesApiService, 
+    NavbarService, 
+    UsersApiService, 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
