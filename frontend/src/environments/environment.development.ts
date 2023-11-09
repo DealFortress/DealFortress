@@ -1,8 +1,8 @@
 export const environment = {
     production: false,
-    apiServerUrl: process.env['API_SERVER_URL'],
-    auth0Domain: process.env['AUTH0_DOMAIN'],
-    auth0ClientId: process.env['AUTH0_CLIENT_ID'],
-    redirectUri: process.env['REDIRECT_URI'],
-    auth0Audience: process.env['AUTH0_AUDIENCE']
+    apiServerUrl: 'https://localhost:5000/api',
+    auth0Domain: 'dev-3ajyy6n01s37rnev.eu.auth0.com',
+    auth0ClientId: 'rXQINGs97eUOheZ0dzEAlXdZIGiQbla8',
+    redirectUri: 'https://localhost:4000',
+    auth0Audience: 'https://dealfortressapi.azurewebsites.net'
 };
