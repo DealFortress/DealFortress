@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "@auth0/auth0-angular";
 
 @Injectable()
-export class AuthInterceptorService implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
     accessToken: string = '';
     constructor(authService: AuthService) {
         

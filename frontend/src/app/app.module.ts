@@ -44,7 +44,7 @@ import { MaterialModule } from './material.module';
 import { AppEffects } from './shared/store/app.effects';
 import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
-import { AuthInterceptorService } from './shared/auth/auth-interceptor/auth-interceptor.service';
+import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
 
 
 @NgModule({
