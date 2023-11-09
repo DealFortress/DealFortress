@@ -1,5 +1,5 @@
 import { Notice } from "@app/shared/models/notice.model";
-import { environment } from 'environments/environment.development';
+import { environment } from 'environments/environment.production';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NoticeRequest } from "@app/shared/models/notice-request.model";

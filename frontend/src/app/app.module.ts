@@ -18,7 +18,7 @@ import { ToggleNavBarComponent } from './header/feature/nav-bar/toggle-nav-bar/t
 import { StaticNavBarComponent } from './header/feature/nav-bar/static-nav-bar/static-nav-bar.component';
 import { NavbarService } from './header/feature/nav-bar/nav-bar.service';
 import { AuthModule } from '@auth0/auth0-angular';
-import { environment } from 'environments/environment.development';
+import { environment } from 'environments/environment.production';
 import { AuthLoginButtonComponent } from './shared/auth/auth-login-button/auth-login-button.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
