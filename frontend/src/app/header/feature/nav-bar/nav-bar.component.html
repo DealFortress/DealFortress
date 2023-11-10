@@ -1,21 +1,3 @@
-<!-- <div class="w-full py-4 top-0 sticky bg-darkblue text-white gap-4 flex flex-col z-50">
-    <app-static-nav-bar></app-static-nav-bar>
-    <ng-container *ngIf="navbarToggle$ | async">
-        <app-toggle-nav-bar></app-toggle-nav-bar>
-    </ng-container>
-</div> -->
-
-<!-- <div class='container flex justify-between items-center mx-auto gap-4'>
-    <button class='text-3xl px-1' (click)="setNavbarToggle()"><fa-icon [icon]="['fas', 'bars']" /></button>
-    <a routerLink="/">
-        <div class='flex gap-2 items-center flex-1'>
-            <img src="assets/logo.png" alt="deal fortress logo" class="logo-s"/>
-            <p class='text-xl medieval-font drop-shadow-md'>DealFortress</p>
-        </div>
-    </a>
-    
-</div> -->
-
 <div class="navbar bg-base-100">
     <div class="navbar-start">
       <div class="dropdown">
@@ -32,13 +14,13 @@
       </div>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+      <a class="btn btn-ghost normal-case text-xl">DealFortress <img src="assets/logo.png" alt="deal fortress logo" class="logo-s"/></a>
     </div>
     <div class="navbar-end">
-      <button class="btn btn-ghost btn-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-      </button>
       <div class="flex gap-4 items-center flex-1 justify-end">
+        <button class="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        </button>
         <ng-container *ngIf="isAuthenticated | async">
             <app-auth-logout-button></app-auth-logout-button>
             <a class='text-3xl' to="/profile"><img [src]="(user | async)?.picture" alt="avatar" class='avatar rounded-full w-10' /></a> 
