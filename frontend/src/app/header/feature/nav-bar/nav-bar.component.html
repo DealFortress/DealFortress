@@ -1,6 +1,67 @@
-<div class="w-full py-4 top-0 sticky bg-darkblue text-white gap-4 rounded-b-xl flex flex-col z-50 border-b-2 ">
+<!-- <div class="w-full py-4 top-0 sticky bg-darkblue text-white gap-4 flex flex-col z-50">
     <app-static-nav-bar></app-static-nav-bar>
     <ng-container *ngIf="navbarToggle$ | async">
         <app-toggle-nav-bar></app-toggle-nav-bar>
     </ng-container>
-</div>
+</div> -->
+
+<!-- <div class='container flex justify-between items-center mx-auto gap-4'>
+    <button class='text-3xl px-1' (click)="setNavbarToggle()"><fa-icon [icon]="['fas', 'bars']" /></button>
+    <a routerLink="/">
+        <div class='flex gap-2 items-center flex-1'>
+            <img src="assets/logo.png" alt="deal fortress logo" class="logo-s"/>
+            <p class='text-xl medieval-font drop-shadow-md'>DealFortress</p>
+        </div>
+    </a>
+    <div class="flex gap-4 items-center flex-1 justify-end">
+        <ng-container *ngIf="isAuthenticated | async">
+            <app-auth-logout-button></app-auth-logout-button>
+            <a class='text-3xl' to="/profile"><img [src]="(user | async)?.picture" alt="avatar" class='avatar rounded-full w-10' /></a> 
+        </ng-container>
+        <ng-container *ngIf="!(isAuthenticated | async)">
+            <app-auth-login-button></app-auth-login-button>
+        </ng-container>
+    </div>
+</div> -->
+
+<!-- <hr class='w-[90%] mx-auto'/>
+<div class='flex justify-between container mx-auto gap-8'>
+    <div class='flex gap-4'>
+        <ul>
+        <li class='text-xl'><a routerLink="/">Market</a></li>
+        <li><a routerLink="/">All</a></li>
+        <li><a routerLink="/">Selling</a></li>
+        <li><a routerLink="/">Buying</a></li>
+        <li><a routerLink="/">Trading</a></li>
+        </ul>
+    </div>
+</div> -->
+
+<div class="navbar bg-base-100">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <label tabindex="0" class="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+        </label>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a>Homepage</a></li>
+          <li><a>Portfolio</a></li>
+          <li><a>About</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar-center">
+      <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+    </div>
+    <div class="navbar-end">
+      <button class="btn btn-ghost btn-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      </button>
+      <button class="btn btn-ghost btn-circle">
+        <div class="indicator">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+          <span class="badge badge-xs badge-primary indicator-item"></span>
+        </div>
+      </button>
+    </div>
+  </div>

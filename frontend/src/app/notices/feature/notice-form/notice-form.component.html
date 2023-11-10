@@ -7,7 +7,6 @@
 <fieldset [disabled]="!(isAuthenticated$ | async)">
     <app-main-container >
         <form action="" [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
-            <app-styled-container barText="New Notice" redirectLink="/notices">
                 <mat-form-field>
                     <mat-label>Your title here ✒️</mat-label>
                     <input matInput [placeholder]="'Selling rare artifact for coin'" formControlName="title" required>
@@ -55,7 +54,6 @@
                         Submit
                     </button>
                 </div>
-            </app-styled-container>
         </form>
     </app-main-container>
 </fieldset>

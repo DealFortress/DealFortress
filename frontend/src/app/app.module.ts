@@ -9,14 +9,10 @@ import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-lis
 import { ErrorComponent } from '@app/shared/error/error.component';
 import { MainContainerComponent } from '@app/shared/main-container/main-container.component';
 import { NoticeFormComponent } from '@app/notices/feature/notice-form/notice-form.component';
-import { StyledContainerComponent } from '@app/shared/styled-container/styled-container.component';
 import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NoticeCardComponent } from '@app/notices/feature/notice-list/notice-card/notice-card.component';
-import { ToggleNavBarComponent } from './header/feature/nav-bar/toggle-nav-bar/toggle-nav-bar.component';
-import { StaticNavBarComponent } from './header/feature/nav-bar/static-nav-bar/static-nav-bar.component';
-import { NavbarService } from './header/feature/nav-bar/nav-bar.service';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'environments/environment.production';
 import { AuthLoginButtonComponent } from './shared/auth/auth-login-button/auth-login-button.component';
@@ -57,18 +53,14 @@ import { RequestRetryInterceptor } from './shared/interceptors/request-retry.int
     NavBarComponent,
     LoaderComponent,
     MainContainerComponent,
-    StyledContainerComponent,
     NoticeFormComponent,
     NoticeDetailComponent,
     NotFoundComponent,
     NoticeCardComponent,
-    ToggleNavBarComponent,
-    StaticNavBarComponent,
     AuthLoginButtonComponent,
     AuthLogoutButtonComponent,
     PopupCardComponent,
     UserProfileComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -95,7 +87,6 @@ import { RequestRetryInterceptor } from './shared/interceptors/request-retry.int
   ],
   providers: [
     NoticesApiService, 
-    NavbarService, 
     UsersApiService, 
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
