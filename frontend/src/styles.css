@@ -38,7 +38,9 @@
 .logo-l{
     width: 150px;
 }
-
+.logo-xl{
+  width: 300px;
+}
 
 .green-snackbar button {
   background-color:#7dac99;
@@ -61,6 +63,11 @@
     }
 }
 
+.medieval-banner{
+  background-image: linear-gradient(to bottom, rgba(73, 73, 74, 0.52), rgba(32, 32, 32, 0.73)),
+  url(https://storage.googleapis.com/pai-images/3ec176411ace4c2a9a7ee987aa3f2fde.jpeg);
+}
+
 .loader {
     color: white;
     font-size: 45px;
@@ -73,6 +80,7 @@
     transform: translateZ(0);
     animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
   }
+
 
   @keyframes mltShdSpin {
     0% {
@@ -114,4 +122,4 @@
   }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Quicksand', "Helvetica Neue", sans-serif; }

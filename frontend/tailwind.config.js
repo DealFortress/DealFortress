@@ -26,7 +26,7 @@ module.exports = {
     daisyui: {
       themes: true,
       styled: true,
-      themes: true,
+      themes: ["light", "dark"],
       base: true,
       utils: true,
       logs: true,
