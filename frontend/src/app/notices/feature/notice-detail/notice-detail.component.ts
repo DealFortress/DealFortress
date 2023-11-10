@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-notice-detail',
   templateUrl: './notice-detail.component.html',
-  styleUrls: ['./notice-detail.component.scss']
+  styleUrls: ['./notice-detail.component.css']
 })
 export class NoticeDetailComponent{
   id = this.route.snapshot.paramMap.get('id');

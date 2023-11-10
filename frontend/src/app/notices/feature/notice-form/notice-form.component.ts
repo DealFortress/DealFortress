@@ -13,7 +13,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-notice-form',
   templateUrl: './notice-form.component.html',
-  styleUrls: ['./notice-form.component.scss'],
+  styleUrls: ['./notice-form.component.css'],
 })
 export class NoticeFormComponent implements OnInit{
   deliveryMethods = ['postage', 'hand delivery', 'pick up'  ];  

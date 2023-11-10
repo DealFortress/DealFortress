@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-notice-list',
   templateUrl: './notice-list.component.html',
-  styleUrls: ['./notice-list.component.scss']
+  styleUrls: ['./notice-list.component.css']
 })
 export class NoticeListComponent {
   faPlusCircle = faPlusCircle;
