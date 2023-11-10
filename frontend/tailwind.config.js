@@ -22,6 +22,6 @@ module.exports = {
         'green': '#7dac99',
         'lighttexthover': 'lightblue'
     },
-    plugins: [],
+    plugins: [require("daisyui")],
     }
 }
