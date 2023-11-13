@@ -29,10 +29,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.min-h-screen{
-  min-height: calc(100vh - 56px) ;
-}
-
 .logo-s {
     width: 50px;
 }
@@ -44,6 +40,10 @@
 }
 .logo-xl{
   width: 300px;
+}
+
+.min-h-screen {
+  min-width: calc(100vh - 100px);
 }
 
 .green-snackbar button {
@@ -117,4 +117,5 @@
   }
 
 html, body { min-height: 100vh; }
-body { margin: 0; font-family: 'Quicksand', "Helvetica Neue", sans-serif;   box-sizing: border-box;}
+html {margin:0; padding: 0;}
+body {margin: 0; padding-top: 100px; font-family: 'Quicksand', "Helvetica Neue", sans-serif;   box-sizing: border-box;}
