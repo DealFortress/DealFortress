@@ -29,6 +29,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+.min-h-screen{
+  min-height: calc(100vh - 56px) ;
+}
+
 .logo-s {
     width: 50px;
 }
@@ -52,15 +56,6 @@
   background-color:#9F192F;
   color: white !important;
   border: none;
-}
-
-
-@layer base {
-    body {
-        box-sizing: border-box;
-        font-family: 'Quicksand', sans-serif;
-        @apply bg-bodyblue;
-    }
 }
 
 .medieval-banner{
@@ -121,5 +116,5 @@
     100% { transform: rotate(360deg) }
   }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Quicksand', "Helvetica Neue", sans-serif; }
+html, body { min-height: 100vh; }
+body { margin: 0; font-family: 'Quicksand', "Helvetica Neue", sans-serif;   box-sizing: border-box;}

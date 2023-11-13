@@ -1,20 +1,24 @@
 <app-main-container>
-        <div class="self-center text-center flex flex-col gap-2 w-full">
-          <p>{{( this.creator | async )?.username}}</p>
-          <img class="rounded-full w-[75px] m-auto" [src]="( this.creator | async )?.avatar" alt="profile picture" />
+  <div class="hero min-h-[75vh] bg-base-200 relative">
+    <div class="hero-content h-full text-center">
+      <div class="absolute top-8 right-8 flex flex-col gap-4">
+        <p>{{( this.creator | async )?.username}}</p>
+        <img class="rounded-full w-[75px] m-auto" [src]="( this.creator | async )?.avatar" alt="profile picture" />
+      </div>
+      <div class="max-w-md flex flex-col justify-evenly h-full gap-12">
+        <h1 class="text-5xl font-bold">{{(notice | async)?.title}}</h1> 
+        <p class="py-6 break-words">{{(notice | async)?.description}}</p>
+        <div class="flex justify-between">
+          <ul class="font-start">
+            <li><fa-icon [icon]="['fas','city']" /> {{(notice | async)?.city}}</li>
+            <li><fa-icon [icon]="['fas','truck-ramp-box']"/> {{(notice | async)?.deliveryMethods}}</li>
+          </ul>
+          <ul class="text-end">
+            <li class="font-bold">SEK</li>
+            <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+          </ul>
         </div>
-      <h2 class="text-3xl break-words mx-6 text-center">{{(notice | async)?.title}}</h2>
-      <div class="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
-        <p class="break-words">{{(notice | async)?.description}}</p>
       </div>
-      <div class="flex justify-between">
-        <ul class="font-start">
-          <li><fa-icon [icon]="['fas','city']" /> {{(notice | async)?.city}}</li>
-          <li><fa-icon [icon]="['fas','truck-ramp-box']"/> {{(notice | async)?.deliveryMethods}}</li>
-        </ul>
-        <ul class="text-end">
-          <li class="font-bold">SEK</li>
-          <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
-        </ul>
-      </div>
+    </div>
+  </div>
 </app-main-container>
