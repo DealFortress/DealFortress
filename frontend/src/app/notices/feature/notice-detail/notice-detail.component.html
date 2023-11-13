@@ -1,25 +1,26 @@
 <app-main-container>
-  <div class="hero min-h-[75vh] bg-base-200 relative">
-    <div class="hero-content h-full text-center flex flex-col w-full">
-      <div class="absolute top-8 right-8 flex flex-col gap-4">
-        <p>{{( this.creator | async )?.username}}</p>
-        <img class="rounded-full w-[75px] m-auto" [src]="( this.creator | async )?.avatar" alt="profile picture" />
-      </div>
-      <div class="max-w-md flex flex-col justify-evenly h-full gap-12">
-        <h1 class="text-5xl font-bold">{{(notice | async)?.title}}</h1> 
-        <p class="py-6 break-words">{{(notice | async)?.description}}</p>
-        <div class="flex justify-between">
-          <ul class="font-start">
-            <li><fa-icon [icon]="['fas','city']" /> {{(notice | async)?.city}}</li>
-            <li><fa-icon [icon]="['fas','truck-ramp-box']"/> {{(notice | async)?.deliveryMethods}}</li>
-          </ul>
-          <ul class="text-end">
-            <li class="font-bold">SEK</li>
-            <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
-          </ul>
+  <div class="grid grid-cols-[3fr,1fr] gap-6">
+    <div class="grid gap-6">
+      <div class="hero min-h-[75vh] bg-base-200 rounded-box">
+        <div class="hero-content h-full text-center flex flex-col w-full">
+          <div class="max-w-md flex flex-col justify-evenly h-full gap-12 text-2xl">
+            <h1 class="text-6xl">{{(notice | async)?.title}}</h1> 
+            <p class="py-6 break-words">{{(notice | async)?.description}}</p>
+            <div class="flex justify-between">
+              <ul class="font-start">
+                <li><fa-icon [icon]="['fas','city']" /> {{(notice | async)?.city}}</li>
+                <li><fa-icon [icon]="['fas','truck-ramp-box']"/> {{(notice | async)?.deliveryMethods}}</li>
+              </ul>
+              <ul class="text-end">
+                <li class="font-bold">SEK</li>
+                <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
       <app-product-carousel [productImageUrls]="productImageUrls"></app-product-carousel>
     </div>
+    <app-user-card [user]="creator"></app-user-card>
   </div>
 </app-main-container>

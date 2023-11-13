@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from '@app/app-routing.module';
+import { AppRoutingModule } from '@app/shared/modules/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { SearchBarComponent } from '@app/header/feature/search-bar/search-bar.component';
 import { NavBarComponent } from '@app/header/feature/nav-bar/nav-bar.component';
@@ -36,13 +36,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { NoticesEffects } from './notices/data-access/store/notices.effects';
 import { noticesReducer } from './notices/data-access/store/notices.reducer';
 import { NoticesApiService } from './notices/data-access/services/notices-api.service';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './shared/modules/material.module';
 import { AppEffects } from './shared/store/app.effects';
 import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
 import { ProductCarouselComponent } from './notices/feature/notice-detail/product-carousel/product-carousel/product-carousel.component';
+import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { ProductCarouselComponent } from './notices/feature/notice-detail/produc
     PopupCardComponent,
     UserProfileComponent,
     ProductCarouselComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserModule,
