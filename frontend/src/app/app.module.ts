@@ -42,6 +42,7 @@ import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
+import { ProductCarouselComponent } from './notices/feature/notice-detail/product-carousel/product-carousel/product-carousel.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { RequestRetryInterceptor } from './shared/interceptors/request-retry.int
     AuthLogoutButtonComponent,
     PopupCardComponent,
     UserProfileComponent,
+    ProductCarouselComponent,
   ],
   imports: [
     BrowserModule,

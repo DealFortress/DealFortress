@@ -1,6 +1,6 @@
 <app-main-container>
   <div class="hero min-h-[75vh] bg-base-200 relative">
-    <div class="hero-content h-full text-center">
+    <div class="hero-content h-full text-center flex flex-col w-full">
       <div class="absolute top-8 right-8 flex flex-col gap-4">
         <p>{{( this.creator | async )?.username}}</p>
         <img class="rounded-full w-[75px] m-auto" [src]="( this.creator | async )?.avatar" alt="profile picture" />
@@ -19,6 +19,7 @@
           </ul>
         </div>
       </div>
+      <app-product-carousel [productImageUrls]="productImageUrls"></app-product-carousel>
     </div>
   </div>
 </app-main-container>

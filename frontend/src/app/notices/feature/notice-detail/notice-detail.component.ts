@@ -18,6 +18,10 @@ export class NoticeDetailComponent{
   id = this.route.snapshot.paramMap.get('id');
   notice = this.store.select(getNoticeById(+this.id!));
   creator = this.store.select(getCurrentlyShownUser)
+  productImageUrls = [ "https://bbs.io-tech.fi/data/attachments/1206/1206107-d8f567f5097c4556a54c1dd13fb0830d.jpg", 
+  "https://bbs.io-tech.fi/data/attachments/1206/1206109-1cdf63f0fafabe98cd70458ea0071b85.jpg",
+  "https://bbs.io-tech.fi/data/attachments/1206/1206108-42e11f5df36a295f1b6ee0a4fd3ea5ea.jpg",
+  "https://bbs.io-tech.fi/data/attachments/1206/1206110-96f0e3e85e913f003b2e232672857f9a.jpg"]
 
   constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute) {
    
