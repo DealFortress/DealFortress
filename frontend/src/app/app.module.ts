@@ -36,7 +36,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { NoticesEffects } from './notices/data-access/store/notices.effects';
 import { noticesReducer } from './notices/data-access/store/notices.reducer';
 import { NoticesApiService } from './notices/data-access/services/notices-api.service';
-import { MaterialModule } from './shared/modules/material.module';
+import { MaterialModule } from './material.module';
 import { AppEffects } from './shared/store/app.effects';
 import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';

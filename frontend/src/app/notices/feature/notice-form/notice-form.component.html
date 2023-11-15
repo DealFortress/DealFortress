@@ -7,53 +7,42 @@
 <fieldset [disabled]="!(isAuthenticated$ | async)">
     <app-main-container >
         <form action="" [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
+                <section class="bg-base-200 relative rounded-lg p-6 pt-20 flex flex-col justify-between gap-12">
                 <mat-form-field>
                     <mat-label>Your title here ✒️</mat-label>
                     <input matInput [placeholder]="'Selling rare artifact for coin'" formControlName="title" required>
                     <mat-error *ngIf="titleFormControl">{{getErrorMessage(titleFormControl)}}</mat-error>
                 </mat-form-field>
-                <mat-form-field class="w-full">
+                <mat-form-field class="">
                     <mat-label>Your description here ✒️</mat-label>
                     <textarea rows="10" matInput [placeholder]="'Rare magical artifact, only slight visual damage, works like a charm! No receipt.'" formControlName="description" required></textarea>
                     <mat-error *ngIf="descriptionFormControl">{{getErrorMessage(descriptionFormControl)}}</mat-error>
                 </mat-form-field>
-                <div class="flex justify-between flex-col gap-4">
-                    <ul class="font-start flex flex-col gap-4">
-                        <li class="flex gap-2 items-center">
-                            <!-- <fa-icon [icon]="['fas','city']"></fa-icon> -->
-                            <mat-form-field class="w-full">
-                              <mat-label>Your city here ✒️</mat-label>
-                              <input matInput [placeholder]="'Baldurs Gate'" formControlName="city" required>
-                              <mat-error *ngIf="cityFormControl">{{getErrorMessage(cityFormControl)}}</mat-error>
-                            </mat-form-field>
-                        </li>
-                        <li class="flex gap-2 items-center">
-                            <!-- <fa-icon [icon]="['fas','cash-register']"></fa-icon> -->
-                            <mat-form-field class="w-full ">
-                                <mat-label class="text-xs ">Payment options</mat-label>
-                                <mat-select formControlName="payments" multiple class="">
-                                  <mat-option *ngFor="let option of payments" [value]="option" class="">{{option}}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="paymentsFormControl">{{getErrorMessage(paymentsFormControl)}}</mat-error>
-                            </mat-form-field>
-                        </li>
-                        <li class="flex gap-2 items-center">
-                            <!-- <fa-icon [icon]="['fas','truck-ramp-box']"></fa-icon> -->
-                            <mat-form-field class="w-full ">
-                                <mat-label class="text-xs ">Delivery methods</mat-label>
-                                <mat-select formControlName="deliveryMethods" multiple class="">
-                                  <mat-option *ngFor="let option of deliveryMethods" [value]="option" class="">{{option}}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="deliveryMethodsFormControl">{{getErrorMessage(deliveryMethodsFormControl)}}</mat-error>
-                            </mat-form-field>
-                        </li>
-                    </ul>
-                </div>
+                <mat-form-field class="">
+                    <mat-label>Your city here ✒️</mat-label>
+                    <input matInput [placeholder]="'Baldurs Gate'" formControlName="city" required>
+                    <mat-error *ngIf="cityFormControl">{{getErrorMessage(cityFormControl)}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="">
+                    <mat-label class="">Payment options</mat-label>
+                    <mat-select formControlName="payments" multiple class="">
+                        <mat-option *ngFor="let option of payments" [value]="option" class="">{{option}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="paymentsFormControl">{{getErrorMessage(paymentsFormControl)}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="">
+                    <mat-label class="">Delivery methods</mat-label>
+                    <mat-select formControlName="deliveryMethods" multiple class="">
+                        <mat-option *ngFor="let option of deliveryMethods" [value]="option" class="">{{option}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="deliveryMethodsFormControl">{{getErrorMessage(deliveryMethodsFormControl)}}</mat-error>
+                </mat-form-field>
                 <div class="flex flex-col gap-4 w-full">
-                    <button type="submit" [disabled]="disableSubmitButton || !noticeForm.valid" class="hover:opacity-80 rounded white-box-border disabled:opacity-40 w-full py-1">
+                    <button type="submit" [disabled]="disableSubmitButton || !noticeForm.valid" class="hover:opacity-80 rounded bg-darkblue white-box-border disabled:opacity-40 w-full py-1">
                         Submit
                     </button>
                 </div>
+            </section>
         </form>
     </app-main-container>
 </fieldset>
