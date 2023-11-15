@@ -1,16 +1,14 @@
-<div class="flex p-6 gap-8 absolute end-10 top-[-100px] z-[0]">
-    <div class="flex flex-col gap-4">
-        <div *ngFor="let imageUrl of productImageUrls; index as i" >
-            <div class="carousel-item" *ngIf="i % 2 == 0">
-                <img [src]="imageUrl" class="rounded gray-gradient w-80 h-96 object-cover opacity-50"/>
-            </div> 
-        </div>
-    </div>
-    <div class="flex flex-col gap-4 pt-32">
-        <div *ngFor="let imageUrl of productImageUrls; index as i">
-            <div class="carousel-item" *ngIf="i % 2 != 0">
-                <img [src]="imageUrl" class="rounded gray-gradient w-80 h-96 object-cover opacity-50"/>
-            </div> 
+<div class="">
+    <div class="">
+        <img [src]="productImageUrls[0]" class="w-full  rounded" alt="product image">
+        <div class="py-6">
+            <h3 class="text-3xl">Product title</h3>
+            <p>price: number,</p>
+            <p>receipt: boolean,</p>
+            <p>warranty: string,</p>
+            <p>categoryId: number,</p>
+            <p>categoryName: string,</p>
+            <p>condition: Condition,</p>
         </div>
     </div>
 </div>

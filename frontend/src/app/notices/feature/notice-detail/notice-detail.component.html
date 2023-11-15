@@ -1,11 +1,10 @@
 <app-main-container>
-  <app-product-carousel [productImageUrls]="productImageUrls"></app-product-carousel>
-  <div class="flex gap-6 relative">
-    <div>
+  <div class="flex gap-10 relative justify-between">
+    <div class="basis-1/2 py-6">
       <h1 class="text-8xl w-full font-thin">{{(notice | async)?.title}}</h1> 
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col justify-between gap-16">
         <p class="py-6 break-words">{{(notice | async)?.description}}</p>
-        <ul class="font-start text-end">
+        <ul class="font-start text-end flex flex-col gap-4">
           <li class="font-bold">1.200 SEK</li>
           <li>{{(notice | async)?.city}} <fa-icon [icon]="['fas','city']" /></li>
           <li>{{(notice | async)?.deliveryMethods}} <fa-icon [icon]="['fas','truck-ramp-box']"/></li>
@@ -13,8 +12,9 @@
         </ul>
       </div>
     </div>
-    <div class="flex flex-col w-full justify-between basis-1/2">
+    <div class="flex flex-col w-full justify-between basis-2/5 gap-8">
       <app-user-card [user]="creator"></app-user-card>
+      <app-product-carousel [productImageUrls]="productImageUrls"></app-product-carousel>
     </div>
   </div>
 </app-main-container>
