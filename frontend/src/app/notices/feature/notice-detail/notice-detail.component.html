@@ -1,7 +1,7 @@
 <app-main-container>
-  <div class="flex gap-10 relative justify-between">
-    <div class="basis-1/2 py-6">
-      <h1 class="text-8xl w-full font-thin">{{(notice | async)?.title}}</h1> 
+  <div class="flex gap-10 relative justify-between grid lg:grid-cols-[3fr_2fr] grid-cols-1">
+    <div class="py-6">
+      <h1 class="lg:text-8xl text-4xl w-full font-thin">{{(notice | async)?.title}}</h1> 
       <div class="flex flex-col justify-between gap-16">
         <p class="py-6 break-words">{{(notice | async)?.description}}</p>
         <ul class="font-start text-end flex flex-col gap-4">
@@ -11,10 +11,13 @@
           <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
         </ul>
       </div>
+      <ng-container *ngFor="let product of (this.notice | async)?.products">
+        <app-product-card [product]="product"></app-product-card>
+      </ng-container>
     </div>
-    <div class="flex flex-col w-full justify-between basis-2/5 gap-8">
-      <app-user-card [user]="creator"></app-user-card>
-      <app-product-carousel [productImageUrls]="productImageUrls"></app-product-carousel>
+    <div class="flex flex-col w-full gap-8">
+      <app-user-card [user]="creator | async"></app-user-card>
+      <app-product-detail [productImageUrls]="productImageUrls"></app-product-detail>
     </div>
   </div>
 </app-main-container>

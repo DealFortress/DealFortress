@@ -9,5 +9,5 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent {
- @Input() user? : Observable<User |undefined>;
+ @Input() user? : User | null;
 }

@@ -36,14 +36,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { NoticesEffects } from './notices/data-access/store/notices.effects';
 import { noticesReducer } from './notices/data-access/store/notices.reducer';
 import { NoticesApiService } from './notices/data-access/services/notices-api.service';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './shared/modules/material.module';
 import { AppEffects } from './shared/store/app.effects';
 import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
-import { ProductCarouselComponent } from './notices/feature/notice-detail/product-carousel/product-carousel/product-carousel.component';
 import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
+import { ProductCardComponent } from './notices/feature/notice-detail/product-card/product-card.component';
+import { ProductDetailComponent } from './notices/feature/notice-detail/product-carousel/product-detail/product-detail.component';
 
 
 @NgModule({
@@ -63,8 +64,9 @@ import { UserCardComponent } from './notices/feature/notice-detail/user-card/use
     AuthLogoutButtonComponent,
     PopupCardComponent,
     UserProfileComponent,
-    ProductCarouselComponent,
+    ProductDetailComponent,
     UserCardComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
