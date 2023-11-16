@@ -10,13 +10,15 @@ public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
     private readonly CategoriesController _categoriesController;
+    private readonly ImagesService _imagesService;
 
 
 
-    public ProductsService(IProductsRepository repo, CategoriesController categoriesController)
+    public ProductsService(IProductsRepository repo, CategoriesController categoriesController, ImagesService imagesService)
     {
         _repo = repo;
         _categoriesController = categoriesController;
+        _imagesService = imagesService;
     }
 
 
@@ -74,16 +76,17 @@ public class ProductsService: IProductsService
             HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
-            Images = product.Images,
             CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
+            Images = product.Images?.Select(image => _imagesService.ToImageResponse(image)).ToList(),
             NoticeId = product.Notice.Id,
             IsSoldSeparately = product.IsSoldSeparately
         };
     }
+
     public Product ToProduct(ProductRequest request, Notice notice)
     {
-        return new Product()
+        var product = new Product()
         {
             Name = request.Name,
             Price = request.Price,
@@ -93,8 +96,12 @@ public class ProductsService: IProductsService
             Condition = request.Condition,
             IsSold = false,
             IsSoldSeparately = false,
-            Notice = notice
+            Notice = notice,
         };
+
+        product.Images = request.Images.Select(image => _imagesService.ToImage(image, product)).ToList();
+
+        return product;
     }
     
     private string GetCategoryNameById(int id)
