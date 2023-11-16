@@ -74,7 +74,7 @@ public class ProductsService: IProductsService
             HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
-            ImageUrls = new List<string>() { "" },
+            Images = product.Images,
             CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
             NoticeId = product.Notice.Id,
