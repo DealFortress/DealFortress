@@ -8,16 +8,17 @@ using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Api.Controllers;
+using System.Security.Policy;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
-public class CategoriessServicesTestsSad
+public class ProductsServicesTestsSad
 {
     private readonly IProductsService _service;
     private readonly ProductRequest _request;
     public NoticesFixture? Fixture;
 
-    public CategoriessServicesTestsSad()
+    public ProductsServicesTestsSad()
     {
         _service = CreateNewService();
 
@@ -30,7 +31,13 @@ public class CategoriessServicesTestsSad
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
-            Condition = Condition.New
+            Condition = Condition.New,
+            Images = new List<ImageRequest>(){
+                new ImageRequest()
+                {
+                    Url = "Hello world"
+                }
+            }
         };
     }
 
@@ -42,7 +49,9 @@ public class CategoriessServicesTestsSad
 
         var categoriesController = new Mock<CategoriesController>(null);
 
-        return new ProductsService(repo, categoriesController.Object);
+        var imagesService = new Mock<IImagesService>();
+
+        return new ProductsService(repo, categoriesController.Object, imagesService.Object);
 
     }
 

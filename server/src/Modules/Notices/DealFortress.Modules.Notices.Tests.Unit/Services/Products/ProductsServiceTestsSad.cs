@@ -21,7 +21,9 @@ public class ProductsServiceTestsSad
 
         var categoriesController = new Mock<CategoriesController>(null);
 
-        _service = new ProductsService(_repo.Object, categoriesController.Object);
+        var imagesService = new Mock<IImagesService>();
+
+        _service = new ProductsService(_repo.Object, categoriesController.Object, imagesService.Object);
 
         _request = CreateProductRequest();
     }
@@ -37,7 +39,13 @@ public class ProductsServiceTestsSad
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
-            Condition = Condition.New
+            Condition = Condition.New,
+            Images = new List<ImageRequest>(){
+                new ImageRequest()
+                {
+                    Url = "Hello world"
+                }
+            }
         };
     }
 

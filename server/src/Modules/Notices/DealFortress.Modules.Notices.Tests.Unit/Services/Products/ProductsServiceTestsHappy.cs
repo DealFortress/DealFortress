@@ -23,7 +23,9 @@ public class ProductsServiceTestsHappy
 
         _categoriesController = new Mock<CategoriesController>(null);
 
-        _service = new ProductsService(_repo.Object, _categoriesController.Object);
+        var imagesService = new Mock<IImagesService>();
+
+        _service = new ProductsService(_repo.Object, _categoriesController.Object, imagesService.Object);
 
         _request = CreateProductRequest();
 
@@ -44,7 +46,13 @@ public class ProductsServiceTestsHappy
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
-            Condition = Condition.New
+            Condition = Condition.New,
+            Images = new List<ImageRequest>(){
+                new ImageRequest()
+                {
+                    Url = "Hello world"
+                }
+            } 
         };
     }
 
@@ -62,7 +70,12 @@ public class ProductsServiceTestsHappy
             CategoryId = 1,
             Condition = Condition.New,
             CategoryName = "test category",
-            ImageUrls = new List<string> { "https://test" },
+            Images = new List<ImageResponse>(){ 
+                new ImageResponse()
+                {
+                    Url = "Hello world"
+                } 
+            },
             NoticeId = 1,
         };
     }
@@ -101,7 +114,7 @@ public class ProductsServiceTestsHappy
     {   
         // arrange
         var list = new List<Product>() { _product };
-        _repo.Setup(repo => repo.GetAllWithNotice()).Returns(list);
+        _repo.Setup(repo => repo.GetAllWithImages()).Returns(list);
         _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns("CPU");
 
         // act

@@ -13,10 +13,11 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public NoticesRepository(NoticesContext context) : base(context)
     {}
 
-    public IEnumerable<Notice> GetAllWithProducts()
+    public IEnumerable<Notice> GetAllWithProductsAndImages()
     {
         return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
+                    .ThenInclude(product => product.Images)
                     .ToList();
     }
 
