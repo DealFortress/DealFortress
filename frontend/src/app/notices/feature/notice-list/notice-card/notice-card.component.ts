@@ -8,7 +8,7 @@ import { Notice } from '@app/shared/models/notice.model';
   styleUrls: ['./notice-card.component.css']
 })
 export class NoticeCardComponent implements OnInit {
-  @Input() notice!: Notice ;
+  @Input({required: true}) notice!: Notice ;
   minutesSinceCreation: string = '';
 
   constructor() {}

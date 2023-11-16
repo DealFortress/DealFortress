@@ -1,14 +1,13 @@
 <div class="">
     <div class="">
-        <img [src]="productImageUrls[0]" class="w-full  rounded" alt="product image">
+        <img [src]="this.product.imageUrls[0]" class="w-full  rounded" alt="product image">
         <div class="py-6">
-            <h3 class="text-3xl">Product title</h3>
-            <p>price: number,</p>
-            <p>receipt: boolean,</p>
-            <p>warranty: string,</p>
-            <p>categoryId: number,</p>
-            <p>categoryName: string,</p>
-            <p>condition: Condition,</p>
+            <h3 class="text-3xl">{{this.product.name}}</h3>
+            <p>{{this.product.price}}SEK</p>
+            <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
+            <p>warranty: {{this.product.warranty}}</p>
+            <p>category: {{this.product.categoryName}}</p>
+            <p>condition: {{this.condition}}</p>
         </div>
     </div>
 </div>

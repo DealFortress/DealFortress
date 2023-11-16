@@ -1,12 +1,12 @@
 <div class="flex py-6 gap-6 items-stretch">
-    <img src="https://www.redhat.com/sysadmin/sites/default/files/styles/full/public/2020-07/cpu-564771_1920%20Cropped.jpg?itok=0IE9iaKz" 
-        alt="" 
+    <img [src]="this.product.imageUrls[0]" 
+        alt="product image" 
         class="rounded-full w-[150px] h-[150px] object-cover"
     />
     <div class="p-4 flex flex-col gap-3 border-b border-[grey] w-full justify-center">
         <p>{{this.product.name}} Graphics Card</p>
         <p>condition: {{this.condition}}</p>
-        <p>receipt: {{this.product.receipt}}</p>
+        <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
         <p>warranty: {{this.product.warranty}}</p>
     </div>
 </div>

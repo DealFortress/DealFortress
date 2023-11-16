@@ -1,27 +1,25 @@
 <app-main-container>
-  <div class="flex gap-10 relative justify-between grid lg:grid-cols-[3fr_2fr] grid-cols-1">
+  <div *ngIf="(notice$ | async) as notice" class="flex gap-10 relative justify-between grid lg:grid-cols-[3fr_2fr] grid-cols-1"  >
     <div class="py-6">
-      <h1 class="lg:text-8xl text-4xl w-full font-thin">{{(notice | async)?.title}}</h1> 
+      <h1 class="lg:text-8xl text-4xl w-full font-thin">{{notice.title}}</h1> 
       <div class="flex flex-col justify-between gap-16">
-        <p class="py-6 break-words">{{(notice | async)?.description}}</p>
+        <p class="py-6 break-words">{{notice.description}}</p>
         <ul class="font-start text-end flex flex-col gap-4">
           <li class="font-bold">1.200 SEK</li>
-          <li>{{(notice | async)?.city}} <fa-icon [icon]="['fas','city']" /></li>
-          <li>{{(notice | async)?.deliveryMethods}} <fa-icon [icon]="['fas','truck-ramp-box']"/></li>
-          <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+          <li>{{notice.city}} <fa-icon [icon]="['fas','city']" /></li>
+          <li>{{notice.deliveryMethods}} <fa-icon [icon]="['fas','truck-ramp-box']"/></li>
+          <li>{{notice.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
         </ul>
       </div>
-      <ng-container *ngFor="let product of (this.notice | async)?.products">
+      <ng-container *ngFor="let product of notice.products">
         <app-product-card [product]="product"></app-product-card>
       </ng-container>
     </div>
     <div class="flex flex-col w-full gap-8">
-      <ng-container *ngIf="creator">
+      <ng-container *ngIf="(creator$ | async) as user;">
+        <app-user-card [user]="user"></app-user-card>
       </ng-container>
-      <ng-template id="userCard">
-        <app-user-card [user]="creator | async"></app-user-card>
-      </ng-template>
-      <app-product-detail [productImageUrls]="productImageUrls"></app-product-detail>
+      <app-product-detail [product]="notice.products[this.selectedProductId]"></app-product-detail>
     </div>
   </div>
 </app-main-container>
