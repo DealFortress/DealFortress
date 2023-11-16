@@ -10,11 +10,11 @@ public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
     private readonly CategoriesController _categoriesController;
-    private readonly ImagesService _imagesService;
+    private readonly IImagesService _imagesService;
 
 
 
-    public ProductsService(IProductsRepository repo, CategoriesController categoriesController, ImagesService imagesService)
+    public ProductsService(IProductsRepository repo, CategoriesController categoriesController, IImagesService imagesService)
     {
         _repo = repo;
         _categoriesController = categoriesController;
@@ -24,7 +24,7 @@ public class ProductsService: IProductsService
 
     public IEnumerable<ProductResponse> GetAll()
     {
-        return _repo.GetAllWithNotice()
+        return _repo.GetAllWithImages()
                     .Select(product => ToProductResponseDTO(product))
                     .ToList();
     }
@@ -78,7 +78,7 @@ public class ProductsService: IProductsService
             CategoryId = product.CategoryId,
             CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
-            Images = product.Images?.Select(image => _imagesService.ToImageResponse(image)).ToList(),
+            Images = product.Images?.Select(image => _imagesService.ToImageResponseDTO(image)).ToList(),
             NoticeId = product.Notice.Id,
             IsSoldSeparately = product.IsSoldSeparately
         };

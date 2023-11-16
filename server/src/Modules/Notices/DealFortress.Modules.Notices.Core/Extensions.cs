@@ -5,7 +5,6 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Modules.Notices.Api")]
@@ -22,7 +21,8 @@ namespace DealFortress.Api.Modules.Notices.Extensions
                 .AddScoped<INoticesRepository, NoticesRepository>()
                 .AddScoped<IProductsRepository, ProductsRepository>()
                 .AddScoped<INoticesService, NoticesService>()
-                .AddScoped<IProductsService, ProductsService>();
+                .AddScoped<IProductsService, ProductsService>()
+                .AddScoped<IImagesService, ImagesService>();
         }
     }
 }
