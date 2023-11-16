@@ -1,4 +1,5 @@
 import { Condition } from "@app/shared/models/condition.model"
+import { Image } from "@app/shared/models/image.model"
 
 
 
@@ -11,7 +12,7 @@ export type Product = {
     categoryId: number,
     categoryName: string,
     condition: Condition,
-    imageUrls: string[]
+    images: Image[],
     NoticeId: number,
     NoticeCity: string,
     NoticePayment: string,

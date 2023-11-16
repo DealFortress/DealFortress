@@ -44,7 +44,7 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
 import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
 import { ProductCardComponent } from './notices/feature/notice-detail/product-card/product-card.component';
-import { ProductDetailComponent } from './notices/feature/notice-detail/product-carousel/product-detail/product-detail.component';
+import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
 
 
 @NgModule({

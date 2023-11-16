@@ -1,7 +1,7 @@
-<div class="flex py-6 gap-6 items-stretch">
-    <img [src]="this.product.imageUrls[0]" 
+<div class="flex py-6 gap-6 items-stretch max-sm:flex-col">
+    <img [src]="this.product.images[0].url" 
         alt="product image" 
-        class="rounded-full w-[150px] h-[150px] object-cover"
+        class="rounded-full object-cover aspect-square"
     />
     <div class="p-4 flex flex-col gap-3 border-b border-[grey] w-full justify-center">
         <p>{{this.product.name}} Graphics Card</p>
