@@ -4,6 +4,7 @@ using DealFortress.Modules.Notices.Core.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 {
     [DbContext(typeof(NoticesContext))]
-    partial class NoticesContextModelSnapshot : ModelSnapshot
+    [Migration("20231116132142_AddImagesToProduct")]
+    partial class AddImagesToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

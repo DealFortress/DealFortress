@@ -17,7 +17,7 @@ public class NoticesService : INoticesService
     
     public IEnumerable<NoticeResponse> GetAll()
     {
-        return _repo.GetAllWithProducts()
+        return _repo.GetAllWithProductsAndImages()
                     .Select(notice => ToNoticeResponseDTO(notice))
                     .ToList();
     }
