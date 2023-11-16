@@ -29,7 +29,9 @@ public class ProductsServicesTestsHappy
 
         var categoriesController = new Mock<CategoriesController>(null);
 
-        return new ProductsService(repo, categoriesController.Object);
+        var imagesService = new Mock<IImagesService>();
+
+        return new ProductsService(repo, categoriesController.Object, imagesService.Object);
 
     }
 

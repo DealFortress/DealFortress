@@ -31,7 +31,7 @@ public class ProductControllersTestsHappy
 
     public ProductRequest CreateProductRequest()
     {
-        return new ProductRequest()
+        return new ProductRequest
         {
             Name = "test",
             Price = 1,
@@ -40,7 +40,13 @@ public class ProductControllersTestsHappy
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
-            Condition = Condition.New
+            Condition = Condition.New,
+            Images = new List<ImageRequest>(){
+                new ImageRequest()
+                {
+                    Url = "Hello world"
+                }
+            }
         };
     }
 
@@ -57,7 +63,12 @@ public class ProductControllersTestsHappy
             CategoryId = 1,
             Condition = Condition.New,
             CategoryName = "test category",
-            ImageUrls = new List<string> { "https://test" },
+            Images = new List<ImageResponse>(){ 
+                new ImageResponse()
+                {
+                    Url = "Hello world"
+                } 
+            },
             NoticeId = 1,
         };
     }

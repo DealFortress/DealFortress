@@ -45,6 +45,5 @@ public class ProductsController : ControllerBase
         var product = _service.DeleteById(id);
 
         return product is null ? NotFound() : NoContent();
-
     }
 }
