@@ -16,7 +16,11 @@
       </ng-container>
     </div>
     <div class="flex flex-col w-full gap-8">
-      <app-user-card [user]="creator | async"></app-user-card>
+      <ng-container *ngIf="creator">
+      </ng-container>
+      <ng-template id="userCard">
+        <app-user-card [user]="creator | async"></app-user-card>
+      </ng-template>
       <app-product-detail [productImageUrls]="productImageUrls"></app-product-detail>
     </div>
   </div>
