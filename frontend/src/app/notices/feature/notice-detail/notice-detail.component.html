@@ -2,24 +2,26 @@
   <div *ngIf="(notice$ | async) as notice" class="flex gap-10 relative justify-between grid lg:grid-cols-[3fr_2fr] grid-cols-1"  >
     <div class="py-6">
       <h1 class="lg:text-8xl text-4xl w-full font-thin">{{notice.title}}</h1> 
-      <div class="flex flex-col justify-between gap-16">
+      <div class="flex flex-col justify-between gap-16 mb-32">
         <p class="py-6 break-words">{{notice.description}}</p>
-        <ul class="font-start text-end flex flex-col gap-4">
-          <li class="font-bold">1.200 SEK</li>
-          <li>{{notice.city}} <fa-icon [icon]="['fas','city']" /></li>
-          <li>{{notice.deliveryMethods}} <fa-icon [icon]="['fas','truck-ramp-box']"/></li>
-          <li>{{notice.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+        <ul class="font-start grid grid-cols-2  gap-4 text-4xl">
+          <li >{{notice.city}} <fa-icon [icon]="['fas','city']" /></li>
+          <li class="text-end">{{notice.deliveryMethods}} <fa-icon [icon]="['fas','truck-ramp-box']"/></li>
+          <li class="">{{notice.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+          <li class="font-bold text-end">1.200 SEK</li>
         </ul>
       </div>
-      <ng-container *ngFor="let product of notice.products">
-        <app-product-card [product]="product"></app-product-card>
-      </ng-container>
+      <app-product-detail [product]="notice.products[this.selectedProductId]"></app-product-detail>
     </div>
-    <div class="flex flex-col w-full gap-8">
+    <div class="flex flex-col w-full gap-56 pt-12">
       <ng-container *ngIf="(creator$ | async) as user;">
         <app-user-card [user]="user"></app-user-card>
       </ng-container>
-      <app-product-detail [product]="notice.products[this.selectedProductId]"></app-product-detail>
+      <div>
+        <ng-container *ngFor="let product of notice.products">
+          <app-product-card [product]="product"></app-product-card>
+        </ng-container>
+      </div>
     </div>
   </div>
 </app-main-container>
