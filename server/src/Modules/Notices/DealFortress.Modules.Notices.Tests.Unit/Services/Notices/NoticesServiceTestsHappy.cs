@@ -52,7 +52,13 @@ public class NoticesServiceTestsHappy
                     IsSoldSeparately = false,
                     Warranty = "month",
                     CategoryId = 1,
-                    Condition = Condition.New
+                    Condition = Condition.New,
+                    Images = new List<ImageRequest>(){
+                        new ImageRequest()
+                        {
+                            Url = "Hello world"
+                        }
+                    }
                 }
             }
         };
@@ -84,7 +90,12 @@ public class NoticesServiceTestsHappy
                     CategoryId = 1,
                     Condition = Condition.New,
                     CategoryName = "test category",
-                    ImageUrls = new List<string>{"https://test"},
+                    Images = new List<ImageResponse>(){ 
+                        new ImageResponse()
+                        {
+                            Url = "Hello world"
+                        } 
+                    },
                     NoticeId = 1,
                 }
             }
@@ -128,7 +139,7 @@ public class NoticesServiceTestsHappy
     {
         // arrange
         var list = new List<Notice>() { _notice };
-        _repo.Setup(repo => repo.GetAllWithProducts()).Returns(list);
+        _repo.Setup(repo => repo.GetAllWithProductsAndImages()).Returns(list);
 
         // act
         var response = _service.GetAll();
