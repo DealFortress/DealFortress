@@ -30,6 +30,13 @@
   color: white !important;
   border: none;
 }
+ #fullscreen {
+  height:calc(100vh - 150px);
+  width:100%;
+  position:  absolute;
+  top: 0;
+  z-index: 9999;
+ }
 
 .red-snackbar button {
   background-color:#9F192F;

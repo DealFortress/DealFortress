@@ -10,8 +10,10 @@ import { Product } from '@app/shared/models/product.model';
 export class ProductDetailComponent{
   @Input({required: true}) product!: Product;
   condition: string = "";
+  toggleFullscreen = false;
 
   ngOnInit(): void {
     this.condition = Condition[this.product.condition];  
   }
+
 }

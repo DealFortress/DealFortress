@@ -1,6 +1,7 @@
 <div class="flex justify-between py-6">
-    <media class="w-[35rem] aspect-square">
-        <app-image-carousel [images]="this.product.images"></app-image-carousel>
+    <media (click)="toggleFullscreen = !toggleFullscreen"  class="w-[35rem] aspect-square">
+        <app-fullscreen-image-carousel *ngIf="toggleFullscreen" [images]="this.product.images"></app-fullscreen-image-carousel>
+        <app-image-carousel *ngIf="!toggleFullscreen" [images]="this.product.images"></app-image-carousel>
     </media>
     <div class="py-6 text-end flex flex-col gap-8">
         <h3 class="text-3xl">{{this.product.name}}</h3>

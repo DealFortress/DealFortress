@@ -1,13 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { Image } from '@app/shared/models/image.model'
 
 @Component({
-  selector: 'app-image-carousel',
-  templateUrl: './image-carousel.component.html',
-  styleUrls: ['./image-carousel.component.css'],
+  selector: 'app-fullscreen-image-carousel',
+  templateUrl: './fullscreen-image-carousel.component.html',
+  styleUrls: ['./fullscreen-image-carousel.component.css'],
 })
 
-export class ImageCarouselComponent {
+export class FullscreenImageCarouselComponent {
   @Input({required: true}) images : Image[] = []
   currentIndex: number = 0;
 
@@ -33,5 +33,4 @@ export class ImageCarouselComponent {
   getCurrentSlideUrl() {
     return `url('${this.images[this.currentIndex].url}')`;
   }
-
 }
