@@ -1,14 +1,13 @@
-<div class=" py-6">
-    <div class="flex justify-between">
-        <img [src]="this.product.images[0].url" class="w-[50%] aspect-square rounded" alt="product image">
-        <div class="py-6 text-end flex flex-col gap-8">
-            <h3 class="text-3xl">{{this.product.name}}</h3>
-            <p>{{this.product.price}}SEK</p>
-            <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
-            <p>warranty: {{this.product.warranty}}</p>
-            <p>category: {{this.product.categoryName}}</p>
-            <p>condition: {{this.condition}}</p>
-        </div>
+<div class="flex justify-between py-6">
+    <media class="w-[35rem] aspect-square">
+        <app-image-carousel [images]="this.product.images"></app-image-carousel>
+    </media>
+    <div class="py-6 text-end flex flex-col gap-8">
+        <h3 class="text-3xl">{{this.product.name}}</h3>
+        <p>{{this.product.price}}SEK</p>
+        <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
+        <p>warranty: {{this.product.warranty}}</p>
+        <p>category: {{this.product.categoryName}}</p>
+        <p>condition: {{this.condition}}</p>
     </div>
-    <app-image-carousel [imagesUrls]="this.product.images"></app-image-carousel>
 </div>

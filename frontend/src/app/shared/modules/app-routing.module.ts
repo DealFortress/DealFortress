@@ -18,16 +18,9 @@ const routes: Routes = [
   {path: '**', component: NotFoundComponent}
 ];
 
-const routerOptions: ExtraOptions = {
-  useHash: false,
-  anchorScrolling: 'enabled',
-  onSameUrlNavigation: 'reload', 
-  scrollPositionRestoration: 'enabled'
-  // ...any other options you'd like to use
-};
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, routerOptions)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }
