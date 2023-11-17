@@ -45,6 +45,7 @@ import { RequestRetryInterceptor } from './shared/interceptors/request-retry.int
 import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
 import { ProductCardComponent } from './notices/feature/notice-detail/product-card/product-card.component';
 import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
+import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { ProductDetailComponent } from './notices/feature/notice-detail/product-
     ProductDetailComponent,
     UserCardComponent,
     ProductCardComponent,
+    ImageCarouselComponent,
   ],
   imports: [
     BrowserModule,

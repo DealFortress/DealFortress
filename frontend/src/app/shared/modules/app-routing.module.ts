@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NoticeDetailComponent } from '@app/notices/feature/notice-detail/notice-detail.component';
 import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-list.component';
 import { NoticeFormComponent } from '@app/notices/feature/notice-form/notice-form.component';
@@ -18,8 +18,16 @@ const routes: Routes = [
   {path: '**', component: NotFoundComponent}
 ];
 
+const routerOptions: ExtraOptions = {
+  useHash: false,
+  anchorScrolling: 'enabled',
+  onSameUrlNavigation: 'reload', 
+  scrollPositionRestoration: 'enabled'
+  // ...any other options you'd like to use
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

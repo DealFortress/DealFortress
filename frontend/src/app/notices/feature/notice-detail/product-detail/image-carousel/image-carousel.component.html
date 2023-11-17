@@ -1,0 +1,37 @@
+<div class="carousel w-full">
+  <div #slide1 class="carousel-item relative w-full">
+    <img [src]="imagesUrls[0].url" class="w-full" />
+    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+      <a routerLink="." fragment="slide4"class="btn btn-circle hover:opacity-60">❮</a>
+      <a routerLink="." fragment="slide2" class="btn btn-circle hover:opacity-60">❯</a>
+    </div>
+  </div> 
+  <div id="slide2" class="carousel-item relative w-full">
+    <img src="assets/logo.png" class="w-full" />
+    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+      <a href="#slide1" class="btn btn-circle hover:opacity-60">❮</a> 
+      <a href="#slide3" class="btn btn-circle hover:opacity-60">❯</a>
+    </div>
+  </div> 
+  <div class="carousel-item relative w-full">
+    <img [src]="imagesUrls[0].url" class="w-full" />
+    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+      <a href="#slide2" class="btn btn-circle hover:opacity-60">❮</a> 
+      <a href="#slide4" class="btn btn-circle hover:opacity-60">❯</a>
+    </div>
+  </div> 
+  <div id="#slide2" class="carousel-item relative w-full">
+    <img [src]="imagesUrls[0].url" class="w-full" />
+    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+      <a href="#slide3" class="btn btn-circle hover:opacity-60">❮</a> 
+      <a href="#slide1" class="btn btn-circle hover:opacity-60">❯</a>
+    </div>
+  </div>
+    <div class="flex justify-center w-full py-2 gap-2 index-50">
+        <a href="#slide1" class="btn btn-xs">1</a> 
+        <a href="#slide2" class="btn btn-xs">2</a> 
+        <a href="#slide3" class="btn btn-xs">3</a> 
+        <a href="#slide4" class="btn btn-xs">4</a>
+    </div>
+</div>
+
