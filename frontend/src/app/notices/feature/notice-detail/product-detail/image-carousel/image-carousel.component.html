@@ -17,10 +17,11 @@
       </span>
       </div>
     </div>
-    <div
+    <img
       class="slide"
-      [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"
-    ></div>
+      [src]="images[currentIndex].url"
+      (click)="toggleFullscreen.emit(true)"
+    />
     <div class="dotsContainer absolute bottom-4 text-center w-full ">
       <div
         *ngFor="let image of images;index as i"

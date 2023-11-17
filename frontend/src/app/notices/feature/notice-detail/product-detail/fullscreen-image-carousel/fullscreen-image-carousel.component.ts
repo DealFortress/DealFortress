@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
 import { Image } from '@app/shared/models/image.model'
 
 @Component({
@@ -7,8 +7,12 @@ import { Image } from '@app/shared/models/image.model'
   styleUrls: ['./fullscreen-image-carousel.component.css'],
 })
 
-export class FullscreenImageCarouselComponent {
+export class FullscreenImageCarouselComponent implements OnInit, OnDestroy{
+
+  constructor(private renderer: Renderer2) {}
+
   @Input({required: true}) images : Image[] = []
+  @Output() toggleFullscreen = new EventEmitter<boolean>();
   currentIndex: number = 0;
 
   goToPrevious(): void {
@@ -30,7 +34,12 @@ export class FullscreenImageCarouselComponent {
     this.currentIndex = slideIndex;
   }
 
-  getCurrentSlideUrl() {
-    return `url('${this.images[this.currentIndex].url}')`;
+  ngOnInit(): void {
+    this.renderer.addClass(document.body, 'p-0');
   }
+
+  ngOnDestroy(): void {
+    this.renderer.removeClass(document.body, 'p-0');
+  }
+
 }

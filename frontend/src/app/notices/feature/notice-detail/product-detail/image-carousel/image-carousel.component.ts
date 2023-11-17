@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Image } from '@app/shared/models/image.model'
 
 @Component({
@@ -9,6 +9,7 @@ import { Image } from '@app/shared/models/image.model'
 
 export class ImageCarouselComponent {
   @Input({required: true}) images : Image[] = []
+  @Output() toggleFullscreen = new EventEmitter<boolean>();
   currentIndex: number = 0;
 
   goToPrevious(): void {
@@ -28,10 +29,6 @@ export class ImageCarouselComponent {
 
   goToSlide(slideIndex: number): void {
     this.currentIndex = slideIndex;
-  }
-
-  getCurrentSlideUrl() {
-    return `url('${this.images[this.currentIndex].url}')`;
   }
 
 }
