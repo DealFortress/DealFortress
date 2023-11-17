@@ -17,14 +17,18 @@ export class NoticeDetailComponent{
   id = this.route.snapshot.paramMap.get('id');
   notice$ = this.store.select(getNoticeById(+this.id!));
   creator$ = this.store.select(getCurrentlyShownUser);
-  selectedProductId = 1;
+  selectedProduct? : Product; 
 
   constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute) {
-   
     this.notice$.subscribe(notice => {
       if (notice) {
         this.store.dispatch(loadUserByIdRequest({id: notice.userId}))
+        this.selectedProduct = notice.products[0]
       }
     })
+  }
+
+  setSelectedProduct(product: Product) {
+    this.selectedProduct = product;
   }
 }

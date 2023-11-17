@@ -13,7 +13,7 @@
           <li class="font-bold text-end">1.200 SEK</li>
         </ul>
       </div>
-      <app-product-detail [product]="notice.products[this.selectedProductId]"></app-product-detail>
+      <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
     </div>
     <div class="flex flex-col w-full gap-56">
       <ng-container *ngIf="(creator$ | async) as user;">
@@ -21,7 +21,9 @@
       </ng-container>
       <div>
         <ng-container *ngFor="let product of notice.products">
-          <app-product-card [product]="product"></app-product-card>
+          <a (click)="selectedProduct = product" [class]="product == selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
+            <app-product-card [product]="product"></app-product-card>
+          </a>
         </ng-container>
       </div>
     </div>
