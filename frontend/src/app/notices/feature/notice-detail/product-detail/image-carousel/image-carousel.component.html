@@ -1,4 +1,4 @@
-<div class="slider">
+<div class="relative h-full">
     <div>
       <div (click)="goToPrevious()" class="leftArrow">
         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/40 hover:bg-white/70">
@@ -18,14 +18,14 @@
       </div>
     </div>
     <img
-      class="slide"
+      class="w-full h-full rounded bg-cover bg-center"
       [src]="images[currentIndex].url"
       (click)="toggleFullscreen.emit(true)"
     />
-    <div class="dotsContainer absolute bottom-4 text-center w-full ">
+    <div class="flex justify-center absolute bottom-4 text-center w-full ">
       <div
         *ngFor="let image of images;index as i"
-        class="dot"
+        class="my-0 mx-[3px] font-[20px] cursor-pointer"
         (click)="goToSlide(i)"
       >
         <span [class]="i ==  currentIndex ? 'text-5xl' : ' text-5xl opacity-50'" >●</span>
