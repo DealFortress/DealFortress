@@ -10,7 +10,7 @@
   --hamburger-gap: 6px;
   --foreground: #c5c5c5;
   --background: rgb(193, 193, 193);
-  --animation-timing: 200ms ease-in-out;
+  --animation-timing: 500ms ease-in-out;
   --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
 }
 
