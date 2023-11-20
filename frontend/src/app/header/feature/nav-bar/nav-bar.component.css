@@ -43,7 +43,7 @@
   transform-origin: left center;
   transition: opacity var(--animation-timing), width var(--animation-timing),
     rotate var(--animation-timing), translate var(--animation-timing),
-    background-color var(--animation-timing);
+    background-color var(--animation-timing), margin var(--animation-timing);
 }
 
 .hamburger-menu input {
@@ -57,12 +57,14 @@
 .hamburger-menu:has(input:checked)::before {
   rotate: 45deg;
   width: var(--x-width);
+  margin-left: 7px;
   translate: 0 calc(var(--bar-height) / -2);
 }
 
 .hamburger-menu:has(input:checked)::after {
   rotate: -45deg;
   width: var(--x-width);
+  margin-left: 7px;
   translate: 0 calc(var(--bar-height) / 2);
 }
 
