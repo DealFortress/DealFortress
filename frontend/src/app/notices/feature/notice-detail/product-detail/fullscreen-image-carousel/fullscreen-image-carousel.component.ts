@@ -36,10 +36,12 @@ export class FullscreenImageCarouselComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'p-0');
+    this.renderer.addClass(document.body, 'overflow-hidden');
   }
 
   ngOnDestroy(): void {
     this.renderer.removeClass(document.body, 'p-0');
+    this.renderer.removeClass(document.body, 'overflow-hidden');
   }
 
 }
