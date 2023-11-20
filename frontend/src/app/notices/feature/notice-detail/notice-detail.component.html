@@ -1,5 +1,5 @@
 <app-main-container>
-  <div *ngIf="(notice$ | async) as notice" class="flex gap-32 justify-between grid lg:grid-cols-[3fr_2fr] grid-cols-1"  >
+  <div *ngIf="(notice$ | async) as notice" class="flex gap-32 justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1"  >
     <div class="py-6 flex flex-col gap-6 ">
       <div>
         <h1 class="lg:text-8xl text-4xl w-full font-thin">{{notice.title}}</h1> 
@@ -19,7 +19,7 @@
       <ng-container *ngIf="(creator$ | async) as user;">
         <app-user-card [user]="user"></app-user-card>
       </ng-container>
-      <div>
+      <div class="flex flex-col gap-6">
         <ng-container *ngFor="let product of notice.products">
           <a (click)="selectedProduct = product" [class]="product == selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
             <app-product-card [product]="product"></app-product-card>
