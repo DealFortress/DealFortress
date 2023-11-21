@@ -18,6 +18,7 @@
       </div>
     </div>
     <img
+      (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')"
       class="max-h-full max-w-full h-auto object-contain m-auto bg-cover bg-center"
       [src]="images[currentIndex].url"
       (click)="toggleFullscreen.emit(true)"

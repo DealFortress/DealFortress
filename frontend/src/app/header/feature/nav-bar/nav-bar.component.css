@@ -78,17 +78,17 @@
 .sidebar {
   display: flex;
   position: absolute;
-  padding: 1rem;
+  padding: .5rem .75rem;
   left: -1rem;
-  top: 3.6rem;
-  border-radius: 10px;
+  border-radius: .5rem;
   transition: scale var(--animation-timing);
-  translate: 0 -50%; 
+  translate: 0 -30%; 
   scale: 100% 0;
   color: var(--background);
   width: 40rem;
   height: auto;
   z-index: -1;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
 }
 
 .hamburger-menu:has(input:checked) + .sidebar {
