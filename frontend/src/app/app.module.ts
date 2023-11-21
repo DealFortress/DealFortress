@@ -27,8 +27,10 @@ import {
     faBars as fasBars,
     faArrowRightToBracket as fasArrowRightToBracket,
     faCashRegister as fasCashRegister,
-    faCity as fasCity,
-    faTruckRampBox as fasTruckRampBox 
+    faChessRook as fasChessRook,
+    faCrow as fasCrow,
+    faCoins as fasCoins,
+    faSackDollar as fasSackDollar,
   } from '@fortawesome/free-solid-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -106,11 +108,14 @@ import { FullscreenImageCarouselComponent } from './notices/feature/notice-detai
 export class AppModule {
 
   constructor(library: FaIconLibrary) {
-    library.addIcons(fasCashRegister,
-      fasCity,
-      fasTruckRampBox,
+    library.addIcons(
+      fasCashRegister,
+      fasChessRook,
+      fasCrow,
       fasArrowRightToBracket,
       fasBars,
+      fasCoins,
+      fasSackDollar
     );
   }
  }

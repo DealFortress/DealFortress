@@ -6,11 +6,11 @@
         <p class="py-12 break-words">{{notice.description}}</p>
       </div>
       <div class="flex flex-col justify-between gap-32 mb-32">
-        <ul class="font-start grid grid-cols-2  gap-4 text-4xl">
-          <li >{{notice.city}} <fa-icon [icon]="['fas','city']" /></li>
-          <li class="text-end">{{notice.deliveryMethods}} <fa-icon [icon]="['fas','truck-ramp-box']"/></li>
-          <li class="">{{notice.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
-          <li class="font-bold text-end">1.200 SEK</li>
+        <ul class="font-start grid grid-cols-2  gap-14 text-3xl">
+          <li ><fa-icon class="text-[grey]" [icon]="['fas','chess-rook']" /> {{notice.city}}</li>
+          <li class="text-end">{{notice.deliveryMethods}} <fa-icon class="text-[lightgrey]" [icon]="['fas','crow']"/></li>
+          <li class=""><fa-icon class="text-[sienna]" [icon]="['fas','sack-dollar']"/> {{notice.payments}}</li>
+          <li class=" text-end text-5xl">1.200 SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
         </ul>
       </div>
       <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
