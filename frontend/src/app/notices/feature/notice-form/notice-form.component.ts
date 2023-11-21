@@ -97,29 +97,7 @@ export class NoticeFormComponent implements OnInit{
   get deliveryMethodsFormControl() {
     return this.noticeForm.get('deliveryMethods') as FormControl;
   }
-
-  productFormGroup = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.minLength(10)
-    ]),
-    price: new FormControl(null, [
-      Validators.required,
-    ]),
-    hasReceipt: new FormControl(''),
-    warranty: new FormControl(''),
-    categoryId: new FormControl('', [
-      Validators.required,
-    ]),
-    condition: new FormControl('', [
-      Validators.required,
-    ]),
-    images: new FormControl([], [
-      Validators.required,
-      Validators.minLength(1)
-    ]),
-  })
-
+  
   noticeFormGroup = new FormGroup({
     userId: new FormControl(),
     title: new FormControl('', [
@@ -143,7 +121,7 @@ export class NoticeFormComponent implements OnInit{
       Validators.minLength(1)
     ]),
     products: new FormArray([
-      this.productFormGroup
+      // this.productFormGroup
     ]),
   });
 }
