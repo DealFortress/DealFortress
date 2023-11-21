@@ -35,22 +35,6 @@ export class NoticeFormComponent implements OnInit{
     this.store.select(getUserId).subscribe(id => this.creatorId = id)
   }
 
-  get titleFormControl() {
-    return this.noticeForm.get('title') as FormControl;
-  }
-  get descriptionFormControl() {
-    return this.noticeForm.get('description') as FormControl;
-  }
-  get cityFormControl() {
-    return this.noticeForm.get('city') as FormControl;
-  }
-  get paymentsFormControl() {
-    return this.noticeForm.get('payments') as FormControl;
-  }
-  get deliveryMethodsFormControl() {
-    return this.noticeForm.get('deliveryMethods') as FormControl;
-  }
-
   getErrorMessage(formControl : AbstractControl) {
     if (formControl.hasError('required')) {
       return 'You must enter a value';
@@ -96,6 +80,23 @@ export class NoticeFormComponent implements OnInit{
       }
     })
   } 
+
+  
+  get titleFormControl() {
+    return this.noticeForm.get('title') as FormControl;
+  }
+  get descriptionFormControl() {
+    return this.noticeForm.get('description') as FormControl;
+  }
+  get cityFormControl() {
+    return this.noticeForm.get('city') as FormControl;
+  }
+  get paymentsFormControl() {
+    return this.noticeForm.get('payments') as FormControl;
+  }
+  get deliveryMethodsFormControl() {
+    return this.noticeForm.get('deliveryMethods') as FormControl;
+  }
 
   productFormGroup = new FormGroup({
     name: new FormControl('', [

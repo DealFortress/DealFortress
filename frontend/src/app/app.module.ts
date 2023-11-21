@@ -49,6 +49,7 @@ import { ProductCardComponent } from './notices/feature/notice-detail/product-ca
 import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
 import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
 import { FullscreenImageCarouselComponent } from './notices/feature/notice-detail/product-detail/fullscreen-image-carousel/fullscreen-image-carousel.component';
+import { ProductFormComponent } from './notices/feature/notice-form/product-form/product-form.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { FullscreenImageCarouselComponent } from './notices/feature/notice-detai
     ProductCardComponent,
     ImageCarouselComponent,
     FullscreenImageCarouselComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,

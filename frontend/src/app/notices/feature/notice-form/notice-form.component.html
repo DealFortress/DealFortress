@@ -37,6 +37,7 @@
                     </mat-select>
                     <mat-error *ngIf="deliveryMethodsFormControl">{{getErrorMessage(deliveryMethodsFormControl)}}</mat-error>
                 </mat-form-field>
+                <app-product-form productFormGroup="productFormGroup"></app-product-form>
                 <div class="flex flex-col gap-4 w-full">
                     <button type="submit" [disabled]="disableSubmitButton || !noticeForm.valid" class="hover:opacity-80 rounded bg-darkblue white-box-border disabled:opacity-40 w-full py-1">
                         Submit
