@@ -12,7 +12,7 @@
                 <input matInput [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <mat-checkbox [color]="'primary'" formControlName="hasReceipt" required>Receipt included</mat-checkbox>
+            <mat-checkbox class="" matInput [color]="'primary'" formControlName="hasReceipt" required>Receipt included</mat-checkbox>
             <mat-form-field class="">
                 <mat-label class="">Payment options</mat-label>
                 <mat-select formControlName="warranty" multiple class="">
