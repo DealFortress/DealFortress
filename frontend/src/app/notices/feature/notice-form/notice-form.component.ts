@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, numberAttribute } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit} from '@angular/core';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
 import { Router } from '@angular/router'
@@ -25,29 +25,7 @@ export class NoticeFormComponent implements OnInit{
   private creatorId? : number;  
 
   constructor(private store: Store, public authService: AuthService, private router: Router) {
-    this.noticeForm = new FormGroup({
-      userId: new FormControl(),
-      title: new FormControl('', [
-        Validators.required,
-        Validators.minLength(10)
-      ]),
-      description: new FormControl('', [
-        Validators.required,
-        Validators.minLength(30)
-      ]),
-      city: new FormControl('', [
-        Validators.required,
-        Validators.minLength(1)
-      ]),
-      payments: new FormControl([''], [
-        Validators.required,
-        Validators.minLength(1)
-      ]),
-      deliveryMethods: new FormControl([''], [
-        Validators.required,
-        Validators.minLength(1)
-      ]),
-    });
+    this.noticeForm = this.noticeFormGroup
 
     if (!this.isAuthenticated$) {
       this.authService.loginWithPopup()
@@ -118,4 +96,53 @@ export class NoticeFormComponent implements OnInit{
       }
     })
   } 
+
+  productFormGroup = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(10)
+    ]),
+    price: new FormControl(null, [
+      Validators.required,
+    ]),
+    hasReceipt: new FormControl(''),
+    warranty: new FormControl(''),
+    categoryId: new FormControl('', [
+      Validators.required,
+    ]),
+    condition: new FormControl('', [
+      Validators.required,
+    ]),
+    images: new FormControl([], [
+      Validators.required,
+      Validators.minLength(1)
+    ]),
+  })
+
+  noticeFormGroup = new FormGroup({
+    userId: new FormControl(),
+    title: new FormControl('', [
+      Validators.required,
+      Validators.minLength(10)
+    ]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.minLength(30)
+    ]),
+    city: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1)
+    ]),
+    payments: new FormControl([''], [
+      Validators.required,
+      Validators.minLength(1)
+    ]),
+    deliveryMethods: new FormControl([''], [
+      Validators.required,
+      Validators.minLength(1)
+    ]),
+    products: new FormArray([
+      this.productFormGroup
+    ]),
+  });
 }
