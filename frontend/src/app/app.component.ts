@@ -5,6 +5,7 @@ import { loadNoticesRequest } from './notices/data-access/store/notices.actions'
 import { UsersService } from './users/utils/services/users.service';
 import { getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
+import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit{
 
   constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
     store.dispatch(loadNoticesRequest());
+    store.dispatch(loadCategoriesRequest());
   }
 
   async ngOnInit(): Promise<void> {

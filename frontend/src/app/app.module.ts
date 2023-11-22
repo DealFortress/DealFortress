@@ -50,6 +50,9 @@ import { ProductDetailComponent } from './notices/feature/notice-detail/product-
 import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
 import { FullscreenImageCarouselComponent } from './notices/feature/notice-detail/product-detail/fullscreen-image-carousel/fullscreen-image-carousel.component';
 import { ProductFormComponent } from './notices/feature/notice-form/product-form/product-form.component';
+import { CategoriesApiService } from './categories/data-access/services/categories-api.service';
+import { categoriesReducer } from './categories/data-access/store/categories.reducer';
+import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 
 
 @NgModule({
@@ -95,12 +98,14 @@ import { ProductFormComponent } from './notices/feature/notice-form/product-form
     BrowserAnimationsModule,
     StoreModule.forRoot({
       noticesState: noticesReducer,
-      userState: usersReducer
+      userState: usersReducer,
+      categoriesState: categoriesReducer
     }),
-    EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect]),
+    EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect, CategoriesEffects]),
   ],
   providers: [
     NoticesApiService, 
+    CategoriesApiService,
     UsersApiService, 
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}

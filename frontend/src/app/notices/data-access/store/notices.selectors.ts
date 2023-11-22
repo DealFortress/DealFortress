@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector} from '@ngrx/store';
-import { NoticesState, noticesAdapter } from './notice.state';
+import { NoticesState, noticesAdapter } from './notices.state';
 
 const getNoticeState = createFeatureSelector<NoticesState>('noticesState');
  

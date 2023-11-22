@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NoticesState } from '@app/notices/data-access/store/notice.state';
+import { NoticesState } from '@app/notices/data-access/store/notices.state';
 import { getNotices } from '@app/notices/data-access/store/notices.selectors';
 import { Notice } from '@app/shared/models/notice.model';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
