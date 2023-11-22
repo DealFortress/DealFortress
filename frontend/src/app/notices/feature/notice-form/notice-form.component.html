@@ -18,6 +18,7 @@
                     <textarea rows="10" matInput [placeholder]="'Rare magical artifact, only slight visual damage, works like a charm! No receipt.'" formControlName="description" required></textarea>
                     <mat-error *ngIf="descriptionFormControl">{{getErrorMessage(descriptionFormControl)}}</mat-error>
                 </mat-form-field>
+                <app-product-form></app-product-form>
                 <mat-form-field class="">
                     <mat-label>Your city here ✒️</mat-label>
                     <input matInput [placeholder]="'Baldurs Gate'" formControlName="city" required>
@@ -44,6 +45,5 @@
                 </div>
             </section>
         </form>
-        <app-product-form></app-product-form>
     </app-main-container>
 </fieldset>

@@ -1,7 +1,6 @@
 <fieldset>
-    <app-main-container>
-        <form action="" [formGroup]="productForm">
-            <section class="bg-base-200 relative rounded-lg p-6 pt-20 flex flex-col justify-between gap-12">
+        <form action="" [formGroup]="productForm" class="w-[33%]" (ngSubmit)="onSubmit()">
+            <section class="bg-base-100 relative rounded-lg p-6 flex flex-col justify-between gap-12">
             <mat-form-field>
                 <mat-label>Name of the product ✒️</mat-label>
                 <input matInput [placeholder]="'Product name'" formControlName="name" required>
@@ -12,39 +11,38 @@
                 <input matInput [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <mat-checkbox class="" matInput [color]="'primary'" formControlName="hasReceipt" required>Receipt included</mat-checkbox>
-            <mat-form-field class="">
-                <mat-label class="">Payment options</mat-label>
-                <mat-select formControlName="warranty" multiple class="">
-                    <input matInput [placeholder]="'3 months left'" formControlName="title" required>
-                </mat-select>
-                <mat-error *ngIf="warrantyFormControl">{{getErrorMessage(warrantyFormControl)}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="">
-                <mat-label class="">Categories</mat-label>
-                <mat-select formControlName="categories" class="">
-                    <mat-option *ngFor="let option of categories" [value]="option" class="">{{option}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="categoryIdFormControl">{{getErrorMessage(categoryIdFormControl)}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="">
-                <mat-label class="">Condition</mat-label>
-                <mat-select formControlName="condition" class="">
-                    <mat-option *ngFor="let option of conditions" [value]="option" class="">{{option}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="conditionFormControl">{{getErrorMessage(conditionFormControl)}}</mat-error>
-            </mat-form-field>
             <mat-form-field class="">
                 <mat-label class="">Image url</mat-label>
                 <input matInput [placeholder]="'url'" formControlName="images" required>
                 <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
             </mat-form-field>
-            <!-- <div class="flex flex-col gap-4 w-full">
-                <button type="submit"  class="hover:opacity-80 rounded bg-darkblue white-box-border disabled:opacity-40 w-full py-1">
-                    Submit
+            <div class="grid grid-cols-2 gap-2">
+                <mat-form-field class="">
+                    <mat-label class="">Categories</mat-label>
+                    <mat-select formControlName="categories" class="">
+                        <mat-option *ngFor="let option of categories" [value]="option" class="">{{option}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="categoryIdFormControl">{{getErrorMessage(categoryIdFormControl)}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="">
+                    <mat-label class="">Condition</mat-label>
+                    <mat-select formControlName="condition" class="">
+                        <mat-option *ngFor="let option of conditions" [value]="option" class="">{{option}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="conditionFormControl">{{getErrorMessage(conditionFormControl)}}</mat-error>
+                </mat-form-field>
+                <mat-checkbox #checkbox class="my-auto py-6" matInput [color]="'primary'" formControlName="hasReceipt" required>Receipt included</mat-checkbox>
+                <mat-form-field class="" *ngIf="checkbox.checked">
+                    <mat-label class="">warranty</mat-label>
+                    <input matInput [placeholder]="'3 months left'" formControlName="title" required>
+                    <mat-error *ngIf="warrantyFormControl">{{getErrorMessage(warrantyFormControl)}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col gap-4 w-full">
+                <button type="submit" [disabled]="disableSubmitButton || !productForm.valid"  class="hover:opacity-80 rounded bg-darkblue white-box-border disabled:opacity-40 w-full py-1">
+                    Add
                 </button>
-            </div> -->
+            </div>
         </section>
         </form>
-    </app-main-container>
 </fieldset>

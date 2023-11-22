@@ -120,8 +120,8 @@ export class NoticeFormComponent implements OnInit{
       Validators.required,
       Validators.minLength(1)
     ]),
-    products: new FormArray([
-      // this.productFormGroup
+    products: new FormControl([ ], [
+      Validators.required
     ]),
   });
 }
