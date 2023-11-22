@@ -9,6 +9,7 @@ import { postNoticeRequest } from '@app/notices/data-access/store/notices.action
 import { getUser, getUserId } from '@app/users/data-access/store/users.selectors';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
+import { getCategories } from '@app/categories/data-access/store/categories.selectors';
 
 @Component({
   selector: 'app-notice-form',

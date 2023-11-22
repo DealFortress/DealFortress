@@ -1,8 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
-import { UsersState } from "./users.state";
+import { UsersState, initialState } from "./users.state";
 import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
 
-const initialState: UsersState = { }
 
 export const usersReducer = createReducer(
     initialState,

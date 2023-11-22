@@ -46,6 +46,9 @@ import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
+import { CategoriesApiService } from './categories/data-access/services/categories-api.service';
+import { categoriesReducer } from './categories/data-access/store/categories.reducer';
+import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 
 
 @NgModule({
@@ -89,12 +92,14 @@ import { RequestRetryInterceptor } from './shared/interceptors/request-retry.int
     BrowserAnimationsModule,
     StoreModule.forRoot({
       noticesState: noticesReducer,
-      userState: usersReducer
+      userState: usersReducer,
+      categoriesState: categoriesReducer
     }),
-    EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect]),
+    EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect, CategoriesEffects]),
   ],
   providers: [
     NoticesApiService, 
+    CategoriesApiService,
     NavbarService, 
     UsersApiService, 
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
