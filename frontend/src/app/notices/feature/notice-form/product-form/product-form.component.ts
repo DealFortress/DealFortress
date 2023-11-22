@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProductRequest } from '@app/shared/models/product-request.model';
+import { ShowAlert } from '@app/shared/store/app.actions';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -9,6 +12,32 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 export class ProductFormComponent {
   categories = ['cpu', 'gpu', 'mobo'  ]; 
   conditions = ['new', 'used', 'broke'  ]; 
+  disableSubmitButton = false;
+
+  @Output() productEvent = new EventEmitter<ProductRequest>();
+
+  async onSubmit() {
+    this.disableSubmitForNSecond(1);  
+
+    console.log(this.productForm);
+    
+    if (this.productForm.invalid) {
+      of(ShowAlert({message: 'Apologies squire there seem to be an issue at the portcullis, try refreshing', actionresult: 'fail'}))
+      return;
+    }    
+
+    // this.productEvent.emit(this.productForm.value as ProductRequest)
+
+    // const postRequest = this.createRequest(this.creatorId);
+
+    // this.store.dispatch(postNoticeRequest(postRequest));
+  }
+
+  disableSubmitForNSecond(n : number)  {
+    this.disableSubmitButton = true;
+    setTimeout(() => (this.disableSubmitButton = false), n*1000);
+  }
+
 
   getErrorMessage(formControl : AbstractControl) {
     if (formControl.hasError('required')) {
@@ -23,18 +52,18 @@ export class ProductFormComponent {
       Validators.required,
       Validators.minLength(10)
     ]),
-    price: new FormControl(null, [
+    price: new FormControl(-1, [
       Validators.required,
     ]),
-    hasReceipt: new FormControl(''),
+    hasReceipt: new FormControl(false),
     warranty: new FormControl(''),
-    categoryId: new FormControl('', [
+    categoryId: new FormControl(-1, [
       Validators.required,
     ]),
     condition: new FormControl('', [
       Validators.required,
     ]),
-    images: new FormControl([], [
+    images: new FormControl([''], [
       Validators.required,
       Validators.minLength(1)
     ]),
