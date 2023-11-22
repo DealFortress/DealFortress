@@ -13,10 +13,10 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $frontend-primary: mat.define-palette(mat.$blue-grey-palette, 50);
-$frontend-accent: mat.define-palette(mat.$deep-orange-palette, A200, A100, A400);
+$frontend-accent: mat.define-palette(mat.$blue-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$frontend-warn: mat.define-palette(mat.$red-palette);
+$frontend-warn: mat.define-palette(mat.$red-palette, 900);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -70,6 +70,15 @@ $frontend-theme: mat.define-dark-theme((
 
 .min-h-screen {
   min-height: calc(100vh - 100px);
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled){
+  background-color: transparent !important;
+}
+
+.mat-mdc-checkbox label {
+  font-size: 1rem;
+  color: rgb(192, 192, 192);
 }
 
 .green-snackbar button {
@@ -149,8 +158,5 @@ $frontend-theme: mat.define-dark-theme((
     100% { transform: rotate(360deg) }
   }
 
-html, body { min-height: 100vh; }
-html {margin:0; padding: 0;}
-body {margin: 0; padding-top: 100px; font-family: 'Quicksand', "Helvetica Neue", sans-serif;   box-sizing: border-box;}
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {margin:0; padding: 0; min-height: 100vh; }
+body { padding-top: 100px; font-family: 'Quicksand', "Helvetica Neue", sans-serif;   box-sizing: border-box;}

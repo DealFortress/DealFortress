@@ -1,0 +1,7 @@
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: white;
+  }
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: transparent !important;
+}
