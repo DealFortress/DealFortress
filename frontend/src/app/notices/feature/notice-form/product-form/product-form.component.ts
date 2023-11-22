@@ -15,7 +15,7 @@ export class ProductFormComponent{
   categories$ = this.store.select(getCategories);
   conditions = ['new', 'used', 'broke'  ]; 
   disableSubmitButton = false;
-  @Output() productEvent = new EventEmitter<ProductRequest>();
+  @Output() productEvent = new EventEmitter<Partial<ProductRequest>>();
 
   
   constructor(private store: Store, private formBuilder: FormBuilder) {}
@@ -25,12 +25,12 @@ export class ProductFormComponent{
       Validators.required,
       Validators.minLength(3)
     ]),
-    price: new FormControl([
+    price: new FormControl(-1, [
       Validators.required,
     ]),
     hasReceipt: new FormControl(false),
     warranty: new FormControl(''),
-    categoryId: new FormControl(0, [
+    categoryId: new FormControl(-1, [
       Validators.required,
     ]),
     condition: new FormControl('', [
@@ -69,12 +69,7 @@ export class ProductFormComponent{
       of(ShowAlert({message: 'Apologies squire there seem to be an issue at the portcullis, try refreshing', actionresult: 'fail'}))
       return;
     }    
-
-    // this.productEvent.emit(this.productForm.value as ProductRequest)
-
-    // const postRequest = this.createRequest(this.creatorId);
-
-    // this.store.dispatch(postNoticeRequest(postRequest));
+    console.log(this.productForm.value)
   }
 
   disableSubmitForNSecond(n : number)  {

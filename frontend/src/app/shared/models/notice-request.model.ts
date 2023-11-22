@@ -1,3 +1,5 @@
+import { ProductRequest } from "./product-request.model"
+
 export type NoticeRequest = {
     userId: number,
     title: string,
@@ -5,4 +7,5 @@ export type NoticeRequest = {
     city: string,
     payments: string[],
     deliveryMethods: string[],
+    products: ProductRequest[]
 }

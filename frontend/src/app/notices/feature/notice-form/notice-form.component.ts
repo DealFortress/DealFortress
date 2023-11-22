@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
 import { Router } from '@angular/router'
@@ -10,6 +10,8 @@ import { getUser, getUserId } from '@app/users/data-access/store/users.selectors
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
 import { getCategories } from '@app/categories/data-access/store/categories.selectors';
+import { Product } from '@app/shared/models/product.model';
+import { ProductRequest } from '@app/shared/models/product-request.model';
 
 @Component({
   selector: 'app-notice-form',
@@ -22,10 +24,16 @@ export class NoticeFormComponent implements OnInit{
   noticeForm: FormGroup;
   isAuthenticated$ = this.authService.isAuthenticated$;
   disableSubmitButton = false;
-
+  
   private creatorId? : number;  
 
-  constructor(private store: Store, public authService: AuthService, private router: Router) {
+  constructor(
+    public authService: AuthService, 
+    private store: Store, 
+    private router: Router, 
+    private formBuilder: FormBuilder
+    ) {
+    
     this.noticeForm = this.noticeFormGroup
 
     if (!this.isAuthenticated$) {
@@ -42,6 +50,21 @@ export class NoticeFormComponent implements OnInit{
     }
 
     return formControl.hasError('minlength') ? `this field must be at least ${formControl.errors?.['minlength'].requiredLength} characters` : '';
+  }
+
+
+
+  addProduct() {
+    this.productsFormArray.push(this.formBuilder.group({ url: ''}));
+  }
+
+  isRemovable() {
+    return this.productsFormArray.length > 1;
+  }
+
+  removeProduct(pos: number) {
+    this.productsFormArray.removeAt(pos);
+    this.productsFormArray.updateValueAndValidity();
   }
 
   async onSubmit() {
@@ -70,6 +93,7 @@ export class NoticeFormComponent implements OnInit{
     const postRequest : NoticeRequest = this.noticeForm.value as NoticeRequest;
       
     postRequest.userId = creatorId; 
+  
 
     return postRequest
   }
@@ -98,6 +122,9 @@ export class NoticeFormComponent implements OnInit{
   get deliveryMethodsFormControl() {
     return this.noticeForm.get('deliveryMethods') as FormControl;
   }
+  get productsFormArray() {
+    return this.noticeForm.get('products') as FormArray;
+  }
   
   noticeFormGroup = new FormGroup({
     userId: new FormControl(),
@@ -121,8 +148,17 @@ export class NoticeFormComponent implements OnInit{
       Validators.required,
       Validators.minLength(1)
     ]),
-    products: new FormControl([ ], [
-      Validators.required
-    ]),
+    products: new FormArray([
+      this.formBuilder.group({
+        name: '',
+        price: -1,
+        hasReceipt: false,
+        warranty: '',
+        categoryId: -1,
+        condition: '',
+        images: [],
+        })
+     ], 
+     [Validators.required, Validators.minLength(1)]),
   });
 }

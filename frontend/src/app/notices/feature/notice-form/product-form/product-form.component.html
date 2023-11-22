@@ -1,5 +1,5 @@
 <fieldset>
-        <form action="" [formGroup]="productForm" class="w-[33%]" (ngSubmit)="onSubmit()">
+        <form action="" [formGroup]="productForm" class="" (ngSubmit)="onSubmit()">
             <section class="bg-base-100 relative rounded-lg p-6 flex flex-col justify-between gap-12">
             <mat-form-field>
                 <mat-label>Name of the product ✒️</mat-label>
@@ -11,37 +11,18 @@
                 <input matInput type="number" [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <!-- <mat-form-field class="">
-                <mat-label class="">Image url</mat-label>
-                <input matInput [placeholder]="'url'" formControlName="images" required>
-                <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
-            </mat-form-field> -->
-            
-            <!-- <div *ngFor="let image of getImages(); let i = index">
-                <mat-form-field formArrayName="images">
-                    <mat-label>Add Image url</mat-label>
-                    <input matInput formControlName="test" />
-                    <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
-                    <a class="absolute top-0 button button-ghost right-0" (click)="removeImage(i)">X</a>
-                </mat-form-field>
-            </div> -->
-
-
             <div formArrayName="images">
                 <h2>Images urls</h2>
-                <div *ngFor="let image of images.controls; index as i; first as isFirst" class="flash-card full-width" appearance="outline">
+                <div *ngFor="let image of images.controls; index as i; first as isFirst" class="" appearance="outline">
                     <div [formGroupName]="i">
                         <div *ngIf="isRemovable()" class="close" (click)="removeImage(i)">X</div>
-                        <mat-form-field class="full-width">
+                        <mat-form-field class="">
                             <input matInput placeholder="image url" formControlName="url" name="url{{i}}" required>
                         </mat-form-field>
                     </div>
                 </div>
                 <button mat-fab color="accent" (click)="addImage()" class="btn btn-ghost">+</button>
             </div>
-
-
-
             <div class="grid grid-cols-2 gap-2">
                 <mat-form-field class="">
                     <mat-label class="">Categories</mat-label>

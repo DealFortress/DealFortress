@@ -18,7 +18,16 @@
                     <textarea rows="10" matInput [placeholder]="'Rare magical artifact, only slight visual damage, works like a charm! No receipt.'" formControlName="description" required></textarea>
                     <mat-error *ngIf="descriptionFormControl">{{getErrorMessage(descriptionFormControl)}}</mat-error>
                 </mat-form-field>
-                <app-product-form></app-product-form>
+                <h3 class="border-bottom border-[grey] text-2xl">Products</h3>
+                <div formArrayName="images" class="flex gap-4 flex-wrap">
+                    <div *ngFor="let image of productsFormArray.controls; index as i; first as isFirst" class="" appearance="outline">
+                        <div [formGroupName]="i" >
+                            <div *ngIf="isRemovable()" class="close" (click)="removeProduct(i)">X</div>
+                                <app-product-form  formControlName="product"></app-product-form>
+                        </div>
+                    </div>
+                    <button mat-fab color="accent" (click)="addProduct()" class="btn btn-ghost">+</button>
+                </div>
                 <mat-form-field class="">
                     <mat-label>Your city here ✒️</mat-label>
                     <input matInput [placeholder]="'Baldurs Gate'" formControlName="city" required>
