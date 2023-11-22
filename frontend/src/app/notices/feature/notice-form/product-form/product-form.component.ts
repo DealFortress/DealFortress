@@ -1,7 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { getCategories } from '@app/categories/data-access/store/categories.selectors';
 import { ProductRequest } from '@app/shared/models/product-request.model';
 import { ShowAlert } from '@app/shared/store/app.actions';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 @Component({
@@ -9,12 +11,59 @@ import { of } from 'rxjs';
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
-export class ProductFormComponent {
-  categories = ['cpu', 'gpu', 'mobo'  ]; 
+export class ProductFormComponent{
+  categories$ = this.store.select(getCategories);
   conditions = ['new', 'used', 'broke'  ]; 
   disableSubmitButton = false;
+  
+  constructor(private store: Store, private formBuilder: FormBuilder) {}
+  
+  productForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    price: new FormControl([
+      Validators.required,
+    ]),
+    hasReceipt: new FormControl(false),
+    warranty: new FormControl(''),
+    categoryId: new FormControl(0, [
+      Validators.required,
+    ]),
+    condition: new FormControl('', [
+      Validators.required,
+    ]),
+    images: this.formBuilder.array([])
+  })
+
+  getImages() {
+    console.log((<FormArray>this.productForm.get('images')).controls);
+    return (<FormArray>this.productForm.get('images')).controls;
+  }
+
+  imageValue(image: any) {
+    return image.controls.value.value;
+  }
+
+  createImage(name?: string): FormGroup {
+    return this.formBuilder.group({
+      value: name ? name : ''
+    });
+  }
+
+  removeImage(index: number) {
+    const images = this.productForm.get('images') as FormArray;
+    images.removeAt(index);
+  }
+
+  addImage(name?: string): void {
+    const images = this.productForm.get('images') as FormArray;
+    images.push(this.createImage(name));
+  }
 
   @Output() productEvent = new EventEmitter<ProductRequest>();
+
 
   async onSubmit() {
     this.disableSubmitForNSecond(1);  
@@ -46,28 +95,6 @@ export class ProductFormComponent {
 
     return formControl.hasError('minlength') ? `this field must be at least ${formControl.errors?.['minlength'].requiredLength} characters` : '';
   }
- 
-  productForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.minLength(10)
-    ]),
-    price: new FormControl(-1, [
-      Validators.required,
-    ]),
-    hasReceipt: new FormControl(false),
-    warranty: new FormControl(''),
-    categoryId: new FormControl(-1, [
-      Validators.required,
-    ]),
-    condition: new FormControl('', [
-      Validators.required,
-    ]),
-    images: new FormControl([''], [
-      Validators.required,
-      Validators.minLength(1)
-    ]),
-  })
 
   get nameFormControl() {
     return this.productForm.get('name') as FormControl;

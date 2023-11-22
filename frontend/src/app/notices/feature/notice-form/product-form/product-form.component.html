@@ -8,19 +8,35 @@
             </mat-form-field>
             <mat-form-field class="">
                 <mat-label>Name your price ✒️</mat-label>
-                <input matInput [placeholder]="'1000'" formControlName="price" required>
+                <input matInput type="number" [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <mat-form-field class="">
+            <!-- <mat-form-field class="">
                 <mat-label class="">Image url</mat-label>
                 <input matInput [placeholder]="'url'" formControlName="images" required>
                 <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
+            </mat-form-field> -->
+            
+
+            <mat-form-field formArrayName="images" *ngFor="let image of getImages(); let i = index">
+                <mat-label>Add Image url</mat-label>
+                <input matInput value="{{ imageValue(image) }}" />
+                <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
+                <a class="absolute top-0 button button-ghost right-0" (click)="removeImage(i)">X</a>
             </mat-form-field>
+            <section>
+                <button mat-raised-button color="primary" type="button" (click)="addImage('Hello')">
+                <i class="material-icons"> add </i>
+                </button>
+            </section>
+
+
+
             <div class="grid grid-cols-2 gap-2">
                 <mat-form-field class="">
                     <mat-label class="">Categories</mat-label>
-                    <mat-select formControlName="categories" class="">
-                        <mat-option *ngFor="let option of categories" [value]="option" class="">{{option}}</mat-option>
+                    <mat-select formControlName="categoryId" class="">
+                        <mat-option *ngFor="let option of (categories$ | async)" [value]="option.id" class="">{{option.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="categoryIdFormControl">{{getErrorMessage(categoryIdFormControl)}}</mat-error>
                 </mat-form-field>
@@ -31,10 +47,10 @@
                     </mat-select>
                     <mat-error *ngIf="conditionFormControl">{{getErrorMessage(conditionFormControl)}}</mat-error>
                 </mat-form-field>
-                <mat-checkbox #checkbox class="my-auto py-6" matInput [color]="'primary'" formControlName="hasReceipt" required>Receipt included</mat-checkbox>
+                <mat-checkbox #checkbox class="my-auto py-6" matInput [color]="'primary'" formControlName="hasReceipt">Receipt included</mat-checkbox>
                 <mat-form-field class="" *ngIf="checkbox.checked">
                     <mat-label class="">warranty</mat-label>
-                    <input matInput [placeholder]="'3 months left'" formControlName="title" required>
+                    <input matInput [placeholder]="'3 months left'" formControlName="warranty" required>
                     <mat-error *ngIf="warrantyFormControl">{{getErrorMessage(warrantyFormControl)}}</mat-error>
                 </mat-form-field>
             </div>
