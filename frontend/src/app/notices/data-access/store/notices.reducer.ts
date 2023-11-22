@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeSuccess } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
-import { initialState, noticesAdapter } from "./notice.state";
+import { initialState, noticesAdapter } from "./notices.state";
 
 
 export const noticesReducer = createReducer(
