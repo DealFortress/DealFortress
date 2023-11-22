@@ -17,18 +17,28 @@
                 <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
             </mat-form-field> -->
             
+            <!-- <div *ngFor="let image of getImages(); let i = index">
+                <mat-form-field formArrayName="images">
+                    <mat-label>Add Image url</mat-label>
+                    <input matInput formControlName="test" />
+                    <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
+                    <a class="absolute top-0 button button-ghost right-0" (click)="removeImage(i)">X</a>
+                </mat-form-field>
+            </div> -->
 
-            <mat-form-field formArrayName="images" *ngFor="let image of getImages(); let i = index">
-                <mat-label>Add Image url</mat-label>
-                <input matInput value="{{ imageValue(image) }}" />
-                <mat-error *ngIf="imagesFormControl">{{getErrorMessage(imagesFormControl)}}</mat-error>
-                <a class="absolute top-0 button button-ghost right-0" (click)="removeImage(i)">X</a>
-            </mat-form-field>
-            <section>
-                <button mat-raised-button color="primary" type="button" (click)="addImage('Hello')">
-                <i class="material-icons"> add </i>
-                </button>
-            </section>
+
+            <div formArrayName="images">
+                <h2>Images urls</h2>
+                <div *ngFor="let image of images.controls; index as i; first as isFirst" class="flash-card full-width" appearance="outline">
+                    <div [formGroupName]="i">
+                        <div *ngIf="isRemovable()" class="close" (click)="removeImage(i)">X</div>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="image url" formControlName="url" name="url{{i}}" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-fab color="accent" (click)="addImage()" class="btn btn-ghost">+</button>
+            </div>
 
 
 

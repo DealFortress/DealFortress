@@ -15,6 +15,8 @@ export class ProductFormComponent{
   categories$ = this.store.select(getCategories);
   conditions = ['new', 'used', 'broke'  ]; 
   disableSubmitButton = false;
+  @Output() productEvent = new EventEmitter<ProductRequest>();
+
   
   constructor(private store: Store, private formBuilder: FormBuilder) {}
   
@@ -34,36 +36,29 @@ export class ProductFormComponent{
     condition: new FormControl('', [
       Validators.required,
     ]),
-    images: this.formBuilder.array([])
+    images: this.formBuilder.array([
+      this.formBuilder.group({
+        url: ''
+    })
+  ])
   })
 
-  getImages() {
-    console.log((<FormArray>this.productForm.get('images')).controls);
-    return (<FormArray>this.productForm.get('images')).controls;
+  get images() {
+    return this.productForm.get('images') as FormArray;
   }
 
-  imageValue(image: any) {
-    return image.controls.value.value;
+  addImage() {
+    this.images.push(this.formBuilder.group({ url: ''}));
   }
 
-  createImage(name?: string): FormGroup {
-    return this.formBuilder.group({
-      value: name ? name : ''
-    });
+  isRemovable() {
+    return this.images.length > 1;
   }
 
-  removeImage(index: number) {
-    const images = this.productForm.get('images') as FormArray;
-    images.removeAt(index);
+  removeImage(pos: number) {
+    this.images.removeAt(pos);
+    this.images.updateValueAndValidity();
   }
-
-  addImage(name?: string): void {
-    const images = this.productForm.get('images') as FormArray;
-    images.push(this.createImage(name));
-  }
-
-  @Output() productEvent = new EventEmitter<ProductRequest>();
-
 
   async onSubmit() {
     this.disableSubmitForNSecond(1);  
