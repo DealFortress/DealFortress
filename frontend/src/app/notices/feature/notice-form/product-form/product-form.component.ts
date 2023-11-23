@@ -46,23 +46,20 @@ export class ProductFormComponent{
   ])
   })
 
-  get imagesFormArray() {
-    return this.productForm.get('images') as FormArray;
-  }
-
+  
   addImage() {
     this.imagesFormArray.push(this.formBuilder.group({ url: ''}));
   }
-
+  
   isRemovable() {
     return this.imagesFormArray.length > 1;
   }
-
+  
   removeImage(pos: number) {
     this.imagesFormArray.removeAt(pos);
     this.imagesFormArray.updateValueAndValidity();
   }
-
+  
   async onSubmit() {
     this.disableSubmitForNSecond(1);  
     
@@ -70,24 +67,24 @@ export class ProductFormComponent{
       of(ShowAlert({message: 'Apologies squire there seem to be an issue at the portcullis, try refreshing', actionresult: 'fail'}))
       return;
     }    
-
+    
     this.productEvent.emit(this.productForm);
   }
-
+  
   disableSubmitForNSecond(n : number)  {
     this.disableSubmitButton = true;
     setTimeout(() => (this.disableSubmitButton = false), n*1000);
   }
-
-
+  
+  
   getErrorMessage(formControl : AbstractControl) {
     if (formControl.hasError('required')) {
       return 'You must enter a value';
     }
-
+    
     return formControl.hasError('minlength') ? `this field must be at least ${formControl.errors?.['minlength'].requiredLength} characters` : '';
   }
-
+  
   get nameFormControl() {
     return this.productForm.get('name') as FormControl;
   }
@@ -106,8 +103,7 @@ export class ProductFormComponent{
   get conditionFormControl() {
     return this.productForm.get('condition') as FormControl;
   }
-  get imagesFormControl() {
-    return this.productForm.get('images') as FormControl;
+  get imagesFormArray() {
+    return this.productForm.get('images') as FormArray;
   }
-
 }

@@ -12,5 +12,5 @@ export type ProductRequest = {
     warranty: string,
     categoryId: number,
     condition: Condition,
-    images: ImageRequest[],
+    imageRequests: ImageRequest[],
 }

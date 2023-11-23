@@ -11,7 +11,7 @@
                 <input matInput type="number" [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <div formArrayName="images">
+            <div formArrayName="imagesFormArray">
                 <h2>Images urls</h2>
                 <div *ngFor="let image of imagesFormArray.controls; index as i; first as isFirst" class="" appearance="outline">
                     <div [formGroupName]="i">
