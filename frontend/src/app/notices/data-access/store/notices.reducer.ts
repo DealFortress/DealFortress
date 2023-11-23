@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeSuccess } from "./notices.actions";
+import { loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 
@@ -30,5 +30,8 @@ export const noticesReducer = createReducer(
             ...state,
             userLatestNoticeId: action.notice.id
         });
+    }),
+    on(putNoticeSuccess,(state,action)=>{
+        return noticesAdapter.updateOne(action.notice, state);
     }),
 );

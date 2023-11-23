@@ -27,4 +27,12 @@ export class NoticesApiService {
                 request)
             .pipe(data => data as Observable<Notice>);
     }
+
+    putNoticeAPI(request: NoticeRequest, noticeId: number): Observable<Notice> {
+        return this.httpClient
+            .put(
+                `${this.noticesUrl}/${noticeId}`,
+                request)
+            .pipe(data => data as Observable<Notice>);
+    }
 }

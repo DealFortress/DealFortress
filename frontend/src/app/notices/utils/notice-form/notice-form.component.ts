@@ -1,11 +1,9 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
 import { Router } from '@angular/router'
 import { Store } from '@ngrx/store';
-import { getUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
-import { postNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import {getUserId } from '@app/users/data-access/store/users.selectors';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
@@ -23,8 +21,9 @@ export class NoticeFormComponent implements OnInit{
   public isAuthenticated$ = this.authService.isAuthenticated$;
   public disableSubmitButton = false;
   private creatorId? : number;  
+  @Output() requestEvent = new EventEmitter<NoticeRequest>();
 
-  constructor(public authService: AuthService, private store: Store, private router: Router, private formBuilder: FormBuilder) {
+  constructor(public authService: AuthService, private store: Store, private formBuilder: FormBuilder) {
     this.noticeForm = this.noticeFormGroup
 
     if (!this.isAuthenticated$) {
@@ -80,8 +79,7 @@ export class NoticeFormComponent implements OnInit{
     }    
     const postRequest = this.createRequest(this.creatorId);
 
-    this.store.dispatch(postNoticeRequest(postRequest));
-    this.navigateToNewNotice()
+    this.requestEvent.emit(postRequest);
   }
 
 
@@ -97,13 +95,6 @@ export class NoticeFormComponent implements OnInit{
     return postRequest
   }
 
-  navigateToNewNotice() {
-    this.store.select(getUserLatestNoticeId).subscribe(id => {
-      if (id) {
-        this.router.navigate(['notices/', id]);
-      }
-    })
-  }
 
   getProductFormGroup(index: number) {
     return this.productsFormArray.get(`${index}`) as FormGroup

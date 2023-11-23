@@ -33,8 +33,6 @@ export class NoticeDetailComponent{
   }
 
   getTotalPrice(notice: Notice) {
-    const sum =  notice?.products.reduce((sum, product) => sum + product.price, 0);
-    console.log(sum);
-    return sum;
+    return notice?.products.reduce((sum, product) => sum + product.price, 0);
   }
 }

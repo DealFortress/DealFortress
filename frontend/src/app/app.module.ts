@@ -8,7 +8,7 @@ import { NoticeDetailComponent } from '@app/notices/feature/notice-detail/notice
 import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-list.component';
 import { ErrorComponent } from '@app/shared/error/error.component';
 import { MainContainerComponent } from '@app/shared/main-container/main-container.component';
-import { NoticeFormComponent } from '@app/notices/feature/notice-form/notice-form.component';
+import { NoticeFormComponent } from '@app/notices/utils/notice-form/notice-form.component';
 import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -49,10 +49,12 @@ import { ProductCardComponent } from './notices/feature/notice-detail/product-ca
 import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
 import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
 import { FullscreenImageCarouselComponent } from './notices/feature/notice-detail/product-detail/fullscreen-image-carousel/fullscreen-image-carousel.component';
-import { ProductFormComponent } from './notices/feature/notice-form/product-form/product-form.component';
+import { ProductFormComponent } from './notices/utils/notice-form/product-form/product-form.component';
 import { CategoriesApiService } from './categories/data-access/services/categories-api.service';
 import { categoriesReducer } from './categories/data-access/store/categories.reducer';
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
+import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
+import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
 
 
 @NgModule({
@@ -78,6 +80,8 @@ import { CategoriesEffects } from './categories/data-access/store/categories.eff
     ImageCarouselComponent,
     FullscreenImageCarouselComponent,
     ProductFormComponent,
+    NoticeCreateComponent,
+    NoticeEditComponent,
   ],
   imports: [
     BrowserModule,
