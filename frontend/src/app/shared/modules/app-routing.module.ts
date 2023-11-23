@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/notices', pathMatch: 'full'},
   {path: 'notices', component: NoticeListComponent},
   {path: 'notices/create', component: NoticeCreateComponent},
-  {path: 'notices/edit', component: NoticeEditComponent},
+  {path: 'notices/:id/edit', component: NoticeEditComponent},
   {path: 'notices/:id', component: NoticeDetailComponent },
   {path: '**', component: NotFoundComponent}
 ];
