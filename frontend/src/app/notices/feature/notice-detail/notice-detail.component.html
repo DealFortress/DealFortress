@@ -1,24 +1,31 @@
 <app-main-container>
-    <app-styled-container barText="Notice {{(notice | async)?.id }}" redirectLink="/notices">
-        <div class="self-center text-center flex flex-col gap-2 w-full">
-          <p>{{( this.creator | async )?.username}}</p>
-          <img class="rounded-full w-[75px] m-auto" [src]="( this.creator | async )?.avatar" alt="profile picture" />
-        </div>
-      <h2 class="text-3xl break-words mx-6 text-center">{{(notice | async)?.title}}</h2>
-      <div class="w-full p-4 bg-darkblue text-white rounded-xl mx-auto white-box-border">
-        <p class="break-words">{{(notice | async)?.description}}</p>
+  <div *ngIf="(notice$ | async) as notice" class="flex justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
+    <div class="py-6 flex flex-col gap-12 ">
+      <div>
+        <h1 class="lg:text-8xl text-4xl w-full font-thin">{{notice.title}}</h1> 
+        <p class="py-12 break-words text-[lightgrey]">{{notice.description}}</p>
       </div>
-      <div class="flex justify-between">
-        <ul class="font-start">
-          <li><fa-icon [icon]="['fas','city']" /> {{(notice | async)?.city}}</li>
-          <li><fa-icon [icon]="['fas','truck-ramp-box']"/> {{(notice | async)?.deliveryMethods}}</li>
-        </ul>
-        <ul class="text-end">
-          <li class="font-bold">SEK</li>
-          <li>{{(notice | async)?.payments}} <fa-icon [icon]="['fas','cash-register']"/></li>
+      <div class="flex flex-col justify-between mb-8">
+        <ul class="font-start grid grid-cols-2  gap-14 text-3xl">
+          <li ><fa-icon class="text-[grey]" [icon]="['fas','chess-rook']" /> {{notice.city}}</li>
+          <li class="text-end">{{notice.deliveryMethods}} <fa-icon class="text-[lightgrey]" [icon]="['fas','crow']"/></li>
+          <li class=""><fa-icon class="text-[sienna]" [icon]="['fas','sack-dollar']"/> {{notice.payments}}</li>
+          <li class=" text-end text-4xl">{{ getTotalPrice(notice) }} SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
         </ul>
       </div>
-
-    </app-styled-container>
-
-  </app-main-container>
+      <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
+    </div>
+    <div class="flex flex-col-reverse lg:flex-col w-full">
+      <ng-container *ngIf="(creator$ | async) as user;">
+        <app-user-card [user]="user"></app-user-card>
+      </ng-container>
+      <div class="flex flex-col gap-6">
+        <ng-container *ngFor="let product of notice.products">
+          <a (click)="selectedProduct = product" [class]="product == selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
+            <app-product-card [product]="product"></app-product-card>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</app-main-container>

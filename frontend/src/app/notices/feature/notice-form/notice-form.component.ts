@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, numberAttribute } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit} from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
 import { Router } from '@angular/router'
@@ -10,11 +10,13 @@ import { getUser, getUserId } from '@app/users/data-access/store/users.selectors
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
 import { getCategories } from '@app/categories/data-access/store/categories.selectors';
+import { Product } from '@app/shared/models/product.model';
+import { ProductRequest } from '@app/shared/models/product-request.model';
 
 @Component({
   selector: 'app-notice-form',
   templateUrl: './notice-form.component.html',
-  styleUrls: ['./notice-form.component.scss'],
+  styleUrls: ['./notice-form.component.css'],
 })
 export class NoticeFormComponent implements OnInit{
   deliveryMethods = ['postage', 'hand delivery', 'pick up'  ];  
@@ -22,33 +24,17 @@ export class NoticeFormComponent implements OnInit{
   noticeForm: FormGroup;
   isAuthenticated$ = this.authService.isAuthenticated$;
   disableSubmitButton = false;
-
+  
   private creatorId? : number;  
 
-  constructor(private store: Store, public authService: AuthService, private router: Router) {
-    this.noticeForm = new FormGroup({
-      userId: new FormControl(),
-      title: new FormControl('', [
-        Validators.required,
-        Validators.minLength(10)
-      ]),
-      description: new FormControl('', [
-        Validators.required,
-        Validators.minLength(30)
-      ]),
-      city: new FormControl('', [
-        Validators.required,
-        Validators.minLength(1)
-      ]),
-      payments: new FormControl([''], [
-        Validators.required,
-        Validators.minLength(1)
-      ]),
-      deliveryMethods: new FormControl([''], [
-        Validators.required,
-        Validators.minLength(1)
-      ]),
-    });
+  constructor(
+    public authService: AuthService, 
+    private store: Store, 
+    private router: Router, 
+    private formBuilder: FormBuilder
+    ) {
+    
+    this.noticeForm = this.noticeFormGroup
 
     if (!this.isAuthenticated$) {
       this.authService.loginWithPopup()
@@ -58,28 +44,43 @@ export class NoticeFormComponent implements OnInit{
     this.store.select(getUserId).subscribe(id => this.creatorId = id)
   }
 
-  get titleFormControl() {
-    return this.noticeForm.get('title') as FormControl;
-  }
-  get descriptionFormControl() {
-    return this.noticeForm.get('description') as FormControl;
-  }
-  get cityFormControl() {
-    return this.noticeForm.get('city') as FormControl;
-  }
-  get paymentsFormControl() {
-    return this.noticeForm.get('payments') as FormControl;
-  }
-  get deliveryMethodsFormControl() {
-    return this.noticeForm.get('deliveryMethods') as FormControl;
-  }
-
   getErrorMessage(formControl : AbstractControl) {
     if (formControl.hasError('required')) {
       return 'You must enter a value';
     }
 
     return formControl.hasError('minlength') ? `this field must be at least ${formControl.errors?.['minlength'].requiredLength} characters` : '';
+  }
+
+  getProductFormGroup(index: number) {
+    return this.productsFormArray.get(`${index}`) as FormGroup
+  }
+
+  addProduct() {
+    this.productsFormArray.push(this.formBuilder.group({
+          name: [''],
+          price: [0],
+          isSold: [false],
+          isSoldSeparately: [false],
+          hasReceipt: [false],
+          warranty: [''],
+          categoryId: [0],
+          condition: [0],
+          imageRequests: this.formBuilder.array([
+            this.formBuilder.group({
+              url: ['']
+            })
+          ]), 
+        }));
+  }
+
+  isRemovable() {
+    return this.productsFormArray.length > 1;
+  }
+
+  removeProduct(pos: number) {
+    this.productsFormArray.removeAt(pos);
+    this.productsFormArray.updateValueAndValidity();
   }
 
   async onSubmit() {
@@ -91,6 +92,8 @@ export class NoticeFormComponent implements OnInit{
     }    
 
     const postRequest = this.createRequest(this.creatorId);
+
+    console.log(postRequest);
 
     this.store.dispatch(postNoticeRequest(postRequest));
 
@@ -108,6 +111,7 @@ export class NoticeFormComponent implements OnInit{
     const postRequest : NoticeRequest = this.noticeForm.value as NoticeRequest;
       
     postRequest.userId = creatorId; 
+  
 
     return postRequest
   }
@@ -119,4 +123,55 @@ export class NoticeFormComponent implements OnInit{
       }
     })
   } 
+
+  // addProductToArray(formGroup: FormGroup) {
+  //   this.productsFormArray.push(formGroup);
+
+  //   console.log(this.productsFormArray);
+  // }
+  
+  get titleFormControl() {
+    return this.noticeForm.get('title') as FormControl;
+  }
+  get descriptionFormControl() {
+    return this.noticeForm.get('description') as FormControl;
+  }
+  get cityFormControl() {
+    return this.noticeForm.get('city') as FormControl;
+  }
+  get paymentsFormControl() {
+    return this.noticeForm.get('payments') as FormControl;
+  }
+  get deliveryMethodsFormControl() {
+    return this.noticeForm.get('deliveryMethods') as FormControl;
+  }
+  get productsFormArray() {
+    return this.noticeForm.get('productRequests') as FormArray;
+  }
+  
+  noticeFormGroup = this.formBuilder.group({
+    userId: [],
+    title: ['', [Validators.required, Validators.minLength(10)]],
+    description: ['', [Validators.required, Validators.minLength(30)]],
+    city: ['', [Validators.required, Validators.minLength(1)]],
+    payments: [[''], [Validators.required, Validators.minLength(1)]],
+    deliveryMethods: [[''], [Validators.required, Validators.minLength(1)]],
+    productRequests: this.formBuilder.array([
+      this.formBuilder.group({
+        name: [''],
+        price: [0],
+        isSold: [false],
+        isSoldSeparately: [false],
+        hasReceipt: [false],
+        warranty: [''],
+        categoryId: [0],
+        condition: [0],
+        imageRequests: this.formBuilder.array([
+          this.formBuilder.group({
+            url: ['']
+          })
+        ]), 
+      })
+    ], [Validators.required, Validators.minLength(1)])
+  });
 }

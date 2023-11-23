@@ -1,13 +1,14 @@
-<div class="w-full h-[30vh] bg-blue flex justify-center items-center ">
-    <img src='assets/logo.png' alt="deal fortress logo" class="logo-l"/>
+<div class="w-full h-[66vh] medieval-banner bg-cover flex justify-center items-center relative top-[-100px]">
+    <img src='assets/biglogo.png' alt="deal fortress logo" class="logo-xl"/>
 </div>
 <app-main-container>
     <header>
         <div class="flex justify-between items-center w-full">
-            <h2 class="text-2xl medieval-font">Latest posts</h2>
-            <a routerLink="/notices/create" class="text-3xl"><fa-icon [icon]="faPlusCircle"/></a>
+            <h2 class="text-4xl medieval-font">Latest posts</h2>
+            <button routerLink="/notices/create" aria-label="create Notice" class="btn btn-square">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
         </div>
-        <p class="text-end">Create Notice</p>
     </header>
     <section class="flex flex-col gap-3" *ngFor="let notice of (notices$ | async)" >
         <app-notice-card [notice]="notice"></app-notice-card>

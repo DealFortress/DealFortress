@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from '@app/app-routing.module';
+import { AppRoutingModule } from '@app/shared/modules/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { SearchBarComponent } from '@app/header/feature/search-bar/search-bar.component';
 import { NavBarComponent } from '@app/header/feature/nav-bar/nav-bar.component';
@@ -9,14 +9,10 @@ import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-lis
 import { ErrorComponent } from '@app/shared/error/error.component';
 import { MainContainerComponent } from '@app/shared/main-container/main-container.component';
 import { NoticeFormComponent } from '@app/notices/feature/notice-form/notice-form.component';
-import { StyledContainerComponent } from '@app/shared/styled-container/styled-container.component';
 import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NoticeCardComponent } from '@app/notices/feature/notice-list/notice-card/notice-card.component';
-import { ToggleNavBarComponent } from './header/feature/nav-bar/toggle-nav-bar/toggle-nav-bar.component';
-import { StaticNavBarComponent } from './header/feature/nav-bar/static-nav-bar/static-nav-bar.component';
-import { NavbarService } from './header/feature/nav-bar/nav-bar.service';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'environments/environment.production';
 import { AuthLoginButtonComponent } from './shared/auth/auth-login-button/auth-login-button.component';
@@ -31,8 +27,10 @@ import {
     faBars as fasBars,
     faArrowRightToBracket as fasArrowRightToBracket,
     faCashRegister as fasCashRegister,
-    faCity as fasCity,
-    faTruckRampBox as fasTruckRampBox 
+    faChessRook as fasChessRook,
+    faCrow as fasCrow,
+    faCoins as fasCoins,
+    faSackDollar as fasSackDollar,
   } from '@fortawesome/free-solid-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -40,12 +38,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { NoticesEffects } from './notices/data-access/store/notices.effects';
 import { noticesReducer } from './notices/data-access/store/notices.reducer';
 import { NoticesApiService } from './notices/data-access/services/notices-api.service';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './shared/modules/material.module';
 import { AppEffects } from './shared/store/app.effects';
 import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
+import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
+import { ProductCardComponent } from './notices/feature/notice-detail/product-card/product-card.component';
+import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
+import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
+import { FullscreenImageCarouselComponent } from './notices/feature/notice-detail/product-detail/fullscreen-image-carousel/fullscreen-image-carousel.component';
+import { ProductFormComponent } from './notices/feature/notice-form/product-form/product-form.component';
 import { CategoriesApiService } from './categories/data-access/services/categories-api.service';
 import { categoriesReducer } from './categories/data-access/store/categories.reducer';
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
@@ -60,18 +64,20 @@ import { CategoriesEffects } from './categories/data-access/store/categories.eff
     NavBarComponent,
     LoaderComponent,
     MainContainerComponent,
-    StyledContainerComponent,
     NoticeFormComponent,
     NoticeDetailComponent,
     NotFoundComponent,
     NoticeCardComponent,
-    ToggleNavBarComponent,
-    StaticNavBarComponent,
     AuthLoginButtonComponent,
     AuthLogoutButtonComponent,
     PopupCardComponent,
     UserProfileComponent,
-
+    ProductDetailComponent,
+    UserCardComponent,
+    ProductCardComponent,
+    ImageCarouselComponent,
+    FullscreenImageCarouselComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,7 +106,6 @@ import { CategoriesEffects } from './categories/data-access/store/categories.eff
   providers: [
     NoticesApiService, 
     CategoriesApiService,
-    NavbarService, 
     UsersApiService, 
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
@@ -110,11 +115,14 @@ import { CategoriesEffects } from './categories/data-access/store/categories.eff
 export class AppModule {
 
   constructor(library: FaIconLibrary) {
-    library.addIcons(fasCashRegister,
-      fasCity,
-      fasTruckRampBox,
+    library.addIcons(
+      fasCashRegister,
+      fasChessRook,
+      fasCrow,
       fasArrowRightToBracket,
       fasBars,
+      fasCoins,
+      fasSackDollar
     );
   }
  }

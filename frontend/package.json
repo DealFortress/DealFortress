@@ -16,7 +16,7 @@
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
     "@angular/forms": "^16.2.0",
-    "@angular/material": "^16.2.8",
+    "@angular/material": "^16.2.12",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
@@ -34,7 +34,7 @@
     "@ngrx/store": "^16.3.0",
     "rxjs": "^6.6.7",
     "rxjs-compat": "^6.6.7",
-    "schematics-scss-migrate": "^2.3.17",
+    "schematics-css-migrate": "^2.3.17",
     "ts-evaluator": "^1.2.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -45,6 +45,7 @@
     "@angular/compiler-cli": "^16.2.0",
     "@types/jasmine": "~4.3.0",
     "autoprefixer": "^10.4.16",
+    "daisyui": "^3.9.4",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -52,7 +53,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.3",
+    "postcss-import": "^15.1.0",
+    "tailwindcss": "^3.3.5",
     "typescript": "~5.1.3"
   }
 }

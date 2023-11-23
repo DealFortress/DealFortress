@@ -5,10 +5,10 @@ import { Notice } from '@app/shared/models/notice.model';
 @Component({
   selector: 'app-notice-card',
   templateUrl: './notice-card.component.html',
-  styleUrls: ['./notice-card.component.scss']
+  styleUrls: ['./notice-card.component.css']
 })
 export class NoticeCardComponent implements OnInit {
-  @Input() notice!: Notice ;
+  @Input({required: true}) notice!: Notice ;
   minutesSinceCreation: string = '';
 
   constructor() {}

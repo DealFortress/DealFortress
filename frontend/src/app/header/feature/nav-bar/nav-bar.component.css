@@ -1,0 +1,158 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.hamburger-menu {
+  --x-width: calc(var(--hamburger-height) * 1.41421356237);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hamburger-gap);
+  /* width: max-content; */
+  z-index: 50;
+  cursor: pointer;
+}
+
+.hamburger-menu:has(input:not(:checked))::after {
+  width: 1rem !important;
+  margin-right: 8px;
+}
+
+
+.hamburger-menu:has(input:checked) {
+  --foreground: white;
+  --background: #ffffff;
+}
+
+.hamburger-menu:has(input:focus-visible)::before,
+.hamburger-menu:has(input:focus-visible)::after,
+.hamburger-menu input:focus-visible {
+  border: 1px solid var(--background);
+  box-shadow: 0 0 0 1px var(--foreground);
+}
+
+.hamburger-menu::before,
+.hamburger-menu::after,
+.hamburger-menu input {
+  content: "";
+  width: var(--bar-width);
+  height: var(--bar-height);
+  background-color: var(--foreground);
+  border-radius: 9999px;
+  transform-origin: left center;
+  transition: opacity var(--animation-timing), width var(--animation-timing),
+    rotate var(--animation-timing), translate var(--animation-timing),
+    background-color var(--animation-timing), margin var(--animation-timing);
+}
+
+.hamburger-menu input {
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  pointer-events: none;
+}
+
+.hamburger-menu:has(input:checked)::before {
+  rotate: 45deg;
+  width: var(--x-width);
+  margin-left: 8px;
+  translate: 0 calc(var(--bar-height) / -2);
+}
+
+.hamburger-menu:has(input:checked)::after {
+  rotate: -45deg;
+  width: var(--x-width);
+  margin-left: 8px;
+  translate: 0 calc(var(--bar-height) / 2);
+}
+
+.hamburger-menu input:checked {
+  opacity: 0;
+  width: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar {
+  display: flex;
+  position: absolute;
+  padding: .5rem .75rem;
+  left: -1rem;
+  border-radius: .5rem;
+  transition: scale var(--animation-timing);
+  translate: 0 -30%; 
+  scale: 100% 0;
+  color: var(--background);
+  width: 40rem;
+  height: auto;
+  z-index: -1;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.hamburger-menu:has(input:checked) + .sidebar {
+  scale: 100% 100%;
+  animation: 1s move linear;
+  animation-fill-mode: both;
+}
+
+.sidebar::after{
+  content: "";
+  position: absolute;
+  top: -58px;
+  right: 1rem;
+  background-image: url("/assets/chain.png");
+  height: 70px;
+  width: 16px;
+  background-size: contain;
+  /* background-color: red; */
+}
+
+.sidebar::before{
+  content: "";
+  position: absolute;
+  top: -58px;
+  left: 1rem;
+  background-image: url("/assets/chain.png");
+  height: 70px;
+  width: 16px;
+  background-size: contain;
+  /* background-color: red; */
+}
+
+@keyframes move {
+    0%   { top: 100%; }
+    2%   { top: 103.30887625352196%; }
+    4%   { top: 112.06407562318391%; }
+    6%   { top: 124.54642206432976%; }
+    8%   { top: 139.16640928859013%; }
+    40%  { top: 203.72473387120573%; }
+    42%  { top: 201.2199697208098%; }
+    44%  { top: 199.17202686633095%; }
+    46%  { top: 197.61374067964204%; }
+    48%  { top: 196.53978407975245%; }
+    50%  { top: 195.91514930968282%; }
+    52%  { top: 195.68370845882814%; }
+    54%  { top: 195.7762912646242%; }
+    56%  { top: 196.1178692094388%; }
+    57%  { top: 196.35849187467915%; }
+    58%  { top: 196.63357948554946%; }
+    59%  { top: 196.93457574055066%; }
+    60%  { top: 197.25345307939384%; }
+    62%  { top: 197.91582261394115%; }
+    64%  { top: 198.56947483257156%; }
+    66%  { top: 199.17467862706735%; }
+    68%  { top: 199.70326312039%; }
+    70%  { top: 200.13794350123476%; }
+    72%  { top: 200.47109806939648%; }
+    84%  { top: 200.7105482768328%; }
+    86%  { top: 200.58308284617112%; }
+    88%  { top: 200.44571408112546%; }
+    90%  { top: 200.3092956925791%; }
+    92%  { top: 200.1823050421591%; }
+    94%  { top: 200.07081078240043%; }
+    96%  { top: 199.97860066859386%; }
+    98%  { top: 199.90742722728143%; }
+    100% { top: 199.8573305048547%; }
+  }

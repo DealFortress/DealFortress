@@ -1,7 +1,10 @@
-<a [routerLink]="['/notices', notice.id]" class="flex flex-col justify-between bg-blue rounded my-2 p-3 gap-4 white-box-border">
-    <p class="font-semibold text-lg break-words">{{notice.title}}</p>
-    <div class="flex gap-12 justify-between">
-        <p>{{notice.city}}</p>
-        <p>{{minutesSinceCreation}}</p>
+<a class="card w-96 bg-neutral text-neutral-content w-full" [routerLink]="['/notices', notice.id]" >
+    <div class="card-body items-left text-left">
+      <h2 class="card-title">{{notice.title}}</h2>
+      <p>{{notice.description.slice(30)}}...</p>
+      <div class="card-actions justify-end">
+        <p><strong>{{notice.city }}</strong></p>
+        <p class="text-end"><strong>{{minutesSinceCreation}}</strong></p>
+      </div>
     </div>
-</a>
+  </a>

@@ -1,0 +1,16 @@
+<div class="relative h-48 transition-all
+            md:flex md:py-6 md:gap-6 md:items-stretch md:w-full md:h-60">
+    <span class="bg-gradient-to-b from-black to-[#454545] opacity-60 md:opacity-0 h-full w-full absolute rounded-xl"></span>
+    <img [src]="this.product.images[0].url" 
+        alt="product image" 
+        class="z-[-1] w-full h-full object-cover rounded-xl
+                md:z-[0] md:rounded-full md:aspect-square md:max-h-full md:max-w-full md:w-auto"
+    />
+    <div class="flex absolute top-0 p-6 flex-col justify-evenly h-full
+                md:relative md:p-4 md:gap-3 md:border-b md:border-[grey] md:w-full md:justify-center">
+        <h3 class="text-2xl">{{this.product.name}}</h3>
+        <p>condition: {{this.condition}}</p>
+        <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
+        <p>warranty: {{this.product.warranty}}</p>
+    </div>
+</div>

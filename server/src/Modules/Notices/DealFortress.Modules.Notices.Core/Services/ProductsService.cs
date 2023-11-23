@@ -99,7 +99,7 @@ public class ProductsService: IProductsService
             Notice = notice,
         };
 
-        product.Images = request.Images.Select(image => _imagesService.ToImage(image, product)).ToList();
+        product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
 
         return product;
     }

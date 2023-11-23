@@ -12,8 +12,6 @@ public class Product
 
     [Range(1, 100000, ErrorMessage = "Price must be between 1SEK and 100 000SEK")]
     public required int Price { get; set; }
-
-    [StringLength(40, MinimumLength = 1 , ErrorMessage = "Warranty cannot be longer than 40 characters or less than 1 characters")]
     public required bool HasReceipt { get; set; }
     public required bool IsSold { get; set; }
     public required bool IsSoldSeparately { get; set; }
