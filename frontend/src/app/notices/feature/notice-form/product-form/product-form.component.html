@@ -11,13 +11,13 @@
                 <input matInput type="number" [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <div formArrayName="imagesFormArray">
+            <div>
                 <h2>Images urls</h2>
-                <div *ngFor="let image of imagesFormArray.controls; index as i; first as isFirst" class="" appearance="outline">
+                <div *ngFor="let image of imagesFormArray.controls; index as i; first as isFirst" class="" appearance="outline" formArrayName="imageRequests">
                     <div [formGroupName]="i">
                         <div *ngIf="isRemovable()" class="close" (click)="removeImage(i)">X</div>
                         <mat-form-field class="">
-                            <input matInput placeholder="image url" formControlName="url" name="url{{i}}" required>
+                            <input matInput placeholder="image url" name="url{{i}}" formControlName="url" required>
                         </mat-form-field>
                     </div>
                 </div>

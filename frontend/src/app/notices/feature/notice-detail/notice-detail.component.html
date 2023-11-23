@@ -10,7 +10,7 @@
           <li ><fa-icon class="text-[grey]" [icon]="['fas','chess-rook']" /> {{notice.city}}</li>
           <li class="text-end">{{notice.deliveryMethods}} <fa-icon class="text-[lightgrey]" [icon]="['fas','crow']"/></li>
           <li class=""><fa-icon class="text-[sienna]" [icon]="['fas','sack-dollar']"/> {{notice.payments}}</li>
-          <li class=" text-end text-4xl">1.200 SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
+          <li class=" text-end text-4xl">{{ getTotalPrice(notice) }} SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
         </ul>
       </div>
       <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>

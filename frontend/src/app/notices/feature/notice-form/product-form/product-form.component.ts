@@ -16,39 +16,19 @@ export class ProductFormComponent{
   categories$ = this.store.select(getCategories);
   conditions = Object.values(Condition).filter(value => isNaN(Number(value))); 
   disableSubmitButton = false;
-  @Output() productEvent = new EventEmitter<FormGroup>();
+  @Input( { required: true }) productForm!: FormGroup;
 
   
   constructor(private store: Store, private formBuilder: FormBuilder) {}
-  
-  productForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3)
-    ]),
-    price: new FormControl(-1, [
-      Validators.required,
-    ]),
-    isSold: new FormControl(false),
-    isSoldSeparately: new FormControl(false),
-    hasReceipt: new FormControl(false),
-    warranty: new FormControl(''),
-    categoryId: new FormControl(-1, [
-      Validators.required,
-    ]),
-    condition: new FormControl(-1, [
-      Validators.required,
-    ]),
-    images: this.formBuilder.array([
-      this.formBuilder.group({
-        url: ''
-    })
-  ])
-  })
+
+  getFormGroup() {
+    return this.productForm as FormGroup;
+  }
 
   
   addImage() {
     this.imagesFormArray.push(this.formBuilder.group({ url: ''}));
+    console.log(this.productForm);
   }
   
   isRemovable() {
@@ -67,8 +47,6 @@ export class ProductFormComponent{
       of(ShowAlert({message: 'Apologies squire there seem to be an issue at the portcullis, try refreshing', actionresult: 'fail'}))
       return;
     }    
-    
-    this.productEvent.emit(this.productForm);
   }
   
   disableSubmitForNSecond(n : number)  {
@@ -104,6 +82,6 @@ export class ProductFormComponent{
     return this.productForm.get('condition') as FormControl;
   }
   get imagesFormArray() {
-    return this.productForm.get('images') as FormArray;
+    return this.productForm.get('imageRequests') as FormArray;
   }
 }

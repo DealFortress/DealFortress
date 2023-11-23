@@ -52,21 +52,23 @@ export class NoticeFormComponent implements OnInit{
     return formControl.hasError('minlength') ? `this field must be at least ${formControl.errors?.['minlength'].requiredLength} characters` : '';
   }
 
-
+  getProductFormGroup(index: number) {
+    return this.productsFormArray.get(`${index}`) as FormGroup
+  }
 
   addProduct() {
     this.productsFormArray.push(this.formBuilder.group({
-          name: '',
-          price: 0,
-          isSold: false,
-          isSoldSeparately: false,
-          hasReceipt: false,
-          warranty: '',
-          categoryId: 0,
-          condition: 0,
+          name: [''],
+          price: [0],
+          isSold: [false],
+          isSoldSeparately: [false],
+          hasReceipt: [false],
+          warranty: [''],
+          categoryId: [0],
+          condition: [0],
           imageRequests: this.formBuilder.array([
             this.formBuilder.group({
-              url: ''
+              url: ['']
             })
           ]), 
         }));
@@ -122,11 +124,11 @@ export class NoticeFormComponent implements OnInit{
     })
   } 
 
-  addProductToArray(formGroup: FormGroup) {
-    this.productsFormArray.push(formGroup);
+  // addProductToArray(formGroup: FormGroup) {
+  //   this.productsFormArray.push(formGroup);
 
-    console.log(this.productsFormArray);
-  }
+  //   console.log(this.productsFormArray);
+  // }
   
   get titleFormControl() {
     return this.noticeForm.get('title') as FormControl;
@@ -147,29 +149,29 @@ export class NoticeFormComponent implements OnInit{
     return this.noticeForm.get('productRequests') as FormArray;
   }
   
-  noticeFormGroup = new FormGroup({
-    userId: new FormControl(),
-    title: new FormControl('', [
-      Validators.required,
-      Validators.minLength(10)
-    ]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.minLength(30)
-    ]),
-    city: new FormControl('', [
-      Validators.required,
-      Validators.minLength(1)
-    ]),
-    payments: new FormControl([''], [
-      Validators.required,
-      Validators.minLength(1)
-    ]),
-    deliveryMethods: new FormControl([''], [
-      Validators.required,
-      Validators.minLength(1)
-    ]),
-    productRequests: new FormArray([],
-     [Validators.required, Validators.minLength(1)]),
+  noticeFormGroup = this.formBuilder.group({
+    userId: [],
+    title: ['', [Validators.required, Validators.minLength(10)]],
+    description: ['', [Validators.required, Validators.minLength(30)]],
+    city: ['', [Validators.required, Validators.minLength(1)]],
+    payments: [[''], [Validators.required, Validators.minLength(1)]],
+    deliveryMethods: [[''], [Validators.required, Validators.minLength(1)]],
+    productRequests: this.formBuilder.array([
+      this.formBuilder.group({
+        name: [''],
+        price: [0],
+        isSold: [false],
+        isSoldSeparately: [false],
+        hasReceipt: [false],
+        warranty: [''],
+        categoryId: [0],
+        condition: [0],
+        imageRequests: this.formBuilder.array([
+          this.formBuilder.group({
+            url: ['']
+          })
+        ]), 
+      })
+    ], [Validators.required, Validators.minLength(1)])
   });
 }
