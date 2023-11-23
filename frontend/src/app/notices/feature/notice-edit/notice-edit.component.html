@@ -1,1 +1,3 @@
-<app-notice-form (requestEvent)="submitRequest($event)"></app-notice-form>
+<ng-container *ngIf="(notice$ | async) as notice;">
+    <app-notice-form [notice]="notice" (requestEvent)="submitRequest($event)"></app-notice-form>
+</ng-container>

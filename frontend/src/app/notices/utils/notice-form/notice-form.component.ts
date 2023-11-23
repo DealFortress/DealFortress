@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import {getUserId } from '@app/users/data-access/store/users.selectors';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
+import { Notice } from '@app/shared/models/notice.model';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class NoticeFormComponent implements OnInit{
   public isAuthenticated$ = this.authService.isAuthenticated$;
   public disableSubmitButton = false;
   private creatorId? : number;  
+  @Input() notice?: Notice;
   @Output() requestEvent = new EventEmitter<NoticeRequest>();
 
   constructor(public authService: AuthService, private store: Store, private formBuilder: FormBuilder) {
