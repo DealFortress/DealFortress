@@ -53,7 +53,7 @@ public class NoticesServiceTestsHappy
                     Warranty = "month",
                     CategoryId = 1,
                     Condition = Condition.New,
-                    Images = new List<ImageRequest>(){
+                    ImageRequests = new List<ImageRequest>(){
                         new ImageRequest()
                         {
                             Url = "Hello world"
