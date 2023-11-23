@@ -4,7 +4,7 @@
       <div>
         <h1 class="lg:text-8xl text-4xl w-full font-thin">{{notice.title}}</h1> 
         <p class="py-12 break-words text-[lightgrey]">{{notice.description}}</p>
-        <button routerLink="edit" class="absolute top-0 right-0 btn btn-ghost btn-circle text-2xl" *ngIf="(creator$ | async)?.id == notice.userId">
+        <button routerLink="edit" class="absolute top-0 right-0 btn btn-ghost btn-circle text-2xl" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
           <fa-icon [icon]="['fas', 'pen']"></fa-icon>
         </button>
       </div>
