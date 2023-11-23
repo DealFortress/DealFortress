@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { getCategories } from '@app/categories/data-access/store/categories.selectors';
+import { Condition } from '@app/shared/models/condition.model';
 import { ProductRequest } from '@app/shared/models/product-request.model';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { Store } from '@ngrx/store';
@@ -13,9 +14,9 @@ import { of } from 'rxjs';
 })
 export class ProductFormComponent{
   categories$ = this.store.select(getCategories);
-  conditions = ['new', 'used', 'broke'  ]; 
+  conditions = Object.values(Condition).filter(value => isNaN(Number(value))); 
   disableSubmitButton = false;
-  @Output() productEvent = new EventEmitter<Partial<ProductRequest>>();
+  @Output() productEvent = new EventEmitter<FormGroup>();
 
   
   constructor(private store: Store, private formBuilder: FormBuilder) {}
@@ -28,12 +29,14 @@ export class ProductFormComponent{
     price: new FormControl(-1, [
       Validators.required,
     ]),
+    isSold: new FormControl(false),
+    isSoldSeparately: new FormControl(false),
     hasReceipt: new FormControl(false),
     warranty: new FormControl(''),
     categoryId: new FormControl(-1, [
       Validators.required,
     ]),
-    condition: new FormControl('', [
+    condition: new FormControl(-1, [
       Validators.required,
     ]),
     images: this.formBuilder.array([
@@ -43,33 +46,32 @@ export class ProductFormComponent{
   ])
   })
 
-  get images() {
+  get imagesFormArray() {
     return this.productForm.get('images') as FormArray;
   }
 
   addImage() {
-    this.images.push(this.formBuilder.group({ url: ''}));
+    this.imagesFormArray.push(this.formBuilder.group({ url: ''}));
   }
 
   isRemovable() {
-    return this.images.length > 1;
+    return this.imagesFormArray.length > 1;
   }
 
   removeImage(pos: number) {
-    this.images.removeAt(pos);
-    this.images.updateValueAndValidity();
+    this.imagesFormArray.removeAt(pos);
+    this.imagesFormArray.updateValueAndValidity();
   }
 
   async onSubmit() {
     this.disableSubmitForNSecond(1);  
-
-    console.log(this.productForm);
     
     if (this.productForm.invalid) {
       of(ShowAlert({message: 'Apologies squire there seem to be an issue at the portcullis, try refreshing', actionresult: 'fail'}))
       return;
     }    
-    console.log(this.productForm.value)
+
+    this.productEvent.emit(this.productForm);
   }
 
   disableSubmitForNSecond(n : number)  {

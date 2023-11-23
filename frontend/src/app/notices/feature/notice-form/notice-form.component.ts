@@ -77,6 +77,8 @@ export class NoticeFormComponent implements OnInit{
 
     const postRequest = this.createRequest(this.creatorId);
 
+    console.log(postRequest);
+
     this.store.dispatch(postNoticeRequest(postRequest));
 
     this.navigateToNewNotice()
@@ -106,6 +108,11 @@ export class NoticeFormComponent implements OnInit{
     })
   } 
 
+  addProductToArray(formGroup: FormGroup) {
+    this.productsFormArray.push(formGroup);
+
+    console.log(this.productsFormArray);
+  }
   
   get titleFormControl() {
     return this.noticeForm.get('title') as FormControl;
@@ -123,7 +130,7 @@ export class NoticeFormComponent implements OnInit{
     return this.noticeForm.get('deliveryMethods') as FormControl;
   }
   get productsFormArray() {
-    return this.noticeForm.get('products') as FormArray;
+    return this.noticeForm.get('productRequests') as FormArray;
   }
   
   noticeFormGroup = new FormGroup({
@@ -148,17 +155,24 @@ export class NoticeFormComponent implements OnInit{
       Validators.required,
       Validators.minLength(1)
     ]),
-    products: new FormArray([
-      this.formBuilder.group({
-        name: '',
-        price: -1,
-        hasReceipt: false,
-        warranty: '',
-        categoryId: -1,
-        condition: '',
-        images: [],
-        })
-     ], 
+    // products: this.formBuilder.array([
+    //   this.formBuilder.group({
+    //     name: '',
+    //     price: 0,
+    //     isSold: false,
+    //     isSoldSeparately: false,
+    //     hasReceipt: false,
+    //     warranty: '',
+    //     categoryId: 0,
+    //     condition: 0,
+    //     images: this.formBuilder.array([
+    //       this.formBuilder.group({
+    //         url: ''
+    //     })
+    //   ])
+    //   })
+    // ], 
+    productRequests: new FormArray([],
      [Validators.required, Validators.minLength(1)]),
   });
 }

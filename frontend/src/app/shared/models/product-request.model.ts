@@ -7,6 +7,8 @@ export type ProductRequest = {
     name: string,
     price: number,
     hasReceipt: boolean,
+    isSold: boolean,
+    isSoldSeparately: boolean,
     warranty: string,
     categoryId: number,
     condition: Condition,

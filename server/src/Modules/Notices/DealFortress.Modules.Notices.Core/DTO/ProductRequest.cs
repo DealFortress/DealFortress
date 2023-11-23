@@ -14,8 +14,6 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required bool HasReceipt { get; set; }
         public required bool IsSold { get; set; }
         public required bool IsSoldSeparately { get; set; }
-
-        [StringLength(40, MinimumLength = 1 , ErrorMessage = "Warranty cannot be longer than 40 characters or less than 1 characters")]
         public string? Warranty { get; set; }
         public required int CategoryId { get; set; }
         public required Condition Condition { get; set; }

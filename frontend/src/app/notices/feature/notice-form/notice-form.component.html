@@ -28,7 +28,7 @@
                     </div>
                     <button mat-fab color="accent" (click)="addProduct()" class="btn btn-ghost">+</button>
                 </div> -->
-                <app-product-form formControlName="product"></app-product-form>
+                <app-product-form (productEvent)="addProductToArray($event)"></app-product-form>
                 <mat-form-field class="">
                     <mat-label>Your city here ✒️</mat-label>
                     <input matInput [placeholder]="'Baldurs Gate'" formControlName="city" required>

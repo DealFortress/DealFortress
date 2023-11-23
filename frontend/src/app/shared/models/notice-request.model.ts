@@ -7,5 +7,5 @@ export type NoticeRequest = {
     city: string,
     payments: string[],
     deliveryMethods: string[],
-    products: ProductRequest[]
+    productRequests: ProductRequest[]
 }

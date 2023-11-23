@@ -13,7 +13,7 @@
             </mat-form-field>
             <div formArrayName="images">
                 <h2>Images urls</h2>
-                <div *ngFor="let image of images.controls; index as i; first as isFirst" class="" appearance="outline">
+                <div *ngFor="let image of imagesFormArray.controls; index as i; first as isFirst" class="" appearance="outline">
                     <div [formGroupName]="i">
                         <div *ngIf="isRemovable()" class="close" (click)="removeImage(i)">X</div>
                         <mat-form-field class="">
@@ -34,10 +34,11 @@
                 <mat-form-field class="">
                     <mat-label class="">Condition</mat-label>
                     <mat-select formControlName="condition" class="">
-                        <mat-option *ngFor="let option of conditions" [value]="option" class="">{{option}}</mat-option>
+                        <mat-option *ngFor="let option of conditions; index as i" [value]="i" class="">{{option}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="conditionFormControl">{{getErrorMessage(conditionFormControl)}}</mat-error>
                 </mat-form-field>
+                <mat-checkbox class="my-auto py-6" matInput [color]="'primary'" formControlName="isSoldSeparately">Can be sold separately</mat-checkbox>
                 <mat-checkbox #checkbox class="my-auto py-6" matInput [color]="'primary'" formControlName="hasReceipt">Receipt included</mat-checkbox>
                 <mat-form-field class="" *ngIf="checkbox.checked">
                     <mat-label class="">warranty</mat-label>
