@@ -10,7 +10,7 @@ public class Product
     [StringLength(50, MinimumLength = 2 , ErrorMessage = "Name cannot be longer than 50 characters or less than 2 characters")]
     public required string Name { get; set; }
 
-    [Range(1, 100000, ErrorMessage = "Price must be between 1SEK and 100 000SEK")]
+    [Range(0, 100000, ErrorMessage = "The maximum price for a product is 100 000 SEK")]
     public required int Price { get; set; }
     public required bool HasReceipt { get; set; }
     public required bool IsSold { get; set; }
