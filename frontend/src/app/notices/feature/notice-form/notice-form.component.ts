@@ -123,31 +123,13 @@ export class NoticeFormComponent implements OnInit{
       }
     })
   } 
-
-  // addProductToArray(formGroup: FormGroup) {
-  //   this.productsFormArray.push(formGroup);
-
-  //   console.log(this.productsFormArray);
-  // }
   
-  get titleFormControl() {
-    return this.noticeForm.get('title') as FormControl;
-  }
-  get descriptionFormControl() {
-    return this.noticeForm.get('description') as FormControl;
-  }
-  get cityFormControl() {
-    return this.noticeForm.get('city') as FormControl;
-  }
-  get paymentsFormControl() {
-    return this.noticeForm.get('payments') as FormControl;
-  }
-  get deliveryMethodsFormControl() {
-    return this.noticeForm.get('deliveryMethods') as FormControl;
-  }
-  get productsFormArray() {
-    return this.noticeForm.get('productRequests') as FormArray;
-  }
+  get titleFormControl() { return this.noticeForm.get('title') as FormControl; }
+  get descriptionFormControl() { return this.noticeForm.get('description') as FormControl; }
+  get cityFormControl() { return this.noticeForm.get('city') as FormControl; }
+  get paymentsFormControl() { return this.noticeForm.get('payments') as FormControl; }
+  get deliveryMethodsFormControl() { return this.noticeForm.get('deliveryMethods') as FormControl; }
+  get productsFormArray() { return this.noticeForm.get('productRequests') as FormArray; }
   
   noticeFormGroup = this.formBuilder.group({
     userId: [],
@@ -158,8 +140,8 @@ export class NoticeFormComponent implements OnInit{
     deliveryMethods: [[''], [Validators.required, Validators.minLength(1)]],
     productRequests: this.formBuilder.array([
       this.formBuilder.group({
-        name: [''],
-        price: [0],
+        name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+        price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
         isSold: [false],
         isSoldSeparately: [false],
         hasReceipt: [false],
@@ -168,9 +150,9 @@ export class NoticeFormComponent implements OnInit{
         condition: [0],
         imageRequests: this.formBuilder.array([
           this.formBuilder.group({
-            url: ['']
+            url: ['', [Validators.required]]
           })
-        ]), 
+        ], [Validators.required, Validators.minLength(1)]),  
       })
     ], [Validators.required, Validators.minLength(1)])
   });
