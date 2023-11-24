@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { postNoticeRequest, putNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById, getUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { Notice } from '@app/shared/models/notice.model';
+import { Product } from '@app/shared/models/product.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs-compat';
 
@@ -16,8 +17,11 @@ import { Observable } from 'rxjs-compat';
 export class NoticeEditComponent {
   id = this.route.snapshot.paramMap.get('id');
   notice$ = this.store.select(getNoticeById(+this.id!));
+  public noticeForm: FormGroup;
 
-  constructor(private store: Store, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) {}
+  constructor(private store: Store, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+    this.noticeForm = this.noticeFormGroup;
+  }
 
   submitRequest(putRequest: NoticeRequest) {
     this.store.dispatch(putNoticeRequest({request: putRequest, noticeId: +this.id!}));
@@ -49,6 +53,27 @@ export class NoticeEditComponent {
       })
     ], [Validators.required, Validators.minLength(1)])
   });
+
+   
+  addProduct(product: Product) {
+    var imageRequests = this.noticeForm.get('imageRequests') as FormArray;
+    
+    imageRequests.push(this.formBuilder.group({
+          name: [product.name],
+          price: [product.price],
+          isSold: [product.isSold],
+          isSoldSeparately: [product.isSoldSeparately],
+          hasReceipt: [product.hasReceipt],
+          warranty: [product.warranty],
+          categoryId: [product.categoryId],
+          condition: [product.condition],
+          imageRequests: this.formBuilder.array([
+            this.formBuilder.group({
+              url: ['']
+            })
+          ]), 
+        }));
+  }
 
   
   navigateToNewNotice() {

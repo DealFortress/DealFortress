@@ -8,7 +8,7 @@
     />
     <div class="flex absolute top-0 p-6 flex-col justify-evenly h-full
                 md:relative md:p-4 md:gap-3 md:border-b md:border-[grey] md:w-full md:justify-center">
-        <h3 class="text-2xl">{{this.product.name}}</h3>
+        <h3 class="text-2xl">{{this.product.name.slice(0, 30)}}</h3>
         <p>condition: {{this.condition}}</p>
         <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
         <p>warranty: {{this.product.warranty}}</p>

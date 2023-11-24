@@ -4,12 +4,12 @@
         <app-image-carousel (toggleFullscreen)="toggleFullscreen = $event" *ngIf="!toggleFullscreen" [images]="this.product.images"></app-image-carousel>
     </media>
     <div class="basis-0 grow-[1] p-2 py-6 text-start flex flex-col gap-8 items-start max-sm:w-[90vw]">
-        <h3 class="text-3xl border-b border-white py-2">{{this.product.name | uppercase}}</h3>
+        <h3 class="text-3xl border-b border-white py-2">{{ this.product.name | uppercase }}</h3>
         <div class="flex flex-col gap-6">
             <p>{{this.product.price }}SEK</p>
             <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
             <p>warranty: {{this.product.warranty}}</p>
-            <p>category: {{this.product.categoryName}}</p>
+            <p>category: {{ ( this.category$ | async )?.name }}</p>
             <p>condition: {{this.condition}}</p>
         </div>
     </div>

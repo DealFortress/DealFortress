@@ -88,12 +88,12 @@ public class NoticeControllersTestsHappy
                     Warranty = "month",
                     CategoryId = 1,
                     Condition = Condition.New,
-                    CategoryName = "test category",
-                    Images = new List<ImageResponse>(){ 
+
+                    Images = new List<ImageResponse>(){
                         new ImageResponse()
                         {
                             Url = "Hello world"
-                        } 
+                        }
                     },
                     NoticeId = 1,
                 }
@@ -132,8 +132,8 @@ public class NoticeControllersTestsHappy
             }
         };
     }
-    
-    
+
+
     [Fact]
     public void GetNotices_should_return_ok()
     {

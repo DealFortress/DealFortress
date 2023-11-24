@@ -22,7 +22,7 @@ export class NoticeFormComponent implements OnInit{
   public isAuthenticated$ = this.authService.isAuthenticated$;
   public disableSubmitButton = false;
   private creatorId? : number;  
-  @Input() notice?: Notice;
+  @Input() prefilledFormGroup?: FormGroup;
   @Output() requestEvent = new EventEmitter<NoticeRequest>();
 
   constructor(public authService: AuthService, private store: Store, private formBuilder: FormBuilder) {
@@ -35,6 +35,10 @@ export class NoticeFormComponent implements OnInit{
 
   ngOnInit(): void {
     this.store.select(getUserId).subscribe(id => this.creatorId = id)
+
+    if (this.prefilledFormGroup != null) {
+      this.noticeForm = this.prefilledFormGroup
+    }
   }
 
   getErrorMessage(formControl : AbstractControl) {

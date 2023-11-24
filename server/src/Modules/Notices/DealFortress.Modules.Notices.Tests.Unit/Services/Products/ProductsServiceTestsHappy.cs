@@ -52,7 +52,7 @@ public class ProductsServiceTestsHappy
                 {
                     Url = "Hello world"
                 }
-            } 
+            }
         };
     }
 
@@ -69,12 +69,12 @@ public class ProductsServiceTestsHappy
             Warranty = "month",
             CategoryId = 1,
             Condition = Condition.New,
-            CategoryName = "test category",
-            Images = new List<ImageResponse>(){ 
+
+            Images = new List<ImageResponse>(){
                 new ImageResponse()
                 {
                     Url = "Hello world"
-                } 
+                }
             },
             NoticeId = 1,
         };
@@ -111,7 +111,7 @@ public class ProductsServiceTestsHappy
 
     [Fact]
     public void GetAll_returns_response()
-    {   
+    {
         // arrange
         var list = new List<Product>() { _product };
         _repo.Setup(repo => repo.GetAllWithImages()).Returns(list);

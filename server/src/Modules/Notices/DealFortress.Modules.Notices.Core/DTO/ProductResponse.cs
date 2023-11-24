@@ -11,7 +11,6 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public string? Warranty { get; set; }
         public bool IsSoldSeparately { get; set; }
         public required int CategoryId { get; set; }
-        public required string CategoryName { get; set; }
         public required Condition Condition { get; set; }
         public virtual List<ImageResponse>? Images { get; set; }
         public required int NoticeId { get; set; }
