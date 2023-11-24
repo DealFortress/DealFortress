@@ -31,7 +31,7 @@ import {
     faCrow as fasCrow,
     faCoins as fasCoins,
     faSackDollar as fasSackDollar,
-    faPen as fasPen,
+    faFeather as fasFeather,
   } from '@fortawesome/free-solid-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -128,7 +128,7 @@ export class AppModule {
       fasBars,
       fasCoins,
       fasSackDollar,
-      fasPen
+      fasFeather
     );
   }
  }

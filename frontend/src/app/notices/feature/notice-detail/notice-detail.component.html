@@ -1,12 +1,9 @@
 <app-main-container>
-  <div *ngIf="(notice$ | async) as notice" class="flex justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
-    <div class="py-6 flex flex-col gap-12 relative ">
+  <div *ngIf="(notice$ | async) as notice" class="relative flex justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
+    <div class="py-6 flex flex-col gap-12 ">
       <div>
         <h1 class="lg:text-8xl text-4xl w-full font-thin break-all">{{notice.title}}</h1> 
         <p class="py-12 break-words text-[lightgrey]">{{notice.description}}</p>
-        <button routerLink="edit" class="absolute top-0 right-0 btn btn-ghost btn-circle text-2xl" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
-          <fa-icon [icon]="['fas', 'pen']"></fa-icon>
-        </button>
       </div>
       <div class="flex flex-col justify-between mb-8">
         <ul class="font-start grid grid-cols-2  gap-14 text-3xl">
@@ -19,8 +16,13 @@
       <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
     </div>
     <div class="flex flex-col-reverse lg:flex-col w-full">
+      <div class="w-full" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
+        <button routerLink="edit" class="absolute top-0 right-0 btn btn-ghost btn-circle text-4xl bg-darkblue btn-lg">
+          <fa-icon [icon]="['fas', 'feather']"></fa-icon>
+        </button>
+      </div>
       <ng-container *ngIf="(creator$ | async) as user;">
-        <app-user-card [user]="user"></app-user-card>
+        <app-user-card [user]="user" class="mt-20"></app-user-card>
       </ng-container>
       <div class="flex flex-col gap-6">
         <ng-container *ngFor="let product of notice.products">
