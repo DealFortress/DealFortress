@@ -18,6 +18,7 @@ export class NoticeDetailComponent{
   creator$ = this.store.select(getCurrentlyShownUser);
   selectedProduct? : Product; 
   currentUserId$ = this.store.select(getUserId);
+  showDeletePopup = false;
 
   constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute) {
     this.notice$.subscribe(notice => {
@@ -34,5 +35,9 @@ export class NoticeDetailComponent{
 
   getTotalPrice(notice: Notice) {
     return notice?.products.reduce((sum, product) => sum + product.price, 0);
+  }
+
+  deleteNotice() {
+    
   }
 }

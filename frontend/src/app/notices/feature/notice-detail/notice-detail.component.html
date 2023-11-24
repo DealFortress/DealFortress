@@ -16,9 +16,12 @@
       <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
     </div>
     <div class="flex flex-col-reverse lg:flex-col w-full">
-      <div class="w-full" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
-        <button routerLink="edit" class="absolute top-0 right-0 btn btn-ghost btn-circle text-4xl bg-darkblue btn-lg">
+      <div class="w-full justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
+        <button routerLink="edit" class="absolute top-0 right-20 btn btn-ghost btn-circle text-4xl bg-darkblue btn-lg">
           <fa-icon [icon]="['fas', 'feather']"></fa-icon>
+        </button>
+        <button class=" absolute right-0 btn btn-ghost btn-circle text-4xl bg-red btn-lg" (click)="showDeletePopup = true" >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
       <ng-container *ngIf="(creator$ | async) as user;">
@@ -34,3 +37,12 @@
     </div>
   </div>
 </app-main-container>
+
+<app-popup-card *ngIf="showDeletePopup">
+  <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2">
+      Abort!
+  </button>
+  <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2">
+      Burn this to the ground
+</button>
+</app-popup-card>
