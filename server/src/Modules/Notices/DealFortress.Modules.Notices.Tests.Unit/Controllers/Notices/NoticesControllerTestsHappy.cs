@@ -181,14 +181,15 @@ public class NoticeControllersTestsHappy
         content.Should().BeOfType<NoticeResponse>();
     }
     [Fact]
-    public void PutNotice_return_no_content_when_service_return_response()
+    public void PutNotice_returns_response_when_service_return_response()
     {
         // Arrange
         _service.Setup(service => service.PutById(1, _request)).Returns(_response);
         // Act
         var httpResponse = _controller.PutNotice(1, _request);
         // Assert 
-        httpResponse.Should().BeOfType<NoContentResult>();
+        var content = httpResponse.Result.As<OkObjectResult>().Value;
+        content.Should().BeOfType<NoticeResponse>();
     }
     [Fact]
     public void DeleteNotice_should_return_no_content()

@@ -156,7 +156,7 @@ public class NoticeControllersTestsSad
         var httpResponse = _controller.PutNotice(1, _request);
 
         // Assert 
-        httpResponse.Should().BeOfType<NotFoundResult>();
+        httpResponse.Result.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
