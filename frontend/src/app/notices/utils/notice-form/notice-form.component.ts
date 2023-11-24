@@ -2,12 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
-import { Router } from '@angular/router'
 import { Store } from '@ngrx/store';
 import {getUserId } from '@app/users/data-access/store/users.selectors';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
-import { Notice } from '@app/shared/models/notice.model';
 
 
 @Component({
@@ -38,7 +36,6 @@ export class NoticeFormComponent implements OnInit{
 
     if (this.prefilledFormGroup != null) {
       this.noticeForm = this.prefilledFormGroup
-      console.log(this.prefilledFormGroup);
     }
   }
 
