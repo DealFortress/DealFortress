@@ -34,6 +34,11 @@ export class NoticeFormComponent implements OnInit{
   ngOnInit(): void {
     this.store.select(getUserId).subscribe(id => this.creatorId = id)
 
+    window.scroll({
+      top: 0,
+      left: 0
+    });
+
     if (this.prefilledFormGroup != null) {
       this.noticeForm = this.prefilledFormGroup
     }
