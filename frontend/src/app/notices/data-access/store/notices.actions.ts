@@ -20,6 +20,6 @@ export const postNoticeRequest = createAction(POST_NOTICE_REQUEST, props<{reques
 export const postNoticeSuccess = createAction(POST_NOTICE_SUCCESS, props<{notice: Notice}>());
 
 export const putNoticeRequest = createAction(PUT_NOTICE_REQUEST, props<{request: NoticeRequest, noticeId: number}>());
-export const putNoticeSuccess = createAction(PUT_NOTICE_SUCCESS, props<{notice: Update<Notice>}>());
+export const putNoticeSuccess = createAction(PUT_NOTICE_SUCCESS, props<{notice: Notice}>());
 
 

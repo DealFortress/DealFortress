@@ -32,6 +32,6 @@ export const noticesReducer = createReducer(
         });
     }),
     on(putNoticeSuccess,(state,action)=>{
-        return noticesAdapter.updateOne(action.notice, state);
+        return noticesAdapter.upsertOne(action.notice, state);
     }),
 );

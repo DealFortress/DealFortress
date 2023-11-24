@@ -68,14 +68,12 @@ export class NoticeEditComponent {
       
   submitRequest(putRequest: NoticeRequest) {
     this.store.dispatch(putNoticeRequest({request: putRequest, noticeId: +this.id!}));
-    this.navigateToNewNotice();
+    this.navigateToNewNotice(+this.id!);
   }
 
-  navigateToNewNotice() {
-    this.store.select(getUserLatestNoticeId).subscribe(id => {
+  navigateToNewNotice(id: number) {
       if (id) {
         this.router.navigate(['notices/', id]);
       }
-    })
   }
 }

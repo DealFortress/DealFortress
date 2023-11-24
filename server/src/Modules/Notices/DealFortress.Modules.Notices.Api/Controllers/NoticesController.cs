@@ -43,7 +43,7 @@ public class NoticesController : ControllerBase
     {
         var response = _service.PutById(id, request);
 
-        return response is null ? NotFound() : NoContent();
+        return response is null ? NotFound() : Ok(response);
     }
 
     [HttpPost]

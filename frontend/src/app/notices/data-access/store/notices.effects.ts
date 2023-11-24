@@ -3,9 +3,10 @@ import { NoticesApiService } from '../services/notices-api.service';
 import { Notice } from '@app/shared/models/notice.model';
 import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeRequest, postNoticeSuccess, putNoticeRequest } from './notices.actions';
+import { loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeRequest, postNoticeSuccess, putNoticeRequest, putNoticeSuccess } from './notices.actions';
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
+import { Update } from '@ngrx/entity';
 
 @Injectable()
 export class NoticesEffects {
@@ -56,7 +57,7 @@ export class NoticesEffects {
             this.noticesApiService.putNoticeAPI(action.request, action.noticeId).pipe(
                 mergeMap(notice => 
                         of(
-                        postNoticeSuccess({ notice: notice as Notice }),
+                        putNoticeSuccess({ notice: notice as Notice }),
                         ShowAlert({ message: 'Created successfully.', actionresult: 'pass' })                    
                         )
                     ),
