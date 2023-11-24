@@ -89,12 +89,11 @@ public class NoticesServiceTestsHappy
                     Warranty = "month",
                     CategoryId = 1,
                     Condition = Condition.New,
-                    CategoryName = "test category",
-                    Images = new List<ImageResponse>(){ 
+                    Images = new List<ImageResponse>(){
                         new ImageResponse()
                         {
                             Url = "Hello world"
-                        } 
+                        }
                     },
                     NoticeId = 1,
                 }
@@ -176,7 +175,7 @@ public class NoticesServiceTestsHappy
     public void PutDTO_should_replace_data()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
 
         // Act
         _service.PutById(1, _request);
@@ -190,7 +189,7 @@ public class NoticesServiceTestsHappy
     public void PutDTO_should_complete_before_sending_back_DTO()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
 
         // Act
         _service.PutById(1, _request);
@@ -203,7 +202,7 @@ public class NoticesServiceTestsHappy
     public void PutDTO_should_return_response()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
 
         // Act
         var response = _service.PutById(1, _request);

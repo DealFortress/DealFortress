@@ -37,13 +37,13 @@ public class NoticesController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult PutNotice(int id, NoticeRequest request)
+    public ActionResult<NoticeResponse> PutNotice(int id, NoticeRequest request)
     {
         var response = _service.PutById(id, request);
 
-        return response is null ? NotFound() : NoContent();
+        return response is null ? NotFound() : Ok(response);
     }
 
     [HttpPost]

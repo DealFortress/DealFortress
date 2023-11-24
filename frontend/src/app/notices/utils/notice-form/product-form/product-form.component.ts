@@ -1,11 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input} from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { getCategories } from '@app/categories/data-access/store/categories.selectors';
 import { Condition } from '@app/shared/models/condition.model';
-import { ProductRequest } from '@app/shared/models/product-request.model';
-import { ShowAlert } from '@app/shared/store/app.actions';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+
 
 @Component({
   selector: 'app-product-form',

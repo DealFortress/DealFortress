@@ -3,9 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Notice } from '@app/shared/models/notice.model';
 import { Product } from '@app/shared/models/product.model';
-import { User } from '@app/shared/models/user.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
-import { getCurrentlyShownUser} from '@app/users/data-access/store/users.selectors';
+import { getCurrentlyShownUser, getUserId} from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -18,6 +17,7 @@ export class NoticeDetailComponent{
   notice$ = this.store.select(getNoticeById(+this.id!));
   creator$ = this.store.select(getCurrentlyShownUser);
   selectedProduct? : Product; 
+  currentUserId$ = this.store.select(getUserId);
 
   constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute) {
     this.notice$.subscribe(notice => {
@@ -33,8 +33,6 @@ export class NoticeDetailComponent{
   }
 
   getTotalPrice(notice: Notice) {
-    const sum =  notice?.products.reduce((sum, product) => sum + product.price, 0);
-    console.log(sum);
-    return sum;
+    return notice?.products.reduce((sum, product) => sum + product.price, 0);
   }
 }

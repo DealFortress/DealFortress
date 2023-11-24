@@ -76,7 +76,6 @@ public class ProductsService: IProductsService
             HasReceipt = product.HasReceipt,
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
-            CategoryName = GetCategoryNameById(product.CategoryId),
             Condition = product.Condition,
             Images = product.Images?.Select(image => _imagesService.ToImageResponseDTO(image)).ToList(),
             NoticeId = product.Notice.Id,
@@ -102,17 +101,5 @@ public class ProductsService: IProductsService
         product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
 
         return product;
-    }
-    
-    private string GetCategoryNameById(int id)
-    {
-        var categoryName = _categoriesController.GetCategoryNameById(id);
-
-        if(categoryName is null)
-        {
-            return string.Empty;
-        }
-
-        return categoryName;
     }
 }

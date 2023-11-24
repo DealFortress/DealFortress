@@ -36,7 +36,7 @@ public class NoticesService : INoticesService
 
     public NoticeResponse? PutById(int id, NoticeRequest request)
     {
-        var notice = _repo.GetById(id);
+        var notice = _repo.GetByIdWithProducts(id);
 
         if (notice is null)
         {

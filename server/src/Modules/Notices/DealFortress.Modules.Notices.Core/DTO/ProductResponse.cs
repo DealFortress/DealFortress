@@ -10,8 +10,8 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required bool HasReceipt { get; set; }
         public string? Warranty { get; set; }
         public bool IsSoldSeparately { get; set; }
+        public bool IsSold { get; set; }
         public required int CategoryId { get; set; }
-        public required string CategoryName { get; set; }
         public required Condition Condition { get; set; }
         public virtual List<ImageResponse>? Images { get; set; }
         public required int NoticeId { get; set; }

@@ -63,12 +63,12 @@ public class ProductControllersTestsSad
             Warranty = "month",
             CategoryId = 1,
             Condition = Condition.New,
-            CategoryName = "test category",
-            Images = new List<ImageResponse>(){ 
+
+            Images = new List<ImageResponse>(){
                 new ImageResponse()
                 {
                     Url = "Hello world"
-                } 
+                }
             },
             NoticeId = 1,
         };
