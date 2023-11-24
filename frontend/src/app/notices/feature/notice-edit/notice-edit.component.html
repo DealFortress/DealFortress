@@ -1,3 +1,3 @@
 <ng-container *ngIf="(notice$ | async) as notice;">
-    <app-notice-form [prefilledFormGroup]="noticeFormGroup" (requestEvent)="submitRequest($event)"></app-notice-form>
+    <app-notice-form [prefilledFormGroup]="noticeForm" (requestEvent)="submitRequest($event)"></app-notice-form>
 </ng-container>

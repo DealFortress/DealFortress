@@ -38,6 +38,7 @@ export class NoticeFormComponent implements OnInit{
 
     if (this.prefilledFormGroup != null) {
       this.noticeForm = this.prefilledFormGroup
+      console.log(this.prefilledFormGroup);
     }
   }
 
