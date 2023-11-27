@@ -17,7 +17,9 @@
                     <div [formGroupName]="i">
                         <div *ngIf="isRemovable()" class="close" (click)="removeImage(i)">X</div>
                         <mat-form-field class="">
+                            <mat-label>Enter your image url ✒️</mat-label>
                             <input matInput placeholder="image url" name="url{{i}}" formControlName="url" required>
+                            <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
                         </mat-form-field>
                     </div>
                 </div>

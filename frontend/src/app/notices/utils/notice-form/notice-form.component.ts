@@ -54,21 +54,23 @@ export class NoticeFormComponent implements OnInit{
 
  
   addProduct() {
-    this.productsFormArray.push(this.formBuilder.group({
-          name: [''],
-          price: [0],
-          isSold: [false],
-          isSoldSeparately: [false],
-          hasReceipt: [false],
-          warranty: [''],
-          categoryId: [0],
-          condition: [0],
-          imageRequests: this.formBuilder.array([
-            this.formBuilder.group({
-              url: ['']
-            })
-          ]), 
-        }));
+    this.productsFormArray.push(this.formBuilder.group(
+      {
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
+      isSold: [false],
+      isSoldSeparately: [false],
+      hasReceipt: [false],
+      warranty: [''],
+      categoryId: [0],
+      condition: [0],
+      imageRequests: this.formBuilder.array([
+        this.formBuilder.group({
+          url: ['', [Validators.required]]
+        })
+      ]),
+      }
+    ));
   }
 
   isRemovable() { 
