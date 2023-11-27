@@ -103,6 +103,8 @@ export class NoticeFormComponent implements OnInit{
     const postRequest : NoticeRequest = this.noticeForm.value as NoticeRequest;  
     postRequest.userId = creatorId; 
 
+    console.log(postRequest);
+
     return postRequest
   }
 
