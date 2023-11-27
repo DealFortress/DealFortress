@@ -35,4 +35,13 @@ export class NoticesApiService {
                 request)
             .pipe(data => data as Observable<Notice>);
     }
+
+    deleteNoticeAPI(noticeId: number) {
+        return this.httpClient
+            .delete(`${this.noticesUrl}/${noticeId}`)
+            .pipe(data => {
+                console.log(data)
+                return data;
+            });
+    }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { deleteNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Notice } from '@app/shared/models/notice.model';
 import { Product } from '@app/shared/models/product.model';
@@ -20,7 +21,7 @@ export class NoticeDetailComponent{
   currentUserId$ = this.store.select(getUserId);
   showDeletePopup = false;
 
-  constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute) {
+  constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router) {
     this.notice$.subscribe(notice => {
       if (notice) {
         this.store.dispatch(loadUserByIdRequest({id: notice.userId}))
@@ -38,6 +39,7 @@ export class NoticeDetailComponent{
   }
 
   deleteNotice() {
-    
+    this.store.dispatch(deleteNoticeRequest({noticeId: +this.id!}))
+    this.router.navigate(['/']);
   }
 }
