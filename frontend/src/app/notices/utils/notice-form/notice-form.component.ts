@@ -14,8 +14,8 @@ import { of } from 'rxjs';
   styleUrls: ['./notice-form.component.css'],
 })
 export class NoticeFormComponent implements OnInit{
-  public deliveryMethods = ['postage', 'hand delivery', 'pick up'  ];  
-  public payments = ['cash', 'bank transfer', 'swish'];
+  public deliveryMethods = ['Postage', 'Hand-delivery', 'Pick-up'  ];  
+  public payments = ['Cash', 'Bank transfer', 'Swish'];
   public noticeForm: FormGroup;
   public isAuthenticated$ = this.authService.isAuthenticated$;
   public disableSubmitButton = false;
