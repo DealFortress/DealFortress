@@ -5,6 +5,7 @@ import { Image } from "@app/shared/models/image.model"
 
 export type Product = {
     id: number,
+    noticeId: number,
     name: string,
     price: number,
     hasReceipt: boolean,
