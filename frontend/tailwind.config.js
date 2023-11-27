@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{html,ts}",
+    "./src/**/*.{js,ts,html}",
   ],
   theme: {
     extend: {
@@ -27,38 +27,15 @@ module.exports = {
       themes: true,
       styled: true,
       themes: [{
-        "dark": {
-          "primary": "blue",
-          "primary-content": "blue",
-          "secondary": "blue",
-          "secondary-content": "blue",
-          "accent": "blue",
-          "accent-content": "blue",
-          "neutral": "blue",
-          "neutral-focus": "blue",
-          "neutral-content": "blue",
-          "base-100": "blue",
-          "base-200": "blue",
-          "base-300": "blue",
-          "base-content": "blue",
+        'dark': {
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+          '--p': '0, 100%, 100% !important',
+          'primary': "pink",
         },
-        "[data-theme=dark]": {
-          "color-scheme": "dark",
-          "primary": "blue",
-          "primary-content": "blue",
-          "secondary": "blue",
-          "secondary-content": "blue",
-          "accent": "blue",
-          "accent-content": "blue",
-          "neutral": "blue",
-          "neutral-focus": "blue",
-          "neutral-content": "blue",
-          "base-100": "blue",
-          "base-200": "blue",
-          "base-300": "blue",
-          "base-content": "blue",
-        },
-        "light": {
+        dark: {
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+          '--p': '0, 100%, 100% !important',
+          'primary': "pink",
         }
       }],
       base: true,

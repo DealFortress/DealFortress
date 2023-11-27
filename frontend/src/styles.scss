@@ -50,14 +50,14 @@ $frontend-theme: mat.define-dark-theme((
   --spring-multiplier: 2;
 }
 
-// .btn-primary {
-//   @apply bg-darkblue;
-//   @apply border-darkblue;
-//   &:hover {
-//     background-color: hsl(var(--b3) / var(--tw-bg-opacity)) !important;
-//     border-color: hsl(var(--b3) / var(--tw-bg-opacity)) !important;
-//   }
-// }
+[data-theme="dark"] .btn-primary {
+  @apply bg-darkblue;
+  @apply border-darkblue;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+}
 
 
 .gray-gradient {
