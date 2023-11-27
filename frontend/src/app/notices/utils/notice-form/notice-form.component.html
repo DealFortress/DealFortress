@@ -1,16 +1,3 @@
-<app-popup-card *ngIf="!(isAuthenticated$ | async)">
-    <h3 class="card-title">Login SQUIRE!</h3>
-    <p>You must be logged in to create a notice!</p>
-    <div class="card-actions justify-end gap-4">
-        <button (click)="this.authService.loginWithPopup()" class="btn btn-primary">
-            Login
-            <fa-icon [icon]="['fas', 'arrow-right-to-bracket']" class="text-2xl"></fa-icon>
-        </button>
-        <button routerLink="/" class="btn btn-ghost">
-            Leave
-        </button>
-    </div>
-</app-popup-card>
 <fieldset [disabled]="!(isAuthenticated$ | async)">
     <app-main-container >
         <form action="" [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
@@ -64,9 +51,12 @@
     </app-main-container>
 </fieldset>
 
-<app-popup-card *ngIf="!(isAuthenticated$ | async)">
-    <button (click)="this.authService.loginWithPopup()" class="hover:text-lighttexthover flex items-center gap-2">
-        Login to create new notice
-        <fa-icon [icon]="['fas', 'arrow-right-to-bracket']" class="text-2xl"></fa-icon>
-    </button>
+<app-popup-card *ngIf="!(isAuthenticated$ | async)" title="Login Squire" body="You must be logged in to create a notice!">
+        <button (click)="this.authService.loginWithPopup()" class="btn btn-primary">
+            Login
+            <fa-icon [icon]="['fas', 'arrow-right-to-bracket']" class="text-2xl"></fa-icon>
+        </button>
+        <button routerLink="/" class="btn btn-ghost">
+            Leave
+        </button>
 </app-popup-card>
