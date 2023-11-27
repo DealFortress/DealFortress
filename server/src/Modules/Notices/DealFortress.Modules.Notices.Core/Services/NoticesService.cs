@@ -2,6 +2,7 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using NuGet.Common;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -105,6 +106,13 @@ public class NoticesService : INoticesService
 
     public Notice ToNotice(NoticeRequest request)
     {
+        
+        var creationDate = DateTime.UtcNow;
+        if (request.CreatedAt is DateTime) 
+        {
+            creationDate = (DateTime)request.CreatedAt;
+        } 
+
         var notice = new Notice()
         {
             UserId = request.UserId,
@@ -113,7 +121,7 @@ public class NoticesService : INoticesService
             City = request.City,
             Payments = string.Join(",", request.Payments),
             DeliveryMethods = string.Join(",", request.DeliveryMethods),
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = creationDate
         };
 
         if (request.ProductRequests is not null)

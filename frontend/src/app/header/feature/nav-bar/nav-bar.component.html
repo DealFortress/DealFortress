@@ -5,19 +5,19 @@
         <label class="hamburger-menu btn btn-ghost btn-circle">
           <input type="checkbox"/>
         </label>
-        <aside tabindex="0" class="sidebar z-[1] flex flex-col gap-2 w-full bg-contain bg-darkblue rounded-box items-start">
+        <aside tabindex="0" class="sidebar w-auto md:w-96 z-[1] flex flex-col gap-2 w-full bg-contain bg-darkblue rounded-box items-start">
             <h3 class="text-2xl border-b border-[darkgrey]">Market</h3>
             <ul class='flex gap-4'>
               <li><a class="hover:border-b border-grey" routerLink="/">All</a></li>
-              <li><a class="hover:border-b border-grey" routerLink="/">Selling</a></li>
+              <!-- <li><a class="hover:border-b border-grey" routerLink="/">Selling</a></li>
               <li><a class="hover:border-b border-grey" routerLink="/">Buying</a></li>
-              <li><a class="hover:border-b border-grey" routerLink="/">Trading</a></li>
+              <li><a class="hover:border-b border-grey" routerLink="/">Trading</a></li> -->
             </ul>
         </aside>
       </div>
     </div>
     <div class="navbar-center">
-      <a routerLink="/" class="btn btn-ghost font-thin normal-case lg:text-3xl">DealFortress <img src="assets/logo.png" alt="deal fortress logo" class="logo-s"/></a>
+      <a routerLink="/" class="btn btn-ghost font-thin normal-case md:text-4xl"><span class="invisible md:visible">DealFortress </span><img src="assets/logo.png" alt="deal fortress logo" class="logo-s"/></a>
     </div>
     <div class="navbar-end">
       <div class="flex gap-4 items-center flex-1 justify-end">

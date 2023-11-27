@@ -35,6 +35,7 @@ export class NoticeEditComponent {
       description: [notice?.description, [Validators.required, Validators.minLength(30)]],
       city: [notice?.city, [Validators.required, Validators.minLength(1)]],
       payments: [notice?.payments, [Validators.required, Validators.minLength(1)]],
+      createdAt: [notice?.createdAt],
       deliveryMethods: [notice?.deliveryMethods, [Validators.required, Validators.minLength(1)]],
       productRequests: this.formBuilder.array(this.createProductFormGroups(notice?.products), [Validators.required, Validators.minLength(1)])
     });

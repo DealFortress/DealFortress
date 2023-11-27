@@ -85,7 +85,6 @@
   translate: 0 -30%; 
   scale: 100% 0;
   color: var(--background);
-  width: 40rem;
   height: auto;
   z-index: -1;
   box-shadow: 0 10px 30px rgba(0,0,0,.4);

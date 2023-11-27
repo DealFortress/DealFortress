@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
+import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 
@@ -34,4 +34,7 @@ export const noticesReducer = createReducer(
     on(putNoticeSuccess,(state,action)=>{
         return noticesAdapter.upsertOne(action.notice, state);
     }),
+    on(deleteNoticeSuccess, (state, action)=> {
+        return noticesAdapter.removeOne(action.noticeId, state)
+    })
 );

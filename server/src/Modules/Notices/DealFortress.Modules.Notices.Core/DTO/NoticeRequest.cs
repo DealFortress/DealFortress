@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DealFortress.Modules.Notices.Core.DTO;
 
@@ -19,6 +20,7 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required string[] Payments { get; set; }
         [MinLength(1, ErrorMessage = "It needs to be at least one delivery method")]
         public required string[] DeliveryMethods { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public virtual List<ProductRequest>? ProductRequests { get; set; }
     }
 

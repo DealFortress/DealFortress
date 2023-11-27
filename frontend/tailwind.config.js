@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{html,ts}",
+    "./src/**/*.{js,ts,html}",
   ],
   theme: {
     extend: {
@@ -26,7 +26,18 @@ module.exports = {
     daisyui: {
       themes: true,
       styled: true,
-      themes: ["light", "dark"],
+      themes: [{
+        'dark': {
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+          '--p': '0, 100%, 100% !important',
+          'primary': "pink",
+        },
+        dark: {
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+          '--p': '0, 100%, 100% !important',
+          'primary': "pink",
+        }
+      }],
       base: true,
       utils: true,
       logs: true,

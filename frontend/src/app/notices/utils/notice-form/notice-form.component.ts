@@ -14,8 +14,8 @@ import { of } from 'rxjs';
   styleUrls: ['./notice-form.component.css'],
 })
 export class NoticeFormComponent implements OnInit{
-  public deliveryMethods = ['postage', 'hand delivery', 'pick up'  ];  
-  public payments = ['cash', 'bank transfer', 'swish'];
+  public deliveryMethods = ['Postage', 'Hand-delivery', 'Pick-up'  ];  
+  public payments = ['Cash', 'Bank transfer', 'Swish'];
   public noticeForm: FormGroup;
   public isAuthenticated$ = this.authService.isAuthenticated$;
   public disableSubmitButton = false;
@@ -34,6 +34,11 @@ export class NoticeFormComponent implements OnInit{
   ngOnInit(): void {
     this.store.select(getUserId).subscribe(id => this.creatorId = id)
 
+    window.scroll({
+      top: 0,
+      left: 0
+    });
+
     if (this.prefilledFormGroup != null) {
       this.noticeForm = this.prefilledFormGroup
     }
@@ -49,21 +54,23 @@ export class NoticeFormComponent implements OnInit{
 
  
   addProduct() {
-    this.productsFormArray.push(this.formBuilder.group({
-          name: [''],
-          price: [0],
-          isSold: [false],
-          isSoldSeparately: [false],
-          hasReceipt: [false],
-          warranty: [''],
-          categoryId: [0],
-          condition: [0],
-          imageRequests: this.formBuilder.array([
-            this.formBuilder.group({
-              url: ['']
-            })
-          ]), 
-        }));
+    this.productsFormArray.push(this.formBuilder.group(
+      {
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
+      isSold: [false],
+      isSoldSeparately: [false],
+      hasReceipt: [false],
+      warranty: [''],
+      categoryId: [0],
+      condition: [0],
+      imageRequests: this.formBuilder.array([
+        this.formBuilder.group({
+          url: ['', [Validators.required]]
+        })
+      ]),
+      }
+    ));
   }
 
   isRemovable() { 
@@ -95,6 +102,8 @@ export class NoticeFormComponent implements OnInit{
   createRequest(creatorId: number) {
     const postRequest : NoticeRequest = this.noticeForm.value as NoticeRequest;  
     postRequest.userId = creatorId; 
+
+    console.log(postRequest);
 
     return postRequest
   }
