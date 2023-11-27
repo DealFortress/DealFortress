@@ -1,18 +1,22 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { NoticesApiService } from '../services/notices-api.service';
+import { NoticesApiService } from '../services/notices-api/notices-api.service';
+import { ProductsApiService } from '../services/products-api/products-api.service';
+
 import { Notice } from '@app/shared/models/notice.model';
 import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeRequest, postNoticeSuccess, putNoticeRequest, putNoticeSuccess } from './notices.actions';
+import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchIsSoldNoticeRequest, patchIsSoldProductSuccess, postNoticeRequest, postNoticeSuccess, putNoticeRequest, putNoticeSuccess } from './notices.actions';
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { Update } from '@ngrx/entity';
+import { Product } from '@app/shared/models/product.model';
 
 @Injectable()
 export class NoticesEffects {
 
     constructor(
         private noticesApiService: NoticesApiService,
+        private productsApiService: ProductsApiService,
         private actions$: Actions,
         ) {}
 
@@ -33,7 +37,7 @@ export class NoticesEffects {
         );
     })
 
-    postNotices$ = createEffect(() =>
+    postNotice$ = createEffect(() =>
     this.actions$.pipe(
         ofType(postNoticeRequest),
         mergeMap(action =>
@@ -50,7 +54,7 @@ export class NoticesEffects {
         )
     );
 
-    putNotices$ = createEffect(() =>
+    putNotice$ = createEffect(() =>
     this.actions$.pipe(
         ofType(putNoticeRequest),
         mergeMap(action =>
@@ -67,7 +71,7 @@ export class NoticesEffects {
         )
     );
 
-    deleteNotices$ = createEffect(() =>
+    deleteNotice$ = createEffect(() =>
     this.actions$.pipe(
         ofType(deleteNoticeRequest),
         mergeMap(action =>
@@ -79,6 +83,24 @@ export class NoticesEffects {
                         )
                     ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to delete notice.', actionresult: 'fail' }))),
+                )
+            )
+        )
+    );
+
+    // Products
+    patchProductIsSold$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(patchIsSoldNoticeRequest),
+        mergeMap(action =>
+            this.productsApiService.patchProductIsSoldAPI(action.productId).pipe(
+                mergeMap(product => 
+                        of(
+                        patchIsSoldProductSuccess({ product: product as Product }),
+                        ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' })                    
+                        )
+                    ),
+                catchError((_error) => of(ShowAlert({ message: 'Failed to update sold status.', actionresult: 'fail' }))),
                 )
             )
         )

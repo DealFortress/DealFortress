@@ -40,7 +40,6 @@ export class NoticesApiService {
         return this.httpClient
             .delete(`${this.noticesUrl}/${noticeId}`)
             .pipe(data => {
-                console.log(data)
                 return data;
             });
     }
