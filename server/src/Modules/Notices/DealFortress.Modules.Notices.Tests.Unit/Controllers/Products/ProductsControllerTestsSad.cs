@@ -60,6 +60,7 @@ public class ProductControllersTestsSad
             Price = 1,
             HasReceipt = true,
             IsSoldSeparately = false,
+            IsSold = false,
             Warranty = "month",
             CategoryId = 1,
             Condition = Condition.New,

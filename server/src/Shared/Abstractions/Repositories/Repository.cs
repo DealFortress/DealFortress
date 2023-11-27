@@ -48,6 +48,11 @@ public class Repository<T> : IRepository<T> where T : class
         Context.Set<T>().RemoveRange(entities);
     }
 
+    public void Update(T entity)
+    {
+        Context.Set<T>().Update(entity);
+    }
+
     public void Complete()
     {
         Context.SaveChanges();

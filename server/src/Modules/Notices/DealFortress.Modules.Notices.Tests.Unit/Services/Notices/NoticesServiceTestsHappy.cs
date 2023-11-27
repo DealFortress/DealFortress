@@ -85,6 +85,7 @@ public class NoticesServiceTestsHappy
                     Name = "test",
                     Price = 1,
                     HasReceipt = true,
+                    IsSold = false,
                     IsSoldSeparately = false,
                     Warranty = "month",
                     CategoryId = 1,

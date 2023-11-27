@@ -65,6 +65,7 @@ public class ProductsServiceTestsHappy
             Name = "test",
             Price = 1,
             HasReceipt = true,
+            IsSold = false,
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
@@ -163,6 +164,61 @@ public class ProductsServiceTestsHappy
         // Assert 
         response.Should().BeOfType<ProductResponse>();
     }
+
+    [Fact]
+    public void PatchSoldStatusById_should_update_data()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        _service.PatchSoldStatusById(1);
+
+        // Assert 
+        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.Update(It.IsAny<Product>()), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void PatchSoldStatusById_should_complete_before_sending_back_DTO()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        _service.PatchSoldStatusById(1);
+
+        // Assert 
+        _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
+    }
+
+    [Fact]
+    public void PatchSoldStatusById_should_return_response()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        var response = _service.PatchSoldStatusById(1);
+
+        // Assert 
+        response.Should().BeOfType<ProductResponse>();
+    }
+
+        [Fact]
+    public void PatchSoldStatusById_should_flip_isSold()
+    {
+        // arrange
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+
+        // Act
+        var response = _service.PatchSoldStatusById(1);
+
+        // Assert 
+        response?.IsSold.Should().Be(true);
+    }
+
 
     [Fact]
     public void DeleteById_should_remove_data_and_complete()

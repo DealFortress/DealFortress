@@ -59,6 +59,7 @@ public class ProductControllersTestsHappy
             Price = 1,
             HasReceipt = true,
             IsSoldSeparately = false,
+            IsSold = false,
             Warranty = "month",
             CategoryId = 1,
             Condition = Condition.New,
@@ -127,14 +128,25 @@ public class ProductControllersTestsHappy
     }
 
     [Fact]
-    public void PutProduct_return_no_content_when_service_return_response()
+    public void PutProduct_return_ok_object_response_when_service_return_response()
     {
         // Arrange
         _service.Setup(service => service.PutById(1, _request)).Returns(_response);
         // Act
         var httpResponse = _controller.PutProduct(1, _request);
         // Assert 
-        httpResponse.Should().BeOfType<NoContentResult>();
+        httpResponse.Should().BeOfType<OkObjectResult>();
+    }
+
+    [Fact]
+    public void PatchProductSoldStatus_return_ok_object_response_when_service_return_response()
+    {
+        // Arrange
+        _service.Setup(service => service.PutById(1, _request)).Returns(_response);
+        // Act
+        var httpResponse = _controller.PutProduct(1, _request);
+        // Assert 
+        httpResponse.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]

@@ -64,7 +64,22 @@ public class ProductsService: IProductsService
         return product;
     }
 
+    public ProductResponse? PatchSoldStatusById(int id)
+    {
+        var product = _repo.GetById(id);
 
+        if (product is null)
+        {
+            return null;
+        }
+
+        product.IsSold = !product.IsSold;
+
+        _repo.Update(product);
+        _repo.Complete();
+
+        return ToProductResponseDTO(product);
+    }
     
     public ProductResponse ToProductResponseDTO(Product product)
     {
@@ -77,6 +92,7 @@ public class ProductsService: IProductsService
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
             Condition = product.Condition,
+            IsSold = product.IsSold,
             Images = product.Images?.Select(image => _imagesService.ToImageResponseDTO(image)).ToList(),
             NoticeId = product.Notice.Id,
             IsSoldSeparately = product.IsSoldSeparately
@@ -102,4 +118,5 @@ public class ProductsService: IProductsService
 
         return product;
     }
+
 }

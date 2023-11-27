@@ -33,7 +33,18 @@ public class ProductsController : ControllerBase
     {
         var response = _service.PutById(id, request);
 
-        return response is null ? NotFound() : NoContent();
+        return response is null ? NotFound() : Ok(response);
+    }
+
+    [HttpPatch("{id}/issold")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult PatchProductSoldStatus(int id)
+    {
+        var response = _service.PatchSoldStatusById(id);
+
+        return response is null ? NotFound() : Ok(response);
     }
 
     [HttpDelete("{id}")]
