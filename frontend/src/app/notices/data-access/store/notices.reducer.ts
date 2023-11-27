@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
+import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductIsSoldSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 
@@ -36,5 +36,9 @@ export const noticesReducer = createReducer(
     }),
     on(deleteNoticeSuccess, (state, action)=> {
         return noticesAdapter.removeOne(action.noticeId, state)
-    })
+    }),
+    on(patchProductIsSoldSuccess,(state,action)=>{
+    //    const notice = state.entities
+        return noticesAdapter.updateOne(, state);
+    }),
 );
