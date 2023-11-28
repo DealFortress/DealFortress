@@ -23,7 +23,7 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
         return NoticesContext!.Products
                         .Include(product => product.Notice)
                         .Include(product => product.Images)
-                        .FirstOrDefault();
+                        .FirstOrDefault(product => product.Id == id);
     }
 
     public NoticesContext? NoticesContext

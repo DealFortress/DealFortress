@@ -16,10 +16,10 @@ export class ProductsApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  patchProductIsSoldAPI(noticeId: number): Observable<Product> {
+  patchProductIsSoldAPI(productId: number): Observable<Product> {
     return this.httpClient
         .patch(
-            `${this.noticesUrl}/${noticeId}/issold`, {})
+            `${this.noticesUrl}/${productId}/issold`, {})
         .pipe(data => data as Observable<Product>);
   }
 }
