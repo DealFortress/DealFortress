@@ -3,6 +3,8 @@ import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNotices
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 import { getNoticeById } from "./notices.selectors";
+import { Notice } from "@app/shared/models/notice.model";
+import { Product } from "@app/shared/models/product.model";
 
 
 export const noticesReducer = createReducer(
@@ -39,13 +41,14 @@ export const noticesReducer = createReducer(
         return noticesAdapter.removeOne(action.noticeId, state)
     }),
     on(patchProductIsSoldSuccess,(state,action)=>{
-        let notice = state.entities[action.product.noticeId]
+        let notice = {...state.entities[action.product.noticeId]} as Notice;
         if (notice) {
             notice.products = notice?.products.map(product => {
+                let updatedProduct = {...product} as Product;
                 if ( product.id == action.product.id) {
-                    product.isSold = action.product.isSold
+                    updatedProduct.isSold = action.product.isSold
                 }
-                return product;
+                return updatedProduct;
             })
         }
         return noticesAdapter.upsertOne(notice!, state);
