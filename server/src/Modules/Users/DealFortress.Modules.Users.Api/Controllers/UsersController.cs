@@ -20,16 +20,17 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUser(string id, string idType)
+    public ActionResult<UserResponse> GetUser(string id)
     {
-       var response = idType switch
-    {
-       "authid" => _service.GetByAuthId(id),
-       "id" => _service.GetById(int.Parse(id)),
-       _ => _service.GetById(int.Parse(id))
-    };
+        UserResponse? response;
 
-    return response is null ? NotFound() : Ok(response);
+        if (int.TryParse(id,out int parsedId)) {
+           response = _service.GetById(parsedId);
+        } else {
+            response = _service.GetByAuthId(id);
+        }
+
+        return response is null ? NotFound() : Ok(response);
     }
 
     [HttpPost]
