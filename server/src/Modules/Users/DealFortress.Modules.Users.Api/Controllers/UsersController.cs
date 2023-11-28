@@ -17,21 +17,17 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUser(int id)
+    public ActionResult<UserResponse> GetUser(string id, string idType)
     {
-    var response = _service.GetById(id);
-
-    return response is null ? NotFound() : Ok(response);
-    }
-
-    [HttpGet("authid/{authId}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUserByAuthId(string authId)
+       var response = idType switch
     {
-    var response = _service.GetByAuthId(authId);
+       "authid" => _service.GetByAuthId(id),
+       "id" => _service.GetById(int.Parse(id)),
+       _ => _service.GetById(int.Parse(id))
+    };
 
     return response is null ? NotFound() : Ok(response);
     }
