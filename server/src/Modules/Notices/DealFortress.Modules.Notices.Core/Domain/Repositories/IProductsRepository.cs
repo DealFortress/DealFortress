@@ -6,5 +6,5 @@ namespace DealFortress.Modules.Notices.Core.Domain.Repositories;
 public interface IProductsRepository : IRepository<Product>
 {
     IEnumerable<Product> GetAllWithEntities();
-    Product? GetByIdWithImages(int id);
+    Product? GetByIdWithEntities(int id);
 }

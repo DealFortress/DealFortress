@@ -18,9 +18,10 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
                         .ToList();
     }
 
-    public Product? GetByIdWithImages(int id)
+    public Product? GetByIdWithEntities(int id)
     {
         return NoticesContext!.Products
+                        .Include(product => product.Notice)
                         .Include(product => product.Images)
                         .FirstOrDefault();
     }
