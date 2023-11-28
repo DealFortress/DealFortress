@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Security.Cryptography.Pkcs;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
@@ -25,7 +26,7 @@ public class UsersController : ControllerBase
     {
         UserResponse? response = null;
 
-        if (int.TryParse(id,out int parsedId ) && idType.ToLower() == "dbid") 
+        if (int.TryParse(id,out int parsedId ) && idType.ToLower() == "id") 
         {
             response = _service.GetById(parsedId);
         } 
@@ -48,5 +49,9 @@ public class UsersController : ControllerBase
         return CreatedAtAction("GetUser", new { id = response.Id }, response);
     }
 
-
+    [NonAction]
+    public virtual bool IsUserNoticeCreator(string authId, int id)
+    {
+        return _service.GetByAuthId(authId)?.Id == id;
+    }
 }

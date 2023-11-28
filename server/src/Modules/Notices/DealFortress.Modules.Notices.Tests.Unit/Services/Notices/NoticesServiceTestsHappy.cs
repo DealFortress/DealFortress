@@ -139,7 +139,7 @@ public class NoticesServiceTestsHappy
     {
         // arrange
         var list = new List<Notice>() { _notice };
-        _repo.Setup(repo => repo.GetAllWithProductsAndImages()).Returns(list);
+        _repo.Setup(repo => repo.GetAll()).Returns(list);
 
         // act
         var response = _service.GetAll();
@@ -152,7 +152,7 @@ public class NoticesServiceTestsHappy
     public void GetById_returns_response_when_repo_returns_a_notice()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // act
         var response = _service.GetById(1);
@@ -176,7 +176,7 @@ public class NoticesServiceTestsHappy
     public void PutDTO_should_replace_data()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // Act
         _service.PutById(1, _request);
@@ -190,7 +190,7 @@ public class NoticesServiceTestsHappy
     public void PutDTO_should_complete_before_sending_back_DTO()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // Act
         _service.PutById(1, _request);
@@ -203,7 +203,7 @@ public class NoticesServiceTestsHappy
     public void PutDTO_should_return_response()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdWithProducts(1)).Returns(_notice);
+        _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
 
         // Act
         var response = _service.PutById(1, _request);

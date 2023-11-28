@@ -103,19 +103,6 @@ public class ProductControllersTestsSad
     }
 
     [Fact]
-    public void putNotice_returns_not_found_when_service_returns_null()
-    {
-        // Arrange
-        _service.Setup(service => service.PutById(1, _request));
-
-        // Act
-        var httpResponse = _controller.PutProduct(1, _request);
-
-        // Assert 
-        httpResponse.Should().BeOfType<NotFoundResult>();
-    }
-
-    [Fact]
     public void deleteNotice_returns_not_found_when_service_returns_null()
     {
         // Arrange

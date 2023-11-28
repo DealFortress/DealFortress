@@ -139,7 +139,7 @@ public class NoticesServiceTestsSad
     public void GetById_returns_null_when_notice_is_not_found()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdWithProducts(1));
+        _repo.Setup(repo => repo.GetById(1));
 
         // act
         var response = _service.GetById(1);

@@ -14,5 +14,5 @@ public interface IProductsService
     ProductResponse ToProductResponseDTO(Product product);
 
     Product ToProduct(ProductRequest request, Notice notice);
-    ProductResponse? PatchSoldStatusById(int id);
+    ProductResponse? PatchSoldStatusById(int id, string authId);
 }

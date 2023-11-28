@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Users.Api.Controllers;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -27,6 +30,26 @@ public class ProductControllersTestsHappy
         _response = CreateProductResponse();
 
         _Product = CreateProduct();
+
+        CreateFakeClaims();
+    }
+
+    private void CreateFakeClaims()
+    {
+        var fakeClaims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.NameIdentifier, "authId"),
+            new Claim("RoleId", "1"),
+            new Claim("UserName", "John")
+        };
+
+        var fakeIdentity = new ClaimsIdentity(fakeClaims, "TestAuthType");
+        var fakeClaimsPrincipal = new ClaimsPrincipal(fakeIdentity);
+
+        _controller.ControllerContext.HttpContext = new DefaultHttpContext
+        {
+            User = fakeClaimsPrincipal 
+        };
     }
 
     public ProductRequest CreateProductRequest()
@@ -128,23 +151,12 @@ public class ProductControllersTestsHappy
     }
 
     [Fact]
-    public void PutProduct_return_ok_object_response_when_service_return_response()
-    {
-        // Arrange
-        _service.Setup(service => service.PutById(1, _request)).Returns(_response);
-        // Act
-        var httpResponse = _controller.PutProduct(1, _request);
-        // Assert 
-        httpResponse.Should().BeOfType<OkObjectResult>();
-    }
-
-    [Fact]
     public void PatchProductSoldStatus_return_ok_object_response_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.PutById(1, _request)).Returns(_response);
+        _service.Setup(service => service.PatchSoldStatusById(1, "authId")).Returns(_response);
         // Act
-        var httpResponse = _controller.PutProduct(1, _request);
+        var httpResponse = _controller.PatchProductSoldStatus(1);
         // Assert 
         httpResponse.Should().BeOfType<OkObjectResult>();
     }

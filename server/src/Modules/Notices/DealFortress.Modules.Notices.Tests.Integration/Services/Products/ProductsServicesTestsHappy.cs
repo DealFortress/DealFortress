@@ -1,13 +1,10 @@
 using Moq;
 using FluentAssertions;
-using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using DealFortress.Modules.Notices.Tests.Integration.Fixture;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
-using DealFortress.Modules.Notices.Core.Domain.Repositories;
-using DealFortress.Modules.Categories.Api.Controllers;
-using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -27,11 +24,11 @@ public class ProductsServicesTestsHappy
 
         var repo = new ProductsRepository(Fixture.Context);
 
-        var categoriesController = new Mock<CategoriesController>(null);
+        var usersController = new Mock<UsersController>(null);
 
         var imagesService = new Mock<IImagesService>();
 
-        return new ProductsService(repo, categoriesController.Object, imagesService.Object);
+        return new ProductsService(repo, imagesService.Object, usersController.Object);
 
     }
 

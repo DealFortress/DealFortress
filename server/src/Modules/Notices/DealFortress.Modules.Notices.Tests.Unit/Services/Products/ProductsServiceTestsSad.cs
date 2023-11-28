@@ -4,6 +4,7 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
+using DealFortress.Modules.Users.Api.Controllers;
 using FluentAssertions;
 using Moq;
 
@@ -14,16 +15,17 @@ public class ProductsServiceTestsSad
     private readonly IProductsService _service;
     private readonly Mock<IProductsRepository> _repo;
     private readonly ProductRequest _request;
+    private readonly Mock<UsersController> _usersController;
 
     public ProductsServiceTestsSad()
     {
         _repo = new Mock<IProductsRepository>();
 
-        var categoriesController = new Mock<CategoriesController>(null);
-
         var imagesService = new Mock<IImagesService>();
 
-        _service = new ProductsService(_repo.Object, categoriesController.Object, imagesService.Object);
+        _usersController = new Mock<UsersController>(null);
+
+        _service = new ProductsService(_repo.Object, imagesService.Object, _usersController.Object);
 
         _request = CreateProductRequest();
     }
@@ -108,9 +110,10 @@ public class ProductsServiceTestsSad
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1);
+        _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
@@ -122,9 +125,10 @@ public class ProductsServiceTestsSad
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1);
+        _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
@@ -135,9 +139,10 @@ public class ProductsServiceTestsSad
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1);
+        var response = _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         response.Should().BeNull();

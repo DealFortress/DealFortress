@@ -2,6 +2,7 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -9,13 +10,14 @@ public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
     private readonly IImagesService _imagesService;
+    private UsersController _usersController;
 
 
-
-    public ProductsService(IProductsRepository repo, IImagesService imagesService)
+    public ProductsService(IProductsRepository repo, IImagesService imagesService, UsersController usersController)
     {
         _repo = repo;
         _imagesService = imagesService;
+        _usersController = usersController;
     }
 
 
@@ -61,11 +63,19 @@ public class ProductsService: IProductsService
         return product;
     }
 
-    public ProductResponse? PatchSoldStatusById(int id)
+    public ProductResponse? PatchSoldStatusById(int id, string authId)
     {
         var product = _repo.GetById(id);
+        
 
         if (product is null)
+        {
+            return null;
+        }
+        
+        var isCreator = _usersController.IsUserNoticeCreator(authId, product.Notice.UserId);
+
+        if (!isCreator)
         {
             return null;
         }

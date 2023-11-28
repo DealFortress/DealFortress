@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using DealFortress.Modules.Notices.Core.DTO;
-using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -25,24 +25,15 @@ public class ProductsController : ControllerBase
         return Ok(_service.GetAll());
     }
 
-    [HttpPut("{id}")]
-    [Authorize]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult PutProduct(int id, ProductRequest request)
-    {
-        var response = _service.PutById(id, request);
-
-        return response is null ? NotFound() : Ok(response);
-    }
-
     [HttpPatch("{id}/issold")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PatchProductSoldStatus(int id)
     {
-        var response = _service.PatchSoldStatusById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+
+        var response = _service.PatchSoldStatusById(id, userId);
 
         return response is null ? NotFound() : Ok(response);
     }

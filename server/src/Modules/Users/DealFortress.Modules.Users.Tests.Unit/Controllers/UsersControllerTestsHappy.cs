@@ -34,9 +34,9 @@ public class UsersControllersTestsHappy
         return new UserRequest()
         {
             AuthId = "testauthid123",
-            Email= "testRequest@email.com",
-            Username="testRequestUsername",
-            Avatar="testRequestAvatar"
+            Email = "testRequest@email.com",
+            Username = "testRequestUsername",
+            Avatar = "testRequestAvatar"
         };
     }
 
@@ -46,9 +46,9 @@ public class UsersControllersTestsHappy
         return new UserResponse()
         {
             Id = 1,
-            Email= "testResponse@email.com",
-            Username="testResponseUsername",
-            Avatar="testResponseAvatar"
+            Email = "testResponse@email.com",
+            Username = "testResponseUsername",
+            Avatar = "testResponseAvatar"
         };
     }
 
@@ -57,21 +57,22 @@ public class UsersControllersTestsHappy
     {
         return new User()
         {
-            Id=1,
-            AuthId= "testauthid123",
-            Email= "test@email.com",
-            Username="testUsername",
-            Avatar="testAvatar" 
+            Id = 1,
+            AuthId = "testauthid123",
+            Email = "test@email.com",
+            Username = "testUsername",
+            Avatar = "testAvatar"
         };
     }
-    
+
     [Fact]
     public void GetUser_return_ok_when_service_return_response()
     {
         // Arrange
         _service.Setup(service => service.GetById(1)).Returns(_response);
+
         // Act
-        var httpResponse = _controller.GetUser(1);
+        var httpResponse = _controller.GetUser("1", "id");
         // Assert 
         httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
@@ -82,7 +83,7 @@ public class UsersControllersTestsHappy
         // Arrange
         _service.Setup(service => service.GetById(1)).Returns(_response);
         // Act
-        var httpResponse = _controller.GetUser(1);
+        var httpResponse = _controller.GetUser("1", "id");
         // Assert 
         var content = httpResponse.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<UserResponse>();

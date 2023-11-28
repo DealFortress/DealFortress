@@ -6,6 +6,7 @@ using FluentAssertions;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Categories.Api.Controllers;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
@@ -16,6 +17,7 @@ public class ProductsServiceTestsHappy
     private readonly ProductRequest _request;
     private readonly Product _product;
     private readonly Mock<CategoriesController> _categoriesController;
+    private readonly Mock<UsersController> _usersController;
 
     public ProductsServiceTestsHappy()
     {
@@ -23,9 +25,11 @@ public class ProductsServiceTestsHappy
 
         _categoriesController = new Mock<CategoriesController>(null);
 
+        _usersController = new Mock<UsersController>(null);
+    
         var imagesService = new Mock<IImagesService>();
 
-        _service = new ProductsService(_repo.Object, _categoriesController.Object, imagesService.Object);
+        _service = new ProductsService(_repo.Object, imagesService.Object, _usersController.Object);
 
         _request = CreateProductRequest();
 
@@ -115,7 +119,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         var list = new List<Product>() { _product };
-        _repo.Setup(repo => repo.GetAllWithImages()).Returns(list);
+        _repo.Setup(repo => repo.GetAll()).Returns(list);
         _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns("CPU");
 
         // act
@@ -170,9 +174,10 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1);
+        _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
@@ -185,9 +190,10 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1);
+        _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -198,22 +204,24 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1);
+        var response = _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         response.Should().BeOfType<ProductResponse>();
     }
 
-        [Fact]
+    [Fact]
     public void PatchSoldStatusById_should_flip_isSold()
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1);
+        var response = _service.PatchSoldStatusById(1, "authid");
 
         // Assert 
         response?.IsSold.Should().Be(true);

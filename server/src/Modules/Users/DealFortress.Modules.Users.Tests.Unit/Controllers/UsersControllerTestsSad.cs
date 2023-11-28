@@ -34,9 +34,9 @@ public class UsersControllersTestsSad
         return new UserRequest()
         {
             AuthId = "testauthid123",
-            Email= "testRequest@email.com",
-            Username="testRequestUsername",
-            Avatar="testRequestAvatar"
+            Email = "testRequest@email.com",
+            Username = "testRequestUsername",
+            Avatar = "testRequestAvatar"
         };
     }
 
@@ -46,9 +46,9 @@ public class UsersControllersTestsSad
         return new UserResponse()
         {
             Id = 1,
-            Email= "testResponse@email.com",
-            Username="testResponseUsername",
-            Avatar="testResponseAvatar"
+            Email = "testResponse@email.com",
+            Username = "testResponseUsername",
+            Avatar = "testResponseAvatar"
         };
     }
 
@@ -57,11 +57,11 @@ public class UsersControllersTestsSad
     {
         return new User()
         {
-            Id=1,
-            AuthId= "testauthid123",
-            Email= "test@email.com",
-            Username="testUsername",
-            Avatar="testAvatar" 
+            Id = 1,
+            AuthId = "testauthid123",
+            Email = "test@email.com",
+            Username = "testUsername",
+            Avatar = "testAvatar"
         };
     }
 
@@ -72,7 +72,7 @@ public class UsersControllersTestsSad
         _service.Setup(service => service.GetById(1));
 
         // Act
-        var httpResponse = _controller.GetUser(1);
+        var httpResponse = _controller.GetUser("1", " id");
 
         // Assert 
         httpResponse.Result.Should().BeOfType<NotFoundResult>();

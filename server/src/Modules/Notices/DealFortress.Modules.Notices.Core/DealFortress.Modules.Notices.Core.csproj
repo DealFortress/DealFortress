@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Abstractions\DealFortress.Shared.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Users\DealFortress.Modules.Users.Api\DealFortress.Modules.Users.Api.csproj" />
     <ProjectReference Include="../../Categories/DealFortress.Modules.Categories.Api/DealFortress.Modules.Categories.Api.csproj" />
   </ItemGroup>
 
