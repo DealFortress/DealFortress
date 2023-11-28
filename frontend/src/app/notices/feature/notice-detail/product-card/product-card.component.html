@@ -1,6 +1,6 @@
 <div class="relative h-48 transition-all hover:cursor-pointer md:flex md:py-6 md:gap-6 md:items-stretch md:w-full md:h-60">
-    <div (click)="toggleSoldStatus()" class="absolute h-6 bg-red rounded flex justify-center items-center z-20 p-4">{{ (this.product.isSold ? 'SOLD' : 'AVAILABLE!')}}</div>
-    <div *ngIf="this.product.isSold" class="absolute w-full h-full bg-black opacity-50 rounded text-6xl flex justify-center items-center z-10">SOLD</div>
+    <div *ngIf="(notice$ | async)?.userId == (user$ | async)?.id" (click)="toggleSoldStatus()" class="absolute h-6 bg-red rounded flex justify-center items-center z-20 p-4">{{ (this.product.isSold ? 'SOLD' : 'AVAILABLE!')}}</div>
+    <div *ngIf="this.product.isSold" class="absolute w-full h-full opacity-50 rounded text-6xl flex justify-center items-center z-10 top-0 left-0 stripes">SOLD</div>
     <span class="bg-gradient-to-b from-black to-[#454545] opacity-60 md:opacity-0 h-full w-full absolute rounded-xl"></span>
     <img [src]="this.product.images[0].url" 
         alt="product image" 

@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { patchProductIsSoldRequest } from '@app/notices/data-access/store/notices.actions';
+import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Condition } from '@app/shared/models/condition.model';
+import { Notice } from '@app/shared/models/notice.model';
 import { Product } from '@app/shared/models/product.model';
+import { getCurrentlyShownUser, getUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -13,14 +16,18 @@ import { Observable } from 'rxjs';
 export class ProductCardComponent implements OnInit{
   @Input({required: true}) product!: Product;
   condition: string = "";
+  notice$? : Observable<Notice | undefined>;
+  user$ = this.store.select(getUser);
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+  }
 
   toggleSoldStatus() {
     this.store.dispatch(patchProductIsSoldRequest({ productId: this.product.id }))
   }
 
   ngOnInit(): void {
+    this.notice$ = this.store.select(getNoticeById(this.product.noticeId))
     this.condition = Condition[this.product.condition];  
   }
 }
