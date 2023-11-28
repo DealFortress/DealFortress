@@ -1,4 +1,3 @@
-using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
@@ -22,7 +21,7 @@ public class ProductsService: IProductsService
 
     public IEnumerable<ProductResponse> GetAll()
     {
-        return _repo.GetAllWithEntities()
+        return _repo.GetAll()
                     .Select(ToProductResponseDTO)
                     .ToList();
     }

@@ -10,7 +10,7 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
     public ProductsRepository(NoticesContext context) : base(context)
     {}
 
-    public IEnumerable<Product> GetAllWithEntities()
+    public new IEnumerable<Product> GetAll()
     {
         return NoticesContext!.Products
                         .Include(product => product.Notice)
@@ -18,7 +18,7 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
                         .ToList();
     }
 
-    public Product? GetByIdWithEntities(int id)
+    public new Product? GetById(int id)
     {
         return NoticesContext!.Products
                         .Include(product => product.Notice)

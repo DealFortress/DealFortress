@@ -18,14 +18,14 @@ public class NoticesService : INoticesService
     
     public IEnumerable<NoticeResponse> GetAll()
     {
-        return _repo.GetAllWithEntities()
+        return _repo.GetAll()
                     .Select(ToNoticeResponseDTO)
                     .ToList();
     }
 
     public NoticeResponse? GetById(int id)
     {
-        var notice = _repo.GetByIdWithEntities(id);
+        var notice = _repo.GetById(id);
 
         if (notice is null)
         {
@@ -37,7 +37,7 @@ public class NoticesService : INoticesService
 
     public NoticeResponse? PutById(int id, NoticeRequest request)
     {
-        var notice = _repo.GetByIdWithEntities(id);
+        var notice = _repo.GetById(id);
 
         if (notice is null)
         {

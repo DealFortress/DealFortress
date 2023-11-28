@@ -13,7 +13,7 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public NoticesRepository(NoticesContext context) : base(context)
     {}
 
-    public IEnumerable<Notice> GetAllWithEntities()
+    public new IEnumerable<Notice> GetAll()
     {
         return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
@@ -21,7 +21,7 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
                     .ToList();
     }
 
-    public Notice? GetByIdWithEntities(int id)
+    public new Notice? GetById(int id)
     {
         return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
