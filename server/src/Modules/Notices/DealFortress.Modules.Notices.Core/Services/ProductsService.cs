@@ -9,23 +9,21 @@ namespace DealFortress.Modules.Notices.Core.Services;
 public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
-    private readonly CategoriesController _categoriesController;
     private readonly IImagesService _imagesService;
 
 
 
-    public ProductsService(IProductsRepository repo, CategoriesController categoriesController, IImagesService imagesService)
+    public ProductsService(IProductsRepository repo, IImagesService imagesService)
     {
         _repo = repo;
-        _categoriesController = categoriesController;
         _imagesService = imagesService;
     }
 
 
     public IEnumerable<ProductResponse> GetAll()
     {
-        return _repo.GetAllWithImages()
-                    .Select(product => ToProductResponseDTO(product))
+        return _repo.GetAllWithEntities()
+                    .Select(ToProductResponseDTO)
                     .ToList();
     }
 
@@ -83,7 +81,7 @@ public class ProductsService: IProductsService
     
     public ProductResponse ToProductResponseDTO(Product product)
     {
-        return new ProductResponse()
+        var response = new ProductResponse()
         {
             Id = product.Id,
             Name = product.Name,
@@ -93,10 +91,16 @@ public class ProductsService: IProductsService
             CategoryId = product.CategoryId,
             Condition = product.Condition,
             IsSold = product.IsSold,
-            Images = product.Images?.Select(image => _imagesService.ToImageResponseDTO(image)).ToList(),
             NoticeId = product.Notice.Id,
             IsSoldSeparately = product.IsSoldSeparately
         };
+
+        if (product.Images is not null)
+        {
+            response.Images = product.Images?.Select(_imagesService.ToImageResponseDTO).ToList();
+        }
+
+        return response;
     }
 
     public Product ToProduct(ProductRequest request, Notice notice)
@@ -114,9 +118,10 @@ public class ProductsService: IProductsService
             Notice = notice,
         };
 
-        product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
-
+        if (product.Images is not null)
+        {
+            product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
+        }
         return product;
     }
-
 }
