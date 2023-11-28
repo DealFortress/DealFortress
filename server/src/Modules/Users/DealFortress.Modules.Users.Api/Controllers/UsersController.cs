@@ -19,7 +19,6 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<UserResponse> GetUser(string id, string idType)

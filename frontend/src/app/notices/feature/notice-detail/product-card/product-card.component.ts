@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { patchProductIsSoldRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Condition } from '@app/shared/models/condition.model';
@@ -19,7 +19,7 @@ export class ProductCardComponent implements OnInit{
   notice$? : Observable<Notice | undefined>;
   user$ = this.store.select(getUser);
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private renderer: Renderer2) {
   }
 
   toggleSoldStatus() {
@@ -29,5 +29,11 @@ export class ProductCardComponent implements OnInit{
   ngOnInit(): void {
     this.notice$ = this.store.select(getNoticeById(this.product.noticeId))
     this.condition = Condition[this.product.condition];  
+  }
+
+  handleFlagColor(isSold: boolean) {
+    if (isSold) {
+      this.renderer
+    }
   }
 }
