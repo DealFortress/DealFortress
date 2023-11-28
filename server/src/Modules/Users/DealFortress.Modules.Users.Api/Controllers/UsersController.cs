@@ -1,3 +1,4 @@
+using System.Security.Cryptography.Pkcs;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -20,15 +21,18 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUser(string id)
+    public ActionResult<UserResponse> GetUser(string id, string idType)
     {
-        UserResponse? response;
+        UserResponse? response = null;
 
-        if (int.TryParse(id,out int parsedId)) {
-           response = _service.GetById(parsedId);
-        } else {
+        if (int.TryParse(id,out int parsedId ) && idType.ToLower() == "dbid") 
+        {
+            response = _service.GetById(parsedId);
+        } 
+        else if (idType.ToLower() == "authid") 
+        {
             response = _service.GetByAuthId(id);
-        }
+        } 
 
         return response is null ? NotFound() : Ok(response);
     }
