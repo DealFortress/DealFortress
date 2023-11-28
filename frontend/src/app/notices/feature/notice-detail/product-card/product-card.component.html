@@ -6,7 +6,7 @@
             {{ (this.product.isSold ? 'SET TO AVAILABLE' : 'SET TO SOLD')}}
         </button>
     </span>
-    <div class='absolute h-6 rounded flex justify-center items-center z-20 p-4' [ngClass]="this.product.isSold ? 'bg-red' : 'bg-green'" >{{ (this.product.isSold ? 'SOLD' : 'AVAILABLE')}}</div>
+    <div class='absolute h-6 rounded flex justify-center items-center z-20 p-4 font-bold' [ngClass]="this.product.isSold ? 'bg-red' : 'bg-green'" >{{ (this.product.isSold ? 'SOLD' : 'AVAILABLE')}}</div>
     <div *ngIf="this.product.isSold" class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes">SOLD</div>
     <span class="bg-gradient-to-b from-black to-[#454545] opacity-60 md:opacity-0 h-full w-full absolute rounded-xl"></span>
     <img [src]="this.product.images[0].url" 
