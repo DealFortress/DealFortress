@@ -2,6 +2,7 @@ using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Notices.Tests.Shared;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -12,9 +13,6 @@ public class ProductControllersTestsSad
 {
     private readonly ProductsController _controller;
     private readonly Mock<IProductsService> _service;
-    private readonly ProductRequest _request;
-    private readonly ProductResponse _response;
-    private readonly Product _Product;
 
     public ProductControllersTestsSad
 ()
@@ -22,84 +20,6 @@ public class ProductControllersTestsSad
         _service = new Mock<IProductsService>();
 
         _controller = new ProductsController(_service.Object);
-
-        _request = CreateProductRequest();
-
-        _response = CreateProductResponse();
-
-        _Product = CreateProduct();
-    }
-
-    public ProductRequest CreateProductRequest()
-    {
-        return new ProductRequest
-        {
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            SoldStatus = SoldStatus.Available,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-            ImageRequests = new List<ImageRequest>(){
-                new ImageRequest()
-                {
-                    Url = "Hello world"
-                }
-            }
-        };
-    }
-
-    public ProductResponse CreateProductResponse()
-    {
-        return new ProductResponse()
-        {
-            Id = 1,
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            IsSoldSeparately = false,
-            SoldStatus = SoldStatus.Available,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-
-            Images = new List<ImageResponse>(){
-                new ImageResponse()
-                {
-                    Url = "Hello world"
-                }
-            },
-            NoticeId = 1,
-        };
-    }
-
-    public Product CreateProduct()
-    {
-        return new Product()
-        {
-            Id = 1,
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            SoldStatus = SoldStatus.Available,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-            Notice = new Notice()
-            {
-                Id = 1,
-                UserId = 1,
-                Title = "test title",
-                Description = "test description",
-                City = "test city",
-                Payments = "cast,swish",
-                DeliveryMethods = "mail,delivered",
-                CreatedAt = new DateTime(),
-            }
-        };
     }
 
     [Fact]

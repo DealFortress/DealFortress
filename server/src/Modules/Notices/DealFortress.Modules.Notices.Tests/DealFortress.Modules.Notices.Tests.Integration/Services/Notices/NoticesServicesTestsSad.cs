@@ -6,6 +6,7 @@ using DealFortress.Modules.Notices.Tests.Integration.Fixture;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
+using DealFortress.Modules.Notices.Tests.Shared;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -19,15 +20,7 @@ public class NoticesServicesTestsSad
     {
         _service = CreateNewService();
 
-        _request = new NoticeRequest
-        {
-            UserId = 1,
-            Title = "test title",
-            Description = "test description",
-            City = "test city",
-            Payments = new[] { "cast", "swish" },
-            DeliveryMethods = new[] { "mail", "delivered" }
-        };
+        _request = NoticesTestModels.CreateNoticeRequest();
     }
 
     public INoticesService CreateNewService()

@@ -5,6 +5,7 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using FluentAssertions;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
+using DealFortress.Modules.Notices.Tests.Shared;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
@@ -23,115 +24,11 @@ public class NoticesServiceTestsHappy
 
         _service = new NoticesService(productsService.Object, _repo.Object);
 
-        _request = CreateNoticeRequest();
+        _request = NoticesTestModels.CreateNoticeRequest();
 
-        _notice = CreateNotice();
+        _notice = NoticesTestModels.CreateNotice();
 
-        _request = CreateNoticeRequest();
-    }
-
-
-    public NoticeRequest CreateNoticeRequest()
-    {
-        return new NoticeRequest()
-        {
-            UserId = 1,
-            Title = "test title",
-            Description = "test description",
-            City = "test city",
-            Payments = new[] { "cast", "swish" },
-            DeliveryMethods = new[] { "mail", "delivered" },
-            ProductRequests = new List<ProductRequest>
-            {
-                new ProductRequest()
-                {
-                    Name = "test",
-                    Price = 1,
-                    HasReceipt = true,
-                    SoldStatus = SoldStatus.Available,
-                    IsSoldSeparately = false,
-                    Warranty = "month",
-                    CategoryId = 1,
-                    Condition = Condition.New,
-                    ImageRequests = new List<ImageRequest>(){
-                        new ImageRequest()
-                        {
-                            Url = "Hello world"
-                        }
-                    }
-                }
-            }
-        };
-    }
-
-    public NoticeResponse CreateNoticeResponse()
-
-    {
-        return new NoticeResponse()
-        {
-            Id = 1,
-            UserId = 1,
-            Title = "test title",
-            Description = "test description",
-            City = "test city",
-            Payments = new[] { "cast", "swish" },
-            DeliveryMethods = new[] { "mail", "delivered" },
-            CreatedAt = new DateTime(),
-            Products = new List<ProductResponse>
-            {
-                new ProductResponse()
-                {
-                    Id = 1,
-                    Name = "test",
-                    Price = 1,
-                    HasReceipt = true,
-                    SoldStatus = SoldStatus.Available,
-                    IsSoldSeparately = false,
-                    Warranty = "month",
-                    CategoryId = 1,
-                    Condition = Condition.New,
-                    Images = new List<ImageResponse>(){
-                        new ImageResponse()
-                        {
-                            Url = "Hello world"
-                        }
-                    },
-                    NoticeId = 1,
-                }
-            }
-        };
-    }
-
-    public Notice CreateNotice()
-
-    {
-        return new Notice()
-        {
-            Id = 1,
-            UserId = 1,
-            Title = "test title",
-            Description = "test description",
-            City = "test city",
-            Payments = "cast,swish",
-            DeliveryMethods = "mail,delivered",
-            CreatedAt = new DateTime(),
-            Products = new List<Product>
-            {
-                new Product()
-                {
-                    Id = 1,
-                    Name = "test",
-                    Price = 1,
-                    HasReceipt = true,
-                    SoldStatus = SoldStatus.Available,
-                    IsSoldSeparately = false,
-                    Warranty = "month",
-                    CategoryId = 1,
-                    Condition = Condition.New,
-                    Notice = this._notice
-                }
-            }
-        };
+        _request = NoticesTestModels.CreateNoticeRequest();
     }
 
     [Fact]
@@ -211,6 +108,20 @@ public class NoticesServiceTestsHappy
         // Assert 
         response.Should().BeOfType<NoticeResponse>();
     }
+
+    // [Fact]
+    // public void PutDTO_should_return_images_inside_response()
+    // {
+    //    // arrange
+    //     _repo.Setup(repo => repo.GetById(1)).Returns(_notice);
+        
+
+    //     // Act
+    //     var response = _service.PutById(1, _request);
+
+    //     // Assert 
+    //     response?.Products?.First().Images?.Count().Should().Be(1); 
+    // }
 
     [Fact]
     public void DeleteById_should_remove_data_and_complete()

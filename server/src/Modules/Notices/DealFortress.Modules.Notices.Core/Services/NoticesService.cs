@@ -121,14 +121,15 @@ public class NoticesService : INoticesService
             City = request.City,
             Payments = string.Join(",", request.Payments),
             DeliveryMethods = string.Join(",", request.DeliveryMethods),
-            CreatedAt = creationDate
+            CreatedAt = creationDate,
+            Products = new List<Product>()
         };
 
         if (request.ProductRequests is not null)
         {
             notice.Products = request.ProductRequests.Select(product => _productsService.ToProduct(product, notice)).ToList();
         }
-
+        
         return notice;
     }
 }

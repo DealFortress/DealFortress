@@ -27,8 +27,6 @@ public class NoticesServiceTestsSad
         _request = NoticesTestModels.CreateNoticeRequest();
 
         _notice = NoticesTestModels.CreateNotice();
-
-        _request = NoticesTestModels.CreateNoticeRequest();
     }
 
     [Fact]

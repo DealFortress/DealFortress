@@ -125,12 +125,11 @@ public class ProductsService: IProductsService
             SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Notice = notice,
+            Images = new List<Image>()
         };
 
-        if (product.Images is not null)
-        {
-            product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
-        }
+        product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
+        
         return product;
     }
 }

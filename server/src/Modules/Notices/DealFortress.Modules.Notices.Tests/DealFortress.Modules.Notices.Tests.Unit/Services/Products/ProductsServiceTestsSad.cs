@@ -28,7 +28,7 @@ public class ProductsServiceTestsSad
 
         _service = new ProductsService(_repo.Object, imagesService.Object, _usersController.Object);
 
-        _request = NoticesTestModels.CreateProductRequest();
+        _request = NoticesTestModels.CreateNoticeRequest().ProductRequests.First();
     }
 
     [Fact]

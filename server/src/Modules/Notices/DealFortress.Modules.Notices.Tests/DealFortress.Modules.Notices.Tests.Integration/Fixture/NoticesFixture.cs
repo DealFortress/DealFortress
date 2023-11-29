@@ -30,14 +30,13 @@ public class NoticesFixture : IDisposable
             Context.Notices.Add(
                 new Notice
                 {
-                    Id = i,
                     UserId = i,
                     Title = $"title {i}",
                     Description = "description",
                     City = "city",
                     Payments = "cast,swish",
                     DeliveryMethods = "mail,delivered",
-                    CreatedAt = new DateTime()
+                    CreatedAt = new DateTime(),
                 }
             );
 
@@ -58,13 +57,27 @@ public class NoticesFixture : IDisposable
                     Warranty = "month",
                     CategoryId = 1,
                     Condition = Condition.New,
-                    Notice = Context.Notices.First()
+                    Notice = Context.Notices.First(),
                 }
             );
+
 
         }
 
         Context.SaveChanges();
+
+        // for (int i = 1; i < numberOfInstances + 1; i++)
+        // {
+        //     Context.Images.Add(
+        //         new Image
+        //         {
+        //             Url = "Hello world",
+        //             Product = Context.Products.First()
+        //         }
+        //     ); 
+        // }
+
+        // Context.SaveChanges();
     }
 
     public void Dispose()

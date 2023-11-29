@@ -1,3 +1,4 @@
+using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
 
@@ -10,7 +11,7 @@ public static class NoticesTestModels
     {
         var notice = new Notice()
         {
-            Id = 1,
+            Id = 10,
             UserId = 1,
             Title = "test title",
             Description = "test description",
@@ -23,10 +24,11 @@ public static class NoticesTestModels
 
         notice.Products.Add(new Product()
         {
-            Id = 1,
+            Id = 10,
             Name = "test",
             Price = 1,
             HasReceipt = true,
+            Images = new List<Image>(),
             SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Warranty = "month",
@@ -76,7 +78,7 @@ public static class NoticesTestModels
     {
         return new NoticeResponse()
         {
-            Id = 1,
+            Id = 10,
             UserId = 1,
             Title = "test title",
             Description = "test description",
@@ -88,7 +90,7 @@ public static class NoticesTestModels
             {
                 new ProductResponse()
                 {
-                    Id = 1,
+                    Id = 10,
                     Name = "test",
                     Price = 1,
                     HasReceipt = true,
@@ -97,7 +99,6 @@ public static class NoticesTestModels
                     Warranty = "month",
                     CategoryId = 1,
                     Condition = Condition.New,
-
                     Images = new List<ImageResponse>(){
                         new ImageResponse()
                         {
@@ -105,78 +106,6 @@ public static class NoticesTestModels
                         }
                     },
                     NoticeId = 1,
-                }
-            }
-        };
-    }
-
-        public static Product CreateProduct()
-    {
-        return new Product()
-        {
-            Id = 1,
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            SoldStatus = SoldStatus.Available,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-            Notice = new Notice()
-            {
-                Id = 1,
-                UserId = 1,
-                Title = "test title",
-                Description = "test description",
-                City = "test city",
-                Payments = "cast,swish",
-                DeliveryMethods = "mail,delivered",
-                CreatedAt = new DateTime(),
-            }
-        };
-    }
-
-        public static ProductResponse CreateProductResponse()
-    {
-        return new ProductResponse()
-        {
-            Id = 1,
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            SoldStatus = SoldStatus.Available,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-
-            Images = new List<ImageResponse>(){
-                new ImageResponse()
-                {
-                    Url = "Hello world"
-                }
-            },
-            NoticeId = 1,
-        };
-    }
-
-    public static ProductRequest CreateProductRequest()
-    {
-        return new ProductRequest()
-        {
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            SoldStatus = SoldStatus.Available,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-            ImageRequests = new List<ImageRequest>(){
-                new ImageRequest()
-                {
-                    Url = "Hello world"
                 }
             }
         };

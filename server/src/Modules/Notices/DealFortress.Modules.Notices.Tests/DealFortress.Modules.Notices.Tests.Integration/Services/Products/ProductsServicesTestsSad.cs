@@ -7,6 +7,7 @@ using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Users.Api.Controllers;
+using DealFortress.Modules.Notices.Tests.Shared;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -20,23 +21,7 @@ public class ProductsServicesTestsSad
     {
         _service = CreateNewService();
 
-        _request = new ProductRequest
-        {
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            SoldStatus = SoldStatus.Available,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-            ImageRequests = new List<ImageRequest>(){
-                new ImageRequest()
-                {
-                    Url = "Hello world"
-                }
-            }
-        };
+        _request = NoticesTestModels.CreateNoticeRequest().ProductRequests.First();
     }
 
     public IProductsService CreateNewService()
