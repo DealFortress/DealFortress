@@ -113,7 +113,7 @@ public class ProductsServiceTestsSad
         _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1, "authid");
+        _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
@@ -128,7 +128,7 @@ public class ProductsServiceTestsSad
         _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1, "authid");
+        _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
@@ -142,7 +142,7 @@ public class ProductsServiceTestsSad
         _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1, "authid");
+        var response = _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
 
         // Assert 
         response.Should().BeNull();

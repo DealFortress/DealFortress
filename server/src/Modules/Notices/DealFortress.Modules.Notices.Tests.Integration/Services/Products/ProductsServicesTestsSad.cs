@@ -25,7 +25,7 @@ public class ProductsServicesTestsSad
             Name = "test",
             Price = 1,
             HasReceipt = true,
-            IsSold = false,
+            SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
