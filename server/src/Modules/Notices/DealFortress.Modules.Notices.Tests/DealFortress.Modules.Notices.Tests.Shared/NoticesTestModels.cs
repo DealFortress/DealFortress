@@ -1,4 +1,3 @@
-using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
 
@@ -11,7 +10,7 @@ public static class NoticesTestModels
     {
         var notice = new Notice()
         {
-            Id = 10,
+            Id = 1,
             UserId = 1,
             Title = "test title",
             Description = "test description",
@@ -24,7 +23,7 @@ public static class NoticesTestModels
 
         notice.Products.Add(new Product()
         {
-            Id = 10,
+            Id = 1,
             Name = "test",
             Price = 1,
             HasReceipt = true,
@@ -78,7 +77,7 @@ public static class NoticesTestModels
     {
         return new NoticeResponse()
         {
-            Id = 10,
+            Id = 1,
             UserId = 1,
             Title = "test title",
             Description = "test description",
@@ -90,7 +89,7 @@ public static class NoticesTestModels
             {
                 new ProductResponse()
                 {
-                    Id = 10,
+                    Id = 1,
                     Name = "test",
                     Price = 1,
                     HasReceipt = true,

@@ -26,7 +26,7 @@ public class ProductsController : ControllerBase
         return Ok(_service.GetAll());
     }
 
-    [HttpPatch("{id}/issold")]
+    [HttpPatch("{id}/soldstatus/{soldstatus}")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

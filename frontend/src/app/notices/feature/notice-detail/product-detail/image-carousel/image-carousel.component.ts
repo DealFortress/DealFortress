@@ -42,8 +42,6 @@ export class ImageCarouselComponent {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
-
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
       this.goToPrevious();
     }

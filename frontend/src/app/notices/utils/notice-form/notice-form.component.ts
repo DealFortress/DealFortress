@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import {getUserId } from '@app/users/data-access/store/users.selectors';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
+import { SoldStatus } from '@app/shared/models/sold-status.model';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class NoticeFormComponent implements OnInit{
       {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
-      isSold: [false],
+      SoldStatus: [SoldStatus.Available],
       isSoldSeparately: [false],
       hasReceipt: [false],
       warranty: [''],
@@ -124,7 +125,7 @@ export class NoticeFormComponent implements OnInit{
       this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
         price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
-        isSold: [false],
+        soldStatus: [SoldStatus.Available],
         isSoldSeparately: [false],
         hasReceipt: [false],
         warranty: [''],

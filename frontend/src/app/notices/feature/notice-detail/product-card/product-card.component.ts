@@ -20,11 +20,13 @@ export class ProductCardComponent implements OnInit{
   SoldStatus = SoldStatus;
   notice$? : Observable<Notice | undefined>;
   user$ = this.store.select(getUser);
+  toggleSoldPopup = false;
 
   constructor(private store: Store, private renderer: Renderer2) {
   }
 
   toggleSoldStatus(soldStatus : SoldStatus) {
+
     this.store.dispatch(patchProductSoldStatusRequest({ productId: this.product.id, soldStatus: soldStatus }))
   }
 
@@ -33,9 +35,23 @@ export class ProductCardComponent implements OnInit{
     this.condition = Condition[this.product.condition];  
   }
 
-  handleFlagColor(isSold: boolean) {
-    if (isSold) {
-      this.renderer
+  // handleFlagColor(isSold: boolean) {
+  //   if (isSold) {
+  //     this.renderer
+  //   }
+  // }
+
+  availability() {
+    switch (this.product.soldStatus) {
+      case 0:
+        return {color: "bg-green", text: 'AVAILABLE'}
+      case 1:
+        return {color: "bg-red", text: 'RESERVED'}
+      case 2:
+        return {color: "bg-transparent", text: ''}   
+      default:
+        return {color: "green", text: 'AVAILABLE'}
     }
   }
+
 }

@@ -1,25 +1,29 @@
 <div class="relative h-48 transition-all hover:cursor-pointer md:flex md:py-6 md:gap-6 md:items-stretch md:w-full md:h-60">
-    <!-- <span class="absolute top-2 right-2 z-20">
-        <button class="btn text-xl" 
-                (click)="toggleSoldStatus()" 
-                *ngIf="((notice$ | async)?.userId == (user$ | async)?.id) && this.product.SoldStatus != SoldStatus.Sold">
-            {{ (this.product.SoldStatus == SoldStatus.Reserved ? 'SET TO AVAILABLE' : 'SET TO RESERVED')}}
-        </button>
-    </span> -->
-
-    <label 
-            class="swap absolute top-2 right-2 z-20"
-            (click)="toggleSoldStatus(soldstatus.checked ? SoldStatus.Available : SoldStatus.Reserved)" 
-            *ngIf="((notice$ | async)?.userId == (user$ | async)?.id) && this.product.soldStatus != SoldStatus.Sold">
-        <input #soldstatus type="checkbox" [checked]="soldstatus" />
-        <div class="swap-on btn text-xl">SET TO AVAILABLE</div>
-        <div class="swap-off  btn text-xl">SET TO RESERVED</div>
-    </label>
-    <!-- <div    
+    <div *ngIf="((notice$ | async)?.userId == (user$ | async)?.id)" class="absolute top-0 right-2 z-20 flex flex-col justify-between w-full h-full md:w-auto md:h-auto md:flex-row items-end md-items-center gap-2 p-2">
+        <span >
+            <button class="btn md:text-xl" 
+                    (click)="toggleSoldPopup = true" 
+                    *ngIf="this.product.soldStatus == SoldStatus.Reserved">
+                SET TO SOLD
+            </button>
+        </span>
+        <label
+            class="swap"
+            *ngIf="this.product.soldStatus != SoldStatus.Sold">
+            <input
+                #soldstatus 
+                type="checkbox" 
+                (click)="toggleSoldStatus(soldstatus.checked ? SoldStatus.Available : SoldStatus.Reserved )"
+                [checked]="this.product.soldStatus == SoldStatus.Available" />
+            <div  class="swap-on btn md:text-xl">SET TO RESERVED</div>
+            <div class="swap-off btn md:text-xl">SET BACK TO AVAILABLE</div>
+        </label>
+    </div>
+    <div    
         class='absolute h-6 rounded flex justify-center items-center z-20 p-4 font-bold' 
-        [ngClass]="this.product.SoldStatus == SoldStatus.Sold ? 'bg-red' : 'bg-green'" >
-            {{ (this.product.isSold ? 'SOLD' : 'AVAILABLE')}}
-    </div> -->
+        [ngClass]="availability().color" >
+            {{ availability().text}}
+    </div>
     <div 
         *ngIf="this.product.soldStatus == SoldStatus.Sold" 
         class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes border border-black">
@@ -39,3 +43,12 @@
         <p>warranty: {{this.product.warranty}}</p>
     </div>
 </div>
+
+<app-popup-card *ngIf="toggleSoldPopup" title="Congratulations on the sale!" body="This action cannot be reversed">
+    <button (click)="toggleSoldStatus(SoldStatus.Sold)" class="btn btn-primary">
+        SOLD!
+    </button>
+    <button (click)="toggleSoldPopup = false" class="btn btn-ghost">
+        CANCEL
+    </button>
+</app-popup-card>

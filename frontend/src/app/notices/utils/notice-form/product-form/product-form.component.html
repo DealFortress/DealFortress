@@ -11,19 +11,23 @@
                 <input matInput type="number" [placeholder]="'1000'" formControlName="price" required>
                 <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
             </mat-form-field>
-            <div>
+            <div class="">
                 <h2>Images urls</h2>
-                <div *ngFor="let image of imagesFormArray.controls; index as i; first as isFirst" class="" appearance="outline" formArrayName="imageRequests">
-                    <div [formGroupName]="i">
-                        <div *ngIf="isRemovable()" class="close" (click)="removeImage(i)">X</div>
-                        <mat-form-field class="">
-                            <mat-label>Enter your image url ✒️</mat-label>
-                            <input matInput placeholder="image url" name="url{{i}}" formControlName="url" required>
-                            <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
-                        </mat-form-field>
-                    </div>
+                <div class="flex flex-wrap w-[45%] items-stretch grow h-auto">
+                    <ng-container *ngFor="let image of imagesFormArray.controls; index as i; first as isFirst" formArrayName="imageRequests">
+                        <div [formGroupName]="i" class="">
+                            <button *ngIf="isRemovable()" class="close" (click)="removeImage(i)" aria-label="create Notice" class="btn btn-circle btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                            <mat-form-field class="">
+                                <mat-label>Enter your image url ✒️</mat-label>
+                                <input matInput placeholder="image url" name="url{{i}}" formControlName="url" required>
+                                <mat-error *ngIf="priceFormControl">{{getErrorMessage(priceFormControl)}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <button mat-fab color="accent" (click)="addImage()" class="self-center btn btn-ghost btn-circle"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                 </div>
-                <button mat-fab color="accent" (click)="addImage()" class="btn btn-ghost">+</button>
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <mat-form-field class="">

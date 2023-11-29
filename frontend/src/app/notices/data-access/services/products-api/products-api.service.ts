@@ -20,7 +20,7 @@ export class ProductsApiService {
   patchProductSoldStatusAPI(productId: number, soldStatus: SoldStatus): Observable<Product> {
     return this.httpClient
         .patch(
-            `${this.noticesUrl}/${productId}/issold`, {soldStatus: soldStatus})
+            `${this.noticesUrl}/${productId}/soldstatus/${soldStatus}`, {})
         .pipe(data => data as Observable<Product>);
   }
 }
