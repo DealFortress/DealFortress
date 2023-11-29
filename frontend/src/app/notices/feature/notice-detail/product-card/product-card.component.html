@@ -1,13 +1,30 @@
 <div class="relative h-48 transition-all hover:cursor-pointer md:flex md:py-6 md:gap-6 md:items-stretch md:w-full md:h-60">
-    <span class="absolute top-2 right-2 z-20">
+    <!-- <span class="absolute top-2 right-2 z-20">
         <button class="btn text-xl" 
                 (click)="toggleSoldStatus()" 
-                *ngIf="(notice$ | async)?.userId == (user$ | async)?.id">
-            {{ (this.product.isSold ? 'SET TO AVAILABLE' : 'SET TO SOLD')}}
+                *ngIf="((notice$ | async)?.userId == (user$ | async)?.id) && this.product.SoldStatus != SoldStatus.Sold">
+            {{ (this.product.SoldStatus == SoldStatus.Reserved ? 'SET TO AVAILABLE' : 'SET TO RESERVED')}}
         </button>
-    </span>
-    <div class='absolute h-6 rounded flex justify-center items-center z-20 p-4 font-bold' [ngClass]="this.product.isSold ? 'bg-red' : 'bg-green'" >{{ (this.product.isSold ? 'SOLD' : 'AVAILABLE')}}</div>
-    <div *ngIf="this.product.isSold" class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes border border-black">SOLD</div>
+    </span> -->
+
+    <label 
+            class="swap absolute top-2 right-2 z-20"
+            (click)="toggleSoldStatus(soldstatus.checked ? SoldStatus.Available : SoldStatus.Reserved)" 
+            *ngIf="((notice$ | async)?.userId == (user$ | async)?.id) && this.product.soldStatus != SoldStatus.Sold">
+        <input #soldstatus type="checkbox" [checked]="soldstatus" />
+        <div class="swap-on btn text-xl">SET TO AVAILABLE</div>
+        <div class="swap-off  btn text-xl">SET TO RESERVED</div>
+    </label>
+    <!-- <div    
+        class='absolute h-6 rounded flex justify-center items-center z-20 p-4 font-bold' 
+        [ngClass]="this.product.SoldStatus == SoldStatus.Sold ? 'bg-red' : 'bg-green'" >
+            {{ (this.product.isSold ? 'SOLD' : 'AVAILABLE')}}
+    </div> -->
+    <div 
+        *ngIf="this.product.soldStatus == SoldStatus.Sold" 
+        class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes border border-black">
+        SOLD
+    </div>
     <span class="bg-gradient-to-b from-black to-[#454545] opacity-60 md:opacity-0 h-full w-full absolute rounded-xl"></span>
     <img [src]="this.product.images[0].url" 
         alt="product image" 

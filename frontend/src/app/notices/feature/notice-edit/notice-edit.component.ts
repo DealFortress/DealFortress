@@ -46,7 +46,7 @@ export class NoticeEditComponent {
        return this.formBuilder.group({
             name: [product.name],
             price: [product.price],
-            isSold: [product.isSold],
+            soldStatus: [product.soldStatus],
             isSoldSeparately: [product.isSoldSeparately],
             hasReceipt: [product.hasReceipt],
             warranty: [product.warranty],

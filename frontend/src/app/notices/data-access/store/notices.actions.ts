@@ -1,6 +1,7 @@
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { Notice } from '@app/shared/models/notice.model';
 import { Product } from '@app/shared/models/product.model';
+import { SoldStatus } from '@app/shared/models/sold-status.model';
 import { createAction, props } from '@ngrx/store';
 
 // Notices
@@ -29,9 +30,9 @@ export const deleteNoticeSuccess = createAction(DELETE_NOTICE_SUCCESS, props<{no
 
 
 // Products
-export const PATCH_PRODUCT_ISSOLD_REQUEST = '[Notices] patch product issold status request';
-export const PATCH_PRODUCT_ISSOLD_SUCCESS = '[Notices] patch product issold status success';
+export const PATCH_PRODUCT_SOLD_STATUS_REQUEST = '[Notices] patch product sold status request';
+export const PATCH_PRODUCT_SOLD_STATUS_SUCCESS = '[Notices] patch product sold status success';
 
-export const patchProductIsSoldRequest = createAction(PATCH_PRODUCT_ISSOLD_REQUEST, props<{productId: number}>());
-export const patchProductIsSoldSuccess = createAction(PATCH_PRODUCT_ISSOLD_SUCCESS, props<{product: Product}>());
+export const patchProductSoldStatusRequest = createAction(PATCH_PRODUCT_SOLD_STATUS_REQUEST, props<{productId: number, soldStatus: SoldStatus}>());
+export const patchProductSoldStatusSuccess = createAction(PATCH_PRODUCT_SOLD_STATUS_SUCCESS, props<{product: Product}>());
 

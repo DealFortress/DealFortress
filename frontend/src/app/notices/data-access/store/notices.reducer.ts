@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductIsSoldSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
+import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 import { getNoticeById } from "./notices.selectors";
@@ -40,13 +40,13 @@ export const noticesReducer = createReducer(
     on(deleteNoticeSuccess, (state, action)=> {
         return noticesAdapter.removeOne(action.noticeId, state)
     }),
-    on(patchProductIsSoldSuccess,(state,action)=>{
+    on(patchProductSoldStatusSuccess,(state,action)=>{
         let notice = {...state.entities[action.product.noticeId]} as Notice;
         if (notice) {
             notice.products = notice?.products.map(product => {
                 let updatedProduct = {...product} as Product;
                 if ( product.id == action.product.id) {
-                    updatedProduct.isSold = action.product.isSold
+                    updatedProduct.soldStatus = action.product.soldStatus
                 }
                 return updatedProduct;
             })

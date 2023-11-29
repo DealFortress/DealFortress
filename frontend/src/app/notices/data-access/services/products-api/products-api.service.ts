@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { Notice } from '@app/shared/models/notice.model';
 import { Product } from '@app/shared/models/product.model';
+import { SoldStatus } from '@app/shared/models/sold-status.model';
 import { environment } from 'environments/environment.production';
 import { Observable } from 'rxjs';
 
@@ -16,10 +17,10 @@ export class ProductsApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  patchProductIsSoldAPI(productId: number): Observable<Product> {
+  patchProductSoldStatusAPI(productId: number, soldStatus: SoldStatus): Observable<Product> {
     return this.httpClient
         .patch(
-            `${this.noticesUrl}/${productId}/issold`, {})
+            `${this.noticesUrl}/${productId}/issold`, {soldStatus: soldStatus})
         .pipe(data => data as Observable<Product>);
   }
 }

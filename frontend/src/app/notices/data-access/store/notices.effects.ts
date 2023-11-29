@@ -5,7 +5,14 @@ import { ProductsApiService } from '../services/products-api/products-api.servic
 import { Notice } from '@app/shared/models/notice.model';
 import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductIsSoldRequest, patchProductIsSoldSuccess, postNoticeRequest, postNoticeSuccess, putNoticeRequest, putNoticeSuccess } from './notices.actions';
+import {    
+            deleteNoticeRequest, deleteNoticeSuccess, 
+            loadNoticesError, loadNoticesRequest, 
+            loadNoticesSuccess, 
+            patchProductSoldStatusRequest, patchProductSoldStatusSuccess, 
+            postNoticeRequest, postNoticeSuccess, 
+            putNoticeRequest, putNoticeSuccess 
+        } from './notices.actions';
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { Update } from '@ngrx/entity';
@@ -89,14 +96,14 @@ export class NoticesEffects {
     );
 
     // Products
-    patchProductIsSold$ = createEffect(() =>
+    patchProductSoldStatus$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(patchProductIsSoldRequest),
+        ofType(patchProductSoldStatusRequest),
         mergeMap(action =>
-            this.productsApiService.patchProductIsSoldAPI(action.productId).pipe(
+            this.productsApiService.patchProductSoldStatusAPI(action.productId, action.soldStatus).pipe(
                 mergeMap(product => 
                         of(
-                            patchProductIsSoldSuccess({ product: product as Product }),
+                            patchProductSoldStatusSuccess({ product: product as Product }),
                             ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' })                    
                         )
                     ),
