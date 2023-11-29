@@ -4,6 +4,7 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
+using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Modules.Users.Api.Controllers;
 using FluentAssertions;
 using Moq;
@@ -27,30 +28,8 @@ public class ProductsServiceTestsSad
 
         _service = new ProductsService(_repo.Object, imagesService.Object, _usersController.Object);
 
-        _request = CreateProductRequest();
+        _request = NoticesTestModels.CreateProductRequest();
     }
-
-    public static ProductRequest CreateProductRequest()
-    {
-        return new ProductRequest()
-        {
-            Name = "test",
-            Price = 1,
-            HasReceipt = true,
-            IsSold = false,
-            IsSoldSeparately = false,
-            Warranty = "month",
-            CategoryId = 1,
-            Condition = Condition.New,
-            ImageRequests = new List<ImageRequest>(){
-                new ImageRequest()
-                {
-                    Url = "Hello world"
-                }
-            }
-        };
-    }
-
 
     [Fact]
     public void PutById_returns_null_when_id_doesnt_exist()

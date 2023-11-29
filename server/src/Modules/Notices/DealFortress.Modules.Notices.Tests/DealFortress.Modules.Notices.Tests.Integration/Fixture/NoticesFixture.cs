@@ -53,7 +53,7 @@ public class NoticesFixture : IDisposable
                     Name = $"Name {i}",
                     Price = 1,
                     HasReceipt = true,
-                    IsSold = false,
+                    SoldStatus = SoldStatus.Available,
                     IsSoldSeparately = false,
                     Warranty = "month",
                     CategoryId = 1,
