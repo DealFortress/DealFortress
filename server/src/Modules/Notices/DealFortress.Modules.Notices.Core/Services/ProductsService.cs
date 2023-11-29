@@ -63,7 +63,7 @@ public class ProductsService: IProductsService
         return product;
     }
 
-    public ProductResponse? PatchSoldStatusById(int id, string authId)
+    public ProductResponse? PatchSoldStatusById(int id, SoldStatus soldStatus, string authId)
     {
         var product = _repo.GetById(id);
         
@@ -80,7 +80,7 @@ public class ProductsService: IProductsService
             return null;
         }
 
-        product.IsSold = !product.IsSold;
+        product.SoldStatus = soldStatus;
 
         _repo.Update(product);
         _repo.Complete();
@@ -99,7 +99,7 @@ public class ProductsService: IProductsService
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
             Condition = product.Condition,
-            IsSold = product.IsSold,
+            SoldStatus = product.SoldStatus,
             NoticeId = product.Notice.Id,
             IsSoldSeparately = product.IsSoldSeparately
         };
@@ -122,7 +122,7 @@ public class ProductsService: IProductsService
             Warranty = request.Warranty,
             CategoryId = request.CategoryId,
             Condition = request.Condition,
-            IsSold = false,
+            SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Notice = notice,
         };

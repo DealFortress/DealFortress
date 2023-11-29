@@ -59,7 +59,7 @@ public class ProductControllersTestsHappy
             Name = "test",
             Price = 1,
             HasReceipt = true,
-            IsSold = false,
+            SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
@@ -82,7 +82,7 @@ public class ProductControllersTestsHappy
             Price = 1,
             HasReceipt = true,
             IsSoldSeparately = false,
-            IsSold = false,
+            SoldStatus = SoldStatus.Available,
             Warranty = "month",
             CategoryId = 1,
             Condition = Condition.New,
@@ -105,7 +105,7 @@ public class ProductControllersTestsHappy
             Name = "test",
             Price = 1,
             HasReceipt = true,
-            IsSold = false,
+            SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
@@ -154,9 +154,9 @@ public class ProductControllersTestsHappy
     public void PatchProductSoldStatus_return_ok_object_response_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.PatchSoldStatusById(1, "authId")).Returns(_response);
+        _service.Setup(service => service.PatchSoldStatusById(1, SoldStatus.Available,"authId")).Returns(_response);
         // Act
-        var httpResponse = _controller.PatchProductSoldStatus(1);
+        var httpResponse = _controller.PatchProductSoldStatus(1, SoldStatus.Available);
         // Assert 
         httpResponse.Should().BeOfType<OkObjectResult>();
     }

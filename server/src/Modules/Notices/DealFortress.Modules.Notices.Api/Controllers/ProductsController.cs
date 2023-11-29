@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using DealFortress.Modules.Notices.Core.Domain.Entities;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -29,11 +30,11 @@ public class ProductsController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult PatchProductSoldStatus(int id)
+    public IActionResult PatchProductSoldStatus(int id, SoldStatus soldStatus)
     {
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
-        var response = _service.PatchSoldStatusById(id, userId);
+        var response = _service.PatchSoldStatusById(id, soldStatus, userId);
 
         return response is null ? NotFound() : Ok(response);
     }
