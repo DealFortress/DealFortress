@@ -122,7 +122,7 @@ public class ProductsService: IProductsService
             Warranty = request.Warranty,
             CategoryId = request.CategoryId,
             Condition = request.Condition,
-            SoldStatus = SoldStatus.Available,
+            SoldStatus = request.SoldStatus,
             IsSoldSeparately = false,
             Notice = notice,
             Images = new List<Image>()

@@ -42,7 +42,6 @@ export class NoticeEditComponent {
 
   createProductFormGroups(products: Product[]) {
     return products.map(product => {
-      console.log(product.soldStatus.valueOf())
        return this.formBuilder.group({
             name: product.name,
             price: product.price,

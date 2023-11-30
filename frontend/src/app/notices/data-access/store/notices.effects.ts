@@ -67,11 +67,11 @@ export class NoticesEffects {
         mergeMap(action =>
             this.noticesApiService.putNoticeAPI(action.request, action.noticeId).pipe(
                 mergeMap(notice => 
-                        of(
-                        putNoticeSuccess({ notice: notice as Notice }),
-                        ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' })                    
-                        )
-                    ),
+                    of(
+                    putNoticeSuccess({ notice: notice as Notice }),
+                    ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' })                    
+                    )
+                ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to update notice.', actionresult: 'fail' }))),
                 )
             )

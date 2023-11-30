@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges } from '@angular/core';
 import { patchProductSoldStatusRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Condition } from '@app/shared/models/condition.model';
@@ -22,24 +22,19 @@ export class ProductCardComponent implements OnInit{
   user$ = this.store.select(getUser);
   toggleSoldPopup = false;
 
-  constructor(private store: Store, private renderer: Renderer2) {
+  constructor(private store: Store) {
   }
-
+ 
   toggleSoldStatus(soldStatus : SoldStatus) {
-
     this.store.dispatch(patchProductSoldStatusRequest({ productId: this.product.id, soldStatus: soldStatus }))
   }
 
   ngOnInit(): void {
     this.notice$ = this.store.select(getNoticeById(this.product.noticeId))
+
     this.condition = Condition[this.product.condition];  
   }
 
-  // handleFlagColor(isSold: boolean) {
-  //   if (isSold) {
-  //     this.renderer
-  //   }
-  // }
 
   availability() {
     switch (this.product.soldStatus) {
