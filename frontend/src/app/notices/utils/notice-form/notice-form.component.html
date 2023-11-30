@@ -1,7 +1,7 @@
 <fieldset [disabled]="!(isAuthenticated$ | async)">
     <app-main-container >
-        <form action="" [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
-                <section class="bg-base-200 relative rounded-lg p-6 pt-20 flex flex-col justify-between gap-12">
+        <form action=""  [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
+                <section class="bg-base-200 relative rounded-lg p-6 h-full pt-20 flex flex-col justify-between gap-12">
                 <mat-form-field>
                     <mat-label >Your title here ✒️</mat-label>
                     <input matInput [placeholder]="'Selling rare artifact for coin'" formControlName="title" required>
@@ -13,14 +13,14 @@
                     <mat-error *ngIf="descriptionFormControl">{{getErrorMessage(descriptionFormControl)}}</mat-error>
                 </mat-form-field>
                 <h3 class="border-bottom border-[grey] text-2xl">Products</h3>
-                <div class="flex gap-4 flex-wrap">
-                    <div *ngFor="let product of productsFormArray.controls; index as i; first as isFirst" class="" appearance="outline" formArrayName="productRequests">
-                        <div>
-                            <div *ngIf="isRemovable()" class="close" (click)="removeProduct(i)">X</div>
-                                <app-product-form [productForm]="getProductFormGroup(i)"></app-product-form>
-                        </div>
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+                    <div *ngFor="let product of productsFormArray.controls; index as i; first as isFirst" class="relative" appearance="outline" formArrayName="productRequests">
+                        <button *ngIf="isRemovable()" (click)="removeProduct(i)" aria-label="create Notice" class="z-10 absolute top-2 right-2 btn btn-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                        <app-product-form [productForm]="getProductFormGroup(i)"></app-product-form>
                     </div>
-                    <button mat-fab color="accent" (click)="addProduct()" class="btn btn-ghost">+</button>
+                    <button mat-fab color="accent" (click)="addProduct()" class="btn btn-ghost "><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                 </div>
                 <mat-form-field class="">
                     <mat-label>Your city here ✒️</mat-label>
@@ -42,7 +42,7 @@
                     <mat-error *ngIf="deliveryMethodsFormControl">{{getErrorMessage(deliveryMethodsFormControl)}}</mat-error>
                 </mat-form-field>
                 <div class="flex flex-col gap-4 w-full">
-                    <button type="submit" [disabled]="disableSubmitButton || !noticeForm.valid" class="hover:opacity-80 rounded bg-darkblue white-box-border disabled:opacity-40 w-full py-1">
+                    <button type="submit" [disabled]="disableSubmitButton || !noticeForm.valid" class="hover:opacity-80 rounded bg-darkblue white-box-border disabled:opacity-40 w-full py-3 text-3xl">
                         Submit
                     </button>
                 </div>

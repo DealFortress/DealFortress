@@ -13,7 +13,7 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public NoticesRepository(NoticesContext context) : base(context)
     {}
 
-    public IEnumerable<Notice> GetAllWithProductsAndImages()
+    public new IEnumerable<Notice> GetAll()
     {
         return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
@@ -21,10 +21,11 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
                     .ToList();
     }
 
-    public Notice? GetByIdWithProducts(int id)
+    public new Notice? GetById(int id)
     {
         return NoticesContext!.Notices
                     .Include(notice => notice.Products!)
+                    .ThenInclude(product => product.Images)
                     .FirstOrDefault(notice => notice.Id == id);
     }
 

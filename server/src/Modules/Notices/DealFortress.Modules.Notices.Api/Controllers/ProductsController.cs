@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using DealFortress.Modules.Notices.Core.DTO;
-using DealFortress.Modules.Notices.Core.Services;
 using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using DealFortress.Modules.Notices.Core.Domain.Entities;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -25,15 +26,17 @@ public class ProductsController : ControllerBase
         return Ok(_service.GetAll());
     }
 
-    [HttpPut("{id}")]
+    [HttpPatch("{id}/soldstatus/{soldstatus}")]
     [Authorize]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult PutProduct(int id, ProductRequest request)
+    public IActionResult PatchProductSoldStatus(int id, SoldStatus soldStatus)
     {
-        var response = _service.PutById(id, request);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
-        return response is null ? NotFound() : NoContent();
+        var response = _service.PatchSoldStatusById(id, soldStatus, userId);
+
+        return response is null ? NotFound() : Ok(response);
     }
 
     [HttpDelete("{id}")]

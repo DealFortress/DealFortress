@@ -12,7 +12,7 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         [Range(1, 100000, ErrorMessage = "Price must be between 1SEK and 100 000SEK")]
         public required int Price { get; set; }
         public required bool HasReceipt { get; set; }
-        public required bool IsSold { get; set; }
+        public required SoldStatus SoldStatus { get; set; }
         public required bool IsSoldSeparately { get; set; }
         public string? Warranty { get; set; }
         public required int CategoryId { get; set; }

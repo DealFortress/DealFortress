@@ -1,31 +1,30 @@
-using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
 public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
-    private readonly CategoriesController _categoriesController;
     private readonly IImagesService _imagesService;
+    private UsersController _usersController;
 
 
-
-    public ProductsService(IProductsRepository repo, CategoriesController categoriesController, IImagesService imagesService)
+    public ProductsService(IProductsRepository repo, IImagesService imagesService, UsersController usersController)
     {
         _repo = repo;
-        _categoriesController = categoriesController;
         _imagesService = imagesService;
+        _usersController = usersController;
     }
 
 
     public IEnumerable<ProductResponse> GetAll()
     {
-        return _repo.GetAllWithImages()
-                    .Select(product => ToProductResponseDTO(product))
+        return _repo.GetAll()
+                    .Select(ToProductResponseDTO)
                     .ToList();
     }
 
@@ -64,11 +63,34 @@ public class ProductsService: IProductsService
         return product;
     }
 
+    public ProductResponse? PatchSoldStatusById(int id, SoldStatus soldStatus, string authId)
+    {
+        var product = _repo.GetById(id);
+        
 
+        if (product is null)
+        {
+            return null;
+        }
+        
+        var isCreator = _usersController.IsUserNoticeCreator(authId, product.Notice.UserId);
+
+        if (!isCreator)
+        {
+            return null;
+        }
+
+        product.SoldStatus = soldStatus;
+
+        _repo.Update(product);
+        _repo.Complete();
+
+        return ToProductResponseDTO(product);
+    }
     
     public ProductResponse ToProductResponseDTO(Product product)
     {
-        return new ProductResponse()
+        var response = new ProductResponse()
         {
             Id = product.Id,
             Name = product.Name,
@@ -77,10 +99,17 @@ public class ProductsService: IProductsService
             Warranty = product.Warranty,
             CategoryId = product.CategoryId,
             Condition = product.Condition,
-            Images = product.Images?.Select(image => _imagesService.ToImageResponseDTO(image)).ToList(),
+            SoldStatus = product.SoldStatus,
             NoticeId = product.Notice.Id,
             IsSoldSeparately = product.IsSoldSeparately
         };
+
+        if (product.Images is not null)
+        {
+            response.Images = product.Images?.Select(_imagesService.ToImageResponseDTO).ToList();
+        }
+
+        return response;
     }
 
     public Product ToProduct(ProductRequest request, Notice notice)
@@ -93,13 +122,14 @@ public class ProductsService: IProductsService
             Warranty = request.Warranty,
             CategoryId = request.CategoryId,
             Condition = request.Condition,
-            IsSold = false,
+            SoldStatus = request.SoldStatus,
             IsSoldSeparately = false,
             Notice = notice,
+            Images = new List<Image>()
         };
 
         product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
-
+        
         return product;
     }
 }

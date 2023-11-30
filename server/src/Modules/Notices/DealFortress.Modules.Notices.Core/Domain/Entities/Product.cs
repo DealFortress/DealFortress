@@ -13,7 +13,7 @@ public class Product
     [Range(0, 100000, ErrorMessage = "The maximum price for a product is 100 000 SEK")]
     public required int Price { get; set; }
     public required bool HasReceipt { get; set; }
-    public required bool IsSold { get; set; }
+    public required SoldStatus SoldStatus { get; set; }
     public required bool IsSoldSeparately { get; set; }
     public required int CategoryId { get; set; }
     public virtual List<Image>? Images { get; set; }
@@ -30,4 +30,11 @@ public enum Condition
     Modified,
     Defective,
     Broken
+}
+
+public enum SoldStatus
+{
+    Available,
+    Reserved,
+    Sold
 }

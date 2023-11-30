@@ -1,5 +1,24 @@
-<div class="relative h-48 transition-all
-            md:flex md:py-6 md:gap-6 md:items-stretch md:w-full md:h-60">
+<div class="relative h-48 transition-all hover:cursor-pointer md:flex md:py-6 md:gap-6 md:items-stretch md:w-full md:h-60">
+    <div *ngIf="((notice$ | async)?.userId == (user$ | async)?.id)" class="absolute top-0 right-2 z-20 flex flex-col justify-between w-full h-full 2xl:w-auto 2xl:h-auto 2xl:flex-row items-end 2xl:items-center gap-2 p-2">
+        <div *ngIf="this.product.soldStatus != SoldStatus.Sold" class="dropdown dropdown-hover">
+            <div tabindex="0" role="button" class="btn btn-ghost m-1 px-4 py-2 min-h-min h-auto">STATUS</div>
+            <ul  class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto">
+              <li *ngIf="this.product.soldStatus != SoldStatus.Available" ><a (click)="toggleSoldStatus(SoldStatus.Available)">Available</a></li>
+              <li *ngIf="this.product.soldStatus != SoldStatus.Reserved"><a (click)="toggleSoldStatus(SoldStatus.Reserved)">Reserved</a></li>
+              <li><a (click)="toggleSoldPopup = true">Sold</a></li>
+            </ul>
+          </div>
+    </div>
+    <div    
+        class='absolute h-6 rounded flex justify-center items-center z-20 p-4 font-bold' 
+        [ngClass]="availability().color" >
+            {{ availability().text}}
+    </div>
+    <div 
+        *ngIf="this.product.soldStatus == SoldStatus.Sold" 
+        class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes border border-black">
+        SOLD
+    </div>
     <span class="bg-gradient-to-b from-black to-[#454545] opacity-60 md:opacity-0 h-full w-full absolute rounded-xl"></span>
     <img [src]="this.product.images[0].url" 
         alt="product image" 
@@ -8,9 +27,18 @@
     />
     <div class="flex absolute top-0 p-6 flex-col justify-evenly h-full
                 md:relative md:p-4 md:gap-3 md:border-b md:border-[grey] md:w-full md:justify-center">
-        <h3 class="text-2xl">{{this.product.name.slice(0, 30)}}</h3>
+        <h3 class="text-2xl">{{this.product.name.slice(0, 30).toUpperCase()}}</h3>
         <p>condition: {{this.condition}}</p>
         <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
-        <p>warranty: {{this.product.warranty}}</p>
+        <!-- <p>warranty: {{this.product.warranty}}</p> -->
     </div>
 </div>
+
+<app-popup-card *ngIf="toggleSoldPopup" title="Congratulations on the sale!" body="This action cannot be reversed">
+    <button (click)="toggleSoldStatus(SoldStatus.Sold)" class="btn btn-primary">
+        SOLD!
+    </button>
+    <button (click)="toggleSoldPopup = false" class="btn btn-ghost">
+        CANCEL
+    </button>
+</app-popup-card>

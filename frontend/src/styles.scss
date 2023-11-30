@@ -59,6 +59,15 @@ $frontend-theme: mat.define-dark-theme((
   }
 }
 
+.stripes {
+  background-image: repeating-linear-gradient(45deg,
+  transparent,
+  transparent 12px,
+  black 13px,
+  black 14px);
+  background-size: 40px 40px;
+}
+
 
 .gray-gradient {
   mask-image: linear-gradient(to bottom, rgba(73, 73, 74, 0.52), rgba(32, 32, 32, 0.73))

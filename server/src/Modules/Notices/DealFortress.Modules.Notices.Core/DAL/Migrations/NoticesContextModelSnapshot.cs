@@ -103,10 +103,6 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("HasReceipt")
-                        .HasMaxLength(40)
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSold")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsSoldSeparately")
@@ -121,6 +117,9 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoldStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Warranty")

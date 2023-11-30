@@ -15,13 +15,13 @@ export class UsersApiService {
 
     getUserByIdAPI(id: number): Observable<User> {
         return this.httpClient
-            .get(`${this.usersUrl}/${id}`)
+            .get(`${this.usersUrl}/${id}?idType=id`)
             .pipe((data) => data as Observable<User>);
     }
 
     getUserByAuthIdAPI(authId : string): Observable<User> {
         return this.httpClient
-            .get(`${this.usersUrl}/authid/${authId}`)
+            .get(`${this.usersUrl}/${authId}?idType=authid`)
             .pipe((data) => data as Observable<User>);
     }
 

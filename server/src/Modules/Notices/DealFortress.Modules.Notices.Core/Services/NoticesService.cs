@@ -18,14 +18,14 @@ public class NoticesService : INoticesService
     
     public IEnumerable<NoticeResponse> GetAll()
     {
-        return _repo.GetAllWithProductsAndImages()
-                    .Select(notice => ToNoticeResponseDTO(notice))
+        return _repo.GetAll()
+                    .Select(ToNoticeResponseDTO)
                     .ToList();
     }
 
     public NoticeResponse? GetById(int id)
     {
-        var notice = _repo.GetByIdWithProducts(id);
+        var notice = _repo.GetById(id);
 
         if (notice is null)
         {
@@ -37,7 +37,7 @@ public class NoticesService : INoticesService
 
     public NoticeResponse? PutById(int id, NoticeRequest request)
     {
-        var notice = _repo.GetByIdWithProducts(id);
+        var notice = _repo.GetById(id);
 
         if (notice is null)
         {
@@ -121,14 +121,15 @@ public class NoticesService : INoticesService
             City = request.City,
             Payments = string.Join(",", request.Payments),
             DeliveryMethods = string.Join(",", request.DeliveryMethods),
-            CreatedAt = creationDate
+            CreatedAt = creationDate,
+            Products = new List<Product>()
         };
 
         if (request.ProductRequests is not null)
         {
             notice.Products = request.ProductRequests.Select(product => _productsService.ToProduct(product, notice)).ToList();
         }
-
+        
         return notice;
     }
 }

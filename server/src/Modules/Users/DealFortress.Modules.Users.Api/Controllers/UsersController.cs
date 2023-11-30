@@ -1,3 +1,5 @@
+using System.Data.Common;
+using System.Security.Cryptography.Pkcs;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -19,21 +21,20 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUser(int id)
+    public ActionResult<UserResponse> GetUser(string id, string idType)
     {
-    var response = _service.GetById(id);
+        UserResponse? response = null;
 
-    return response is null ? NotFound() : Ok(response);
-    }
+        if (int.TryParse(id,out int parsedId ) && idType.ToLower() == "id") 
+        {
+            response = _service.GetById(parsedId);
+        } 
+        else if (idType.ToLower() == "authid") 
+        {
+            response = _service.GetByAuthId(id);
+        } 
 
-    [HttpGet("authid/{authId}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUserByAuthId(string authId)
-    {
-    var response = _service.GetByAuthId(authId);
-
-    return response is null ? NotFound() : Ok(response);
+        return response is null ? NotFound() : Ok(response);
     }
 
     [HttpPost]
@@ -47,5 +48,9 @@ public class UsersController : ControllerBase
         return CreatedAtAction("GetUser", new { id = response.Id }, response);
     }
 
-
+    [NonAction]
+    public virtual bool IsUserNoticeCreator(string authId, int id)
+    {
+        return _service.GetByAuthId(authId)?.Id == id;
+    }
 }

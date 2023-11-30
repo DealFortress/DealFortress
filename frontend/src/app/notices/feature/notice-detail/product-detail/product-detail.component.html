@@ -1,4 +1,4 @@
-<div class="bg-base-200 px-4 rounded flex flex-col md:flex-row justify-between py-6 gap-6">
+<div class="px-4 rounded flex flex-col md:flex-row justify-between py-6 gap-6 bg-base-200">
     <media class="basis-0 grow-[2] bg-black rounded aspect-square max-h-[33vh]">
         <app-fullscreen-image-carousel (toggleFullscreen)="toggleFullscreen = $event" *ngIf="toggleFullscreen" [images]="this.product.images"></app-fullscreen-image-carousel>
         <app-image-carousel (toggleFullscreen)="toggleFullscreen = $event" *ngIf="!toggleFullscreen" [images]="this.product.images"></app-image-carousel>
@@ -8,7 +8,7 @@
         <div class="flex flex-col gap-6">
             <p>{{this.product.price }}SEK</p>
             <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
-            <p>warranty: {{this.product.warranty}}</p>
+            <!-- <p>warranty: {{this.product.warranty}}</p> -->
             <p>category: {{ ( this.category$ | async )?.name }}</p>
             <p>condition: {{this.condition}}</p>
         </div>
