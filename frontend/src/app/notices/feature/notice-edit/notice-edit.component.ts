@@ -20,7 +20,6 @@ export class NoticeEditComponent {
   noticeForm?: FormGroup;
 
   constructor(private store: Store, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) {
-
     this.notice$.subscribe(notice => {
       if (notice) {
         this.noticeForm = this.createNoticeFormGroup(notice)
@@ -43,15 +42,16 @@ export class NoticeEditComponent {
 
   createProductFormGroups(products: Product[]) {
     return products.map(product => {
+      console.log(product.soldStatus.valueOf())
        return this.formBuilder.group({
-            name: [product.name],
-            price: [product.price],
-            soldStatus: [product.soldStatus],
-            isSoldSeparately: [product.isSoldSeparately],
-            hasReceipt: [product.hasReceipt],
-            warranty: [product.warranty],
-            categoryId: [product.categoryId],
-            condition: [product.condition],
+            name: product.name,
+            price: product.price,
+            soldStatus: product.soldStatus.valueOf(),
+            isSoldSeparately: product.isSoldSeparately,
+            hasReceipt: product.hasReceipt,
+            warranty: product.warranty,
+            categoryId: product.categoryId,
+            condition: product.condition,
             imageRequests: this.formBuilder.array(
               this.createImagesFormGroups(product.images)
             ), 

@@ -59,7 +59,7 @@ export class NoticeFormComponent implements OnInit{
       {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
-      SoldStatus: [SoldStatus.Available],
+      SoldStatus: [SoldStatus.Available.valueOf()],
       isSoldSeparately: [false],
       hasReceipt: [false],
       warranty: [''],
@@ -104,8 +104,6 @@ export class NoticeFormComponent implements OnInit{
     const postRequest : NoticeRequest = this.noticeForm.value as NoticeRequest;  
     postRequest.userId = creatorId; 
 
-    console.log(postRequest);
-
     return postRequest
   }
 
@@ -125,12 +123,12 @@ export class NoticeFormComponent implements OnInit{
       this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
         price: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
-        soldStatus: [SoldStatus.Available],
-        isSoldSeparately: [false],
-        hasReceipt: [false],
-        warranty: [''],
-        categoryId: [0],
-        condition: [0],
+        soldStatus: SoldStatus.Available.valueOf(),
+        isSoldSeparately: false,
+        hasReceipt: false,
+        warranty: '',
+        categoryId: 0,
+        condition: 0,
         imageRequests: this.formBuilder.array([
           this.formBuilder.group({
             url: ['', [Validators.required]]

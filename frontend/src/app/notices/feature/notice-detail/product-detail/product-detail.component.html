@@ -8,7 +8,7 @@
         <div class="flex flex-col gap-6">
             <p>{{this.product.price }}SEK</p>
             <p>receipt: {{this.product.hasReceipt ? "yes" : "no"}}</p>
-            <p>warranty: {{this.product.warranty}}</p>
+            <!-- <p>warranty: {{this.product.warranty}}</p> -->
             <p>category: {{ ( this.category$ | async )?.name }}</p>
             <p>condition: {{this.condition}}</p>
         </div>

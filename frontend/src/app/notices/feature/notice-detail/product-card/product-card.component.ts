@@ -46,7 +46,7 @@ export class ProductCardComponent implements OnInit{
       case 0:
         return {color: "bg-green", text: 'AVAILABLE'}
       case 1:
-        return {color: "bg-red", text: 'RESERVED'}
+        return {color: "bg-[orange]", text: 'RESERVED'}
       case 2:
         return {color: "bg-transparent", text: ''}   
       default:
