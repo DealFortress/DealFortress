@@ -57,6 +57,7 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
+import { SignalRServiceComponent } from './messages/data-access/services/signal-r.service/signal-r.service.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.c
     ProductFormComponent,
     NoticeCreateComponent,
     NoticeEditComponent,
+    SignalRServiceComponent,
   ],
   imports: [
     BrowserModule,
