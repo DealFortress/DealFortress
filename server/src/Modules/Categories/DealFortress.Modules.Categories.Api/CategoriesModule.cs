@@ -13,7 +13,6 @@ internal static class CategoriesModule
     {
         services
             .AddCore(connectionString)
-            .AddScoped<CategoriesController>()
-            .AddControllers();
+            .AddScoped<CategoriesController>();
     }
 }

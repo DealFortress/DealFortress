@@ -5,15 +5,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
 
-namespace DealFortress.Modules.Notices.Api;
+namespace DealFortress.Modules.Messages.Api;
 
-internal static class NoticesModule
+internal static class Messages
 {
-    public static void AddNoticesModule(this IServiceCollection services, string connectionString)
+    public static void AddMessagesModule(this IServiceCollection services, string connectionString)
     {
         services
             .AddCore(connectionString)
-            .AddScoped<NoticesController>()
-            .AddScoped<ProductsController>();
+            .AddScoped<MessagesController>()
+            .AddSignalR();
     }
 }

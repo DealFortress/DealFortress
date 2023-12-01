@@ -15,7 +15,7 @@ builder.AddAuthenticationAndAuthorization();
 builder.Services.AddCategoriesModule(connectionString!);
 builder.Services.AddNoticesModule(connectionString!);
 builder.Services.AddUsersModule(connectionString!);
-
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>

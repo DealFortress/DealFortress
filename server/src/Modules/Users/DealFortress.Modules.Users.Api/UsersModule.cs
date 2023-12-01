@@ -14,7 +14,6 @@ internal static class UsersModule
     {
         services
             .AddCore(connectionString)
-            .AddScoped<UsersController>()
-            .AddControllers();
+            .AddScoped<UsersController>();
     }
 }
