@@ -51,6 +51,10 @@ public class MessagesService: IMessagesService
     {
         var response = new MessageResponse()
         {
+            Id = message.Id,
+            Text= message.Text,
+            UserId = message.UserId,
+            RecipientId = message.RecipientId            
         };
 
         return response;
@@ -58,9 +62,11 @@ public class MessagesService: IMessagesService
 
     public Message ToMessage(MessageRequest request)
     {
-        return  new Message()
+        return new Message()
         {
-
+            Text= request.Text,
+            UserId = request.UserId,
+            RecipientId = request.RecipientId    
         };
     }
 }
