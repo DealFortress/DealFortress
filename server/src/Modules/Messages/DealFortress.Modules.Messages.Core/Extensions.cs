@@ -16,10 +16,10 @@ namespace DealFortress.Api.Modules.Messages.Extensions
         public static IServiceCollection AddCore(this IServiceCollection service, string connectionString)
         {
             return service
-                .AddDbContext<messagesContext>(options =>
+                .AddDbContext<MessagesContext>(options =>
                     options.UseSqlServer(connectionString))
                 .AddScoped<IMessagesRepository, MessagesRepository>()
-                .AddScoped<IMessagesService, MessagesService>()
+                .AddScoped<IMessagesService, MessagesService>();
         }
     }
 }

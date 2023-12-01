@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
-using DealFortress.Api.Modules.Notices.Extensions;
-using DealFortress.Modules.Notices.Api.Controllers;
+using DealFortress.Api.Modules.Messages.Extensions;
+using DealFortress.Modules.Messages.Api.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]

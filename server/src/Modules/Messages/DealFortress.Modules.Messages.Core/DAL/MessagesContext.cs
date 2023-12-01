@@ -1,14 +1,16 @@
+using DealFortress.Shared.Abstractions.Contexts;
+using Microsoft.EntityFrameworkCore;
 
-namespace DealFortress.Modules.Messages.Core.DAL
-{
-    public class MessagesContext
+namespace DealFortress.Modules.Messages.Core.DAL;
+    
+    public class MessagesContext : DbContext, IDbContext
     {
         public MessagesContext (DbContextOptions<MessagesContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Domain.Entities.Mesage> Messages { get; set; } = default!;
+        public DbSet<Domain.Entities.Message> Messages { get; set; } = default!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -16,6 +18,3 @@ namespace DealFortress.Modules.Messages.Core.DAL
             modelBuilder.HasDefaultSchema("messagesContext");
         }
     }    
-
-    }
-}

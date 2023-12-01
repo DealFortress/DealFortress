@@ -8,17 +8,15 @@ namespace DealFortress.Modules.Messages.Core.Services;
 public class MessagesService: IMessagesService
 {
     private readonly IMessagesRepository _repo;
-    private UsersController _usersController;
 
 
-    public MessagesService(IMessagesRepository repo, UsersController usersController)
+    public MessagesService(IMessagesRepository repo)
     {
         _repo = repo;
-        _usersController = usersController;
     }
 
 
-    public IEnumerable<MessagesResponse> GetAll()
+    public IEnumerable<MessageResponse> GetAll()
     {
         // FILTER BY USER ID
         return _repo.GetAll()
@@ -46,7 +44,7 @@ public class MessagesService: IMessagesService
 
         _repo.Complete();
 
-        return ToNoticeResponseDTO(message);
+        return ToMessageResponseDTO(message);
     }
 
     public MessageResponse ToMessageResponseDTO(Message message)

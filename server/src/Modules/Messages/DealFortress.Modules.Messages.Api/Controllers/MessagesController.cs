@@ -27,7 +27,7 @@ public class MessagesController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<MessageResponse> GetNotice(int id)
+    public ActionResult<MessageResponse> GetMessage(int id)
     {
        var response = _service.GetById(id);
 
@@ -38,11 +38,11 @@ public class MessagesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<MessageResponse> PostNotice(MessageRequest request)
+    public ActionResult<MessageResponse> PostMessage(MessageRequest request)
     {
         var response = _service.Post(request);
         
-        return CreatedAtAction("GetNotice", new { id = response.Id }, response);
+        return CreatedAtAction("GetMessage", new { id = response.Id }, response);
     }
 
 }

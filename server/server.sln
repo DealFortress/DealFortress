@@ -46,6 +46,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DealFortress.Modules.Notice
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Notices.Tests.Shared", "src\Modules\Notices\DealFortress.Modules.Notices.Tests\DealFortress.Modules.Notices.Tests.Shared\DealFortress.Modules.Notices.Tests.Shared.csproj", "{8D59117C-CCE8-409F-B89D-F4E8BC93B4FE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{7177E3FD-C782-47C2-A1E4-FE4EC107BFEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Messages.Api", "src\Modules\Messages\DealFortress.Modules.Messages.Api\DealFortress.Modules.Messages.Api.csproj", "{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Messages.Core", "src\Modules\Messages\DealFortress.Modules.Messages.Core\DealFortress.Modules.Messages.Core.csproj", "{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +117,14 @@ Global
 		{8D59117C-CCE8-409F-B89D-F4E8BC93B4FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D59117C-CCE8-409F-B89D-F4E8BC93B4FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D59117C-CCE8-409F-B89D-F4E8BC93B4FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C65AE11A-6EE9-4C8E-9CC0-5E61CB69F9BA} = {80039F3A-82DF-4105-B72F-62248FCF9AE0}
@@ -133,5 +147,8 @@ Global
 		{233663EE-573B-4C47-AC0E-9766A42872ED} = {D1D01265-5C7B-4AE7-AD9A-2BEF43D96ADB}
 		{9B6247D0-3510-421E-AAF9-66CFF5560712} = {CB900889-76AE-479E-90BE-C1228A2EFA88}
 		{8D59117C-CCE8-409F-B89D-F4E8BC93B4FE} = {9B6247D0-3510-421E-AAF9-66CFF5560712}
+		{7177E3FD-C782-47C2-A1E4-FE4EC107BFEB} = {0B0C3C96-08CB-40F8-B8A2-4ECB9792D841}
+		{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074} = {7177E3FD-C782-47C2-A1E4-FE4EC107BFEB}
+		{C5FE62DE-630F-49CE-89EE-ADCD75F862C4} = {7177E3FD-C782-47C2-A1E4-FE4EC107BFEB}
 	EndGlobalSection
 EndGlobal
