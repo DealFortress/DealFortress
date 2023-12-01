@@ -9,17 +9,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Modules.Messages.Api")]
 
-namespace DealFortress.Api.Modules.Messages.Extensions
+namespace DealFortress.Api.Modules.Messages.Extensions;
+internal static class Extensions
 {
-    internal static class Extensions
+    public static IServiceCollection AddCore(this IServiceCollection service, string connectionString)
     {
-        public static IServiceCollection AddCore(this IServiceCollection service, string connectionString)
-        {
-            return service
-                .AddDbContext<MessagesContext>(options =>
-                    options.UseSqlServer(connectionString))
-                .AddScoped<IMessagesRepository, MessagesRepository>()
-                .AddScoped<IMessagesService, MessagesService>();
-        }
+        return service
+            .AddDbContext<MessagesContext>(options =>
+                options.UseSqlServer(connectionString))
+            .AddScoped<IMessagesRepository, MessagesRepository>()
+            .AddScoped<IMessagesService, MessagesService>();
     }
 }

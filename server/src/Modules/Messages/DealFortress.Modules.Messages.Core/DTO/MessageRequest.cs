@@ -1,10 +1,8 @@
 
-namespace DealFortress.Modules.Messages.Core.DTO
+namespace DealFortress.Modules.Messages.Core.DTO;
+public class MessageRequest
 {
-    public class MessageRequest
-    {
-        public required string Text { get; set; }
-        public required int UserId { get; set; }
-        public required int RecipientId { get; set; }
-    }
+    public required string Text { get; set; }
+    public required int UserId { get; set; }
+    public required int RecipientId { get; set; }
 }
