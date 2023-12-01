@@ -61,7 +61,7 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
   
   - Wireframe: [Excalidraw](https://excalidraw.com/#room=2ab6f5d1e7b980f0d720,gnL2G7lG_2TnaVrYLOBTKg)
   
-  - UML and Data sketches: [Eraser](https://app.eraser.io/workspace/ODF2nY7EUHBNB5rJDnyo?origin=share)
+  - UML and Data sketches: [Eraser](https://app.eraser.io/workspace/fNTcdg5ZpTmM6w0OyhfA)
   
   - Tailwind
 
