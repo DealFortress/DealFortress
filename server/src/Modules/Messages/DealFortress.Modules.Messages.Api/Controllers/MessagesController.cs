@@ -1,8 +1,13 @@
+using DealFortress.Modules.Messages.Core.Domain.Entities;
+using DealFortress.Modules.Messages.Core.Domain.HubConfig;
+using DealFortress.Modules.Messages.Core.Domain.HubConfig.DataStorage;
+using DealFortress.Modules.Messages.Core.Domain.HubConfig.TimerFeatures;
 using DealFortress.Modules.Messages.Core.Domain.Services;
 using DealFortress.Modules.Messages.Core.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace DealFortress.Modules.Messages.Api.Controllers;
 
@@ -11,17 +16,22 @@ namespace DealFortress.Modules.Messages.Api.Controllers;
 public class MessagesController : ControllerBase
 {
     private readonly IMessagesService _service;
+    private readonly IHubContext<MessageHub> _hub;
 
-    public MessagesController(IMessagesService service)
+    public MessagesController(IMessagesService service, IHubContext<MessageHub> hub)
     {
         _service = service;
+        _hub = hub;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<MessageResponse>> GetMessages()
     {
-        return Ok(_service.GetAll());
+        var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transfermessagedata", _service.GetAll()));
+
+        return Ok(new {Message = "Request Completed"});
+        // return Ok(_service.GetAll());
     }
 
     [HttpGet("{id}")]
