@@ -18,8 +18,6 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit{
   status = this.store.select(getNoticesStatus);
   Status = Status;
-  private baseUrl = environment.apiServerUrl;
-  private messageUrl = `${this.baseUrl}/messages`;
 
   constructor(private authService: AuthService, private usersService: UsersService,private store: Store, public signalRService: SignalRService, private http: HttpClient) {
     store.dispatch(loadNoticesRequest());
@@ -31,19 +29,10 @@ export class AppComponent implements OnInit{
       .startConnection()
       .addTransferMessageDataListener();
 
-    this.startHttpRequest();
-
     this.authService.user$.subscribe(async user => {
       if (user) {
         this.usersService.setCurrentUser(user);
       }
     })
-  }
-
-  private startHttpRequest() {
-    this.http.get(this.messageUrl)
-      .subscribe(res => {
-        console.log(res);
-      })
   }
 }

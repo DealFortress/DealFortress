@@ -9,8 +9,8 @@ import { environment } from 'environments/environment.production';
 })
 export class SignalRService {
   public messages?: Message[];
-  private baseUrl = environment.apiServerUrl;
-  private messageUrl = `${this.baseUrl}/test`;
+  private baseUrl = environment.hubServerUrl;
+  private messageUrl = `${this.baseUrl}/messages-hub`;
   private hubConnection?: signalR.HubConnection;
 
   public startConnection = () => {
@@ -31,7 +31,6 @@ export class SignalRService {
     this.hubConnection?.on('transfermessagedata', (data) => {
       this.messages = data;
       console.log(data);
-      return this;
     })
   }
 

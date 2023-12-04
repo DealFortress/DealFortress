@@ -42,7 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseCors(policy =>
     {
     policy
-        .WithOrigins("https://localhost:4000","http://localhost:4000","http://127.0.0.1:4000")
+        .WithOrigins("https://localhost:4000","http://localhost:4000","http://127.0.0.1:4000","http://localhost")
         .AllowAnyMethod() 
         .AllowCredentials()  
         .AllowAnyHeader();

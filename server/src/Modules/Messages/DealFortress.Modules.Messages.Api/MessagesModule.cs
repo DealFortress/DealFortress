@@ -1,8 +1,10 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Api.Modules.Messages.Extensions;
-using DealFortress.Modules.Messages.Api.Controllers;
+using DealFortress.Modules.Messages.Core.Domain.Clients;
 using DealFortress.Modules.Messages.Core.Domain.HubConfig;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
@@ -15,12 +17,18 @@ internal static class Messages
     {
         services
             .AddCore(connectionString)
-            .AddScoped<MessagesController>()
             .AddSignalR();
     }
 
     public static void MapMessageHub(this WebApplication app)
     {
-        app.MapHub<MessageHub>("/test");
+        app.MapHub<MessageHub>("messages-hub");
+        app.MapPost("broadcast", async (string message, IHubContext<MessageHub, IMessagesClient> context) => 
+        {
+            await context.Clients.All.ReceiveMessage(message);
+
+            return Results.NoContent();
+        });
+        
     }
 }
