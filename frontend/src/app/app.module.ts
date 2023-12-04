@@ -83,7 +83,7 @@ import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.c
     FullscreenImageCarouselComponent,
     ProductFormComponent,
     NoticeCreateComponent,
-    NoticeEditComponent,
+    NoticeEditComponent
   ],
   imports: [
     BrowserModule,

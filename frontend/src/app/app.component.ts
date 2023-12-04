@@ -6,6 +6,9 @@ import { UsersService } from './users/utils/services/users.service';
 import { getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
+import { SignalRService } from './messages/data-access/services/signal-r/signal-r.service';
+import { HttpClient } from '@microsoft/signalr';
+import { environment } from 'environments/environment.production';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +18,32 @@ import { loadCategoriesRequest } from './categories/data-access/store/categories
 export class AppComponent implements OnInit{
   status = this.store.select(getNoticesStatus);
   Status = Status;
+  private baseUrl = environment.apiServerUrl;
+  private messageUrl = `${this.baseUrl}/api/messages`;
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
+  constructor(private authService: AuthService, private usersService: UsersService,private store: Store, public signalRService: SignalRService, private http: HttpClient) {
     store.dispatch(loadNoticesRequest());
     store.dispatch(loadCategoriesRequest());
   }
 
   async ngOnInit(): Promise<void> {
+    this.signalRService
+      .startConnection()
+      .addTransferMessageDataListener();
+
+    this.startHttpRequest();
+
     this.authService.user$.subscribe(async user => {
       if (user) {
         this.usersService.setCurrentUser(user);
       }
     })
+  }
+
+  private startHttpRequest() {
+    this.http.get(this.messageUrl)
+      .then(res => {
+        console.log(res);
+      })
   }
 }
