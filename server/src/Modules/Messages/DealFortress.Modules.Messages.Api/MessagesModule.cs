@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Api.Modules.Messages.Extensions;
 using DealFortress.Modules.Messages.Api.Controllers;
-using DealFortress.Modules.Messages.Core.Domain.Entities;
 using DealFortress.Modules.Messages.Core.Domain.HubConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
