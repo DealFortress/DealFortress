@@ -21,11 +21,6 @@ internal static class Messages
 
     public static void MapMessageHub(this WebApplication app)
     {
-        // app.UseEndpoints(endpoints =>
-        // {
-        //     endpoints.MapHub<MessageHub>("/messages");
-        // });
-
-        app.MapHub<MessageHub>("/messages");
+        app.MapHub<MessageHub>("/test");
     }
 }

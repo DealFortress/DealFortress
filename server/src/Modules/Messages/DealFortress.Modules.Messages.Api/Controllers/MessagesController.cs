@@ -1,3 +1,4 @@
+using DealFortress.Modules.Messages.Core.Domain.Entities;
 using DealFortress.Modules.Messages.Core.Domain.HubConfig;
 using DealFortress.Modules.Messages.Core.Domain.HubConfig.TimerFeatures;
 using DealFortress.Modules.Messages.Core.Domain.Services;
@@ -26,9 +27,10 @@ public class MessagesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<MessageResponse>> GetMessages()
     {
-        var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transfermessagedata", _service.GetAll()));
+        var response = new List<Message>();
+        new TimerManager(() => _hub.Clients.All.SendAsync("transfermessagedata", response = new List<Message>{new Message(){Id=1,Text="in",UserId=5,RecipientId=4} }));
 
-        return Ok(new {Message = "Request Completed"});
+        return Ok(response);
         // return Ok(_service.GetAll());
     }
 

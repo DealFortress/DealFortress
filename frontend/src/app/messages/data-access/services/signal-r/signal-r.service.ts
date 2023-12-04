@@ -10,12 +10,13 @@ import { environment } from 'environments/environment.production';
 export class SignalRService {
   public messages?: Message[];
   private baseUrl = environment.apiServerUrl;
-  private messageUrl = `${this.baseUrl}/api/messages`;
+  private messageUrl = `${this.baseUrl}/test`;
   private hubConnection?: signalR.HubConnection;
 
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(this.messageUrl)
+      .configureLogging(signalR.LogLevel.Information)
       .build();
 
     this.hubConnection

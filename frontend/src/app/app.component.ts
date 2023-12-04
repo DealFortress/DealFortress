@@ -7,8 +7,8 @@ import { getNoticesStatus } from './notices/data-access/store/notices.selectors'
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
 import { SignalRService } from './messages/data-access/services/signal-r/signal-r.service';
-import { HttpClient } from '@microsoft/signalr';
 import { environment } from 'environments/environment.production';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit{
   status = this.store.select(getNoticesStatus);
   Status = Status;
   private baseUrl = environment.apiServerUrl;
-  private messageUrl = `${this.baseUrl}/api/messages`;
+  private messageUrl = `${this.baseUrl}/messages`;
 
   constructor(private authService: AuthService, private usersService: UsersService,private store: Store, public signalRService: SignalRService, private http: HttpClient) {
     store.dispatch(loadNoticesRequest());
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit{
 
   private startHttpRequest() {
     this.http.get(this.messageUrl)
-      .then(res => {
+      .subscribe(res => {
         console.log(res);
       })
   }
