@@ -53,9 +53,7 @@ public class UsersService : IUsersService
 
     public string GetCurrentUserAuthId()
     {
-        var user = _httpContext?.HttpContext?.User;
-        var authId = user!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-        return authId;
+        return _httpContext?.HttpContext?.User.Identity?.Name!;
     }
     public UserResponse ToUserResponseDTO(User user)
     {
