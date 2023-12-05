@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using DealFortress.Modules.Messages.Core.Domain.Clients;
 using DealFortress.Modules.Messages.Core.Domain.Entities;
 using DealFortress.Modules.Messages.Core.Domain.HubConfig;
@@ -23,15 +24,17 @@ public class MessagesController : ControllerBase
         _hub = hub;
     }
 
-    // [HttpGet]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // public ActionResult<IEnumerable<MessageResponse>> GetMessages()
-    // {
-    //     var response = new List<Message>();
+    [HttpGet]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<MessageResponse>>> GetMessages()
+    {
+        var response = _service.GetAll();
 
-    //     return Ok(response);
-    //     // return Ok(_service.GetAll());
-    // }
+        await _hub.Clients.All.ReceiveMessages(response);
+
+        return Ok(response);
+    }
 
     // [HttpGet("{id}")]
     // [ProducesResponseType(StatusCodes.Status200OK)]
@@ -44,18 +47,16 @@ public class MessagesController : ControllerBase
     // }
 
     [HttpPost]
-    [Authorize]
+    // [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IResult> PostMessage(string request)
+    public async Task<ActionResult<MessageResponse>> PostMessage(MessageRequest request)
     {
-        await _hub.Clients.All.ReceiveMessage(request);
+        var response = _service.Post(request);
 
-        return Results.NoContent();
+        await _hub.Clients.All.SendMessage(response);
 
-        // var response = _service.Post(request);
-        
-        // return CreatedAtAction("GetMessage", new { id = response.Id }, response);
+        return CreatedAtAction("GetMessage", new { id = response.Id }, response);
     }
 
 }

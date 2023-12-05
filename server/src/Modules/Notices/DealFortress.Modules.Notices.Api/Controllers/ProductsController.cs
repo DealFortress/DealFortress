@@ -32,9 +32,7 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PatchProductSoldStatus(int id, SoldStatus soldStatus)
     {
-        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-
-        var response = _service.PatchSoldStatusById(id, soldStatus, userId);
+        var response = _service.PatchSoldStatusById(id, soldStatus);
 
         return response is null ? NotFound() : Ok(response);
     }

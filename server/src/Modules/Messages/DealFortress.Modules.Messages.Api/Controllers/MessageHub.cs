@@ -17,17 +17,17 @@ public sealed class MessageHub : Hub<IMessagesClient>
 
     public override async Task OnConnectedAsync()
     {
-        await Clients.All.ReceiveMessage($"{Context.ConnectionId} has joined");
+        await Clients.All.ReceiveMessages(_service.GetAll());
     }
 
-    public async Task SendMessage(string message)
+    public async Task SendMessage(MessageResponse request)
     {
-        await Clients.All.ReceiveMessage($"{Context.ConnectionId}: {message}");
+        await Clients.All.SendMessage(request);
     }
 
     public async Task GetMessages()
     {
-        var response = new List<MessageResponse>() { new MessageResponse() {Id = 1, RecipientId = 4, Text = "Hello", UserId = 1}};
+        var response = _service.GetAll();
         await Clients.All.ReceiveMessages(response);
     }
 }

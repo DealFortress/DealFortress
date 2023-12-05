@@ -1,16 +1,20 @@
+using System.Security.Claims;
 using DealFortress.Modules.Users.Core.Domain.Entities;
 using DealFortress.Modules.Users.Core.Domain.Repositories;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace DealFortress.Modules.Users.Core.Services;
 
 public class UsersService : IUsersService
 {
     private readonly IUsersRepository _repo;
-    public UsersService(IUsersRepository repo)
+    private readonly IHttpContextAccessor _httpContext;
+    public UsersService(IUsersRepository repo, IHttpContextAccessor httpContext)
     {
         _repo = repo;
+        _httpContext = httpContext;
     }
 
     public UserResponse? GetById(int id)
@@ -47,6 +51,12 @@ public class UsersService : IUsersService
         return ToUserResponseDTO(user);
     }
 
+    public string GetCurrentUserAuthId()
+    {
+        var user = _httpContext?.HttpContext?.User;
+        var authId = user!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+        return authId;
+    }
     public UserResponse ToUserResponseDTO(User user)
     {
         var response = new UserResponse()
@@ -72,6 +82,5 @@ public class UsersService : IUsersService
 
         return user;
     }
-
 
 }

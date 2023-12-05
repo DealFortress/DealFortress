@@ -13,11 +13,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.AddAuthenticationAndAuthorization();
 
-builder.Services.AddCategoriesModule(connectionString!);
-builder.Services.AddNoticesModule(connectionString!);
-builder.Services.AddUsersModule(connectionString!);
-builder.Services.AddMessagesModule(connectionString!);
-builder.Services.AddControllers();
+builder.Services
+    .AddUsersModule(connectionString!)
+    .AddMessagesModule(connectionString!)
+    .AddCategoriesModule(connectionString!)
+    .AddNoticesModule(connectionString!)
+    .AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>

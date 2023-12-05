@@ -2,24 +2,30 @@ using DealFortress.Modules.Messages.Core.Domain.Entities;
 using DealFortress.Modules.Messages.Core.Domain.Repositories;
 using DealFortress.Modules.Messages.Core.Domain.Services;
 using DealFortress.Modules.Messages.Core.DTO;
+using DealFortress.Modules.Users.Api.Controllers;
+
 
 namespace DealFortress.Modules.Messages.Core.Services;
 
 public class MessagesService: IMessagesService
 {
     private readonly IMessagesRepository _repo;
+    private readonly UsersController _usersController;
 
-
-    public MessagesService(IMessagesRepository repo)
+    public MessagesService(IMessagesRepository repo, UsersController usersController)
     {
         _repo = repo;
+        _usersController = usersController;
     }
 
 
     public IEnumerable<MessageResponse> GetAll()
     {
-        // FILTER BY USER ID
+    var authId = _usersController.GetAuthId();
+    var id = _usersController.GetUserIdByAuthId(authId);
+
         return _repo.GetAll()
+                    .Where(message => message.UserId == id || message.RecipientId == id)
                     .Select(ToMessageResponseDTO)
                     .ToList();
     }
@@ -69,4 +75,5 @@ public class MessagesService: IMessagesService
             RecipientId = request.RecipientId    
         };
     }
+
 }

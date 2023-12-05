@@ -9,10 +9,12 @@ namespace DealFortress.Modules.Categories.Api;
 
 internal static class CategoriesModule
 {
-    public static void AddCategoriesModule(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddCategoriesModule(this IServiceCollection services, string connectionString)
     {
         services
             .AddCore(connectionString)
             .AddScoped<CategoriesController>();
+
+        return services;
     }
 }
