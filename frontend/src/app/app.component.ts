@@ -6,6 +6,8 @@ import { UsersService } from './users/utils/services/users.service';
 import { getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
+import { environment } from 'environments/environment.production';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +18,13 @@ export class AppComponent implements OnInit{
   status = this.store.select(getNoticesStatus);
   Status = Status;
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
+  constructor(private authService: AuthService, private usersService: UsersService,private store: Store, private http: HttpClient) {
     store.dispatch(loadNoticesRequest());
     store.dispatch(loadCategoriesRequest());
   }
 
   async ngOnInit(): Promise<void> {
+
     this.authService.user$.subscribe(async user => {
       if (user) {
         this.usersService.setCurrentUser(user);

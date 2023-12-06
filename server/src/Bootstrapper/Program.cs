@@ -1,6 +1,7 @@
 using DealFortress.Modules.Categories.Api;
 using DealFortress.Modules.Notices.Api;
 using DealFortress.Modules.Users.Api;
+using DealFortress.Modules.Messages.Api;
 using Bootstrapper.Auth;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.AddAuthenticationAndAuthorization();
 
-builder.Services.AddCategoriesModule(connectionString!);
-builder.Services.AddNoticesModule(connectionString!);
-builder.Services.AddUsersModule(connectionString!);
-
+builder.Services
+    .AddUsersModule(connectionString!)
+    .AddMessagesModule(connectionString!)
+    .AddCategoriesModule(connectionString!)
+    .AddNoticesModule(connectionString!)
+    .AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -39,8 +42,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseCors(policy =>
     {
-    policy.AllowAnyOrigin()
-        .AllowAnyMethod()   
+    policy
+        .WithOrigins("https://localhost:4000","http://localhost:4000","http://127.0.0.1:4000","http://localhost")
+        .AllowAnyMethod() 
+        .AllowCredentials()  
         .AllowAnyHeader();
     });
 }
@@ -54,6 +59,8 @@ app.MapControllers();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.MapMessageHub();
 
 app.Run();
 

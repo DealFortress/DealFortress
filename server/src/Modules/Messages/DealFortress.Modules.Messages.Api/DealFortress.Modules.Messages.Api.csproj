@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="bogus" Version="34.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+    <PackageReference Include="microsoft.aspnetcore.signalr.client" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -26,11 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Modules/Categories/DealFortress.Modules.Categories.Api/DealFortress.Modules.Categories.Api.csproj" />
-    <ProjectReference Include="../Modules/Notices/DealFortress.Modules.Notices.Api/DealFortress.Modules.Notices.Api.csproj" />
-    <ProjectReference Include="../Modules/Users/DealFortress.Modules.Users.Api/DealFortress.Modules.Users.Api.csproj" />
-    <ProjectReference Include="../Modules/Messages/DealFortress.Modules.Messages.Api/DealFortress.Modules.Messages.Api.csproj" />
-
+    <ProjectReference Include="..\..\Users\DealFortress.Modules.Users.Api\DealFortress.Modules.Users.Api.csproj" />
+    <ProjectReference Include="..\DealFortress.Modules.Messages.Core\DealFortress.Modules.Messages.Core.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Abstractions\DealFortress.Shared.Abstractions.csproj" />
   </ItemGroup>
+
 
 </Project>

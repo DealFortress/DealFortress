@@ -1,5 +1,3 @@
-using System.Data.Common;
-using System.Security.Cryptography.Pkcs;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -49,8 +47,27 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual bool IsUserNoticeCreator(string authId, int id)
+    public virtual bool IsUserNoticeCreator(int id)
     {
-        return _service.GetByAuthId(authId)?.Id == id;
+        var currentUserAuthId = _service.GetCurrentUserAuthId();
+        return _service.GetByAuthId(currentUserAuthId)?.Id == id;
+    }
+
+    [NonAction]
+    public virtual string GetCurrentUserAuthId()
+    {
+        return _service.GetCurrentUserAuthId();
+    }
+
+    [NonAction]
+    public virtual string? GetAuthIdByUserId(int userId)
+    {
+        return _service.GetAuthIdByUserId(userId);
+    }
+
+    [NonAction]
+    public virtual int? GetUserIdByAuthId(string authId)
+    {
+        return _service.GetByAuthId(authId)?.Id;
     }
 }

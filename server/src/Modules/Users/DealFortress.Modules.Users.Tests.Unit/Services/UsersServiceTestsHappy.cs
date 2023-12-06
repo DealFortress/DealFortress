@@ -5,6 +5,7 @@ using DealFortress.Modules.Users.Core.Domain.Repositories;
 using DealFortress.Modules.Users.Core.DTO;
 using DealFortress.Modules.Users.Core.Services;
 using Moq;
+using Microsoft.AspNetCore.Http;
 
 namespace DealFortress.Modules.Users.Tests.Unit;
 
@@ -19,7 +20,9 @@ public class UsersServiceTestsHappy
     {
         _repo = new Mock<IUsersRepository>();
 
-        _service = new UsersService(_repo.Object);
+        var httpContext = new Mock<IHttpContextAccessor>();
+
+        _service = new UsersService(_repo.Object, httpContext.Object);
 
         _request = CreateUserRequest();
 
@@ -89,71 +92,4 @@ public class UsersServiceTestsHappy
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
 
     }
-
-    // [Fact]
-    // public void PutDTO_should_replace_data()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1)).Returns(_user);
-
-    //     // Act
-    //     _service.PutById(1, _request);
-
-    //     // Assert 
-    //     _repo.Verify(repo => repo.Add(It.IsAny<Notice>()), Times.AtLeastOnce());
-    //     _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.AtLeastOnce());
-    // }
-
-    // [Fact]
-    // public void PutDTO_should_complete_before_sending_back_DTO()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1)).Returns(_user);
-
-    //     // Act
-    //     _service.PutById(1, _request);
-
-    //     // Assert 
-    //     _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
-    // }
-
-    // [Fact]
-    // public void PutDTO_should_return_response()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1)).Returns(_user);
-
-    //     // Act
-    //     var response = _service.PutById(1, _request);
-
-    //     // Assert 
-    //     response.Should().BeOfType<NoticeResponse>();
-    // }
-
-    // [Fact]
-    // public void DeleteById_should_remove_data_and_complete()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1)).Returns(_user);
-
-    //     // Act
-    //     _service.DeleteById(1);
-
-    //     // Assert 
-    //     _repo.Verify(repo => repo.Remove(It.IsAny<User>()), Times.AtLeastOnce());
-    //     _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
-    // }
-
-    // [Fact]
-    // public void DeleteById_should_return_User()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1)).Returns(_user);
-
-    //     // Act
-    //     var response = _service.DeleteById(1);
-
-    //     // Assert 
-    //     response.Should().Be(_user;
-    // }
 }

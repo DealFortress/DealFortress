@@ -10,6 +10,10 @@ public interface IUsersService
 
     UserResponse? GetByAuthId(string authId);
 
+    string GetCurrentUserAuthId();
+
+    string? GetAuthIdByUserId(int id);
+
     UserResponse Post(UserRequest request);
 
     UserResponse ToUserResponseDTO(User user);

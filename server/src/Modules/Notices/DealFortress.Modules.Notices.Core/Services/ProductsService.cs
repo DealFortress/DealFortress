@@ -63,7 +63,7 @@ public class ProductsService: IProductsService
         return product;
     }
 
-    public ProductResponse? PatchSoldStatusById(int id, SoldStatus soldStatus, string authId)
+    public ProductResponse? PatchSoldStatusById(int id, SoldStatus soldStatus)
     {
         var product = _repo.GetById(id);
         
@@ -73,7 +73,7 @@ public class ProductsService: IProductsService
             return null;
         }
         
-        var isCreator = _usersController.IsUserNoticeCreator(authId, product.Notice.UserId);
+        var isCreator = _usersController.IsUserNoticeCreator(product.Notice.UserId);
 
         if (!isCreator)
         {

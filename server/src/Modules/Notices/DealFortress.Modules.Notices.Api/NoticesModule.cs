@@ -9,12 +9,13 @@ namespace DealFortress.Modules.Notices.Api;
 
 internal static class NoticesModule
 {
-    public static void AddNoticesModule(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddNoticesModule(this IServiceCollection services, string connectionString)
     {
         services
             .AddCore(connectionString)
             .AddScoped<NoticesController>()
-            .AddScoped<ProductsController>()
-            .AddControllers();
+            .AddScoped<ProductsController>();
+
+         return services;
     }
 }

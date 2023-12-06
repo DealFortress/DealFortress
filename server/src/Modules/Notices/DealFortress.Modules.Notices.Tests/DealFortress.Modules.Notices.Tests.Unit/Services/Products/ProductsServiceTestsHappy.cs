@@ -34,7 +34,7 @@ public class ProductsServiceTestsHappy
 
         _request = NoticesTestModels.CreateNoticeRequest().ProductRequests.First();
 
-        _product = NoticesTestModels.CreateNotice().Products.First();
+        _product = NoticesTestModels.CreateNotice().Products!.First();
     }
  
 
@@ -99,10 +99,10 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
@@ -115,10 +115,10 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -129,10 +129,10 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         response.Should().BeOfType<ProductResponse>();
@@ -143,10 +143,10 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         response?.SoldStatus.Should().Be(SoldStatus.Available);
