@@ -27,7 +27,7 @@ public class ProductControllersTestsHappy
 
         _response = NoticesTestModels.CreateNoticeResponse().Products!.First();
 
-        _Product = NoticesTestModels.CreateNotice().Products.First();
+        _Product = NoticesTestModels.CreateNotice().Products!.First();
 
         _controller.CreateFakeClaims();
     }

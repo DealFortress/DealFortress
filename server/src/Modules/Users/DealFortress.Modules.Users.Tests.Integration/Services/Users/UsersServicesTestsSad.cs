@@ -6,6 +6,7 @@ using DealFortress.Modules.Users.Tests.Integration.Fixture;
 using DealFortress.Modules.Users.Core.DAL.Repositories;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.Domain.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace DealFortress.Modules.Users.Tests.Integration;
 
@@ -36,7 +37,9 @@ public class UsersServicesTestsSad
 
         var repo = new UsersRepository(Fixture.Context);
 
-        return new UsersService(repo);
+        var httpContext = new Mock<IHttpContextAccessor>();
+
+        return new UsersService(repo, httpContext.Object);
     }
 
     [Fact]
