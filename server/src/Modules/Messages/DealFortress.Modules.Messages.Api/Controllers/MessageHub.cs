@@ -21,21 +21,9 @@ public sealed class MessageHub : Hub<IMessagesClient>
     public override async Task OnConnectedAsync()
     {
         var authId = Context.User!.Identity!.Name!;
-        await Clients.User(authId).ReceiveMessage($"{authId} has joined");
+        await Clients.User(authId).SendJoinText($"{authId} has joined");
 
         var response = _service.GetAll();
-        await Clients.User(authId).ReceiveMessages(response);
-    }
-
-    public async Task SendMessage(MessageResponse request)
-    {
-        await Clients.All.SendMessage(request);
-    }
-
-    public async Task GetMessages()
-    {
-        var authId = Context.User!.Identity!.Name!;
-        var response = _service.GetAll();
-        await Clients.User(authId).ReceiveMessages(response);
+        await Clients.User(authId).SendMessages(response);
     }
 }

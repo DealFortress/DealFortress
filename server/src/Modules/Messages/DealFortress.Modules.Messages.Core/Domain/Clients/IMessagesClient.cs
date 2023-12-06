@@ -10,8 +10,8 @@ namespace DealFortress.Modules.Messages.Core.Domain.Clients
 {
     public interface IMessagesClient
     {
-        Task ReceiveMessage(string message);
-        Task ReceiveMessages(IEnumerable<MessageResponse> messages);
+        Task SendJoinText(string message);
+        Task SendMessages(IEnumerable<MessageResponse> messages);
 
         Task SendMessage(MessageResponse message);
     }

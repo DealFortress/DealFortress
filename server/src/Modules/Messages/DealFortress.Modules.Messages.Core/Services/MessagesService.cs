@@ -21,7 +21,7 @@ public class MessagesService: IMessagesService
 
     public IEnumerable<MessageResponse> GetAll()
     {
-    var authId = _usersController.GetAuthId();
+    var authId = _usersController.GetCurrentUserAuthId();
     var id = _usersController.GetUserIdByAuthId(authId);
 
         return _repo.GetAll()
