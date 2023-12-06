@@ -40,15 +40,15 @@ public class MessagesController : ControllerBase
     //     return Ok(response);
     // }
 
-    // [HttpGet("{id}")]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public ActionResult<MessageResponse> GetMessage(int id)
-    // {
-    //    var response = _service.GetById(id);
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<MessageResponse> GetMessage(int id)
+    {
+       var response = _service.GetById(id);
 
-    //    return response is null ? NotFound() : Ok(response);
-    // }
+       return response is null ? NotFound() : Ok(response);
+    }
 
     [HttpPost]
     [Authorize]
@@ -57,9 +57,12 @@ public class MessagesController : ControllerBase
     public async Task<ActionResult<MessageResponse>> PostMessage(MessageRequest request)
     {
         var response = _service.Post(request);
-        var recipientAuthId = _usersController.GetUser();
+        var recipientAuthId = _usersController.GetAuthIdByUserId(response.RecipientId);
 
-        await _hub.Clients.All.SendMessage(response);
+        if(recipientAuthId is not null)
+        {
+            await _hub.Clients.User(recipientAuthId).SendMessage(response);
+        }
 
         return CreatedAtAction("GetMessage", new { id = response.Id }, response);
     }

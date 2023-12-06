@@ -62,8 +62,7 @@ public class UsersController : ControllerBase
     [NonAction]
     public virtual string? GetAuthIdByUserId(int userId)
     {
-        // return _service.GetById(userId)
-        return "Hello";
+        return _service.GetAuthIdByUserId(userId);
     }
 
     [NonAction]

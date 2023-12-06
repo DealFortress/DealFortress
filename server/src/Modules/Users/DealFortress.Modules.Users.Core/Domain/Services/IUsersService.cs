@@ -12,6 +12,8 @@ public interface IUsersService
 
     string GetCurrentUserAuthId();
 
+    string? GetAuthIdByUserId(int id);
+
     UserResponse Post(UserRequest request);
 
     UserResponse ToUserResponseDTO(User user);

@@ -55,6 +55,8 @@ public class UsersService : IUsersService
     {
         return _httpContext?.HttpContext?.User.Identity?.Name!;
     }
+
+    public string? GetAuthIdByUserId(int id) => _repo.GetById(id)?.AuthId;
     public UserResponse ToUserResponseDTO(User user)
     {
         var response = new UserResponse()
