@@ -6,7 +6,6 @@ import { UsersService } from './users/utils/services/users.service';
 import { getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
-import { SignalRService } from './messages/data-access/services/signal-r/signal-r.service';
 import { environment } from 'environments/environment.production';
 import { HttpClient } from '@angular/common/http';
 
@@ -19,15 +18,12 @@ export class AppComponent implements OnInit{
   status = this.store.select(getNoticesStatus);
   Status = Status;
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store, public signalRService: SignalRService, private http: HttpClient) {
+  constructor(private authService: AuthService, private usersService: UsersService,private store: Store, private http: HttpClient) {
     store.dispatch(loadNoticesRequest());
     store.dispatch(loadCategoriesRequest());
   }
 
   async ngOnInit(): Promise<void> {
-    this.signalRService
-      .startConnection()
-      .addTransferMessageDataListener();
 
     this.authService.user$.subscribe(async user => {
       if (user) {

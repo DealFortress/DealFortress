@@ -57,7 +57,6 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
-import { SignalRService } from './messages/data-access/services/signal-r/signal-r.service';
 
 
 @NgModule({
@@ -114,7 +113,6 @@ import { SignalRService } from './messages/data-access/services/signal-r/signal-
     NoticesApiService, 
     CategoriesApiService,
     UsersApiService, 
-    SignalRService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
   ],
