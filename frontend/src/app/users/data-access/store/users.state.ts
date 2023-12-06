@@ -1,4 +1,3 @@
-import { sortByDate } from "@app/notices/data-access/store/notices.state";
 import { User } from "@app/shared/models/user.model";
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 

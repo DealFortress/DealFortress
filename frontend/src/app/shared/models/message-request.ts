@@ -1,4 +1,4 @@
-export type Message = {
+export type MessageRequest = {
     text: string,
     userId: number,
     recipientId: number,
