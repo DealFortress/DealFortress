@@ -89,10 +89,10 @@ public class ProductsServiceTestsSad
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
@@ -104,10 +104,10 @@ public class ProductsServiceTestsSad
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
 
         // Act
-        _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
@@ -118,10 +118,10 @@ public class ProductsServiceTestsSad
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1));
-        _usersController.Setup(controller => controller.IsUserNoticeCreator("authid", 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
 
         // Act
-        var response = _service.PatchSoldStatusById(1, SoldStatus.Available,"authid");
+        var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         response.Should().BeNull();

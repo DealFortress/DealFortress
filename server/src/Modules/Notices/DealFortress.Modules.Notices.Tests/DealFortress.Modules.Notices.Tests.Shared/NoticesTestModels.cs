@@ -1,5 +1,8 @@
+using System.Security.Claims;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DealFortress.Modules.Notices.Tests.Shared;
 
@@ -108,5 +111,25 @@ public static class NoticesTestModels
                 }
             }
         };
+    }
+
+    public static ControllerBase CreateFakeClaims(this ControllerBase controller)
+    {
+        var fakeClaims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.NameIdentifier, "authId"),
+            new Claim("RoleId", "1"),
+            new Claim("UserName", "John")
+        };
+
+        var fakeIdentity = new ClaimsIdentity(fakeClaims, "TestAuthType");
+        var fakeClaimsPrincipal = new ClaimsPrincipal(fakeIdentity);
+
+        controller.ControllerContext.HttpContext = new DefaultHttpContext
+        {
+            User = fakeClaimsPrincipal 
+        };
+
+        return controller;
     }
 }

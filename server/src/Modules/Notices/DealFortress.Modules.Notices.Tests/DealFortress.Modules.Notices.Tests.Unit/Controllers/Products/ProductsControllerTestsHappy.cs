@@ -29,25 +29,7 @@ public class ProductControllersTestsHappy
 
         _Product = NoticesTestModels.CreateNotice().Products.First();
 
-        CreateFakeClaims();
-    }
-
-    private void CreateFakeClaims()
-    {
-        var fakeClaims = new List<Claim>()
-        {
-            new Claim(ClaimTypes.NameIdentifier, "authId"),
-            new Claim("RoleId", "1"),
-            new Claim("UserName", "John")
-        };
-
-        var fakeIdentity = new ClaimsIdentity(fakeClaims, "TestAuthType");
-        var fakeClaimsPrincipal = new ClaimsPrincipal(fakeIdentity);
-
-        _controller.ControllerContext.HttpContext = new DefaultHttpContext
-        {
-            User = fakeClaimsPrincipal 
-        };
+        _controller.CreateFakeClaims();
     }
 
 
@@ -80,7 +62,7 @@ public class ProductControllersTestsHappy
     public void PatchProductSoldStatus_return_ok_object_response_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.PatchSoldStatusById(1, SoldStatus.Available,"authId")).Returns(_response);
+        _service.Setup(service => service.PatchSoldStatusById(1, SoldStatus.Available)).Returns(_response);
         // Act
         var httpResponse = _controller.PatchProductSoldStatus(1, SoldStatus.Available);
         // Assert 

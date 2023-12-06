@@ -5,6 +5,7 @@ using DealFortress.Modules.Users.Core.Domain.Repositories;
 using FluentAssertions;
 using DealFortress.Modules.Users.Core.Domain.Entities;
 using DealFortress.Modules.Users.Core.Domain.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace DealFortress.Modules.Users.Tests.Unit;
 
@@ -19,7 +20,9 @@ public class UsersServiceTestsSad
     {
         _repo = new Mock<IUsersRepository>();
 
-        _service = new UsersService(_repo.Object);
+        var httpContext = new Mock<IHttpContextAccessor>();
+
+        _service = new UsersService(_repo.Object, httpContext.Object);
 
         _request = CreateUserRequest();
 
@@ -77,71 +80,4 @@ public class UsersServiceTestsSad
         // assert
         response.Should().BeNull();
     }
-
-    // [Fact]
-    // public void PutDTO_should_not_replace_data_if_user_not_found()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1));
-
-    //     // Act
-    //     _service.PutById(1, _request);
-
-    //     // Assert 
-    //     _repo.Verify(repo => repo.Add(It.IsAny<User>()), Times.Never());
-    //     _repo.Verify(repo => repo.Remove(It.IsAny<User>()), Times.Never());
-    // }
-
-    // [Fact]
-    // public void PutDTO_should_not_complete_if_user_not_found()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1));
-
-    //     // Act
-    //     _service.PutById(1, _request);
-
-    //     // Assert 
-    //     _repo.Verify(repo => repo.Complete(), Times.Never());
-    // }
-
-    // [Fact]
-    // public void PutDTO_should_return_null_if_notice_not_found()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1));
-
-    //     // Act
-    //     var response = _service.PutById(1, _request);
-
-    //     // Assert 
-    //     response.Should().BeNull();
-    // }
-
-    // [Fact]
-    // public void DeleteById_should_not_remove_data_and_complete_if_id_doesnt_exist()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1));
-
-    //     // Act
-    //     _service.DeleteById(1);
-
-    //     // Assert 
-    //     _repo.Verify(repo => repo.Remove(It.IsAny<User>()), Times.Never());
-    //     _repo.Verify(repo => repo.Complete(), Times.Never());
-    // }
-
-    // [Fact]
-    // public void DeleteById_should_not_return_User_if_id_doesnt_exist()
-    // {
-    //     // arrange
-    //     _repo.Setup(repo => repo.GetById(1));
-
-    //     // Act
-    //     var response = _service.DeleteById(1);
-
-    //     // Assert 
-    //     response.Should().BeNull();
-    // }
 }
