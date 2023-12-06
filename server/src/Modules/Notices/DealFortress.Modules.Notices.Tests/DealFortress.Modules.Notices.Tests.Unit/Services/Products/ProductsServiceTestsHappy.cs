@@ -34,7 +34,7 @@ public class ProductsServiceTestsHappy
 
         _request = NoticesTestModels.CreateNoticeRequest().ProductRequests.First();
 
-        _product = NoticesTestModels.CreateNotice().Products.First();
+        _product = NoticesTestModels.CreateNotice().Products!.First();
     }
  
 
