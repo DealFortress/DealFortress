@@ -12,7 +12,7 @@ export class MessageListComponent implements OnInit, OnChanges{
   public messages = this.store.select(connectToMessageHub);
 
   constructor(private store: Store) {
-    store.dispatch(connectToMessageHubRequest())
+    // store.dispatch(connectToMessageHubRequest())
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.messages.subscribe(data => {

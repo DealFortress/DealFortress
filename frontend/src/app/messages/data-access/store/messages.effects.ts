@@ -17,24 +17,24 @@ export class MessagesEffect {
         ) {}
 
 
-    connectToMessageHub$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(connectToMessageHubRequest),
-            mergeMap(() => 
-                this.messageApiService.startConnection()
-                .pipe(
-                    map((messages : Message[]) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
-                    ),
-                    catchError((_error) => 
-                        of(
-                            ShowAlert({ message: 'Connection to hub failed', actionresult: 'fail' }),
-                            connectToMessageHubError({errorText: _error.message, statusCode: _error.status})
-                        )
-                    )
-                )   
-            )
-        );
-    })
+    // connectToMessageHub$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(connectToMessageHubRequest),
+    //         mergeMap(() => 
+    //             this.messageApiService.startConnection()
+    //             .pipe(
+    //                 map((messages : Message[]) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
+    //                 ),
+    //                 catchError((_error) => 
+    //                     of(
+    //                         ShowAlert({ message: 'Connection to hub failed', actionresult: 'fail' }),
+    //                         connectToMessageHubError({errorText: _error.message, statusCode: _error.status})
+    //                     )
+    //                 )
+    //             )   
+    //         )
+    //     );
+    // })
 
 
 
