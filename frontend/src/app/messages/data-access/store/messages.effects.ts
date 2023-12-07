@@ -6,6 +6,7 @@ import { of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { MessagesApiService } from "../service/messages-api.service";
 import { Observable } from "rxjs-compat";
+import { Message } from "@app/shared/models/message";
 
 @Injectable()
 export class MessagesEffect {
@@ -20,8 +21,9 @@ export class MessagesEffect {
         return this.actions$.pipe(
             ofType(connectToMessageHubRequest),
             mergeMap(() => 
-                this.messageApiService.startConnection().pipe(
-                    map((messages) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
+                this.messageApiService.startConnection()
+                .pipe(
+                    map((messages : Message[]) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
                     ),
                     catchError((_error) => 
                         of(

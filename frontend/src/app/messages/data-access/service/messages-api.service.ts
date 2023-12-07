@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { Message } from '@app/shared/models/message';
-import * as signalr from '@microsoft/signalr'
 import { environment } from 'environments/environment.production';
+import { SignalrClient, SignalrConnection } from 'ngx-signalr-websocket';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -9,25 +10,33 @@ import { Subject } from 'rxjs';
 })
 export class MessagesApiService {
   private messageHubUrl = `${environment.hubServerUrl}/messages-hub`;
+  private connection! : SignalrConnection;
 
-
-  constructor() {
+  constructor(private httpClient: HttpClient) {
+    
+    SignalrClient
+      .create(this.httpClient)
+      .connect(this.messageHubUrl)
+      .subscribe(connection => this.connection = connection);
   }
 
-
-  startConnection() {
-    const connection = new signalr
-      .HubConnectionBuilder()
-      .configureLogging(signalr.LogLevel.Information)
-      .withUrl(this.messageHubUrl)
-      .build();
-
-  connection
-  .start()
-  .then(data => console.log(data))
-
-  const subject = new Subject<Message[]>();
-  connection.stream<Message[]>("test").subscribe(subject);
-  return subject.asObservable();
+  startConnection(){
+    return this.connection.on<Message[]>("sendjointext")
   }
+
+  // startConnection() {
+  //   const connection = new signalr
+  //     .HubConnectionBuilder()
+  //     .configureLogging(signalr.LogLevel.Information)
+  //     .withUrl(this.messageHubUrl)
+  //     .build();
+
+  // connection
+  // .start()
+  // .then(data => console.log(data))
+
+  // const subject = new Subject<Message[]>();
+  // connection.stream<Message[]>("test").subscribe(subject);
+  // return subject.asObservable();
+// }
 }
