@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'environments/environment.production';
-import { SignalrConnection } from 'ngx-signalr-websocket';
 import * as signalr from '@microsoft/signalr'
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -11,7 +10,6 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class MessagesApiService {
   private messageHubUrl = `${environment.hubServerUrl}/messages-hub`;
-  private connection! : SignalrConnection;
   private options!: signalr.IHttpConnectionOptions;;
 
   constructor(private httpClient: HttpClient, private store: Store, public authService: AuthService,) {
@@ -22,13 +20,6 @@ export class MessagesApiService {
           return token;
         }
       };
-    })
-
-    authService.isAuthenticated$.subscribe(isAuthenticated => {
-      if (isAuthenticated)
-      {
-        this.startConnection();
-      }
     })
   }
 
