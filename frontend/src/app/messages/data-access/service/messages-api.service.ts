@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MessagesService {
+export class MessagesApiService {
   private messageHubUrl = `${environment.hubServerUrl}/message-hub`;
 
 

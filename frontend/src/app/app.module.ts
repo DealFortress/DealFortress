@@ -58,6 +58,8 @@ import { CategoriesEffects } from './categories/data-access/store/categories.eff
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
 import { MessageListComponent } from './messages/feature/message-list/message-list.component';
+import { messagesReducer } from './messages/data-access/store/messages.reducer';
+import { MessagesApiService } from './messages/data-access/service/messages-api.service';
 
 
 @NgModule({
@@ -107,7 +109,8 @@ import { MessageListComponent } from './messages/feature/message-list/message-li
     StoreModule.forRoot({
       noticesState: noticesReducer,
       userState: usersReducer,
-      categoriesState: categoriesReducer
+      categoriesState: categoriesReducer,
+      messagesState: messagesReducer
     }),
     EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect, CategoriesEffects]),
   ],
@@ -115,6 +118,7 @@ import { MessageListComponent } from './messages/feature/message-list/message-li
     NoticesApiService, 
     CategoriesApiService,
     UsersApiService, 
+    MessagesApiService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
   ],

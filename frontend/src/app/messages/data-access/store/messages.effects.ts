@@ -4,14 +4,14 @@ import { connectToMessageHubError, connectToMessageHubRequest, connectToMessageH
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, pipe } from "rxjs";
 import { Injectable } from "@angular/core";
-import { MessagesService } from "../service/messages.service";
+import { MessagesApiService } from "../service/messages-api.service";
 
 @Injectable()
 export class MessagesEffect {
 
     constructor(
         private actions$: Actions,
-        private messageService: MessagesService
+        private messageApiService: MessagesApiService
         ) {}
 
 
@@ -19,7 +19,7 @@ export class MessagesEffect {
         return this.actions$.pipe(
             ofType(connectToMessageHubRequest),
             mergeMap((action) => {
-                return this.messageService.startConnection().pipe(
+                return this.messageApiService.startConnection().pipe(
                     mergeMap((messages) => of(   
                             connectToMessageHubSuccess({messages: messages, statusCode: 200})
                         )
