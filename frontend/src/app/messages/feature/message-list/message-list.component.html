@@ -1,9 +1,10 @@
-<div class="chat chat-start">
-    <div class="chat-image avatar" *ngFor="let message of messages">
-      <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+<app-main-container>
+    <div class="chat chat-start" *ngFor="let message of messages">
+      <div class="chat-image avatar">
+        <div class="w-10 rounded-full">
+          <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        </div>
       </div>
       <div class="chat-bubble">{{message.text}}</div>
     </div>
-</div>
-  
+</app-main-container>
