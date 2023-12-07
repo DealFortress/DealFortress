@@ -23,11 +23,10 @@ export class UsersEffect {
             ofType(loadUserByAuthIdRequest),
             mergeMap((action) => {
                 return this.usersApiService.getUserByAuthIdAPI(action.authId).pipe(
-                    mergeMap((user) => of(
-                            ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' }),
-   
-                            loadUserByAuthIdSuccess({user: user, statusCode: 200})
-                        )
+                    map((user) => {
+                        ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' })
+                        return loadUserByAuthIdSuccess({user: user, statusCode: 200})
+                    }
                     ),
                     catchError((_error) => of(
                             loadUserByAuthIdError({errorText: _error.message, statusCode: _error.status})
@@ -43,10 +42,9 @@ export class UsersEffect {
             ofType(loadUserByIdRequest),
             mergeMap((action) => {
                 return this.usersApiService.getUserByIdAPI(action.id).pipe(
-                    mergeMap((user) => of(   
-                            loadUserByIdSuccess({user: user, statusCode: 200})
-                        )
-                    ),
+                    map((user) => { 
+                        return loadUserByIdSuccess({user: user, statusCode: 200})
+                    }),
                     catchError((_error) => of(
                             loadUserByIdError({errorText: _error.message, statusCode: _error.status})
                         )
@@ -63,10 +61,10 @@ export class UsersEffect {
         ofType(postUserRequest),
         mergeMap(action =>
             this.usersApiService.postUserAPI(action).pipe(
-                mergeMap(user => of(
-                            ShowAlert({ message: 'Welcome Squire!', actionresult: 'pass' }),
-                            postUserSuccess({ user: user as User, statusCode: 201 })                   
-                        )
+                map(user => {
+                            ShowAlert({ message: 'Welcome Squire!', actionresult: 'pass' });
+                            return postUserSuccess({ user: user as User, statusCode: 201 });               
+                        }
                     ),
                     catchError((_error) => of(
                             ShowAlert({ message: 'Failed to get user from server, please reconnect squire.', actionresult: 'fail' }),

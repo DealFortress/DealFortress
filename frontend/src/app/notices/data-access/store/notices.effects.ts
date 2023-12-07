@@ -49,12 +49,10 @@ export class NoticesEffects {
         ofType(postNoticeRequest),
         mergeMap(action =>
             this.noticesApiService.postNoticeAPI(action.request).pipe(
-                mergeMap(notice => 
-                        of(
-                        postNoticeSuccess({ notice: notice as Notice }),
-                        ShowAlert({ message: 'Created successfully.', actionresult: 'pass' })                  
-                        )
-                    ),
+                map(notice => {
+                    ShowAlert({ message: 'Created successfully.', actionresult: 'pass' });
+                    return postNoticeSuccess({ notice: notice as Notice });
+                }),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to create notice.', actionresult: 'fail' }))),
                 )
             )
@@ -66,11 +64,11 @@ export class NoticesEffects {
         ofType(putNoticeRequest),
         mergeMap(action =>
             this.noticesApiService.putNoticeAPI(action.request, action.noticeId).pipe(
-                mergeMap(notice => 
-                    of(
-                    putNoticeSuccess({ notice: notice as Notice }),
-                    ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' })                    
-                    )
+                map(notice => {
+                    ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' });                 
+                    return putNoticeSuccess({ notice: notice as Notice });
+                }
+                    
                 ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to update notice.', actionresult: 'fail' }))),
                 )
@@ -83,12 +81,10 @@ export class NoticesEffects {
         ofType(deleteNoticeRequest),
         mergeMap(action =>
             this.noticesApiService.deleteNoticeAPI(action.noticeId).pipe(
-                mergeMap(() => 
-                        of(
-                        deleteNoticeSuccess({noticeId: action.noticeId}),
-                        ShowAlert({ message: 'Deleted successfully.', actionresult: 'pass' })                    
-                        )
-                    ),
+                map(() => {
+                    ShowAlert({ message: 'Deleted successfully.', actionresult: 'pass' });                   
+                    return deleteNoticeSuccess({noticeId: action.noticeId});
+                }),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to delete notice.', actionresult: 'fail' }))),
                 )
             )
@@ -101,12 +97,10 @@ export class NoticesEffects {
         ofType(patchProductSoldStatusRequest),
         mergeMap(action =>
             this.productsApiService.patchProductSoldStatusAPI(action.productId, action.soldStatus).pipe(
-                mergeMap(product => 
-                        of(
-                            patchProductSoldStatusSuccess({ product: product as Product }),
-                            ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' })                    
-                        )
-                    ),
+                map(product => {
+                    ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' });
+                    return patchProductSoldStatusSuccess({ product: product as Product });
+                }),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to update sold status.', actionresult: 'fail' }))),
                 )
             )

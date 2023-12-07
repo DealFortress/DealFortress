@@ -1,10 +1,11 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, mergeMap } from "rxjs/operators";
-import { connectToMessageHubError, connectToMessageHubRequest, connectToMessageHubSuccess, postMessageError, postMessageSuccess } from "./messages.actions";
+import { catchError, map, mergeMap } from "rxjs/operators";
+import { connectToMessageHubError, connectToMessageHubRequest, connectToMessageHubSuccess } from "./messages.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
-import { of, pipe } from "rxjs";
+import { of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { MessagesApiService } from "../service/messages-api.service";
+import { Observable } from "rxjs-compat";
 
 @Injectable()
 export class MessagesEffect {
@@ -18,14 +19,14 @@ export class MessagesEffect {
     connectToMessageHub$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(connectToMessageHubRequest),
-            mergeMap((action) => {
+            mergeMap(() => {
+                console.log('in')
                 return this.messageApiService.startConnection().pipe(
-                    mergeMap((messages) => of(   
-                            connectToMessageHubSuccess({messages: messages, statusCode: 200})
-                        )
+                    map((messages) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
                     ),
-                    catchError((_error) => of(
-                            ShowAlert({ message: '', actionresult: 'fail' }),
+                    catchError((_error) => 
+                        of(
+                            ShowAlert({ message: 'Connection to hub failed', actionresult: 'fail' }),
                             connectToMessageHubError({errorText: _error.message, statusCode: _error.status})
                         )
                     )
