@@ -4,13 +4,15 @@ import { Store } from '@ngrx/store';
 import { environment } from 'environments/environment.production';
 import * as signalr from '@microsoft/signalr'
 import { AuthService } from '@auth0/auth0-angular';
+import { Message } from '@app/shared/models/message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesApiService {
   private messageHubUrl = `${environment.hubServerUrl}/messages-hub`;
-  private options!: signalr.IHttpConnectionOptions;;
+  private options!: signalr.IHttpConnectionOptions;
+  public messages?: Message[];
 
   constructor(private httpClient: HttpClient, private store: Store, public authService: AuthService,) {
 
@@ -44,7 +46,7 @@ export class MessagesApiService {
     });
 
     connection.on("sendmessages", data => {
-      console.log(data);
+      this.messages = data;
   });
   }
 }
