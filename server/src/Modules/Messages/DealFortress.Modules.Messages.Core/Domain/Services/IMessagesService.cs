@@ -7,6 +7,8 @@ public interface IMessagesService
 {
     IEnumerable<MessageResponse> GetAll();
 
+    IEnumerable<MessageResponse> GetAllByAuthId(string authId);
+
     MessageResponse? GetById(int id);
 
     MessageResponse Post(MessageRequest request);

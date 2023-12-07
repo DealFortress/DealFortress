@@ -1,12 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable} from '@angular/core';
-import { Message } from '@app/shared/models/message';
-import { getUser } from '@app/users/data-access/store/users.selectors';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'environments/environment.production';
-import { SignalrClient, SignalrConnection } from 'ngx-signalr-websocket';
+import { SignalrConnection } from 'ngx-signalr-websocket';
 import * as signalr from '@microsoft/signalr'
-import { Subject } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
@@ -15,34 +12,40 @@ import { AuthService } from '@auth0/auth0-angular';
 export class MessagesApiService {
   private messageHubUrl = `${environment.hubServerUrl}/messages-hub`;
   private connection! : SignalrConnection;
+  private options!: signalr.IHttpConnectionOptions;;
 
   constructor(private httpClient: HttpClient, private store: Store, public authService: AuthService,) {
-      if (authService.isAuthenticated$)
+
+    authService.getAccessTokenSilently().subscribe(token => {
+      this.options = {
+        accessTokenFactory: () => {
+          return token;
+        }
+      };
+    })
+
+    authService.isAuthenticated$.subscribe(isAuthenticated => {
+      if (isAuthenticated)
       {
-        // SignalrClient
-        // .create(this.httpClient)
-        // .connect(this.messageHubUrl)
-        // .subscribe(connection => {
-        //   this.connection = connection
-        // });
         this.startConnection();
       }
+    })
   }
-
-  // startConnection(){
-  //   return this.connection.on<[]>("sendjointext")
-  // }
 
   startConnection() {
     const connection = new signalr
       .HubConnectionBuilder()
       .configureLogging(signalr.LogLevel.Information)
-      .withUrl(this.messageHubUrl)
+      .withUrl(this.messageHubUrl, this.options)
       .build();
 
     connection.start()
 
     connection.on("sendjointext", data => {
+      console.log(data);
+    });
+
+    connection.on("sendmessages", data => {
       console.log(data);
   });
   }

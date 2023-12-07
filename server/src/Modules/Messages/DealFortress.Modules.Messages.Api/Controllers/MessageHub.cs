@@ -3,6 +3,7 @@ using DealFortress.Modules.Messages.Core.Domain.Clients;
 using DealFortress.Modules.Messages.Core.Domain.Services;
 using DealFortress.Modules.Messages.Core.DTO;
 using DealFortress.Modules.Messages.Core.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
@@ -23,7 +24,7 @@ public sealed class MessageHub : Hub<IMessagesClient>
         var authId = Context.User!.Identity!.Name!;
         await Clients.User(authId).SendJoinText($"{authId} has joined");
 
-        var response = _service.GetAll();
+        var response = _service.GetAllByAuthId(authId);
         await Clients.User(authId).SendMessages(response);
     }
 }
