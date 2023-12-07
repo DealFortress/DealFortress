@@ -60,6 +60,7 @@ import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.c
 import { MessageListComponent } from './messages/feature/message-list/message-list.component';
 import { messagesReducer } from './messages/data-access/store/messages.reducer';
 import { MessagesApiService } from './messages/data-access/service/messages-api.service';
+import { MessagesEffect } from './messages/data-access/store/messages.effects';
 
 
 @NgModule({
@@ -112,7 +113,13 @@ import { MessagesApiService } from './messages/data-access/service/messages-api.
       categoriesState: categoriesReducer,
       messagesState: messagesReducer
     }),
-    EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect, CategoriesEffects]),
+    EffectsModule.forRoot([
+        NoticesEffects, 
+        AppEffects, 
+        UsersEffect, 
+        CategoriesEffects, 
+        MessagesEffect
+    ]),
   ],
   providers: [
     NoticesApiService, 

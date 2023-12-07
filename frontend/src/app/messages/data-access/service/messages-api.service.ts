@@ -8,10 +8,11 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MessagesApiService {
-  private messageHubUrl = `${environment.hubServerUrl}/message-hub`;
+  private messageHubUrl = `${environment.hubServerUrl}/messages-hub`;
 
 
-  constructor() { }
+  constructor() {
+  }
 
 
   startConnection() {
