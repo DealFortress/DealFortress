@@ -26,7 +26,12 @@
         </button> -->
         <ng-container *ngIf="isAuthenticated | async">
             <app-auth-logout-button></app-auth-logout-button>
-            <a class='text-3xl' to="/profile"><img [src]="(user | async)?.picture" alt="avatar" class='avatar rounded-full w-10' /></a> 
+            <div class="dropdown dropdown-end dropdown-hover">
+              <a  tabindex="0" role="button" class="hover:shadow-xl" ><img [src]="(user | async)?.picture" alt="avatar" class='avatar rounded-full w-10 hover:shadow-xl' /></a> 
+              <ul  class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto ">
+                <li><a routerLink="/messages">messages</a></li>
+              </ul>
+          </div>
         </ng-container>
         <ng-container *ngIf="!(isAuthenticated | async)">
             <app-auth-login-button></app-auth-login-button>

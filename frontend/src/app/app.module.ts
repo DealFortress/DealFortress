@@ -57,6 +57,7 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
+import { MessageListComponent } from './messages/feature/message-list/message-list.component';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.c
     FullscreenImageCarouselComponent,
     ProductFormComponent,
     NoticeCreateComponent,
-    NoticeEditComponent
+    NoticeEditComponent,
+    MessageListComponent
   ],
   imports: [
     BrowserModule,
