@@ -21,6 +21,13 @@ export class MessagesApiService {
         }
       };
     })
+
+    authService.isAuthenticated$.subscribe(isAuthenticated => {
+      if (isAuthenticated)
+      {
+        this.startConnection();
+      }
+    })
   }
 
   startConnection() {
