@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@ngrx/data": "^17.0.1",
+    "@ngrx/effects": "^17.0.1",
     "@types/node": "^20.8.10",
     "dotenv": "^16.3.1"
   }

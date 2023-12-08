@@ -23,7 +23,7 @@
     "@auth0/auth0-angular": "^2.2.1",
     "@babel/plugin-transform-async-generator-functions": "^7.23.2",
     "@babel/plugin-transform-unicode-property-regex": "^7.22.5",
-    "@fortawesome/angular-fontawesome": "^0.13.0",
+    "@fortawesome/angular-fontawesome": "^0.14.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
