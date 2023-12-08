@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent {
-  public messages = this.messageService.getAll();
+  // public messages = this.messageService.getAll();
 
   constructor(private messageService: MessageService) {
     // store.dispatch(connectToMessageHubRequest())

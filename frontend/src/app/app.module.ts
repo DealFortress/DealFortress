@@ -61,10 +61,9 @@ import { MessageListComponent } from './messages/feature/message-list/message-li
 import { messagesReducer } from './messages/data-access/store/messages.reducer';
 import { MessagesApiService } from './messages/data-access/service/messages-api.service';
 import { MessagesEffect } from './messages/data-access/store/messages.effects';
-import { EntityCollectionServiceElementsFactory, EntityDataModule } from '@ngrx/data';
+import { EntityCollectionServiceElementsFactory, EntityDataModule, EntityDataService } from '@ngrx/data';
 import { entityConfig } from './messages/data-access/ngrx-data/entity-metadata';
 import { MessageService } from './messages/data-access/ngrx-data/message.service';
-
 
 @NgModule({
   declarations: [
@@ -126,6 +125,9 @@ import { MessageService } from './messages/data-access/ngrx-data/message.service
     ])
   ],
   providers: [
+    EntityDataService,
+    EntityCollectionServiceElementsFactory,
+    MessageService,
     NoticesApiService, 
     CategoriesApiService,
     UsersApiService, 

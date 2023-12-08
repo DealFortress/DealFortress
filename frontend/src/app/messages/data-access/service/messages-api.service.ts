@@ -46,7 +46,7 @@ export class MessagesApiService {
     });
 
     connection.on("sendmessages", data => {
-      this.messageService.add(data);
+      // this.messageService.add(data);
   });
   }
 }
