@@ -21,9 +21,9 @@ export class UsersEffect {
     loadUserByAuthId$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadUserByAuthIdRequest),
-            mergeMap((action) => {
+            map((action) => {
                 return this.usersApiService.getUserByAuthIdAPI(action.authId).pipe(
-                    mergemap((user) => {
+                    mergeMap((user) => {
                         ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' })
                         return loadUserByAuthIdSuccess({user: user, statusCode: 200})
                     }
