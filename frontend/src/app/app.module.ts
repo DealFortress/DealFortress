@@ -61,6 +61,9 @@ import { MessageListComponent } from './messages/feature/message-list/message-li
 import { messagesReducer } from './messages/data-access/store/messages.reducer';
 import { MessagesApiService } from './messages/data-access/service/messages-api.service';
 import { MessagesEffect } from './messages/data-access/store/messages.effects';
+import { EntityCollectionServiceElementsFactory, EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './messages/data-access/ngrx-data/entity-metadata';
+import { MessageService } from './messages/data-access/ngrx-data/message.service';
 
 
 @NgModule({
@@ -98,6 +101,7 @@ import { MessagesEffect } from './messages/data-access/store/messages.effects';
     FormsModule,
     HttpClientModule,
     AsyncPipe,
+    EntityDataModule.forRoot(entityConfig),
     AuthModule.forRoot({
       domain: environment.auth0Domain!,
       clientId: environment.auth0ClientId!,
@@ -119,7 +123,7 @@ import { MessagesEffect } from './messages/data-access/store/messages.effects';
         UsersEffect, 
         CategoriesEffects, 
         MessagesEffect
-    ]),
+    ])
   ],
   providers: [
     NoticesApiService, 

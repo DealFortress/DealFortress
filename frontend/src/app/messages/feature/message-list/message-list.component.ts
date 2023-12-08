@@ -1,4 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MessageService } from '@app/messages/data-access/ngrx-data/message.service';
+
 import { MessagesApiService } from '@app/messages/data-access/service/messages-api.service';
 import { connectToMessageHubRequest } from '@app/messages/data-access/store/messages.actions';
 import { connectToMessageHub } from '@app/messages/data-access/store/messages.selectors';
@@ -10,21 +12,12 @@ import { Store } from '@ngrx/store';
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css']
 })
-export class MessageListComponent implements OnInit, OnChanges{
-  public messages?: Message[];
+export class MessageListComponent {
+  public messages = this.messageService.getAll();
 
-  constructor(private store: Store, private service: MessagesApiService) {
+  constructor(private messageService: MessageService) {
     // store.dispatch(connectToMessageHubRequest())
-    
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.service.messages)
-    this.messages = this.service.messages;
-  }
 
-  ngOnInit(): void {
-    console.log(this.service.messages)
-    this.messages = this.service.messages;
-  }
 }

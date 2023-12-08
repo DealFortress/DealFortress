@@ -5,6 +5,7 @@ import { environment } from 'environments/environment.production';
 import * as signalr from '@microsoft/signalr'
 import { AuthService } from '@auth0/auth0-angular';
 import { Message } from '@app/shared/models/message';
+import { MessageService } from '../ngrx-data/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,8 @@ import { Message } from '@app/shared/models/message';
 export class MessagesApiService {
   private messageHubUrl = `${environment.hubServerUrl}/messages-hub`;
   private options!: signalr.IHttpConnectionOptions;
-  public messages?: Message[];
 
-  constructor(private httpClient: HttpClient, private store: Store, public authService: AuthService,) {
+  constructor(private httpClient: HttpClient, private store: Store, public authService: AuthService, private messageService : MessageService) {
 
     authService.getAccessTokenSilently().subscribe(token => {
       this.options = {
@@ -46,7 +46,7 @@ export class MessagesApiService {
     });
 
     connection.on("sendmessages", data => {
-      this.messages = data;
+      this.messageService.add(data);
   });
   }
 }
