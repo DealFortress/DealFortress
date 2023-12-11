@@ -62,6 +62,7 @@ import { messagesReducer } from './messages/data-access/store/messages.reducer';
 import { MessagesApiService } from './messages/data-access/service/messages-api.service';
 import { MessagesEffect } from './messages/data-access/store/messages.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       noticesState: noticesReducer,
       userState: usersReducer,
       categoriesState: categoriesReducer,
-      messagesState: messagesReducer
+      messagesState: messagesReducer,
+      signalr: signalrReducer
     }), 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([
@@ -119,7 +121,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         AppEffects, 
         UsersEffect, 
         CategoriesEffects, 
-        MessagesEffect
+        MessagesEffect,
+        SignalREffects
     ])
   ],
   providers: [
