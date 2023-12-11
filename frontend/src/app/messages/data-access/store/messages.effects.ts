@@ -1,12 +1,6 @@
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, map, mergeMap } from "rxjs/operators";
-import { connectToMessageHubError, connectToMessageHubRequest, connectToMessageHubSuccess } from "./messages.actions";
-import { ShowAlert } from "@app/shared/store/app.actions";
-import { of } from "rxjs";
+import { Actions } from "@ngrx/effects";
 import { Injectable } from "@angular/core";
 import { MessagesApiService } from "../service/messages-api.service";
-import { Observable } from "rxjs-compat";
-import { Message } from "@app/shared/models/message";
 
 @Injectable()
 export class MessagesEffect {
@@ -19,7 +13,7 @@ export class MessagesEffect {
 
     // connectToMessageHub$ = createEffect(() => {
     //     return this.actions$.pipe(
-    //         ofType(connectToMessageHubRequest),
+    //         ofType(connectToMessageHubRequest),npm
     //         mergeMap(() => 
     //             this.messageApiService.startConnection()
     //             .pipe(

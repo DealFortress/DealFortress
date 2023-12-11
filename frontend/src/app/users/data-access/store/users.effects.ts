@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, delay, map, mergeMap, tap} from 'rxjs/operators';
+import { catchError, delay, exhaustMap, map, mergeMap, tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { EmptyAction, ShowAlert } from '@app/shared/store/app.actions';
 import { UsersApiService } from '../services/users-api.service';
 import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from './users.actions';
@@ -18,24 +18,24 @@ export class UsersEffect {
         ) {}
 
 
-    loadUserByAuthId$ = createEffect(() => {
-        return this.actions$.pipe(
+    loadUserByAuthId$ = createEffect(() => 
+        this.actions$.pipe(
             ofType(loadUserByAuthIdRequest),
-            map((action) => {
+            mergeMap(action => {
                 return this.usersApiService.getUserByAuthIdAPI(action.authId).pipe(
-                    mergeMap((user) => {
-                        ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' })
-                        return loadUserByAuthIdSuccess({user: user, statusCode: 200})
-                    }
+                    map((user) => (
+                        ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' }),
+                        loadUserByAuthIdSuccess({user: user, statusCode: 200})
+                        )
                     ),
                     catchError((_error) => of(
-                            loadUserByAuthIdError({errorText: _error.message, statusCode: _error.status})
-                        )
+                        loadUserByAuthIdError({errorText: _error.message, statusCode: _error.status}) 
+                    )
                     )
                 );
             })
-        );
-    })
+        )
+    )
 
     loadUserById$ = createEffect(() => {
         return this.actions$.pipe(
