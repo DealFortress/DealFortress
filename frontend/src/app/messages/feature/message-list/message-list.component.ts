@@ -12,12 +12,15 @@ import { Store } from '@ngrx/store';
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css']
 })
-export class MessageListComponent {
-  // public messages = this.messageService.getAll();
+export class MessageListComponent implements OnInit {
+  public messages$ = this.messageService.getAll();
 
-  constructor(private messageService: MessageService) {
-    // store.dispatch(connectToMessageHubRequest())
+  constructor(private messageService: MessageService, messagesApiService: MessagesApiService) {
+    messagesApiService.getAll()
   }
 
+  ngOnInit(): void {
+  }
 
 }
+
