@@ -16,7 +16,7 @@ export class MessagesApiService {
   private options!: signalr.IHttpConnectionOptions;
   private connection? : signalr.HubConnection;
 
-  constructor(private httpClient: HttpClient, public authService: AuthService, private messageService : MessageService) {
+  constructor(public authService: AuthService) {
 
     authService.getAccessTokenSilently().subscribe(token => {
       this.options = {
@@ -42,7 +42,7 @@ export class MessagesApiService {
       .build();
 
     connection.start()
-    this.connection = connection;
+    // this.connection = connection;
 
     connection.on("sendjointext", data => {
       console.log(data);
@@ -50,11 +50,11 @@ export class MessagesApiService {
   }
 
 
-  getAll() {
-    this.connection?.on("sendmessages", (data : Message[]) => 
-    this.messageService.addAll(data)
-   );
-  };
+  // getAll() {
+  //   this.connection?.on("sendmessages", (data : Message[]) => 
+  //   this.messageService.addAll(data)
+  //  );
+  // };
 }
 
 
