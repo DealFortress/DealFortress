@@ -41,11 +41,13 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 ## Tech stack
 
 
-  - .NET with C# 
+  - .NET with C
+  
+  - Angular 2 with NGRX
+  
+  - SignalR Library
 
   - Entity Framework Library
-
-  - Angular 2 with NGRX
 
   - Github Actions & Project
 
