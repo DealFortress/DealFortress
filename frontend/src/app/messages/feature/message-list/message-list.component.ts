@@ -1,11 +1,10 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MessageService } from '@app/messages/data-access/ngrx-data/message.service';
-
 import { MessagesApiService } from '@app/messages/data-access/service/messages-api.service';
 import { connectToMessageHubRequest } from '@app/messages/data-access/store/messages.actions';
 import { connectToMessageHub } from '@app/messages/data-access/store/messages.selectors';
 import { Message } from '@app/shared/models/message';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-message-list',
@@ -13,9 +12,9 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit {
-  public messages$ = this.messageService.getAll();
+  public messages$?: Observable<Message[]>;
 
-  constructor(private messageService: MessageService, messagesApiService: MessagesApiService) {
+  constructor(messagesApiService: MessagesApiService) {
     // messagesApiService.getAll()
   }
 

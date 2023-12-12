@@ -22,3 +22,4 @@ export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{mess
 export const postMessageError = createAction(POST_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
 
 
+
