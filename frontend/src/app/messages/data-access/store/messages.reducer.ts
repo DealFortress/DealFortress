@@ -1,15 +1,15 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./messages.state";
-import { connectToMessageHubError, connectToMessageHubSuccess } from "./messages.actions";
+import { getMessagesError, getMessagesSuccess } from "./messages.actions";
 
 export const messagesReducer = createReducer(
     initialState,
-    on(connectToMessageHubSuccess,(state,action)=>{
+    on(getMessagesSuccess,(state,action)=>{
         return {
             ...state,
         }
     }),
-    on(connectToMessageHubError,(state,action)=>{
+    on(getMessagesError,(state,action)=>{
         return {
             ...state,
         }

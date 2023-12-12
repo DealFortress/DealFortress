@@ -59,7 +59,6 @@ import { NoticeCreateComponent } from './notices/feature/notice-create/notice-cr
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
 import { MessageListComponent } from './messages/feature/message-list/message-list.component';
 import { messagesReducer } from './messages/data-access/store/messages.reducer';
-import { MessagesApiService } from './messages/data-access/service/messages-api.service';
 import { MessagesEffect } from './messages/data-access/store/messages.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
@@ -129,7 +128,6 @@ import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
     NoticesApiService, 
     CategoriesApiService,
     UsersApiService, 
-    MessagesApiService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
   ],

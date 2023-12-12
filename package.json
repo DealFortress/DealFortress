@@ -2,8 +2,8 @@
   "dependencies": {
     "@ngrx/data": "^17.0.1",
     "@ngrx/effects": "^17.0.1",
-    "@trellisorg/ngrx-data-websocket-client": "^0.0.4",
     "@types/node": "^20.8.10",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "ngrx-signalr-core": "^15.1.2"
   }
 }

@@ -25,6 +25,6 @@ public sealed class MessageHub : Hub<IMessagesClient>
         await Clients.User(authId).SendJoinText($"{authId} has joined");
 
         var response = _service.GetAllByAuthId(authId);
-        await Clients.User(authId).SendMessages(response);
+        await Clients.User(authId).GetMessages(response);
     }
 }

@@ -1,20 +1,19 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { connectToMessageHubError, connectToMessageHubRequest, connectToMessageHubSuccess } from "./messages.actions";
+import { POST_MESSAGE_REQUEST, getMessagesError, getMessagesSuccess, postMessageError, postMessageSuccess } from "./messages.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, Observable, merge } from "rxjs";
 import { Injectable } from "@angular/core";
-import { MessagesApiService } from "../service/messages-api.service";
 import { Message } from "@app/shared/models/message";
-import { startSignalRHub, signalrHubUnstarted, signalrConnected, mergeMapHubToAction } from "ngrx-signalr-core";
+import { startSignalRHub, signalrHubUnstarted, signalrConnected, mergeMapHubToAction, findHub, hubNotFound } from "ngrx-signalr-core";
 import { createAction, props } from "@ngrx/store";
+import { messageHub } from "@app/messages/utils/message.hub";
 
 @Injectable()
 export class MessagesEffect {
 
     constructor(
         private actions$: Actions,
-        private messageApiService: MessagesApiService
         ) {}
 
 
@@ -25,28 +24,58 @@ export class MessagesEffect {
         )
     );
 
-    listenToEvents$ = createEffect(() =>
+    listenToMessages$ = createEffect(() =>
         this.actions$.pipe(
             ofType(signalrConnected),
             mergeMapHubToAction(({ hub }) => {
             // TODO : add event listeners
-            const whenEvent1$ = hub
-                .on("sendmessages")
-                .pipe(map((x: any) => {
-                    console.log(x);
-                    return createAction(x)
-                }));
-
-            return merge(whenEvent1$);
-        })
+            const getMessages$ = hub
+                .on("getmessages")
+                .pipe(
+                    map((messages ) => {
+                        console.log(messages)
+                        return getMessagesSuccess({messages: messages as Message[], statusCode: 200})
+                    }
+                    ),
+                    catchError((_error) => 
+                        of(
+                            ShowAlert({ message: 'Getting messages failed', actionresult: 'fail' }),
+                            getMessagesError({errorText: _error.message, statusCode: _error.status})
+                        )
+                    ))
+            return merge(getMessages$);
+            })
         )
     );
 
-    // connectToMessageHub$ = createEffect(() => {
+    // postMessage$ = createEffect(() =>
+    //     this.actions$.pipe(
+    //         ofType(POST_MESSAGE_REQUEST), 
+    //         mergeMap(({ params }) => {
+    //         const hub = findHub(messageHub);
+    //         if (!hub) {
+    //             return of(hubNotFound(messageHub));
+    //         }
+
+    //         return hub.send("postmessage", params).pipe(
+    //             map((message) => {
+    //                 return postMessageSuccess({message: message  as Message, statusCode: 200})
+    //             }),
+    //             catchError((_error) => 
+    //                 of(
+    //                     ShowAlert({ message: 'Sending message failed', actionresult: 'fail' }),
+    //                     postMessageError({errorText: _error.message, statusCode: _error.status})
+    //                 ))
+    //         );
+    //         })
+    //     )
+    // );
+
+    // GetMessages$ = createEffect(() => {
     //     return this.actions$.pipe(
-    //         ofType(connectToMessageHubRequest),npm
+    //         ofType(connectToMessageHubRequest)
     //         mergeMap(() => 
-    //             this.messageApiService.startConnection()
+    //             this.
     //             .pipe(
     //                 map((messages : Message[]) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
     //                 ),

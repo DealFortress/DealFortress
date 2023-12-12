@@ -8,7 +8,7 @@ import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
 import { HttpClient } from '@angular/common/http';
 import { createSignalRHub } from 'ngrx-signalr-core';
-import { MessageHub } from './messages/utils/message.hub';
+import { messageHub } from './messages/utils/message.hub';
 
 @Component({
   selector: 'app-root',
@@ -29,24 +29,21 @@ export class AppComponent implements OnInit{
     this.store.dispatch(loadCategoriesRequest());
 
     this.authService.getAccessTokenSilently().subscribe(token => {
-      MessageHub.options = {
-        accessTokenFactory: () => {
-          return token;
-        }
-      };
-
-      this.store.dispatch(createSignalRHub(MessageHub));
+      if (token) {
+        messageHub.options = {
+          accessTokenFactory: () => {
+            return token;
+          }
+        };
+        // const action = createSignalRHub(hub, url, options, true);
+        console.log(messageHub);
+        this.store.dispatch(createSignalRHub(messageHub));
+      }
     })
 
     this.authService.user$.subscribe(async user => {
       if (user) {
         this.usersService.setCurrentUser(user);
-      }
-    })
-
-    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        
       }
     })
   }
