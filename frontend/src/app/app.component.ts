@@ -35,8 +35,7 @@ export class AppComponent implements OnInit{
             return token;
           }
         };
-        // const action = createSignalRHub(hub, url, options, true);
-        console.log(messageHub);
+
         this.store.dispatch(createSignalRHub(messageHub));
       }
     })

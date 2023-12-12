@@ -5,7 +5,7 @@
         <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
       </div>
     </div>
-    <div class="chat-bubble">hello</div>
+    <div class="chat-bubble">{{(messages$ | async)?.length}}</div>
   </div>
     <div class="chat chat-start" *ngFor="let message of (messages$ | async)">
       <div class="chat-image avatar">

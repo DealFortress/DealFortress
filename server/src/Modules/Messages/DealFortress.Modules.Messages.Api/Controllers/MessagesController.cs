@@ -61,7 +61,7 @@ public class MessagesController : ControllerBase
 
         if(recipientAuthId is not null)
         {
-            await _hub.Clients.User(recipientAuthId).SendMessage(response);
+            await _hub.Clients.User(recipientAuthId).PostMessage(response);
         }
 
         return CreatedAtAction("GetMessage", new { id = response.Id }, response);

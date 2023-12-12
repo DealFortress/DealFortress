@@ -7,11 +7,15 @@ export const messagesReducer = createReducer(
     on(getMessagesSuccess,(state,action)=>{
         return {
             ...state,
+            messages: action.messages,
+            statusCode: action.statusCode
         }
     }),
     on(getMessagesError,(state,action)=>{
         return {
             ...state,
+            errorMessage: action.errorText,
+            statusCode: action.statusCode
         }
     }),
     // on(postMessageSuccess, (state, action) => {

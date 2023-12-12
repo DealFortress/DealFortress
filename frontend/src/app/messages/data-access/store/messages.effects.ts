@@ -33,7 +33,6 @@ export class MessagesEffect {
                 .on("getmessages")
                 .pipe(
                     map((messages ) => {
-                        console.log(messages)
                         return getMessagesSuccess({messages: messages as Message[], statusCode: 200})
                     }
                     ),
@@ -48,67 +47,26 @@ export class MessagesEffect {
         )
     );
 
-    // postMessage$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(POST_MESSAGE_REQUEST), 
-    //         mergeMap(({ params }) => {
-    //         const hub = findHub(messageHub);
-    //         if (!hub) {
-    //             return of(hubNotFound(messageHub));
-    //         }
+    postMessage$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(POST_MESSAGE_REQUEST), 
+            mergeMap(({ params }) => {
+            const hub = findHub(messageHub);
+            if (!hub) {
+                return of(hubNotFound(messageHub));
+            }
 
-    //         return hub.send("postmessage", params).pipe(
-    //             map((message) => {
-    //                 return postMessageSuccess({message: message  as Message, statusCode: 200})
-    //             }),
-    //             catchError((_error) => 
-    //                 of(
-    //                     ShowAlert({ message: 'Sending message failed', actionresult: 'fail' }),
-    //                     postMessageError({errorText: _error.message, statusCode: _error.status})
-    //                 ))
-    //         );
-    //         })
-    //     )
-    // );
-
-    // GetMessages$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(connectToMessageHubRequest)
-    //         mergeMap(() => 
-    //             this.
-    //             .pipe(
-    //                 map((messages : Message[]) => connectToMessageHubSuccess({messages: messages, statusCode: 200})
-    //                 ),
-    //                 catchError((_error) => 
-    //                     of(
-    //                         ShowAlert({ message: 'Connection to hub failed', actionresult: 'fail' }),
-    //                         connectToMessageHubError({errorText: _error.message, statusCode: _error.status})
-    //                     )
-    //                 )
-    //             )   
-    //         )
-    //     );
-    // })
-
-
-
-    // postMessage$ = createEffect(() =>
-    // this.actions$.pipe(
-    //     ofType(postMessageRequest),
-    //     mergeMap(action =>
-    //         this..pipe(
-    //             mergeMap(user => of(
-    //                         ShowAlert({ message: '', actionresult: 'pass' }),
-    //                         postMessageSuccess()                   
-    //                     )
-    //                 ),
-    //                 catchError((_error) => of(
-    //                         ShowAlert({ message: '', actionresult: 'fail' }),
-    //                         postMessageError()
-    //                     )
-    //                 ),
-    //             )
-    //         )
-    //     )
-    // );
+            return hub.send("postmessage", params).pipe(
+                map((message) => {
+                    return postMessageSuccess({message: message  as Message, statusCode: 200})
+                }),
+                catchError((_error) => 
+                    of(
+                        ShowAlert({ message: 'Sending message failed', actionresult: 'fail' }),
+                        postMessageError({errorText: _error.message, statusCode: _error.status})
+                    ))
+            );
+            })
+        )
+    );
 }

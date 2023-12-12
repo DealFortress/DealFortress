@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { connectToMessageHub } from '@app/messages/data-access/store/messages.selectors';
+import { getMessages } from '@app/messages/data-access/store/messages.selectors';
 import { Message } from '@app/shared/models/message';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -10,14 +10,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit {
-  public messages$?: Observable<Message[]>;
+  public messages$?: Observable<Message[] | undefined>;
 
   constructor(private store: Store) {
-    // this.messages$ = store.select(sel)
-    // messagesApiService.getAll()
   }
-
+  
   ngOnInit(): void {
+    this.messages$ = this.store.select(getMessages);
   }
 
 }
