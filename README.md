@@ -32,7 +32,7 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)
 
 ## Videos
-[2 minute video on the pitch deck](https://streamable.com/geq9mt) 
+[2 minute video on the pitch deck](https://youtu.be/FD3JxMlWXQQ) 
 
 [Deal Fortress overview by Luc Siat - Sep. 2023](https://studio.youtube.com/video/abTcDyegfxM/edit) 
 
