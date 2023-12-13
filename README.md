@@ -33,7 +33,9 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
 ## Videos
 [2 minute video on the pitch deck](https://streamable.com/geq9mt) 
+
 [Deal Fotress overview by Luc Siat - Sep. 2023](https://studio.youtube.com/video/abTcDyegfxM/edit) 
+
 [Demo of DealFortress features - Nov. 2023](https://studio.youtube.com/video/abTcDyegfxM/edit) 
 
 <!-- [30 minute pair programmed coding session](https://youtu.be/bgvt1kpQ9RY) -->
