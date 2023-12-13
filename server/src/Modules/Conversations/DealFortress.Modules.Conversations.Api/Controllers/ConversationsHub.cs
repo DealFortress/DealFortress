@@ -1,10 +1,13 @@
 using System.Security.Claims;
 using DealFortress.Modules.Conversations.Core.Domain.Clients;
+using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO;
 using DealFortress.Modules.Conversations.Core.Services;
+using DealFortress.Modules.Users.Api.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 
 namespace DealFortress.Modules.Conversations.Core.Domain.HubConfig;
@@ -12,11 +15,15 @@ namespace DealFortress.Modules.Conversations.Core.Domain.HubConfig;
 [Authorize]
 public sealed class ConversationsHub : Hub<IConversationsClient>
 {
-    private IConversationsService _service;
+    private readonly IConversationsService _conversationService;
+    private readonly IMessagesService _messagesService;
+    private readonly UsersController _usersController;
 
-    public ConversationsHub(IConversationsService service) 
+    public ConversationsHub(IConversationsService conversationService, UsersController usersController, IMessagesService messagesService) 
     {
-        _service = service;
+        _conversationService = conversationService;
+        _usersController = usersController;
+        _messagesService = messagesService;
     }
 
     public override async Task OnConnectedAsync()
@@ -24,7 +31,47 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         var authId = Context.User!.Identity!.Name!;
         await Clients.User(authId).SendJoinText($"{authId} has joined");
 
-        var response = _service.GetAllByAuthId(authId);
+        var response = _conversationService.GetAllByAuthId(authId);
         await Clients.User(authId).GetConversations(response);
+    }
+
+    public async Task PostConversation(ConversationRequest request) 
+    {
+        var authId = Context.User!.Identity!.Name!;
+        var isCreator = _usersController.IsUserEntityCreator(request.UserOneId, authId);
+
+        if (!isCreator) 
+        {
+            return;
+        }
+
+        var response = _conversationService.Post(request);
+
+        if (response is null)
+        {
+            return;
+        }
+
+        await Clients.User(authId).GetConversation(response);
+    }
+
+        public async Task PostMessage(MessageRequest request) 
+    {
+        var authId = Context.User!.Identity!.Name!;
+        var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
+
+        if (!isCreator) 
+        {
+            return;
+        }
+
+        var response = _messagesService.Post(request);
+
+        if (response is null)
+        {
+            return;
+        }
+
+        await Clients.User(authId).GetMessage(response);
     }
 }

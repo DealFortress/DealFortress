@@ -10,7 +10,7 @@ namespace DealFortress.Modules.Conversations.Core.Domain.Clients;
 public interface IConversationsClient
 {
     Task SendJoinText(string message);
-    Task GetConversations(IEnumerable<ConversationResponse> Conversations);
-    Task PostConversation(ConversationResponse conversation);
-    Task PostMessage(MessageResponse message);
+    Task GetConversations(IEnumerable<ConversationResponse> conversations);
+    Task GetConversation(ConversationResponse conversation);
+    Task GetMessage(MessageResponse message);
 }

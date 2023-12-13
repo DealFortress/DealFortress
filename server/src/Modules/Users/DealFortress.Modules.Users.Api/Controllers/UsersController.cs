@@ -47,8 +47,13 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual bool IsUserNoticeCreator(int id)
+    public virtual bool IsUserEntityCreator(int id, string? authId)
     {
+        if (authId is not null)
+        {
+            return _service.GetByAuthId(authId)?.Id == id;
+        }
+
         var currentUserAuthId = _service.GetCurrentUserAuthId();
         return _service.GetByAuthId(currentUserAuthId)?.Id == id;
     }
