@@ -1,23 +1,22 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { getMessages } from '@app/messages/data-access/store/messages.selectors';
 import { Message } from '@app/shared/models/message';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-message-list',
-  templateUrl: './message-list.component.html',
-  styleUrls: ['./message-list.component.css']
+  selector: 'app-conversation-list',
+  templateUrl: './conversation-list.component.html',
+  styleUrl: './conversation-list.component.css'
 })
-export class MessageListComponent implements OnInit {
+export class ConversationListComponent {
   public messages$?: Observable<Message[] | undefined>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private formBuilder: FormBuilder) {
   }
   
   ngOnInit(): void {
     this.messages$ = this.store.select(getMessages);
   }
-
 }
-

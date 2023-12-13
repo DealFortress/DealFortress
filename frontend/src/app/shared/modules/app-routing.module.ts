@@ -5,7 +5,7 @@ import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-lis
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { NoticeCreateComponent } from '@app/notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from '@app/notices/feature/notice-edit/notice-edit.component';
-import { MessageListComponent } from '@app/messages/feature/message-list/message-list.component';
+import { MessageListComponent } from '@app/messages/feature/conversation-detail/message-list.component';
 
 
 

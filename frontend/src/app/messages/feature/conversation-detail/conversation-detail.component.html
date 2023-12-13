@@ -1,12 +1,4 @@
 <app-main-container>
-  <div class="chat chat-start">
-    <div class="chat-image avatar">
-      <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-      </div>
-    </div>
-    <div class="chat-bubble">{{(messages$ | async)?.length}}</div>
-  </div>
     <div class="chat chat-start" *ngFor="let message of (messages$ | async)">
       <div class="chat-image avatar">
         <div class="w-10 rounded-full">
@@ -16,3 +8,9 @@
       <div class="chat-bubble">{{message.text}}</div>
     </div>
 </app-main-container>
+<form (submit)="onMessageSubmit()" class="sticky bottom-0 px-2 py-3 w-full flex flex-grow bg-base-200 gap-2">
+  <input type="text" placeholder="Type here" class="input input-bordered w-full" />
+  <button type="submit" class="btn btn-square btn-ghost text-2xl">
+    <fa-icon [icon]="['fas', 'dove']"></fa-icon>
+  </button>
+</form>

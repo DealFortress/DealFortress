@@ -33,6 +33,7 @@ import {
     faSackDollar as fasSackDollar,
     faFeather as fasFeather,
     faTrashCan as fasTrashCan,
+    faDove as fasDove
   } from '@fortawesome/free-solid-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -57,11 +58,12 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
-import { MessageListComponent } from './messages/feature/message-list/message-list.component';
 import { messagesReducer } from './messages/data-access/store/messages.reducer';
 import { MessagesEffect } from './messages/data-access/store/messages.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
+import { ConversationDetailComponent } from './messages/feature/conversation-detail/conversation-detail.component';
+import { ConversationListComponent } from './messages/feature/conversation-list/conversation-list.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
     ProductFormComponent,
     NoticeCreateComponent,
     NoticeEditComponent,
-    MessageListComponent
+    ConversationDetailComponent,
+    ConversationListComponent
   ],
   imports: [
     BrowserModule,
@@ -145,7 +148,8 @@ export class AppModule {
       fasCoins,
       fasSackDollar,
       fasFeather,
-      fasTrashCan
+      fasTrashCan,
+      fasDove
     );
   }
  }
