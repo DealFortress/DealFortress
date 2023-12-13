@@ -40,32 +40,35 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
 ## Tech stack
 
+### Backend
 
-  - .NET with C
-  
-  - Angular 2 with NGRX
-  
+  - .NET with C#
+
   - SignalR Library
 
   - Entity Framework Library
 
+  - Azure Sql DB & Azure web app services 
+
+### Frontend
+  
+  - Angular 17 with NGRX Store, SignalR
+
+  - Azure static webpages
+    
+  - TailwindCSS, DaisyUI & FontAwesome
+
+### Tools
+
   - Github Actions & Project
+    
+  - Auth0
 
-  - Azure Sql DB, Azure web app services & Azure static webpages
-
-
-## Tools & Libraries
-
-
-  <!-- - Auth0
-  - Formik -->
   - Design sketch: [Figma prototype and components](https://www.figma.com/file/6pMA53jsPBJ6p0kguOzKba/Deal-Fortress-prototype?type=design&node-id=0-1&t=9esxib8YXRiofpYN-0)
   
   - Wireframe: [Excalidraw](https://excalidraw.com/#room=2ab6f5d1e7b980f0d720,gnL2G7lG_2TnaVrYLOBTKg)
   
   - UML and Data sketches: [Eraser](https://app.eraser.io/workspace/fNTcdg5ZpTmM6w0OyhfA)
-  
-  - Tailwind
 
 <!-- ![Screenshot](./screenshot.png) -->
 
