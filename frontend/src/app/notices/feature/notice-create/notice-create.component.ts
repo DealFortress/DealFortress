@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
-import { NoticeRequest } from '@app/shared/models/notice-request.model';
+import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
 import { Store } from '@ngrx/store';
 
 @Component({

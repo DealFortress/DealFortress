@@ -1,4 +1,4 @@
-import { User } from "@app/shared/models/user.model";
+import { User } from "@app/shared/models/user/user.model";
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 
 

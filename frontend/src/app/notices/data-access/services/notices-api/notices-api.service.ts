@@ -1,8 +1,8 @@
-import { Notice } from "@app/shared/models/notice.model";
+import { Notice } from "@app/shared/models/notice/notice.model";
 import { environment } from 'environments/environment.production';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NoticeRequest } from "@app/shared/models/notice-request.model";
+import { NoticeRequest } from "@app/shared/models/notice/notice-request.model";
 import { Injectable } from "@angular/core";
 
 

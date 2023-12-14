@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { UserRequest } from "@app/shared/models/user-request.model";
-import { User } from "@app/shared/models/user.model";
+import { UserRequest } from "@app/shared/models/user/user-request.model";
+import { User } from "@app/shared/models/user/user.model";
 import { environment } from "environments/environment.production";
 import { Observable } from "rxjs";
 

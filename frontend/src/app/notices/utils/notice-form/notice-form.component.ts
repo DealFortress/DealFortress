@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NoticeRequest } from '@app/shared/models/notice-request.model';
+import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 import {getUserId } from '@app/users/data-access/store/users.selectors';

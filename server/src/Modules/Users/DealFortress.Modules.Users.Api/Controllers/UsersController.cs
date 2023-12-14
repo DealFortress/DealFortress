@@ -47,7 +47,7 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual bool IsUserEntityCreator(int id, string? authId)
+    public virtual bool IsUserEntityCreator(int id, string? authId = null)
     {
         if (authId is not null)
         {

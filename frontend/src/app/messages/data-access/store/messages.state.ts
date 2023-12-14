@@ -1,4 +1,4 @@
-import { Message } from "@app/shared/models/message";
+import { Message } from "@app/shared/models/message/message";
 
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 

@@ -52,10 +52,13 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
             return;
         }
 
+        var recipientAuthId = _usersController.GetAuthIdByUserId(request.UserTwoId);
+
+        await Clients.User(recipientAuthId!).GetConversation(response);
         await Clients.User(authId).GetConversation(response);
     }
 
-        public async Task PostMessage(MessageRequest request) 
+    public async Task PostMessage(MessageRequest request) 
     {
         var authId = Context.User!.Identity!.Name!;
         var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
@@ -72,6 +75,16 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
             return;
         }
 
+        var conversation = _conversationService.GetById(request.ConversationId);
+        var recipientAuthId = _usersController.GetAuthIdByUserId(conversation!.UserTwoId);
+
+        await Clients.User(recipientAuthId!).GetMessage(response);
         await Clients.User(authId).GetMessage(response);
+    }
+
+    public async Task TestEndpoint(string message)
+    {
+        var authId = Context.User!.Identity!.Name!;
+        await Clients.User(authId).TestMessage($"Message: {message}");    
     }
 }

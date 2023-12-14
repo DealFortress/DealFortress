@@ -5,7 +5,7 @@ import { EMPTY, of } from 'rxjs';
 import { EmptyAction, ShowAlert } from '@app/shared/store/app.actions';
 import { UsersApiService } from '../services/users-api.service';
 import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from './users.actions';
-import { User } from '@app/shared/models/user.model';
+import { User } from '@app/shared/models/user/user.model';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable()

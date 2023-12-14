@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, S
 import { patchProductSoldStatusRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Condition } from '@app/shared/models/condition.model';
-import { Notice } from '@app/shared/models/notice.model';
-import { Product } from '@app/shared/models/product.model';
+import { Notice } from '@app/shared/models/notice/notice.model';
+import { Product } from '@app/shared/models/product/product.model';
 import { SoldStatus } from '@app/shared/models/sold-status.model';
 import { getCurrentlyShownUser, getUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';

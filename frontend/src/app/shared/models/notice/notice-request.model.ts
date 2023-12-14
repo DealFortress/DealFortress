@@ -1,4 +1,4 @@
-import { ProductRequest } from "./product-request.model"
+import { ProductRequest } from "../product/product-request.model"
 
 export type NoticeRequest = {
     userId: number,

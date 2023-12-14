@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { getMessages } from '@app/messages/data-access/store/messages.selectors';
-import { Message } from '@app/shared/models/message';
+import { Message } from '@app/shared/models/message/message';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
