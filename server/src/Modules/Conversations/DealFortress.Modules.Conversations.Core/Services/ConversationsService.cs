@@ -9,11 +9,13 @@ public class ConversationsService : IConversationsService
 {
     private readonly IConversationsRepository _repo;
     private readonly UsersController _usersController;
+    private readonly IMessagesService _messagesService;
 
-    public ConversationsService(IConversationsRepository repo, UsersController usersController)
+    public ConversationsService(IConversationsRepository repo, UsersController usersController, IMessagesService messagesService)
     {
         _repo = repo;
         _usersController = usersController;
+        _messagesService = messagesService;
     }
 
 
@@ -66,7 +68,7 @@ public class ConversationsService : IConversationsService
             Name = conversation.Name,
             UserOneId = conversation.UserOneId,
             UserTwoId = conversation.UserTwoId,
-            Messages = conversation.Messages
+            Messages = conversation.Messages?.ConvertAll(message => _messagesService.ToMessageResponseDTO(message))
         };
 
         return response;

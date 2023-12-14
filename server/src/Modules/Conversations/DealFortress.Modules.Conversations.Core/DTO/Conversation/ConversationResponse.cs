@@ -1,4 +1,6 @@
 
+using DealFortress.Modules.Conversations.Core.DTO;
+
 namespace DealFortress.Modules.Conversations.Core.Domain.Entities;
 public class ConversationResponse {
     public int Id { get; set; }
@@ -6,5 +8,5 @@ public class ConversationResponse {
     public required string Name { get; set; }
     public required int UserOneId { get; set; }
     public required int UserTwoId { get; set; }
-    public List<Message>? Messages { get; set; }
+    public List<MessageResponse>? Messages { get; set; }
 }
