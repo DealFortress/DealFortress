@@ -1,23 +1,22 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./conversations.state";
-import { getMessagesError, getMessagesSuccess } from "./conversations.actions";
+import { getConversationsError, getConversationsSuccess, getMessagesError, getMessagesSuccess } from "./conversations.actions";
 
-export const messagesReducer = createReducer(
+export const conversationsReducer = createReducer(
     initialState,
-    on(getMessagesSuccess,(state,action)=>{
+    on(getConversationsSuccess,(state,action)=>{
         return {
             ...state,
-            messages: action.messages,
-            statusCode: action.statusCode
+            conversations: action.conversations,
         }
     }),
-    on(getMessagesError,(state,action)=>{
+    on(getConversationsError,(state,action)=>{
         return {
             ...state,
             errorMessage: action.errorText,
-            statusCode: action.statusCode
         }
     }),
+
     // on(postMessageSuccess, (state, action) => {
     //     return {
     //         ...state,

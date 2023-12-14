@@ -1,9 +1,9 @@
 import { Message } from "../message/message"
 
 export type Conversation = {
-    NoticeId: number,
-    Name: string,
-    UserOneId: number,
-    UserTwoId: number,
-    Messages: Message[]
+    noticeId: number,
+    name: string,
+    userOneId: number,
+    userTwoId: number,
+    messages: Message[]
 }

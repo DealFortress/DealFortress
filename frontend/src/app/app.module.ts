@@ -58,8 +58,8 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
-import { messagesReducer } from './conversations/data-access/store/conversations.reducer';
-import { MessagesEffect } from './conversations/data-access/store/conversations.effects';
+import { conversationsReducer } from './conversations/data-access/store/conversations.reducer';
+import { ConversationsEffects } from './conversations/data-access/store/conversations.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
 import { ConversationDetailComponent } from './conversations/feature/conversation-detail/conversation-detail.component';
@@ -114,7 +114,7 @@ import { ConversationListComponent } from './conversations/feature/conversation-
       noticesState: noticesReducer,
       userState: usersReducer,
       categoriesState: categoriesReducer,
-      messagesState: messagesReducer,
+      conversationsState: conversationsReducer,
       signalr: signalrReducer
     }), 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
@@ -123,7 +123,7 @@ import { ConversationListComponent } from './conversations/feature/conversation-
         AppEffects, 
         UsersEffect, 
         CategoriesEffects, 
-        MessagesEffect,
+        ConversationsEffects,
         SignalREffects
     ])
   ],

@@ -10,7 +10,7 @@ import { conversationHub } from "@app/conversations/utils/conversation.hub";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
 
 @Injectable()
-export class MessagesEffect {
+export class ConversationsEffects {
 
     constructor(
         private actions$: Actions,
@@ -33,7 +33,6 @@ export class MessagesEffect {
             .on("getconversations")
             .pipe(
                 map((conversations ) => {
-                    console.log(conversations)
                     return getConversationsSuccess({conversations: conversations as Conversation[]})
                 }
                 ),

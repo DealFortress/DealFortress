@@ -1,5 +1,5 @@
 <app-main-container>
-    <div class="chat chat-start" *ngFor="let message of (messages$ | async)">
+    <div class="chat chat-start" *ngFor="let message of conversation.messages">
       <div class="chat-image avatar">
         <div class="w-10 rounded-full">
           <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />

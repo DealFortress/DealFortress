@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { getMessages } from '@app/messages/data-access/store/messages.selectors';
+import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
+import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { Message } from '@app/shared/models/message/message';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -11,13 +12,13 @@ import { Observable } from 'rxjs';
   styleUrl: './conversation-detail.component.css'
 })
 export class ConversationDetailComponent {
-  public messages$?: Observable<Message[] | undefined>;
+  @Input({required: true}) conversation!: Conversation;
 
-  constructor(private store: Store, private formBuilder: FormBuilder) {
+  constructor( private formBuilder: FormBuilder) {
   }
   
   ngOnInit(): void {
-    this.messages$ = this.store.select(getMessages);
+  
   }
 
   onMessageSubmit() {

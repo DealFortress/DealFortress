@@ -1,10 +1,10 @@
 import { Message } from "../message/message"
 
 export type Conversation = {
-    Id: number,
-    NoticeId: number,
-    Name: string,
-    UserOneId: number,
-    UserTwoId: number,
-    Messages: Message[]
+    id: number,
+    noticeId: number,
+    name: string,
+    userOneId: number,
+    userTwoId: number,
+    messages: Message[]
 }

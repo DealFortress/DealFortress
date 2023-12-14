@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { MessagesState } from './conversations.state';
+import { ConversationsState } from './conversations.state';
 
-const getMessagesState = createFeatureSelector<MessagesState>('messagesState');
+const getConversationsState = createFeatureSelector<ConversationsState>('conversationsState');
  
-export const getMessages = createSelector(
-    getMessagesState,
-    (state) => state.messages
+export const getConversations = createSelector(
+    getConversationsState,
+    (state) => state.conversations
 );

@@ -1,14 +1,14 @@
+import { Conversation } from "@app/shared/models/conversation/conversation.model";
 import { Message } from "@app/shared/models/message/message";
 
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 
 
-export interface MessagesState extends EntityState<Message> {
-    messages?: Message[],
+export interface ConversationsState extends EntityState<Conversation> {
+    conversations?: Conversation[],
     errorMessage?: string,
-    statusCode?: number
 }
 
-export const messagesAdapter: EntityAdapter<Message> = createEntityAdapter<Message>({})
+export const conversationsAdapter: EntityAdapter<Conversation> = createEntityAdapter<Conversation>({})
 
-export const initialState : MessagesState = messagesAdapter.getInitialState({ errorMessage: '' });
+export const initialState : ConversationsState = conversationsAdapter.getInitialState({ errorMessage: '' });

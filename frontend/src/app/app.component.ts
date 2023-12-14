@@ -8,7 +8,7 @@ import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
 import { HttpClient } from '@angular/common/http';
 import { createSignalRHub } from 'ngrx-signalr-core';
-import { messageHub } from './messages/utils/message.hub';
+import { conversationHub } from './conversations/utils/conversation.hub';
 
 @Component({
   selector: 'app-root',
@@ -32,13 +32,13 @@ export class AppComponent implements OnInit{
       if (token) {
         console.log(token);
 
-        messageHub.options = {
+        conversationHub.options = {
           accessTokenFactory: () => {
             return token;
           }
         };
 
-        this.store.dispatch(createSignalRHub(messageHub));
+        this.store.dispatch(createSignalRHub(conversationHub));
       }
     })
 
