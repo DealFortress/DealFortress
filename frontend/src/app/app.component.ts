@@ -30,6 +30,8 @@ export class AppComponent implements OnInit{
 
     this.authService.getAccessTokenSilently().subscribe(token => {
       if (token) {
+        console.log(token);
+
         messageHub.options = {
           accessTokenFactory: () => {
             return token;

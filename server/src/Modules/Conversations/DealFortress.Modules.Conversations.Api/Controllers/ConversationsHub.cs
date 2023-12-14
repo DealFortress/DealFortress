@@ -35,6 +35,14 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         await Clients.User(authId).GetConversations(response);
     }
 
+    // public async Task GetConversations()
+    // {
+    //     var authId = Context.User!.Identity!.Name!;
+
+    //     var response = _conversationService.GetAllByAuthId(authId);
+    //     await Clients.User(authId).GetConversations(response);
+    // }
+
     public async Task PostConversation(ConversationRequest request) 
     {
         var authId = Context.User!.Identity!.Name!;

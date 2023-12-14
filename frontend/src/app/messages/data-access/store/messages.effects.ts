@@ -33,7 +33,7 @@ export class MessagesEffect {
             .on("getconversations")
             .pipe(
                 map((conversations ) => {
-                    console.log()
+                    console.log(conversations)
                     return getConversationsSuccess({conversations: conversations as Conversation[]})
                 }
                 ),
