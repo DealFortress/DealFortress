@@ -1,12 +1,12 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { POST_MESSAGE_REQUEST, getConversationsSuccess, getMessagesError, getMessagesSuccess, postMessageError, postMessageSuccess } from "./messages.actions";
+import { POST_MESSAGE_REQUEST, getConversationsSuccess, getMessagesError, getMessagesSuccess, postMessageError, postMessageSuccess } from "./conversations.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, Observable, merge } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Message } from "@app/shared/models/message/message";
 import { startSignalRHub, signalrHubUnstarted, signalrConnected, mergeMapHubToAction, findHub, hubNotFound } from "ngrx-signalr-core";
-import { messageHub } from "@app/messages/utils/message.hub";
+import { conversationHub } from "@app/conversations/utils/conversation.hub";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
 
 @Injectable()
@@ -75,9 +75,9 @@ export class MessagesEffect {
         this.actions$.pipe(
             ofType(POST_MESSAGE_REQUEST), 
             mergeMap(({ params }) => {
-            const hub = findHub(messageHub);
+            const hub = findHub(conversationHub);
             if (!hub) {
-                return of(hubNotFound(messageHub));
+                return of(hubNotFound(conversationHub));
             }
 
             return hub.send("postmessage", params).pipe(

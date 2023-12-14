@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { initialState } from "./messages.state";
-import { getMessagesError, getMessagesSuccess } from "./messages.actions";
+import { initialState } from "./conversations.state";
+import { getMessagesError, getMessagesSuccess } from "./conversations.actions";
 
 export const messagesReducer = createReducer(
     initialState,

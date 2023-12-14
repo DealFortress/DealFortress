@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { MessagesState } from './messages.state';
+import { MessagesState } from './conversations.state';
 
 const getMessagesState = createFeatureSelector<MessagesState>('messagesState');
  

@@ -58,12 +58,12 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
-import { messagesReducer } from './messages/data-access/store/messages.reducer';
-import { MessagesEffect } from './messages/data-access/store/messages.effects';
+import { messagesReducer } from './conversations/data-access/store/conversations.reducer';
+import { MessagesEffect } from './conversations/data-access/store/conversations.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
-import { ConversationDetailComponent } from './messages/feature/conversation-detail/conversation-detail.component';
-import { ConversationListComponent } from './messages/feature/conversation-list/conversation-list.component';
+import { ConversationDetailComponent } from './conversations/feature/conversation-detail/conversation-detail.component';
+import { ConversationListComponent } from './conversations/feature/conversation-list/conversation-list.component';
 
 @NgModule({
   declarations: [
