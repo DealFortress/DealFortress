@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
   templateUrl: './conversation-detail.component.html',
   styleUrl: './conversation-detail.component.css'
 })
-export class ConversationDetailComponent {
+export class ConversationDetailComponent implements OnChanges{
   @Input({required: true}) conversation!: Conversation;
   @Output() unselectConversation$ = new EventEmitter();
   public user$ = this.store.select(getUser);
@@ -27,10 +27,8 @@ export class ConversationDetailComponent {
 
   constructor( private formBuilder: FormBuilder, private store: Store) {
   }
-  
-  ngOnInit(): void {
-    this.messageFormGroup.patchValue({ conversationId: this.conversation.id })
 
+  ngOnChanges(changes: SimpleChanges): void {
     this.user$.subscribe(user => {
       this.messageFormGroup.patchValue({senderId: user?.id})
 
@@ -38,9 +36,12 @@ export class ConversationDetailComponent {
 
       this.store.dispatch(loadUserByIdRequest({ id: contactId }))
     })
-
-
   }
+  
+  ngOnInit(): void {
+    this.messageFormGroup.patchValue({ conversationId: this.conversation.id })
+  }
+  
 
   onMessageSubmit() {
     const messageRequest = this.messageFormGroup.value as MessageRequest;

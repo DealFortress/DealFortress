@@ -52,10 +52,12 @@ export class ConversationsEffects {
             ofType(signalrConnected),
             mergeMapHubToAction(({ hub }) => {
             // TODO : add event listeners
+            
             const getMessage$ = hub
                 .on("getmessage")
                 .pipe(
                     map((message ) => {
+                        console.log("message has arrived!");
                         return getMessageSuccess({message: message as Message})
                     }
                     ),
@@ -81,6 +83,7 @@ export class ConversationsEffects {
             }
             return hub.send("postmessage", request).pipe(
                 map((message) => {
+                    console.log("Post success")
                     return postMessageSuccess({message: message  as Message, statusCode: 200})
                 }),
                 catchError((_error) => 
