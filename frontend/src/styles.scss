@@ -105,7 +105,7 @@ $frontend-theme: mat.define-dark-theme((
   border: none;
 }
  #fullscreen {
-  height:calc(100vh - 150px);
+  height:calc(100vh - 100px);
   width:100%;
   position:  absolute;
   top: 0;
@@ -176,5 +176,5 @@ $frontend-theme: mat.define-dark-theme((
     100% { transform: rotate(360deg) }
   }
 
-html, body {margin:0; padding: 0; min-height: 100vh; cursor: default;}
+html, body {margin:0; padding: 0; min-height: 100vh; }
 body { padding-top: 100px; font-family: 'Quicksand', "Helvetica Neue", sans-serif;   box-sizing: border-box;}

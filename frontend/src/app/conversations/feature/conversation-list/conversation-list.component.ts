@@ -23,4 +23,8 @@ export class ConversationListComponent {
     this.conversations$.subscribe(conversations => { if (conversations)  console.log(conversations)})
   }
 
+  unselectConversation() {
+    this.selectedConversation = undefined;
+  }
+
 }

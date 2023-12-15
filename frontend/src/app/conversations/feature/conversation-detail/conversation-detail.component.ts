@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
@@ -9,6 +9,7 @@ import { getCurrentlyShownUser, getUser } from '@app/users/data-access/store/use
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-conversation-detail',
   templateUrl: './conversation-detail.component.html',
@@ -16,6 +17,7 @@ import { Observable } from 'rxjs';
 })
 export class ConversationDetailComponent {
   @Input({required: true}) conversation!: Conversation;
+  @Output() unselectConversation$ = new EventEmitter();
   public user$ = this.store.select(getUser);
   public contact$ = this.store.select(getCurrentlyShownUser);
   
@@ -40,6 +42,10 @@ export class ConversationDetailComponent {
 
   onMessageSubmit() {
 
+  }
+
+  unselectConversation() {
+    this.unselectConversation$.emit();
   }
   
   MessageFormGroup = this.formBuilder.group({
