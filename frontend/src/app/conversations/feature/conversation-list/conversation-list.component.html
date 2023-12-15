@@ -1,11 +1,11 @@
-<main *ngIf="(conversations$ | async) as conversations" class="md:container h-full md:mx-auto grid md:grid-cols-[1fr,2fr] border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0  rounded-md">
+<main *ngIf="(conversations$ | async) as conversations" class="overflow-hidden h-screen md:container h-full md:mx-auto grid md:grid-cols-[1fr,2fr] border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0  rounded-md">
     <aside  [ngClass]="selectedConversation ? 'hidden md:block' : 'block' " class="bg-base-0 rounded basis-0 p-2">
         <ng-container *ngFor="let conversation of conversations">
             <app-conversation-card [conversation]="conversation" (click)="selectedConversation = conversation"></app-conversation-card>
             </ng-container>
     </aside>
     <app-conversation-detail 
-        class="md:block" 
+        class="md:block overflow-y-scroll" 
         [ngClass]="selectedConversation ? 'block' : 'hidden md:block'" 
         [conversation]="selectedConversation ? selectedConversation : conversations[0]"
         (unselectConversation$)="unselectConversation()"
