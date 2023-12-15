@@ -84,9 +84,10 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         }
 
         var conversation = _conversationService.GetById(request.ConversationId);
-        var recipientAuthId = _usersController.GetAuthIdByUserId(conversation!.UserTwoId);
+        var userOneAuthId = _usersController.GetAuthIdByUserId(conversation!.UserOneId);
+        var userTwoAuthId = _usersController.GetAuthIdByUserId(conversation!.UserTwoId);
 
-        await Clients.User(recipientAuthId!).GetMessage(response);
-        await Clients.User(authId).GetMessage(response);
+        await Clients.User(userOneAuthId!).GetMessage(response);
+        await Clients.User(userTwoAuthId!).GetMessage(response);
     }
 }
