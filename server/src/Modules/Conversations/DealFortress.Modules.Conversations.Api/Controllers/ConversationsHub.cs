@@ -89,10 +89,4 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         await Clients.User(recipientAuthId!).GetMessage(response);
         await Clients.User(authId).GetMessage(response);
     }
-
-    public async Task TestEndpoint(string message)
-    {
-        var authId = Context.User!.Identity!.Name!;
-        await Clients.User(authId).TestMessage($"Message: {message}");    
-    }
 }

@@ -1,6 +1,6 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { POST_MESSAGE_REQUEST, getConversationsSuccess, getMessagesError, getMessagesSuccess, postMessageError, postMessageSuccess } from "./conversations.actions";
+import { POST_MESSAGE_REQUEST, getConversationsSuccess, getMessageError, getMessageSuccess, postMessageError, postMessageRequest, postMessageSuccess } from "./conversations.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, Observable, merge } from "rxjs";
 import { Injectable } from "@angular/core";
@@ -39,47 +39,47 @@ export class ConversationsEffects {
                 catchError((_error) => 
                     of(
                         ShowAlert({ message: 'Getting conversations failed', actionresult: 'fail' }),
-                        getMessagesError({errorText: _error.message, statusCode: _error.status})
+                        getMessageError({errorText: _error.message, statusCode: _error.status})
                     )
                 ))
         return merge(getConversations$);
         })
     )
-);
+    );
 
-    // listenToMessages$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(signalrConnected),
-    //         mergeMapHubToAction(({ hub }) => {
-    //         // TODO : add event listeners
-    //         const getMessages$ = hub
-    //             .on("getmessages")
-    //             .pipe(
-    //                 map((messages ) => {
-    //                     return getMessagesSuccess({messages: messages as Message[], statusCode: 200})
-    //                 }
-    //                 ),
-    //                 catchError((_error) => 
-    //                     of(
-    //                         ShowAlert({ message: 'Getting messages failed', actionresult: 'fail' }),
-    //                         getMessagesError({errorText: _error.message, statusCode: _error.status})
-    //                     )
-    //                 ))
-    //         return merge(getMessages$);
-    //         })
-    //     )
-    // );
+    listenToMessage$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(signalrConnected),
+            mergeMapHubToAction(({ hub }) => {
+            // TODO : add event listeners
+            const getMessage$ = hub
+                .on("getmessage")
+                .pipe(
+                    map((message ) => {
+                        return getMessageSuccess({message: message as Message})
+                    }
+                    ),
+                    catchError((_error) => 
+                        of(
+                            ShowAlert({ message: 'Getting messages failed', actionresult: 'fail' }),
+                            getMessageError({errorText: _error.message, statusCode: _error.status})
+                        )
+                    ))
+            return merge(getMessage$);
+            })
+        )
+    );
 
     postMessage$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(POST_MESSAGE_REQUEST), 
-            mergeMap(({ params }) => {
+            ofType(postMessageRequest), 
+            mergeMap(({ request }) => {
+
             const hub = findHub(conversationHub);
             if (!hub) {
                 return of(hubNotFound(conversationHub));
             }
-
-            return hub.send("postmessage", params).pipe(
+            return hub.send("postmessage", request).pipe(
                 map((message) => {
                     return postMessageSuccess({message: message  as Message, statusCode: 200})
                 }),
@@ -92,4 +92,22 @@ export class ConversationsEffects {
             })
         )
     );
+
+    // sendEvent$ = createEffect(() =>
+    //     this.actions$.pipe(
+    //         ofType(POST_MESSAGE_REQUEST), // TODO : create a custom action
+    //         mergeMap(({ params }) => {
+    //         const hub = findHub(conversationHub);
+    //         if (!hub) {
+    //             return of(hubNotFound(conversationHub));
+    //         }
+
+    //         // TODO : send event to the hub
+    //         return hub.send("postmessage", params).pipe(
+    //             map((_) => console.log("post success")),
+    //             catchError((_error) => console.log("post failed"))
+    //         );
+    //         })
+    //     )
+    // );
 }

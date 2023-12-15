@@ -3,10 +3,9 @@ import { Message } from '@app/shared/models/message/message';
 import {MessageRequest } from '@app/shared/models/message/message-request';
 import { createAction, props } from '@ngrx/store';
 
-export const GET_MESSAGES_REQUEST = '[Messages] connect to message hub request';
-export const GET_MESSAGES_SUCCESS = '[Messages] connect to message hub success';
-export const GET_MESSAGES_ERROR = '[Messages] connect to message hub error';
-
+export const GET_MESSAGE_REQUEST = '[Messages] get message request';
+export const GET_MESSAGE_SUCCESS = '[Messages] get message success';
+export const GET_MESSAGE_ERROR = '[Messages] get message error';
 
 export const POST_MESSAGE_REQUEST = '[Messages] post message';
 export const POST_MESSAGE_SUCCESS = '[Messages] post message success';
@@ -21,10 +20,8 @@ export const POST_CONVERSATION_SUCCESS = '[Conversations] post conversation succ
 export const POST_CONVERSATION_ERROR = '[Conversations] post conversation error';
 
 
-
-// export const connectToMessageHubRequest = createAction(GET_MESSAGES_REQUEST);
-export const getMessagesSuccess = createAction(GET_MESSAGES_SUCCESS, props<{messages : Message[], statusCode: number}>());
-export const getMessagesError = createAction(GET_MESSAGES_ERROR, props<{errorText: string, statusCode: number}>());
+export const getMessageSuccess = createAction(GET_MESSAGE_SUCCESS, props<{message : Message}>());
+export const getMessageError = createAction(GET_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
 
 export const postMessageRequest = createAction(POST_MESSAGE_REQUEST, props<{request: MessageRequest}>());
 export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{message: Message, statusCode: number}>());

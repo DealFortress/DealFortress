@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./conversations.state";
-import { getConversationsError, getConversationsSuccess, getMessagesError, getMessagesSuccess } from "./conversations.actions";
+import { getConversationsError, getConversationsSuccess, getMessageSuccess, postMessageError, postMessageSuccess } from "./conversations.actions";
+import { Conversation } from "@app/shared/models/conversation/conversation.model";
 
 export const conversationsReducer = createReducer(
     initialState,
@@ -17,14 +18,21 @@ export const conversationsReducer = createReducer(
         }
     }),
 
-    // on(postMessageSuccess, (state, action) => {
-    //     return {
-    //         ...state,
-    //     }
-    // }),
-    // on(postMessageError, (state, action) => {
-    //     return {
-    //         ...state,
-    //     }
-    // })
+    on(getMessageSuccess, (state, action) => {
+        return {
+            ...state, 
+            conversations: state.conversations?.map(conversation => {
+                let updated: Conversation = {...conversation};
+                if (conversation.id == action.message.conversationId) {
+                    updated.messages = [...updated.messages, action.message];
+                }
+                return updated
+            })
+        }
+    }),
+    on(postMessageError, (state, action) => {
+        return {
+            ...state,
+        }
+    })
 );

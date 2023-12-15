@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { Message } from '@app/shared/models/message/message';
+import { MessageRequest } from '@app/shared/models/message/message-request';
 import { User } from '@app/shared/models/user/user.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
 import { getCurrentlyShownUser, getUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
+import { signalrConnected } from 'ngrx-signalr-core';
 import { Observable } from 'rxjs';
 
 
@@ -26,30 +29,31 @@ export class ConversationDetailComponent {
   }
   
   ngOnInit(): void {
-    let contactId: number;
+    this.messageFormGroup.patchValue({ conversationId: this.conversation.id })
 
     this.user$.subscribe(user => {
-      if (this.conversation.userOneId == user?.id) {
-        contactId = this.conversation.userTwoId;
-      } else {
-        contactId = this.conversation.userOneId;
-      }
+      this.messageFormGroup.patchValue({senderId: user?.id})
+
+      const contactId = this.conversation.userOneId == user?.id ? this.conversation.userTwoId : this.conversation.userOneId;
 
       this.store.dispatch(loadUserByIdRequest({ id: contactId }))
     })
 
+
   }
 
   onMessageSubmit() {
-
+    const messageRequest = this.messageFormGroup.value as MessageRequest;
+    this.store.dispatch(postMessageRequest({ request: messageRequest }));
   }
 
   unselectConversation() {
     this.unselectConversation$.emit();
   }
   
-  MessageFormGroup = this.formBuilder.group({
+  messageFormGroup = this.formBuilder.group({
     text: '',
-    // recipientId: 
+    senderId: -1,
+    conversationId: -1
   })
 }
