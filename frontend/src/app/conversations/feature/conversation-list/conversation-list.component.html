@@ -1,16 +1,10 @@
-<app-main-container  *ngIf="(conversations$ | async) as conversations">
-    <section class="flex flex-col flex-grow">
-        <aside>
-            <a *ngFor="let conversation of conversations" class="card w-96 bg-base-100 shadow-xl" (click)="selectedConversation = conversation" >
-                <div class="card-body">
-                    <div>
-                        <h2 class="card-title">{{conversation.name}}</h2>
-                        <h3 class="bold">from {{getContactName(conversation)}}  GET PERSON</h3>
-                    </div>
-                  <p>{{getLatestMessagePreview(conversation)}}</p>
-                </div>
-              </a>
+<app-main-container *ngIf="(conversations$ | async) as conversations" class="" >
+    <section class="grid md:grid-cols-[1fr,2fr] h-full border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0 min-h-screen rounded-md">
+        <aside class="bg-base-0 rounded basis-0 p-2">
+            <ng-container *ngFor="let conversation of conversations">
+                <app-conversation-card [conversation]="conversation" (click)="selectedConversation = conversation"></app-conversation-card>
+              </ng-container>
         </aside>
-        <app-conversation-detail class="hidden md:visible" [conversation]="selectedConversation ? selectedConversation : conversations[0]"></app-conversation-detail>
+        <app-conversation-detail class="hidden md:block" [conversation]="selectedConversation ? selectedConversation : conversations[0]"></app-conversation-detail>
     </section>
 </app-main-container>

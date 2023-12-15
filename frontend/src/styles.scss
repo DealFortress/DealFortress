@@ -87,7 +87,7 @@ $frontend-theme: mat.define-dark-theme((
 }
 
 .min-h-screen {
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 150px);
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled){

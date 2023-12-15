@@ -20,7 +20,8 @@ module.exports = {
         'white': 'white',
         'red': '#9F192F',
         'green': '#7dac99',
-        'lighttexthover': 'lightblue'
+        'lighttexthover': 'lightblue',
+        'base-0': '#232A33',
     },
     plugins: [require("daisyui")],
     daisyui: {

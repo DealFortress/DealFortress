@@ -23,17 +23,4 @@ export class ConversationListComponent {
     this.conversations$.subscribe(conversations => { if (conversations)  console.log(conversations)})
   }
 
-  getContactName(conversation : Conversation) {
-    // get curren user id filter to goet the other person id and then grab the user name by the id
-  }
-
-  getLatestMessagePreview(conversation: Conversation) {
-    const latestMessageText = conversation.messages[conversation.messages.length - 1].text;
-
-    if (latestMessageText.length <= 30) {
-      return latestMessageText;
-    }
-    
-    return `${conversation.messages[conversation.messages.length - 1].text.slice(0, 30)}...`;
-  }
 }

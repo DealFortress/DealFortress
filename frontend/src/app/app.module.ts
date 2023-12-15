@@ -64,6 +64,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
 import { ConversationDetailComponent } from './conversations/feature/conversation-detail/conversation-detail.component';
 import { ConversationListComponent } from './conversations/feature/conversation-list/conversation-list.component';
+import { ConversationCardComponent } from './conversations/feature/conversation-list/conversation-card/conversation-card/conversation-card.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ConversationListComponent } from './conversations/feature/conversation-
     NoticeCreateComponent,
     NoticeEditComponent,
     ConversationDetailComponent,
-    ConversationListComponent
+    ConversationListComponent,
+    ConversationCardComponent
   ],
   imports: [
     BrowserModule,
