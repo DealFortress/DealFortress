@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
@@ -25,10 +25,10 @@ export class ConversationDetailComponent {
   public contact$ = this.store.select(getCurrentlyShownUser);
   
 
-  constructor( private formBuilder: FormBuilder, private store: Store) {
+  constructor( private formBuilder: FormBuilder, private store: Store, private renderer : Renderer2) {
   }
-  
-  ngOnInit(): void {
+
+  ngOnInit(): void {    
     this.messageFormGroup.patchValue({ conversationId: this.conversation.id })
 
     this.user$.subscribe(user => {
@@ -42,10 +42,12 @@ export class ConversationDetailComponent {
 
   }
 
-  onMessageSubmit() {
+  onMessageSubmit() {      
     const messageRequest = this.messageFormGroup.value as MessageRequest;
     this.store.dispatch(postMessageRequest({ request: messageRequest }));
   }
+
+
 
   unselectConversation() {
     this.unselectConversation$.emit();

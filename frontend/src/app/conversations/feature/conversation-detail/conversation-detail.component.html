@@ -1,9 +1,9 @@
-<div class="bg-base-100 h-full p-2 rounded-md flex flex-col justify-between shadow-inner relative" >
+<div  class="bg-base-100 p-2 rounded-md flex flex-col justify-between shadow-inner relative">
   <section *ngIf="(user$ | async) as user" class="p-4">
     <button (click)="unselectConversation()" class="md:hidden btn btn-square btn-ghost text-2xl absolute left-2 top-2">
       <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
     </button>
-    <div class="" *ngFor="let message of conversation.messages">
+    <div #chat [scrollTop]="chat.scrollHeight" *ngFor="let message of conversation.messages">
       <div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
         <div class="chat-image avatar">
           <div class="w-10 rounded-full">
@@ -14,7 +14,7 @@
       </div>
     </div>
   </section>
-  <form [formGroup]="messageFormGroup" (submit)="onMessageSubmit()" class="sticky bottom-0 px-2 py-3 w-full flex bg-base-200 gap-2">
+  <form #form [formGroup]="messageFormGroup" (submit)="onMessageSubmit(); form.reset()" class="sticky bottom-0 px-2 py-3 w-full flex bg-base-200 gap-2">
     <input formControlName="text" type="text" placeholder="Type here" class="input input-bordered w-full" />
     <button type="submit" class="btn btn-square btn-ghost text-2xl">
       <fa-icon [icon]="['fas', 'dove']"></fa-icon>
