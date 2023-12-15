@@ -1,12 +1,16 @@
-<div class="bg-base-100 h-full p-2 rounded-md flex flex-col justify-between shadow-inner">
-  <div class="chat chat-start" *ngFor="let message of conversation.messages">
-     <div class="chat-image avatar">
-       <div class="w-10 rounded-full">
-         <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-       </div>
-     </div>
-     <div class="chat-bubble">{{message.text}}</div>
-   </div>
+<div class="bg-base-100 h-full p-2 rounded-md flex flex-col justify-between shadow-inner" >
+  <section *ngIf="(user$ | async) as user" class="p-4">
+    <div class="" *ngFor="let message of conversation.messages">
+      <div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
+        <div class="chat-image avatar">
+          <div class="w-10 rounded-full">
+            <img alt="Tailwind CSS chat bubble component" [src]="message.senderId == user.id ? user.avatar : (contact$ | async)?.avatar" />
+          </div>
+        </div>
+        <div class="chat-bubble">{{message.text}}</div>
+      </div>
+    </div>
+  </section>
   <form (submit)="onMessageSubmit()" class="sticky bottom-0 px-2 py-3 w-full flex bg-base-200 gap-2">
     <input type="text" placeholder="Type here" class="input input-bordered w-full" />
     <button type="submit" class="btn btn-square btn-ghost text-2xl">
