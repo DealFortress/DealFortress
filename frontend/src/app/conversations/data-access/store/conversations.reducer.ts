@@ -1,15 +1,16 @@
 import { createReducer, on } from "@ngrx/store";
-import { initialState } from "./conversations.state";
+import { conversationsAdapter, initialState } from "./conversations.state";
 import { getConversationsError, getConversationsSuccess, getMessageSuccess, postMessageError, postMessageSuccess } from "./conversations.actions";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
+import { Status } from "@app/shared/models/state.model";
 
 export const conversationsReducer = createReducer(
     initialState,
     on(getConversationsSuccess,(state,action)=>{
-        return {
+        return conversationsAdapter.setAll(action.conversations, {
             ...state,
-            conversations: action.conversations,
-        }
+            status: Status.success
+        })
     }),
     on(getConversationsError,(state,action)=>{
         return {
@@ -18,21 +19,18 @@ export const conversationsReducer = createReducer(
         }
     }),
 
-    on(getMessageSuccess, (state, action) => {
-        return {
-            ...state, 
-            conversations: state.conversations?.map(conversation => {
-                let updated: Conversation = {...conversation};
-                if (conversation.id == action.message.conversationId) {
-                    updated.messages = [...updated.messages, action.message];
-                }
-                return updated
-            })
-        }
+    on(getMessageSuccess, (state, action) => {  
+        const conversation = state.entities[action.message.conversationId]
+            let updatedConversation = {...conversation!};
+            updatedConversation.messages = [...updatedConversation.messages, action.message];               
+            return conversationsAdapter.upsertOne(updatedConversation,state);
     }),
+
     on(postMessageError, (state, action) => {
         return {
             ...state,
+            errorMessage:action.errorText,
+            status: Status.error
         }
     })
 );

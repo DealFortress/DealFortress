@@ -6,8 +6,7 @@ import { UsersService } from './users/utils/services/users.service';
 import { getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
-import { HttpClient } from '@angular/common/http';
-import { createSignalRHub } from 'ngrx-signalr-core';
+import { createSignalRHub} from 'ngrx-signalr-core';
 import { conversationHub } from './conversations/utils/conversation.hub';
 
 @Component({
@@ -20,7 +19,7 @@ export class AppComponent implements OnInit{
   Status = Status;
   
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store, private http: HttpClient) {
+  constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
 
   }
 

@@ -27,6 +27,7 @@ export const postMessageRequest = createAction(POST_MESSAGE_REQUEST, props<{requ
 export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{message: Message, statusCode: number}>());
 export const postMessageError = createAction(POST_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
 
+
 export const getConversationsSuccess = createAction(GET_CONVERSATION_SUCCESS, props<{conversations : Conversation[]}>())
 export const getConversationsError = createAction(GET_CONVERSATION_SUCCESS, props<{errorText: string}>())
 

@@ -1,0 +1,6 @@
+    <form #form [formGroup]="messageFormGroup" (submit)="onMessageSubmit(); form.reset()" class="sticky bottom-0 px-2 py-3 w-full flex bg-base-200 gap-2">
+      <input formControlName="text" type="text" placeholder="Type here" class="input input-bordered w-full" />
+      <button type="submit" class="btn btn-square btn-ghost text-2xl">
+        <fa-icon [icon]="['fas', 'dove']"></fa-icon>
+      </button>
+    </form>

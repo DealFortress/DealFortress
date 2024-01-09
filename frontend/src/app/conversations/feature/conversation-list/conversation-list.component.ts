@@ -12,22 +12,15 @@ import { Observable } from 'rxjs';
   styleUrl: './conversation-list.component.css'
 })
 export class ConversationListComponent {
-  public conversations$?: Observable<Conversation[] | undefined>;
-  public selectedConversation?: Conversation;  
+  public conversations$ = this.store.select(getConversations);
+  public selectedConversationId?: number;  
   
 
   constructor(private store: Store, private formBuilder: FormBuilder) {
   }
 
-  ngOnInit(): void {
-    this.conversations$ = this.store.select(getConversations);
-    this.conversations$.subscribe(conversations => { if (conversations)  console.log(conversations)})
-  }
-
-
-
   unselectConversation() {
-    this.selectedConversation = undefined;
+    this.selectedConversationId = undefined;
   }
 
 }
