@@ -1,23 +1,24 @@
-<div class="bg-base-100 p-2 rounded-md flex flex-col justify-between shadow-inner relative">
+<div class="h-full flex justify-between flex-col">
   <section *ngIf="(user$ | async) as user" class="p-4">
-    <button (click)="unselectConversation()" class="md:hidden btn btn-square btn-ghost text-2xl absolute left-2 top-2">
-      <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
-    </button>
-    <div #chat [scrollTop]="chat.scrollHeight" *ngFor="let message of conversation.messages">
-      <div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
-        <div class="chat-image avatar">
-          <div class="w-10 rounded-full">
-            <img alt="Tailwind CSS chat bubble component" [src]="message.senderId == user.id ? user.avatar : (contact$ | async)?.avatar" />
+      <button (click)="unselectConversation()" class="md:hidden btn btn-square btn-ghost text-2xl absolute left-2 top-2">
+        <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
+      </button>
+      <div #chat [scrollTop]="chat.scrollHeight" *ngFor="let message of conversation.messages">
+        <div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
+          <div class="chat-image avatar">
+            <div class="w-10 rounded-full">
+              <img alt="Tailwind CSS chat bubble component" [src]="message.senderId == user.id ? user.avatar : (contact$ | async)?.avatar" />
+            </div>
           </div>
+          <div class="chat-bubble">{{message.text}}</div>
         </div>
-        <div class="chat-bubble">{{message.text}}</div>
       </div>
-    </div>
-  </section>
-  <form #form [formGroup]="messageFormGroup" (submit)="onMessageSubmit(); form.reset()" class="sticky bottom-0 px-2 py-3 w-full flex bg-base-200 gap-2">
-    <input formControlName="text" type="text" placeholder="Type here" class="input input-bordered w-full" />
-    <button type="submit" class="btn btn-square btn-ghost text-2xl">
-      <fa-icon [icon]="['fas', 'dove']"></fa-icon>
-    </button>
-  </form>
+    </section>
+    <form #form [formGroup]="messageFormGroup" (submit)="onMessageSubmit(); form.reset()" class="sticky bottom-0 px-2 py-3 w-full flex bg-base-200 gap-2">
+      <input formControlName="text" type="text" placeholder="Type here" class="input input-bordered w-full" />
+      <button type="submit" class="btn btn-square btn-ghost text-2xl">
+        <fa-icon [icon]="['fas', 'dove']"></fa-icon>
+      </button>
+    </form>
 </div>
+

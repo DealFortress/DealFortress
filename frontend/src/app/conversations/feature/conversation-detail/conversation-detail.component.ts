@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
@@ -43,12 +43,10 @@ export class ConversationDetailComponent implements OnChanges{
   }
   
 
-  onMessageSubmit() {      
+  onMessageSubmit() {    
     const messageRequest = this.messageFormGroup.value as MessageRequest;
     this.store.dispatch(postMessageRequest({ request: messageRequest }));
   }
-
-
 
   unselectConversation() {
     this.unselectConversation$.emit();

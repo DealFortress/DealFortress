@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
@@ -13,15 +13,18 @@ import { Observable } from 'rxjs';
 })
 export class ConversationListComponent {
   public conversations$?: Observable<Conversation[] | undefined>;
-  public selectedConversation?: Conversation;
+  public selectedConversation?: Conversation;  
+  
 
   constructor(private store: Store, private formBuilder: FormBuilder) {
   }
-  
+
   ngOnInit(): void {
     this.conversations$ = this.store.select(getConversations);
     this.conversations$.subscribe(conversations => { if (conversations)  console.log(conversations)})
   }
+
+
 
   unselectConversation() {
     this.selectedConversation = undefined;
