@@ -20,6 +20,7 @@ export class NoticeDetailComponent{
   selectedProduct? : Product; 
   currentUserId$ = this.store.select(getUserId);
   showDeletePopup = false;
+  toggleMessagePopup = false;
 
   constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router) {
     this.notice$.subscribe(notice => {
@@ -42,4 +43,5 @@ export class NoticeDetailComponent{
     this.store.dispatch(deleteNoticeRequest({noticeId: +this.id!}))
     this.router.navigate(['/']);
   }
+
 }

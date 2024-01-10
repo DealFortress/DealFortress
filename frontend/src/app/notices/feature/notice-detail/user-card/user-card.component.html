@@ -4,14 +4,10 @@
         <div class="card-actions">
         </div>
         <div class="card-actions justify-start">
-            <button (click)="toggleMessagePopup = true" class="btn btn-primary"><fa-icon [icon]="['fas', 'dove']"></fa-icon> Message</button>
+            <button (click)="toggleMessagePopup$.emit(true)" class="btn btn-primary"><fa-icon [icon]="['fas', 'dove']"></fa-icon> Message</button>
         </div>
     </div>
     <figure>    
         <img class="rounded-full lg:w-[100px] w-[75px] m-auto" [src]="user.avatar" alt="profile picture" />
     </figure>
 </div>
-
-<!-- <app-popup-card *ngIf="toggleMessagePopup">
-    <app-conversation-create [senderId]="user.id" [conversation]=""></app-conversation-create>
-</app-popup-card> -->

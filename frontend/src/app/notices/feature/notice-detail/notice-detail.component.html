@@ -25,7 +25,7 @@
     </div>
     <div class="flex flex-col-reverse lg:flex-col w-full">
       <ng-container *ngIf="(creator$ | async) as user;">
-        <app-user-card [user]="user" class="mt-20"></app-user-card>
+        <app-user-card [user]="user" (toggleMessagePopup$)="toggleMessagePopup = true" class="mt-20" ></app-user-card>
       </ng-container>
       <div class="flex flex-col gap-6">
         <ng-container *ngFor="let product of notice.products">
@@ -39,10 +39,14 @@
 </app-main-container>
 
 <app-popup-card *ngIf="showDeletePopup">
-    <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
-        Abort!
-    </button>
-    <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
-        Burn it!
-    </button>
+  <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
+    Abort!
+  </button>
+  <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
+    Burn it!
+  </button>
+</app-popup-card>
+
+<app-popup-card *ngIf="toggleMessagePopup && (creator$ | async) && (notice$ | async) as notice" [title]="'Your message'">
+  <app-conversation-create [senderId]="(creator$ | async)!.id" [notice]="notice" [recipientId]="notice.userId"></app-conversation-create>
 </app-popup-card>

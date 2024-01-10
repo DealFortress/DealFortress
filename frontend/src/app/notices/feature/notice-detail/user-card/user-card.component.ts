@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '@app/shared/models/user/user.model';
+import { EmitFlags } from 'typescript';
 
 
 
@@ -10,5 +11,5 @@ import { User } from '@app/shared/models/user/user.model';
 })
 export class UserCardComponent {
  @Input({required: true}) user! : User ;
- toggleMessagePopup = false;
+ @Output() toggleMessagePopup$ = new EventEmitter<boolean>(false);
 }
