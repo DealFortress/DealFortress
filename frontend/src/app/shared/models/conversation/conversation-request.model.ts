@@ -1,9 +1,9 @@
-import { Message } from "../message/message"
+import { MessageRequest } from "../message/message-request"
 
-export type Conversation = {
+export type ConversationRequest = {
     noticeId: number,
     name: string,
     BuyerId: number,
     SellerId: number,
-    messages: Message[]
+    messageRequests: MessageRequest[]
 }

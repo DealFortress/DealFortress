@@ -1,5 +1,6 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { ConversationsState, conversationsAdapter } from './conversations.state';
+import { pipe } from 'rxjs';
 
 const getConversationsState = createFeatureSelector<ConversationsState>('conversationsState');
  
@@ -14,4 +15,9 @@ export const getConversations = createSelector(
 export const getConversationById = (id: number) =>  createSelector(
     getConversationsState,
     state => state.entities[id]
+);
+
+export const getConversationByNoticeId = (noticeId: number) =>  createSelector(
+    getConversations,
+    conversations => conversations.find(conversation => conversation.noticeId == noticeId)
 );
