@@ -6,6 +6,7 @@ import { Notice } from '@app/shared/models/notice/notice.model';
 import { Product } from '@app/shared/models/product/product.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
 import { getCurrentlyShownUser, getUserId} from '@app/users/data-access/store/users.selectors';
+import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -22,7 +23,7 @@ export class NoticeDetailComponent{
   showDeletePopup = false;
   toggleMessagePopup = false;
 
-  constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router) {
+  constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router, public authService: AuthService) {
     this.notice$.subscribe(notice => {
       if (notice) {
         this.store.dispatch(loadUserByIdRequest({id: notice.userId}))
@@ -44,4 +45,13 @@ export class NoticeDetailComponent{
     this.router.navigate(['/']);
   }
 
+  handleMessagePopup() {
+    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        this.toggleMessagePopup = true;
+      } else {
+        this.authService.loginWithPopup()
+      }
+    })
+  }
 }

@@ -67,6 +67,7 @@ import { ConversationDetailComponent } from './conversations/feature/conversatio
 import { ConversationListComponent } from './conversations/feature/conversation-list/conversation-list.component';
 import { ConversationCardComponent } from './conversations/feature/conversation-list/conversation-card/conversation-card/conversation-card.component';
 import { ConversationCreateComponent } from "./conversations/feature/conversation-create/conversation-create/conversation-create.component";
+import { MessagesCreateComponent } from './conversations/feature/conversation-create/messages-create/messages-create.component';
 
 @NgModule({
     declarations: [
@@ -96,7 +97,8 @@ import { ConversationCreateComponent } from "./conversations/feature/conversatio
         ConversationDetailComponent,
         ConversationListComponent,
         ConversationCardComponent,
-        ConversationCreateComponent
+        ConversationCreateComponent,
+        MessagesCreateComponent
     ],
     providers: [
         NoticesApiService,

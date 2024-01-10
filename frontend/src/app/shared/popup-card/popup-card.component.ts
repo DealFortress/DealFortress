@@ -9,6 +9,7 @@ import { StringMappingType } from 'typescript';
 export class PopupCardComponent implements OnInit, OnDestroy{
   @Input() title? : string;
   @Input() body? : string;
+  @Input() isCloseable? : boolean;
 
   constructor(private renderer: Renderer2) {}
 

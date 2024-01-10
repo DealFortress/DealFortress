@@ -22,7 +22,7 @@ export class ConversationDetailComponent implements OnInit {
   @Input({required: true}) conversationId!: number;
   @Output() unselectConversation$ = new EventEmitter();
   public user$ = this.store.select(getUser);
-  public contact$ = this.store.select(getCurrentlyShownUser);
+  public recipient$ = this.store.select(getCurrentlyShownUser);
   public conversation$? : Observable<Conversation | undefined>;
 
   constructor(private store: Store) {

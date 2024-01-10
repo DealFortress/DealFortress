@@ -7,19 +7,13 @@
         <div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
           <div class="chat-image avatar">
             <div class="w-10 rounded-full">
-              <img alt="Tailwind CSS chat bubble component" [src]="message.senderId == user.id ? user.avatar : (contact$ | async)?.avatar" />
+              <img alt="Tailwind CSS chat bubble component" [src]="message.senderId == user.id ? user.avatar : (recipient$ | async)?.avatar" />
             </div>
           </div>
           <div class="chat-bubble">{{message.text}}</div>
         </div>
       </div>
     </section>
-    <app-conversation-create 
-    *ngIf="(conversation$ | async) as conversation"
-    [conversationId]="conversation.id" 
-    [senderId]="user.id" 
-    [recipientId]="conversation.BuyerId == user.id ? conversation.SellerId : conversation.BuyerId"
-    >
-    </app-conversation-create>
+    <app-messages-create [senderId]="user.id" [recipientId]="(recipient$ | async)!.id" [conversationId]="conversationId"></app-messages-create>
 </div>
 
