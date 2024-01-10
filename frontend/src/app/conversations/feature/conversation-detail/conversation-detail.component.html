@@ -18,7 +18,7 @@
     *ngIf="(conversation$ | async) as conversation"
     [conversationId]="conversation.id" 
     [senderId]="user.id" 
-    [recipientId]="conversation.userOneId == user.id ? conversation.userTwoId : conversation.userOneId"
+    [recipientId]="conversation.BuyerId == user.id ? conversation.SellerId : conversation.BuyerId"
     >
     </app-conversation-create>
 </div>

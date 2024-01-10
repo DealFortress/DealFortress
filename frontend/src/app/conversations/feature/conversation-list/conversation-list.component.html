@@ -8,7 +8,7 @@
         class="bg-base-0 rounded basis-0 p-2 flex "
         [ngClass]="selectedConversationId ? 'hidden md:block' : 'block' "
     >        
-            <h3 *ngIf="conversations.length == 0" class="text-justify text-2xl justify-self-center self-center">The conversations you are a part of will appear here</h3>
+            <h3 *ngIf="conversations.length == 0 " class="text-justify text-2xl m-auto self-center">The conversations you are a part of will appear here</h3>
             <ng-container *ngFor="let conversation of conversations">
                 <app-conversation-card [conversation]="conversation" (click)="selectedConversationId = conversation.id"></app-conversation-card>
             </ng-container>

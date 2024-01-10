@@ -4,7 +4,7 @@ export type Conversation = {
     id: number,
     noticeId: number,
     name: string,
-    userOneId: number,
-    userTwoId: number,
+    BuyerId: number,
+    SellerId: number,
     messages: Message[]
 }

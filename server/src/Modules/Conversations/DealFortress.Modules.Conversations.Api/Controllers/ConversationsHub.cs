@@ -46,7 +46,7 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
     public async Task PostConversation(ConversationRequest request) 
     {
         var authId = Context.User!.Identity!.Name!;
-        var isCreator = _usersController.IsUserEntityCreator(request.UserOneId, authId);
+        var isCreator = _usersController.IsUserEntityCreator(request.BuyerId, authId);
 
         if (!isCreator) 
         {
@@ -60,7 +60,7 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
             return;
         }
 
-        var recipientAuthId = _usersController.GetAuthIdByUserId(request.UserTwoId);
+        var recipientAuthId = _usersController.GetAuthIdByUserId(request.SellerId);
 
         await Clients.User(recipientAuthId!).GetConversation(response);
         await Clients.User(authId).GetConversation(response);
@@ -84,8 +84,8 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         }
 
         var conversation = _conversationService.GetById(request.ConversationId);
-        var userOneAuthId = _usersController.GetAuthIdByUserId(conversation!.UserOneId);
-        var userTwoAuthId = _usersController.GetAuthIdByUserId(conversation!.UserTwoId);
+        var userOneAuthId = _usersController.GetAuthIdByUserId(conversation!.BuyerId);
+        var userTwoAuthId = _usersController.GetAuthIdByUserId(conversation!.SellerId);
 
         await Clients.User(userOneAuthId!).GetMessage(response);
         await Clients.User(userTwoAuthId!).GetMessage(response);

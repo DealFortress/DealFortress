@@ -31,7 +31,7 @@ public class ConversationsService : IConversationsService
         var id = _usersController.GetUserIdByAuthId(authId);
 
         return _repo.GetAll()
-                    .Where(conversation => conversation.UserOneId == id || conversation.UserTwoId == id)
+                    .Where(conversation => conversation.BuyerId == id || conversation.SellerId == id)
                     .Select(ToConversationResponseDTO)
                     .ToList();
     }
@@ -66,8 +66,8 @@ public class ConversationsService : IConversationsService
             Id = conversation.Id,
             NoticeId = conversation.NoticeId,
             Name = conversation.Name,
-            UserOneId = conversation.UserOneId,
-            UserTwoId = conversation.UserTwoId,
+            BuyerId = conversation.BuyerId,
+            SellerId = conversation.SellerId,
             Messages = conversation.Messages?.ConvertAll(message => _messagesService.ToMessageResponseDTO(message))
         };
 
@@ -80,8 +80,8 @@ public class ConversationsService : IConversationsService
         {
             NoticeId = request.NoticeId,
             Name = request.Name,
-            UserOneId = request.UserOneId,
-            UserTwoId = request.UserTwoId
+            BuyerId = request.BuyerId,
+            SellerId = request.SellerId
         };
     }
 }

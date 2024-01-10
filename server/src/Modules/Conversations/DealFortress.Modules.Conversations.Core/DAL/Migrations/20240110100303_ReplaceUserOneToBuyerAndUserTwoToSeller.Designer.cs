@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
 {
     [DbContext(typeof(ConversationsContext))]
-    [Migration("20231213143711_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240110100303_ReplaceUserOneToBuyerAndUserTwoToSeller")]
+    partial class ReplaceUserOneToBuyerAndUserTwoToSeller
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,14 +34,14 @@ namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BuyerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NoticeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BuyerId")
                         .HasColumnType("int");
 
                     b.Property<int>("SellerId")

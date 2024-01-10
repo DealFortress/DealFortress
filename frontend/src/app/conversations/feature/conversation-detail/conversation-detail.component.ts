@@ -23,12 +23,13 @@ export class ConversationDetailComponent implements OnInit {
   @Output() unselectConversation$ = new EventEmitter();
   public user$ = this.store.select(getUser);
   public contact$ = this.store.select(getCurrentlyShownUser);
-  public conversation$ = this.store.select(getConversationById(this.conversationId)); 
+  public conversation$? : Observable<Conversation | undefined>;
 
   constructor(private store: Store) {
   }
 
   ngOnInit(): void {
+    this.conversation$ =  this.store.select(getConversationById(this.conversationId)); 
   }
 
   unselectConversation() {

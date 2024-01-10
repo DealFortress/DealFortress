@@ -23,8 +23,8 @@ namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NoticeId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserOneId = table.Column<int>(type: "int", nullable: false),
-                    UserTwoId = table.Column<int>(type: "int", nullable: false)
+                    BuyerId = table.Column<int>(type: "int", nullable: false),
+                    SellerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
