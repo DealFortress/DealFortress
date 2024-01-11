@@ -7,7 +7,7 @@ import { Message } from '@app/shared/models/message/message';
 import { MessageRequest } from '@app/shared/models/message/message-request';
 import { User } from '@app/shared/models/user/user.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
-import { getCurrentlyShownUser, getUser } from '@app/users/data-access/store/users.selectors';
+import { getNoticeOwner, getLoggedInUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { signalrConnected } from 'ngrx-signalr-core';
 import { Observable } from 'rxjs';
@@ -21,8 +21,8 @@ import { Observable } from 'rxjs';
 export class ConversationDetailComponent implements OnInit {
   @Input({required: true}) conversationId!: number;
   @Output() unselectConversation$ = new EventEmitter();
-  public user$ = this.store.select(getUser);
-  public recipient$ = this.store.select(getCurrentlyShownUser);
+  public user$ = this.store.select(getLoggedInUser);
+  public recipient$ = this.store.select(getNoticeOwner);
   public conversation$? : Observable<Conversation | undefined>;
 
   constructor(private store: Store) {

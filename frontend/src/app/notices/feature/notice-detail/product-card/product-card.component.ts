@@ -5,7 +5,7 @@ import { Condition } from '@app/shared/models/condition.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { Product } from '@app/shared/models/product/product.model';
 import { SoldStatus } from '@app/shared/models/sold-status.model';
-import { getCurrentlyShownUser, getUser } from '@app/users/data-access/store/users.selectors';
+import { getNoticeOwner, getLoggedInUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class ProductCardComponent implements OnInit{
   condition: string = "";
   SoldStatus = SoldStatus;
   notice$? : Observable<Notice | undefined>;
-  user$ = this.store.select(getUser);
+  user$ = this.store.select(getLoggedInUser);
   toggleSoldPopup = false;
 
   constructor(private store: Store) {

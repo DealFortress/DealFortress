@@ -5,7 +5,7 @@ import { getNoticeById } from '@app/notices/data-access/store/notices.selectors'
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { Product } from '@app/shared/models/product/product.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
-import { getCurrentlyShownUser, getUserId} from '@app/users/data-access/store/users.selectors';
+import { getNoticeOwner, getLoggedInUser} from '@app/users/data-access/store/users.selectors';
 import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 
@@ -17,9 +17,9 @@ import { Store } from '@ngrx/store';
 export class NoticeDetailComponent{
   id = this.route.snapshot.paramMap.get('id');
   notice$ = this.store.select(getNoticeById(+this.id!));
-  creator$ = this.store.select(getCurrentlyShownUser);
+  creator$ = this.store.select(getNoticeOwner);
   selectedProduct? : Product; 
-  currentUserId$ = this.store.select(getUserId);
+  currentUser$ = this.store.select(getLoggedInUser);
   showDeletePopup = false;
   toggleMessagePopup = false;
 

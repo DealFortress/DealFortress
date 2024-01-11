@@ -33,7 +33,7 @@ public class MessagesService: IMessagesService
 
     public IEnumerable<MessageResponse> GetAllByAuthId(string authId)
     {
-        var id = _usersController.GetUserIdByAuthId(authId);
+        var id = _usersController.getLoggedInUserIdByAuthId(authId);
 
         return _repo.GetAll()
                     .Where(message => message.SenderId == id)

@@ -66,24 +66,24 @@ public class UsersControllersTestsHappy
     }
 
     [Fact]
-    public void GetUser_return_ok_when_service_return_response()
+    public void getLoggedInUser_return_ok_when_service_return_response()
     {
         // Arrange
         _service.Setup(service => service.GetById(1)).Returns(_response);
 
         // Act
-        var httpResponse = _controller.GetUser("1", "id");
+        var httpResponse = _controller.getLoggedInUser("1", "id");
         // Assert 
         httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void GetUser_return_response_when_server_returns_response()
+    public void getLoggedInUser_return_response_when_server_returns_response()
     {
         // Arrange
         _service.Setup(service => service.GetById(1)).Returns(_response);
         // Act
-        var httpResponse = _controller.GetUser("1", "id");
+        var httpResponse = _controller.getLoggedInUser("1", "id");
         // Assert 
         var content = httpResponse.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<UserResponse>();

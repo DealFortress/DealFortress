@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postNoticeRequest } from '@app/notices/data-access/store/notices.actions';
-import { getUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
+import { getLoggedInUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
 import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
 import { Store } from '@ngrx/store';
 
@@ -21,7 +21,7 @@ export class NoticeCreateComponent {
   }
   
   navigateToNewNotice() {
-    this.store.select(getUserLatestNoticeId).subscribe(id => {
+    this.store.select(getLoggedInUserLatestNoticeId).subscribe(id => {
       if (id) {
         this.router.navigate(['notices/', id]);
       }

@@ -8,7 +8,7 @@ export const usersReducer = createReducer(
     on(loadUserByIdSuccess,(state,action)=>{
         return {
             ...state,
-            currentlyShownUser: action.user,
+            noticeOwner: action.user,
         }
     }),
     on(loadUserByIdError,(state,action)=>{

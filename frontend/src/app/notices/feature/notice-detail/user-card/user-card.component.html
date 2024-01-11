@@ -4,7 +4,7 @@
         <div class="card-actions">
         </div>
         <div class="card-actions justify-start">
-            <button (click)="toggleMessagePopup$.emit(true)" class="btn btn-primary"><fa-icon [icon]="['fas', 'dove']"></fa-icon> Message</button>
+            <button *ngIf="user.id != (currentUser |async)?.id" (click)="toggleMessagePopup$.emit(true)" class="btn btn-primary"><fa-icon [icon]="['fas', 'dove']"></fa-icon> Message</button>
         </div>
     </div>
     <figure>    

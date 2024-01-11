@@ -10,7 +10,7 @@ export const getNotices = createSelector(
     selectAll
 );
 
-export const getUserLatestNoticeId = createSelector(
+export const getLoggedInUserLatestNoticeId = createSelector(
     getNoticesState,
     (state) => state.userLatestNoticeId
 )

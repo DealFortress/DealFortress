@@ -1,6 +1,6 @@
 <app-main-container>
   <div *ngIf="(notice$ | async) as notice" class="relative justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
-    <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
+    <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUser$ | async)?.id">
       <button routerLink="edit" class="top-0 right-20 btn btn-ghost btn-circle text-2xl md:text-4xl bg-darkblue md:btn-lg">
         <fa-icon [icon]="['fas', 'feather']"></fa-icon>
       </button>
@@ -10,15 +10,15 @@
     </div>
     <div class="py-6 flex mt-10 flex-col gap-12 ">
       <div>
-        <h1 class="lg:text-8xl text-4xl w-full font-thin break-words">{{notice.title.toUpperCase()}}</h1> 
+        <h1 class="lg:text-8xl text-6xl w-full font-thin break-words">{{notice.title.toUpperCase()}}</h1> 
         <p class="py-12 break-words text-[lightgrey] ">{{notice.description}}</p>
       </div>
       <div class="flex flex-col justify-between mb-8">
-        <ul class="font-start grid grid-cols-2  gap-14 text-3xl">
+        <ul class="font-start grid grid-cols-2 gap-4 md:gap-14 text-2xl md:text-3xl">
           <li ><fa-icon class="text-[grey]" [icon]="['fas','chess-rook']" /> {{notice.city[0].toUpperCase() + notice.city.slice(1).toLocaleLowerCase()}}</li>
           <li class="text-end">{{notice.deliveryMethods}} <fa-icon class="text-[lightgrey]" [icon]="['fas','crow']"/></li>
           <li class=""><fa-icon class="text-[sienna]" [icon]="['fas','sack-dollar']"/> {{notice.payments}}</li>
-          <li class=" text-end text-4xl">{{ getTotalPrice(notice) }} SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
+          <li class=" text-end text-2xl md:text-4xl">{{ getTotalPrice(notice) }} SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
         </ul>
       </div>
       <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
@@ -48,10 +48,10 @@
 </app-popup-card>
 
 <app-conversation-create 
-  *ngIf="toggleMessagePopup && (creator$ | async) && (notice$ | async) as notice" 
+  *ngIf="toggleMessagePopup && (currentUser$ | async)  && (notice$ | async) && (creator$ | async) as user" 
   (toggleMessagePopup$)="toggleMessagePopup = false"
-  [senderId]="(currentUserId$ | async)!"
-  [recipientId]="(creator$ | async)!.id"
-  [notice]="notice"
+  [sender]="(currentUser$ | async)!"
+  [recipient]="user"
+  [notice]="(notice$ | async)!"
   >
 </app-conversation-create>

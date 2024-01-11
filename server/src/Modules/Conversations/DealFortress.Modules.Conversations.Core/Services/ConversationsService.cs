@@ -28,7 +28,7 @@ public class ConversationsService : IConversationsService
 
     public IEnumerable<ConversationResponse> GetAllByAuthId(string authId)
     {
-        var id = _usersController.GetUserIdByAuthId(authId);
+        var id = _usersController.getLoggedInUserIdByAuthId(authId);
 
         return _repo.GetAll()
                     .Where(conversation => conversation.BuyerId == id || conversation.SellerId == id)
