@@ -55,11 +55,14 @@ public class MessagesService: IMessagesService
 
      public MessageResponse? Post(MessageRequest request)
     {
-        var conversation = _conversationsRepo.GetById(request.ConversationId);
+        var conversationId = request.ConversationId ?? default(int);
+
+        var conversation = _conversationsRepo.GetById(conversationId);
 
         if( conversation is null ) {
             return null;
         }
+        
         var message = ToMessage(request, conversation);
 
         _repo.Add(message);

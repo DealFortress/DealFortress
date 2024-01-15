@@ -59,7 +59,7 @@ export class ConversationsEffects {
         }
         return hub.send("postconversation", request).pipe(
             map((conversation) => {
-                console.log("Post success")
+                ShowAlert({ message: 'Sending message failed', actionresult: 'fail' });
                 return postConversationSuccess({conversation: conversation  as Conversation, statusCode: 200})
             }),
             catchError((_error) => 

@@ -31,15 +31,15 @@ export class ConversationCreateComponent implements OnInit{
       \n I have a question about '${this.notice.title}' 
       \n \n Kind regards,
       \n ${this.sender.username}`)
-
+    
+      this.messageFormGroup.controls.senderId.patchValue(this.sender.id)
   }
-
 
   messageFormGroup = this.formBuilder.group({
     text: '',
     senderId: -1,
-    conversationId: -1
   })
+
 
 
    onConversationSubmit() {
@@ -47,11 +47,14 @@ export class ConversationCreateComponent implements OnInit{
       noticeId: this.notice.id,
       name: this.notice.title,
       buyerId: this.sender.id,
-      SellerId: this.recipient.id,
-      messageRequest: this.messageFormGroup
+      sellerId: this.recipient.id,
+      messageRequests: this.formBuilder.array([
+        this.messageFormGroup
+      ])
     })
 
     const conversationRequest = conversationFormGroup.value as ConversationRequest;
+    console.log(conversationRequest);
     this.store.dispatch(postConversationRequest({ request: conversationRequest }));
   }
 

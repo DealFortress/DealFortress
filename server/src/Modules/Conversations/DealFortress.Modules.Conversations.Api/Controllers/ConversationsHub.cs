@@ -71,7 +71,7 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         var authId = Context.User!.Identity!.Name!;
         var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
 
-        if (!isCreator) 
+        if (!isCreator || request.ConversationId is null) 
         {
             return;
         }
@@ -83,7 +83,9 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
             return;
         }
 
-        var conversation = _conversationService.GetById(request.ConversationId);
+        var conversation = _conversationService.GetById(response.ConversationId);
+
+      
         var userOneAuthId = _usersController.GetAuthIdByUserId(conversation!.BuyerId);
         var userTwoAuthId = _usersController.GetAuthIdByUserId(conversation!.SellerId);
 
