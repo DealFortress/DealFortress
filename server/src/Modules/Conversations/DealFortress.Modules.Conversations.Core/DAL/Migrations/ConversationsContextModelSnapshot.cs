@@ -31,7 +31,7 @@ namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BuyerId")
+                    b.Property<int>("UserOneId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -41,7 +41,7 @@ namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
                     b.Property<int>("NoticeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SellerId")
+                    b.Property<int>("UserTwoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

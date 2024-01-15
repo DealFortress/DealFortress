@@ -41,10 +41,10 @@ namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
                     b.Property<int>("NoticeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BuyerId")
+                    b.Property<int>("UserOneId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SellerId")
+                    b.Property<int>("UserTwoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
