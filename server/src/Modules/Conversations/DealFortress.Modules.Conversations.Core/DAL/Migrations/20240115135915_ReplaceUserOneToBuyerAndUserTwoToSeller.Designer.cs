@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DealFortress.Modules.Conversations.Core.DAL.Migrations
 {
     [DbContext(typeof(ConversationsContext))]
-    [Migration("20240110100303_ReplaceUserOneToBuyerAndUserTwoToSeller")]
+    [Migration("20240115135915_ReplaceUserOneToBuyerAndUserTwoToSeller")]
     partial class ReplaceUserOneToBuyerAndUserTwoToSeller
     {
         /// <inheritdoc />
