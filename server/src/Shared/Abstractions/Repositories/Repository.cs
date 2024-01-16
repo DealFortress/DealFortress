@@ -24,8 +24,10 @@ public class Repository<T> : IRepository<T> where T : class
     public void Delete(int id)
     {
         var entity = GetById(id);
-        if (entity != null)
+        if (entity is not null)
+        {
             Context.Set<T>().Remove(entity);
+        }
     }
 
     public void Add(T entity)

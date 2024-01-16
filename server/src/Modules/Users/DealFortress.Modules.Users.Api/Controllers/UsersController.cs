@@ -19,7 +19,7 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> GetUser(string id, string idType)
+    public ActionResult<UserResponse> getLoggedInUser(string id, string idType)
     {
         UserResponse? response = null;
 
@@ -43,12 +43,17 @@ public class UsersController : ControllerBase
     {
         var response = _service.Post(request);
 
-        return CreatedAtAction("GetUser", new { id = response.Id }, response);
+        return CreatedAtAction("getLoggedInUser", new { id = response.Id }, response);
     }
 
     [NonAction]
-    public virtual bool IsUserNoticeCreator(int id)
+    public virtual bool IsUserEntityCreator(int id, string? authId = null)
     {
+        if (authId is not null)
+        {
+            return _service.GetByAuthId(authId)?.Id == id;
+        }
+
         var currentUserAuthId = _service.GetCurrentUserAuthId();
         return _service.GetByAuthId(currentUserAuthId)?.Id == id;
     }
@@ -66,7 +71,7 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual int? GetUserIdByAuthId(string authId)
+    public virtual int? getLoggedInUserIdByAuthId(string authId)
     {
         return _service.GetByAuthId(authId)?.Id;
     }

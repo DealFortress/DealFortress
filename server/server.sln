@@ -46,11 +46,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DealFortress.Modules.Notice
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Notices.Tests.Shared", "src\Modules\Notices\DealFortress.Modules.Notices.Tests\DealFortress.Modules.Notices.Tests.Shared\DealFortress.Modules.Notices.Tests.Shared.csproj", "{8D59117C-CCE8-409F-B89D-F4E8BC93B4FE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{7177E3FD-C782-47C2-A1E4-FE4EC107BFEB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conversations", "Conversations", "{7177E3FD-C782-47C2-A1E4-FE4EC107BFEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Messages.Api", "src\Modules\Messages\DealFortress.Modules.Messages.Api\DealFortress.Modules.Messages.Api.csproj", "{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Conversations.Api", "src\Modules\Conversations\DealFortress.Modules.Conversations.Api\DealFortress.Modules.Conversations.Api.csproj", "{6F5D3E4D-A71C-4278-9CC2-D2E1777C9074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Messages.Core", "src\Modules\Messages\DealFortress.Modules.Messages.Core\DealFortress.Modules.Messages.Core.csproj", "{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Conversations.Core", "src\Modules\Conversations\DealFortress.Modules.Conversations.Core\DealFortress.Modules.Conversations.Core.csproj", "{C5FE62DE-630F-49CE-89EE-ADCD75F862C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

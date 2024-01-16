@@ -1,7 +1,7 @@
 using DealFortress.Modules.Categories.Api;
 using DealFortress.Modules.Notices.Api;
 using DealFortress.Modules.Users.Api;
-using DealFortress.Modules.Messages.Api;
+using DealFortress.Modules.Conversations.Api;
 using Bootstrapper.Auth;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,7 @@ builder.AddAuthenticationAndAuthorization();
 
 builder.Services
     .AddUsersModule(connectionString!)
-    .AddMessagesModule(connectionString!)
+    .AddConversationsModule(connectionString!)
     .AddCategoriesModule(connectionString!)
     .AddNoticesModule(connectionString!)
     .AddControllers();
@@ -60,7 +60,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-app.MapMessageHub();
+app.MapConversationsHub();
 
 app.Run();
 
