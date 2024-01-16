@@ -25,7 +25,7 @@ export class ConversationDetailComponent implements OnInit {
   ngOnInit(): void {
     this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
-    this.store.dispatch(loadUserByIdRequest({id: notice.userId})) 
+    // this.store.dispatch(loadUserByIdRequest({id: notice.userId})) 
     this.recipient$.subscribe(recipient => {if (recipient) { console.log(recipient)}})
   }
 
