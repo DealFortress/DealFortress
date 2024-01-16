@@ -99,7 +99,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
 
         // Act
         _service.PatchSoldStatusById(1, SoldStatus.Available);
@@ -115,7 +115,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
 
         // Act
         _service.PatchSoldStatusById(1, SoldStatus.Available);
@@ -129,7 +129,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
 
         // Act
         var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
@@ -143,7 +143,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetById(1)).Returns(_product);
-        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
+        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
 
         // Act
         var response = _service.PatchSoldStatusById(1, SoldStatus.Available);

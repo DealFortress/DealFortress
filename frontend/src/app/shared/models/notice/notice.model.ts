@@ -1,4 +1,4 @@
-import { Product } from "@app/shared/models/product.model"
+import { Product } from "@app/shared/models/product/product.model"
 
 export type Notice = {
     id: number,

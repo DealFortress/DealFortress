@@ -1,17 +1,17 @@
 import { Condition } from "@app/shared/models/condition.model"
-import { Image } from "@app/shared/models/image.model"
-import { SoldStatus } from "./sold-status.model"
+import { ImageRequest } from "../image/image-request.model"
+import { SoldStatus } from "../sold-status.model"
 
-export type Product = {
-    id: number,
-    noticeId: number,
+
+
+export type ProductRequest = {
     name: string,
     price: number,
     hasReceipt: boolean,
-    warranty: string,
     soldStatus: SoldStatus,
     isSoldSeparately: boolean,
+    warranty: string,
     categoryId: number,
     condition: Condition,
-    images: Image[],
+    imageRequests: ImageRequest[],
 }

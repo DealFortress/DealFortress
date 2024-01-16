@@ -3,8 +3,8 @@ import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNotices
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 import { getNoticeById } from "./notices.selectors";
-import { Notice } from "@app/shared/models/notice.model";
-import { Product } from "@app/shared/models/product.model";
+import { Notice } from "@app/shared/models/notice/notice.model";
+import { Product } from "@app/shared/models/product/product.model";
 
 
 export const noticesReducer = createReducer(

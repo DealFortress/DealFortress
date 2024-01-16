@@ -74,7 +74,11 @@ public class ProductsService: IProductsService
             return null;
         }
         
+<<<<<<< HEAD
         var isCreator = await _usersController.IsUserNoticeCreator(product.Notice.UserId);
+=======
+        var isCreator = _usersController.IsUserEntityCreator(product.Notice.UserId);
+>>>>>>> a7e858eba2140eb24e0fdf3a0eb250d1d6f545ca
 
         if (!isCreator)
         {
