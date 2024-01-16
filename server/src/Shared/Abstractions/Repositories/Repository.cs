@@ -24,11 +24,7 @@ public class Repository<T> : IRepository<T> where T : class
 
     public async Task DeleteAsync(int id)
     {
-<<<<<<< HEAD
         var entity = await GetByIdAsync(id);
-=======
-        var entity = GetById(id);
->>>>>>> a7e858eba2140eb24e0fdf3a0eb250d1d6f545ca
         if (entity is not null)
         {
             Context.Set<T>().Remove(entity);

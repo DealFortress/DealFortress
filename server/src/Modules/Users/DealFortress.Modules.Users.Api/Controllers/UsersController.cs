@@ -19,11 +19,7 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-<<<<<<< HEAD
-    public async Task<ActionResult<UserResponse>> GetUserAsync(string id, string idType)
-=======
-    public ActionResult<UserResponse> getLoggedInUser(string id, string idType)
->>>>>>> a7e858eba2140eb24e0fdf3a0eb250d1d6f545ca
+    public async Task<ActionResult<UserResponse>> getLoggedInUserAsync(string id, string idType)
     {
         UserResponse? response = null;
 
@@ -43,7 +39,7 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserResponse>> PostUserAsync(UserRequest request)
+    public async Task<ActionResult<UserResponse>> PostUserAsyncAsync(UserRequest request)
     {
         var response = await _service.PostAsync(request);
 
@@ -51,20 +47,19 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-<<<<<<< HEAD
-    public virtual async Task<bool> IsUserNoticeCreator(int id)
-=======
-    public virtual bool IsUserEntityCreator(int id, string? authId = null)
->>>>>>> a7e858eba2140eb24e0fdf3a0eb250d1d6f545ca
+    public virtual async Task<bool> IsUserEntityCreatorAsync(int id, string? authId = null)
     {
         if (authId is not null)
         {
-            return _service.GetByAuthId(authId)?.Id == id;
-        }
+            var entity = await _service.GetByAuthIdAsync(authId);
+            return entity?.Id == id;
 
-        var currentUserAuthId = _service.GetCurrentUserAuthId();
-        var entity = await _service.GetByAuthIdAsync(currentUserAuthId);
-        return entity?.Id == id;
+        } else 
+        {
+            var currentUserAuthId = _service.GetCurrentUserAuthId();
+            var entity = await _service.GetByAuthIdAsync(currentUserAuthId);
+            return entity?.Id == id;
+        }
     }
 
     [NonAction]
@@ -74,17 +69,13 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual async Task<string?> GetAuthIdByUserId(int userId)
+    public virtual async Task<string?> GetAuthIdByUserIdAsync(int userId)
     {
         return await _service.GetAuthIdByUserIdAsync(userId);
     }
 
     [NonAction]
-<<<<<<< HEAD
-    public virtual async Task<int?> GetUserIdByAuthId(string authId)
-=======
-    public virtual int? getLoggedInUserIdByAuthId(string authId)
->>>>>>> a7e858eba2140eb24e0fdf3a0eb250d1d6f545ca
+    public virtual async Task<int?> getLoggedInUserIdByAuthIdAsync(string authId)
     {
         var entity = await _service.GetByAuthIdAsync(authId);
         return entity?.Id;

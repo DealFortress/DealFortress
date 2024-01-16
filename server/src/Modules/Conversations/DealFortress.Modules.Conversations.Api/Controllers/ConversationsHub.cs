@@ -31,7 +31,7 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         var authId = Context.User!.Identity!.Name!;
         await Clients.User(authId).SendJoinText($"{authId} has joined");
 
-        var response = _conversationService.GetAllByAuthId(authId);
+        var response = await _conversationService.GetAllByAuthIdAsync(authId);
         await Clients.User(authId).GetConversations(response);
     }
 
@@ -43,24 +43,24 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
     //     await Clients.User(authId).GetConversations(response);
     // }
 
-    public async Task PostConversation(ConversationRequest request) 
+    public async Task PostConversationAsync(ConversationRequest request) 
     {
         var authId = Context.User!.Identity!.Name!;
-        var isCreator = _usersController.IsUserEntityCreator(request.BuyerId, authId);
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(request.BuyerId, authId);
 
         if (!isCreator) 
         {
             return;
         }
 
-        var response = _conversationService.Post(request);
+        var response = await _conversationService.PostAsync(request);
 
         if (response is null)
         {
             return;
         }
 
-        var sellerAuthId = _usersController.GetAuthIdByUserId(request.SellerId);
+        var sellerAuthId = await _usersController.GetAuthIdByUserIdAsync(request.SellerId);
 
         await Clients.User(sellerAuthId!).GetConversation(response);
         await Clients.User(authId).GetConversation(response);

@@ -20,7 +20,7 @@ public class NoticesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNotices()
+    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync()
     {
         return  Ok(await _service.GetAllAsync());
     }
@@ -28,7 +28,7 @@ public class NoticesController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task< ActionResult<NoticeResponse>> GetNotice(int id)
+    public async Task< ActionResult<NoticeResponse>> GetNoticeAsync(int id)
     {
        var response = await _service.GetByIdAsync(id);
 
@@ -39,7 +39,7 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<NoticeResponse>> PutNotice(int id, NoticeRequest request)
+    public async Task<ActionResult<NoticeResponse>> PutNoticeAsync(int id, NoticeRequest request)
     {
         var response = await _service.PutByIdAsync(id, request);
 
@@ -50,7 +50,7 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest request)
+    public async Task<ActionResult<NoticeResponse>> PostNoticeAsync(NoticeRequest request)
     {
         var response = await _service.PostAsync(request);
         
@@ -61,7 +61,7 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteNotice(int id)
+    public async Task<IActionResult> DeleteNoticeAsync(int id)
     {
         var notice = await _service.DeleteByIdAsync(id);
         

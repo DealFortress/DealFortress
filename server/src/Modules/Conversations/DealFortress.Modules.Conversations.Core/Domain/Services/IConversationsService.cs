@@ -3,11 +3,11 @@ using DealFortress.Modules.Conversations.Core.Domain.Entities;
 namespace DealFortress.Modules.Conversations.Core.Domain.Services;
 public interface IConversationsService
 {
-    IEnumerable<ConversationResponse> GetAllByAuthId(string authId);
+    Task<IEnumerable<ConversationResponse>> GetAllByAuthIdAsync(string authId);
 
-    ConversationResponse? GetById(int id);
+    Task<ConversationResponse?> GetByIdAsync(int id);
 
-    ConversationResponse Post(ConversationRequest request);
+    Task<ConversationResponse> PostAsync(ConversationRequest request);
 
     ConversationResponse ToConversationResponseDTO(Conversation Conversation);
 

@@ -1,10 +1,7 @@
 using DealFortress.Modules.Categories.Api;
 using DealFortress.Modules.Notices.Api;
 using DealFortress.Modules.Users.Api;
-<<<<<<< HEAD
-=======
 using DealFortress.Modules.Conversations.Api;
->>>>>>> a7e858eba2140eb24e0fdf3a0eb250d1d6f545ca
 using Bootstrapper.Auth;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;

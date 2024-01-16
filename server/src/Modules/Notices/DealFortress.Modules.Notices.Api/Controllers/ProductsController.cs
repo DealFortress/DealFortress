@@ -21,7 +21,7 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProducts()
+    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync()
     {
         return Ok(await _service.GetAllAsync());
     }
@@ -30,7 +30,7 @@ public class ProductsController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> PatchProductSoldStatus(int id, SoldStatus soldStatus)
+    public async Task<IActionResult> PatchProductSoldStatusAsync(int id, SoldStatus soldStatus)
     {
         var response = await _service.PatchSoldStatusByIdAsync(id, soldStatus);
 
@@ -41,7 +41,7 @@ public class ProductsController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProduct(int id)
+    public async Task<IActionResult> DeleteProductAsync(int id)
     {
         var product = await _service.DeleteByIdAsync(id);
 
