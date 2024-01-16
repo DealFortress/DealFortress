@@ -1,15 +1,9 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
-import { getConversationById, getConversations } from '@app/conversations/data-access/store/conversations.selectors';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
-import { Message } from '@app/shared/models/message/message';
-import { MessageRequest } from '@app/shared/models/message/message-request';
-import { User } from '@app/shared/models/user/user.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
 import { getNoticeOwner, getLoggedInUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
-import { signalrConnected } from 'ngrx-signalr-core';
 import { Observable } from 'rxjs';
 
 
@@ -27,9 +21,12 @@ export class ConversationDetailComponent implements OnInit {
 
   constructor(private store: Store) {
   }
-
+  
   ngOnInit(): void {
-    this.conversation$ =  this.store.select(getConversationById(this.conversationId)); 
+    this.conversation$ =  this.store.select(getConversationById(this.conversationId));
+    
+    this.store.dispatch(loadUserByIdRequest({id: notice.userId})) 
+    this.recipient$.subscribe(recipient => {if (recipient) { console.log(recipient)}})
   }
 
   unselectConversation() {

@@ -28,11 +28,11 @@ export const conversationsReducer = createReducer(
             return conversationsAdapter.upsertOne(updatedConversation,state);
     }),
 
-    on(getConversationSuccess, (state, action) => {
-       return conversationsAdapter.addOne(action.conversation, {
-        ...state,
-        })
-    }),
+    // on(getConversationSuccess, (state, action) => {
+    //    return conversationsAdapter.addOne(action.conversation, {
+    //     ...state,
+    //     })
+    // }),
 
     on(postMessageError, (state, action) => {
         return {

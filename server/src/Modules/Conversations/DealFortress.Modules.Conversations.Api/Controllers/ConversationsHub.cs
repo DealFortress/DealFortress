@@ -60,36 +60,36 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
             return;
         }
 
-        var recipientAuthId = _usersController.GetAuthIdByUserId(request.SellerId);
+        var sellerAuthId = _usersController.GetAuthIdByUserId(request.SellerId);
 
-        await Clients.User(recipientAuthId!).GetConversation(response);
+        await Clients.User(sellerAuthId!).GetConversation(response);
         await Clients.User(authId).GetConversation(response);
     }
 
-    public async Task PostMessage(MessageRequest request) 
-    {
-        var authId = Context.User!.Identity!.Name!;
-        var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
+    // public async Task PostMessage(MessageRequest request) 
+    // {
+    //     var authId = Context.User!.Identity!.Name!;
+    //     var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
 
-        if (!isCreator) 
-        {
-            return;
-        }
+    //     if (!isCreator) 
+    //     {
+    //         return;
+    //     }
 
-        var response = _messagesService.Post(request);
+    //     var response = _messagesService.Post(request);
 
-        if (response is null)
-        {
-            return;
-        }
+    //     if (response is null)
+    //     {
+    //         return;
+    //     }
 
-        var conversation = _conversationService.GetById(response.ConversationId);
+    //     var conversation = _conversationService.GetById(response.ConversationId);
 
       
-        var userOneAuthId = _usersController.GetAuthIdByUserId(conversation!.BuyerId);
-        var userTwoAuthId = _usersController.GetAuthIdByUserId(conversation!.SellerId);
+    //     var buyerAuthId = _usersController.GetAuthIdByUserId(conversation!.BuyerId);
+    //     var sellerAuthId = _usersController.GetAuthIdByUserId(conversation!.SellerId);
 
-        await Clients.User(userOneAuthId!).GetMessage(response);
-        await Clients.User(userTwoAuthId!).GetMessage(response);
-    }
+    //     await Clients.User(buyerAuthId!).GetMessage(response);
+    //     await Clients.User(sellerAuthId!).GetMessage(response);
+    // }
 }

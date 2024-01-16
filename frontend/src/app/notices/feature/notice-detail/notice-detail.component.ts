@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { deleteNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './notice-detail.component.html',
   styleUrls: ['./notice-detail.component.css']
 })
-export class NoticeDetailComponent{
+export class NoticeDetailComponent implements OnInit{
   id = this.route.snapshot.paramMap.get('id');
   notice$ = this.store.select(getNoticeById(+this.id!));
   creator$ = this.store.select(getNoticeOwner);
@@ -24,6 +24,9 @@ export class NoticeDetailComponent{
   toggleMessagePopup = false;
 
   constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router, public authService: AuthService) {
+  }
+  
+  ngOnInit(): void {
     this.notice$.subscribe(notice => {
       if (notice) {
         this.store.dispatch(loadUserByIdRequest({id: notice.userId}))

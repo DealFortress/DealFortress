@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { UsersState, initialState } from "./users.state";
-import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
+import { loadUserByAuthIdError,loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
 
 
 export const usersReducer = createReducer(
