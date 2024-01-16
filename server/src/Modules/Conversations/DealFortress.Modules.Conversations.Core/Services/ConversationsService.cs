@@ -76,12 +76,19 @@ public class ConversationsService : IConversationsService
 
     public Conversation ToConversation(ConversationRequest request)
     {
-        return new Conversation()
+        var conversation = new Conversation()
         {
             NoticeId = request.NoticeId,
             Name = request.Name,
             BuyerId = request.BuyerId,
             SellerId = request.SellerId
         };
+
+        if (request.MessagesRequests is not null)
+        {
+            conversation.Messages = request.MessagesRequests.ConvertAll(message => _messagesService.ToMessage(message, conversation));
+        }
+
+        return conversation;
     }
 }

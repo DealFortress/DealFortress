@@ -71,7 +71,7 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         var authId = Context.User!.Identity!.Name!;
         var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
 
-        if (!isCreator || request.ConversationId is null) 
+        if (!isCreator) 
         {
             return;
         }

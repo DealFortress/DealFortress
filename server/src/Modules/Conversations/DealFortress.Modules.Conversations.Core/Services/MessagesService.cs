@@ -55,9 +55,7 @@ public class MessagesService: IMessagesService
 
      public MessageResponse? Post(MessageRequest request)
     {
-        var conversationId = request.ConversationId ?? default(int);
-
-        var conversation = _conversationsRepo.GetById(conversationId);
+        var conversation = _conversationsRepo.GetById(request.ConversationId);
 
         if( conversation is null ) {
             return null;
