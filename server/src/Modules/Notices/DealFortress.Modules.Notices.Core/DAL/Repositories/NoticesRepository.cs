@@ -13,20 +13,20 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public NoticesRepository(NoticesContext context) : base(context)
     {}
 
-    public new IEnumerable<Notice> GetAllAsync()
+    public new async Task<IEnumerable<Notice>> GetAllAsync()
     {
-        return NoticesContext!.Notices
+        return await NoticesContext!.Notices
                     .Include(notice => notice.Products!)
                     .ThenInclude(product => product.Images)
-                    .ToList();
+                    .ToListAsync();
     }
 
-    public new Notice? GetByIdAsync(int id)
+    public new async Task<Notice?> GetByIdAsync(int id)
     {
-        return NoticesContext!.Notices
+        return await NoticesContext!.Notices
                     .Include(notice => notice.Products!)
                     .ThenInclude(product => product.Images)
-                    .FirstOrDefault(notice => notice.Id == id);
+                    .FirstOrDefaultAsync(notice => notice.Id == id);
     }
 
     public NoticesContext? NoticesContext

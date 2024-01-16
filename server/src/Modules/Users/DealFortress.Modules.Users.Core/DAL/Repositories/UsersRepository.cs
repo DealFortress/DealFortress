@@ -15,7 +15,7 @@ internal class UsersRepository : Repository<User>, IUsersRepository
 
     public async Task<User?> GetByAuthIdAsync(string authId)
     {
-        return await UsersContext?.Users.FirstOrDefaultAsync(user => user.AuthId == authId);
+        return await UsersContext!.Users.FirstOrDefaultAsync(user => user.AuthId == authId);
     }
 
     public UsersContext? UsersContext
