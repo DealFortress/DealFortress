@@ -12,31 +12,31 @@ public class Repository<T> : IRepository<T> where T : class
         Context = context;
     }
 
-    public async Task<IEnumerable<T>> GetAll()
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
         return await Context.Set<T>().ToListAsync();
     }
 
-    public async Task<T?> GetById(int id)
+    public async Task<T?> GetByIdAsync(int id)
     {
         return await Context.Set<T>().FindAsync(id);
     }
 
-    public async Task Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        var entity = await GetById(id);
+        var entity = await GetByIdAsync(id);
         if (entity is not null)
         {
             Context.Set<T>().Remove(entity);
         }
     }
 
-    public async Task Add(T entity)
+    public async Task AddAsync(T entity)
     {
         await Context.Set<T>().AddAsync(entity);
     }
 
-    public async Task AddRange(IEnumerable<T> entities)
+    public async Task AddRangeAsync(IEnumerable<T> entities)
     {
         await Context.Set<T>().AddRangeAsync(entities);
     }

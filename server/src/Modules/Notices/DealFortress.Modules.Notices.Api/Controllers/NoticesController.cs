@@ -22,7 +22,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNotices()
     {
-        return  Ok(await _service.GetAll());
+        return  Ok(await _service.GetAllAsync());
     }
 
     [HttpGet("{id}")]
@@ -30,7 +30,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task< ActionResult<NoticeResponse>> GetNotice(int id)
     {
-       var response = await _service.GetById(id);
+       var response = await _service.GetByIdAsync(id);
 
        return response is null ? NotFound() : Ok(response);
     }
@@ -41,7 +41,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<NoticeResponse>> PutNotice(int id, NoticeRequest request)
     {
-        var response = await _service.PutById(id, request);
+        var response = await _service.PutByIdAsync(id, request);
 
         return response is null ? NotFound() : Ok(response);
     }
@@ -52,7 +52,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<NoticeResponse>> PostNotice(NoticeRequest request)
     {
-        var response = await _service.Post(request);
+        var response = await _service.PostAsync(request);
         
         return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }
@@ -61,9 +61,9 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public  async Task<IActionResult> DeleteNotice(int id)
+    public async Task<IActionResult> DeleteNotice(int id)
     {
-        var notice = await _service.DeleteById(id);
+        var notice = await _service.DeleteByIdAsync(id);
         
         return notice is null ? NotFound() : NoContent();
     }
