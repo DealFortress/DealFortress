@@ -2,7 +2,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { NoticesApiService } from '../services/notices-api/notices-api.service';
 import { ProductsApiService } from '../services/products-api/products-api.service';
 
-import { Notice } from '@app/shared/models/notice.model';
+import { Notice } from '@app/shared/models/notice/notice.model';
 import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {    
@@ -16,7 +16,7 @@ import {
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { Update } from '@ngrx/entity';
-import { Product } from '@app/shared/models/product.model';
+import { Product } from '@app/shared/models/product/product.model';
 
 @Injectable()
 export class NoticesEffects {

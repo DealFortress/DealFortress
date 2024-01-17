@@ -5,14 +5,15 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface IProductsService
 {
-    IEnumerable<ProductResponse> GetAll();
+    Task<IEnumerable<ProductResponse>> GetAllAsync();
 
-    ProductResponse? PutById(int id, ProductRequest request);
+    Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request);
 
-    Product? DeleteById(int id);
+    Task<Product?> DeleteByIdAsync(int id);
+
+    Task<ProductResponse?> PatchSoldStatusByIdAsync(int id, SoldStatus soldStatus);
 
     ProductResponse ToProductResponseDTO(Product product);
 
     Product ToProduct(ProductRequest request, Notice notice);
-    ProductResponse? PatchSoldStatusById(int id, SoldStatus soldStatus);
 }

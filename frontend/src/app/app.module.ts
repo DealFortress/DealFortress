@@ -33,7 +33,8 @@ import {
     faSackDollar as fasSackDollar,
     faFeather as fasFeather,
     faTrashCan as fasTrashCan,
-    faDove as fasDove
+    faDove as fasDove,
+    faAngleLeft as fasAngleLeft
   } from '@fortawesome/free-solid-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -58,83 +59,89 @@ import { categoriesReducer } from './categories/data-access/store/categories.red
 import { CategoriesEffects } from './categories/data-access/store/categories.effects';
 import { NoticeCreateComponent } from './notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from './notices/feature/notice-edit/notice-edit.component';
-import { messagesReducer } from './messages/data-access/store/messages.reducer';
-import { MessagesEffect } from './messages/data-access/store/messages.effects';
+import { conversationsReducer } from './conversations/data-access/store/conversations.reducer';
+import { ConversationsEffects } from './conversations/data-access/store/conversations.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
-import { ConversationDetailComponent } from './messages/feature/conversation-detail/conversation-detail.component';
-import { ConversationListComponent } from './messages/feature/conversation-list/conversation-list.component';
+import { ConversationDetailComponent } from './conversations/feature/conversation-detail/conversation-detail.component';
+import { ConversationListComponent } from './conversations/feature/conversation-list/conversation-list.component';
+import { ConversationCardComponent } from './conversations/feature/conversation-list/conversation-card/conversation-card/conversation-card.component';
+import { ConversationCreateComponent } from "./conversations/feature/conversation-create/conversation-create/conversation-create.component";
+import { MessagesCreateComponent } from './conversations/feature/conversation-create/messages-create/messages-create.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NoticeListComponent,
-    ErrorComponent,
-    SearchBarComponent,
-    NavBarComponent,
-    LoaderComponent,
-    MainContainerComponent,
-    NoticeFormComponent,
-    NoticeDetailComponent,
-    NotFoundComponent,
-    NoticeCardComponent,
-    AuthLoginButtonComponent,
-    AuthLogoutButtonComponent,
-    PopupCardComponent,
-    UserProfileComponent,
-    ProductDetailComponent,
-    UserCardComponent,
-    ProductCardComponent,
-    ImageCarouselComponent,
-    FullscreenImageCarouselComponent,
-    ProductFormComponent,
-    NoticeCreateComponent,
-    NoticeEditComponent,
-    ConversationDetailComponent,
-    ConversationListComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    MaterialModule,
-    FormsModule,
-    HttpClientModule,
-    AsyncPipe,
-    AuthModule.forRoot({
-      domain: environment.auth0Domain!,
-      clientId: environment.auth0ClientId!,
-      authorizationParams: {
-        audience: environment.auth0Audience,
-        redirect_uri: window.location.origin
-      }
-    }),
-    BrowserAnimationsModule,
-    StoreModule.forRoot({
-      noticesState: noticesReducer,
-      userState: usersReducer,
-      categoriesState: categoriesReducer,
-      messagesState: messagesReducer,
-      signalr: signalrReducer
-    }), 
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([
-        NoticesEffects, 
-        AppEffects, 
-        UsersEffect, 
-        CategoriesEffects, 
-        MessagesEffect,
-        SignalREffects
-    ])
-  ],
-  providers: [
-    NoticesApiService, 
-    CategoriesApiService,
-    UsersApiService, 
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NoticeListComponent,
+        ErrorComponent,
+        SearchBarComponent,
+        NavBarComponent,
+        LoaderComponent,
+        MainContainerComponent,
+        NoticeFormComponent,
+        NoticeDetailComponent,
+        NotFoundComponent,
+        NoticeCardComponent,
+        AuthLoginButtonComponent,
+        AuthLogoutButtonComponent,
+        PopupCardComponent,
+        UserProfileComponent,
+        ProductDetailComponent,
+        UserCardComponent,
+        ProductCardComponent,
+        ImageCarouselComponent,
+        FullscreenImageCarouselComponent,
+        ProductFormComponent,
+        NoticeCreateComponent,
+        NoticeEditComponent,
+        ConversationDetailComponent,
+        ConversationListComponent,
+        ConversationCardComponent,
+        ConversationCreateComponent,
+        MessagesCreateComponent
+    ],
+    providers: [
+        NoticesApiService,
+        CategoriesApiService,
+        UsersApiService,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true }
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        MaterialModule,
+        FormsModule,
+        HttpClientModule,
+        AsyncPipe,
+        AuthModule.forRoot({
+            domain: environment.auth0Domain!,
+            clientId: environment.auth0ClientId!,
+            authorizationParams: {
+                audience: environment.auth0Audience,
+                redirect_uri: window.location.origin
+            }
+        }),
+        BrowserAnimationsModule,
+        StoreModule.forRoot({
+            noticesState: noticesReducer,
+            userState: usersReducer,
+            categoriesState: categoriesReducer,
+            conversationsState: conversationsReducer,
+            signalr: signalrReducer
+        }),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([
+            NoticesEffects,
+            AppEffects,
+            UsersEffect,
+            CategoriesEffects,
+            ConversationsEffects,
+            SignalREffects
+        ]),
+    ]
 })
 export class AppModule {
 
@@ -149,7 +156,8 @@ export class AppModule {
       fasSackDollar,
       fasFeather,
       fasTrashCan,
-      fasDove
+      fasDove,
+      fasAngleLeft
     );
   }
  }

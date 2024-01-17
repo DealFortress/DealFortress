@@ -5,7 +5,7 @@ import { EMPTY, of } from 'rxjs';
 import { EmptyAction, ShowAlert } from '@app/shared/store/app.actions';
 import { UsersApiService } from '../services/users-api.service';
 import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from './users.actions';
-import { User } from '@app/shared/models/user.model';
+import { User } from '@app/shared/models/user/user.model';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UsersEffect {
         this.actions$.pipe(
             ofType(loadUserByAuthIdRequest),
             mergeMap(action => {
-                return this.usersApiService.getUserByAuthIdAPI(action.authId).pipe(
+                return this.usersApiService.getLoggedInUserByAuthIdAPI(action.authId).pipe(
                     map((user) => (
                         ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' }),
                         loadUserByAuthIdSuccess({user: user, statusCode: 200})
@@ -41,7 +41,7 @@ export class UsersEffect {
         return this.actions$.pipe(
             ofType(loadUserByIdRequest),
             mergeMap((action) => {
-                return this.usersApiService.getUserByIdAPI(action.id).pipe(
+                return this.usersApiService.getLoggedInUserByIdAPI(action.id).pipe(
                     map((user) => { 
                         return loadUserByIdSuccess({user: user, statusCode: 200})
                     }),

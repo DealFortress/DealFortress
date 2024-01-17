@@ -5,5 +5,5 @@ namespace DealFortress.Modules.Users.Core.Domain.Repositories;
 
 public interface IUsersRepository : IRepository<User>
 {
-    User? GetByAuthId(string AuthId);
+    Task<User?> GetByAuthIdAsync(string AuthId);
 }

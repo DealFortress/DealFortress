@@ -66,13 +66,13 @@ public class UsersControllersTestsSad
     }
 
     [Fact]
-    public void getUser_returns_not_found_when_service_returns_null()
+    public void getLoggedInUser_returns_not_found_when_service_returns_null()
     {
         // Arrange
         _service.Setup(service => service.GetById(1));
 
         // Act
-        var httpResponse = _controller.GetUser("1", " id");
+        var httpResponse = _controller.getLoggedInUser("1", " id");
 
         // Assert 
         httpResponse.Result.Should().BeOfType<NotFoundResult>();

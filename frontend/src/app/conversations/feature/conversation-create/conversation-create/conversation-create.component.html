@@ -1,0 +1,16 @@
+<app-popup-card>
+  <button (click)="toggleMessagePopup$.emit()" aria-label="create Notice" class="btn btn-square btn-ghost absolute top-2 left-2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+  </button>
+  <h3 class="text-center w-full text-2xl md:text-3xl">Your message</h3>
+  <form #form [formGroup]="messageFormGroup" (submit)="onConversationSubmit()" class="sticky bottom-0 px-2 py-3 w-full gap-2">
+    <textarea [formControlName]="'text'" [rows]="12" [cols]="50"  class="input input-bordered w-full h-auto" ></textarea>
+    <div class="py-2 gap-2 flex justify-between md:justify-end">
+      <button (click)="toggleMessagePopup$.emit()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost text-1xl md:text-2xl">Cancel</button>
+      <button type="submit" class="btn text-1xl md:text-2xl">
+        Send
+        <fa-icon [icon]="['fas', 'dove']"></fa-icon>
+      </button>
+    </div>
+  </form>
+</app-popup-card>

@@ -3,12 +3,12 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 import { loadNoticesRequest } from './notices/data-access/store/notices.actions';
 import { UsersService } from './users/utils/services/users.service';
-import { getNoticesStatus } from './notices/data-access/store/notices.selectors';
+import { getNotices, getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
-import { HttpClient } from '@angular/common/http';
-import { createSignalRHub } from 'ngrx-signalr-core';
-import { messageHub } from './messages/utils/message.hub';
+import { createSignalRHub} from 'ngrx-signalr-core';
+import { conversationHub } from './conversations/utils/conversation.hub';
+import { loadUserByIdRequest } from './users/data-access/store/users.actions';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +18,10 @@ import { messageHub } from './messages/utils/message.hub';
 export class AppComponent implements OnInit{
   status = this.store.select(getNoticesStatus);
   Status = Status;
+  notices = this.store.select(getNotices);
   
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store, private http: HttpClient) {
+  constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
 
   }
 
@@ -30,19 +31,27 @@ export class AppComponent implements OnInit{
 
     this.authService.getAccessTokenSilently().subscribe(token => {
       if (token) {
-        messageHub.options = {
+        console.log(token);
+
+        conversationHub.options = {
           accessTokenFactory: () => {
             return token;
           }
         };
 
-        this.store.dispatch(createSignalRHub(messageHub));
+        this.store.dispatch(createSignalRHub(conversationHub));
       }
     })
 
     this.authService.user$.subscribe(async user => {
       if (user) {
         this.usersService.setCurrentUser(user);
+      }
+    })
+
+    this.notices.subscribe(notices => {
+      if (notices) {
+        notices.forEach(notice => this.store.dispatch(loadUserByIdRequest({id: notice.userId})))
       }
     })
   }
