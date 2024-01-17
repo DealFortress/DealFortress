@@ -5,12 +5,12 @@ const getUsersState = createFeatureSelector<UsersState>('userState');
  
 export const getLoggedInUser = createSelector(
     getUsersState,
-    (state) => state.user
+    (state) => state.loggedInUser
 );
 
 export const getLoggedInUserId = createSelector(
     getUsersState,
-    (state) => state.user?.id
+    (state) => state.loggedInUser?.id
 );
 
 export const getErrorMessage = createSelector(
@@ -23,7 +23,7 @@ export const getStatusCode = createSelector(
     (state) => state.statusCode
 )
 
-export const getNoticeOwner =  createSelector(
+export const getUserById = (id: number) =>  createSelector(
     getUsersState,
-    (state) => state.noticeOwner
+    (state) => state.entities[id]
 )
