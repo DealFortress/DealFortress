@@ -1,13 +1,9 @@
-using System.Security.Claims;
 using DealFortress.Modules.Conversations.Core.Domain.Clients;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO;
-using DealFortress.Modules.Conversations.Core.Services;
 using DealFortress.Modules.Users.Api.Controllers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 
 namespace DealFortress.Modules.Conversations.Core.Domain.HubConfig;
@@ -43,7 +39,7 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
     //     await Clients.User(authId).GetConversations(response);
     // }
 
-    public async Task PostConversationAsync(ConversationRequest request) 
+    public async Task PostConversation(ConversationRequest request) 
     {
         var authId = Context.User!.Identity!.Name!;
         var isCreator = await _usersController.IsUserEntityCreatorAsync(request.BuyerId, authId);
@@ -66,30 +62,30 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         await Clients.User(authId).GetConversation(response);
     }
 
-    // public async Task PostMessage(MessageRequest request) 
-    // {
-    //     var authId = Context.User!.Identity!.Name!;
-    //     var isCreator = _usersController.IsUserEntityCreator(request.SenderId, authId);
+    public async Task PostMessage(StandaloneMessageRequest request) 
+    {
+        var authId = Context.User!.Identity!.Name!;
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(request.SenderId, authId);
 
-    //     if (!isCreator) 
-    //     {
-    //         return;
-    //     }
+        if (!isCreator) 
+        {
+            return;
+        }
 
-    //     var response = _messagesService.Post(request);
+        var response = await _messagesService.PostAsync(request);
 
-    //     if (response is null)
-    //     {
-    //         return;
-    //     }
+        if (response is null)
+        {
+            return;
+        }
 
-    //     var conversation = _conversationService.GetById(response.ConversationId);
+        var conversation = await _conversationService.GetByIdAsync(response.ConversationId);
 
       
-    //     var buyerAuthId = _usersController.GetAuthIdByUserId(conversation!.BuyerId);
-    //     var sellerAuthId = _usersController.GetAuthIdByUserId(conversation!.SellerId);
+        var buyerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.BuyerId);
+        var sellerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.SellerId);
 
-    //     await Clients.User(buyerAuthId!).GetMessage(response);
-    //     await Clients.User(sellerAuthId!).GetMessage(response);
-    // }
+        await Clients.User(buyerAuthId!).GetMessage(response);
+        await Clients.User(sellerAuthId!).GetMessage(response);
+    }
 }

@@ -1,7 +1,7 @@
 <a class="card-body border-b-2 border-base-100 cursor-pointer hover:bg-base-100">
     <div>
         <h2 class="card-title">{{conversation.name}}</h2>
-        <h3 class="bold">from {{getContactName(conversation)}}  GET PERSON</h3>
+        <h3 class="font-bold">from {{((recipient$ | async )?.username | uppercase)}}</h3>
     </div>
   <p>{{getLatestMessagePreview(conversation)}}</p>
 </a>

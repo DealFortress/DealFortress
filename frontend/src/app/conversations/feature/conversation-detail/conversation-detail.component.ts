@@ -4,6 +4,7 @@ import { getUserIdByNoticeId } from '@app/notices/data-access/store/notices.sele
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { User } from '@app/shared/models/user/user.model';
 import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -16,7 +17,7 @@ import { Observable } from 'rxjs';
 export class ConversationDetailComponent implements OnInit {
   @Input({required: true}) conversationId!: number;
   @Output() unselectConversation$ = new EventEmitter();
-  public user$ = this.store.select(getLoggedInUser);
+  public loggedInUser$ = this.store.select(getLoggedInUser);
   public recipient$? : Observable<User | undefined>;
   public conversation$? : Observable<Conversation | undefined>;
 
@@ -28,15 +29,15 @@ export class ConversationDetailComponent implements OnInit {
 
     this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
-
     this.conversation$.subscribe(conversation => {
       if (conversation) {
-        this.store.select(getUserIdByNoticeId(conversation.noticeId)).subscribe(recipientId => {
-          if (recipientId) {
+        this.loggedInUser$.subscribe(loggedInUser => {
+          if (loggedInUser) {
+            let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
             this.recipient$ = this.store.select(getUserById(recipientId));
           }
-        }
-      )}
+        }) 
+      }
     })
   }
 

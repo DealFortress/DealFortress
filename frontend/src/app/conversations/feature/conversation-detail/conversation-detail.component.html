@@ -1,5 +1,5 @@
-<ng-container *ngIf="(user$ | async) as user ; else skeleton">
-  <ng-container *ngIf="(conversation$ | async) as conversation">
+<ng-container *ngIf="(loggedInUser$ | async) as user ; else skeleton">
+  <ng-container *ngIf="(conversation$ | async) as conversation; else skeleton">
     <div 
     *ngIf="(recipient$ | async) as recipient" 
     class="h-full flex justify-between flex-col">

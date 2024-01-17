@@ -57,23 +57,22 @@ public class MessagesService: IMessagesService
         return ToMessageResponseDTO(message);
     } 
 
-     public async Task<MessageResponse?> PostAsync(MessageRequest request)
+     public async Task<MessageResponse?> PostAsync(StandaloneMessageRequest request)
     {
 
-        return null;
-        // var conversation = _conversationsRepo.GetById(request.ConversationId);
+        var conversation = await _conversationsRepo.GetByIdAsync(request.ConversationId);
 
-        // if( conversation is null ) {
-        //     return null;
-        // }
+        if( conversation is null ) {
+            return null;
+        }
         
-        // var message = ToMessage(request, conversation);
+        var message = ToMessage(request, conversation);
 
-        // _repo.Add(message);
+        await _repo.AddAsync(message);
 
-        // _repo.Complete();
+        _repo.Complete();
 
-        // return ToMessageResponseDTO(message);
+        return ToMessageResponseDTO(message);
     }
 
     public MessageResponse ToMessageResponseDTO(Message message)
@@ -90,7 +89,7 @@ public class MessagesService: IMessagesService
         return response;
     }
 
-    public Message ToMessage(MessageRequest request, Conversation conversation)
+    public Message ToMessage(IMessageRequest request, Conversation conversation)
     {
         return new Message()
         {

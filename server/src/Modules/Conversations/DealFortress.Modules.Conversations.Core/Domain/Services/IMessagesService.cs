@@ -7,9 +7,9 @@ public interface IMessagesService
 {
     Task<MessageResponse?> GetByIdAsync(int id);
 
-    Task<MessageResponse?> PostAsync(MessageRequest request);
+    Task<MessageResponse?> PostAsync(StandaloneMessageRequest request);
 
     MessageResponse ToMessageResponseDTO(Message message);
 
-    Message ToMessage(MessageRequest request, Conversation conversation);
+    Message ToMessage(IMessageRequest request, Conversation conversation);
 }
