@@ -18,9 +18,9 @@ public class UsersService : IUsersService
         
     }
 
-    public UserResponse? GetById(int id)
+    public async Task<UserResponse?> GetByIdAsync(int id)
     {
-        var user = _repo.GetById(id);
+        var user = await _repo.GetByIdAsync(id);
 
         if (user is null)
         {
@@ -30,9 +30,9 @@ public class UsersService : IUsersService
         return ToUserResponseDTO(user);
     }
 
-    public UserResponse? GetByAuthId(string authId)
+    public async Task<UserResponse?> GetByAuthIdAsync(string authId)
     {
-        var user = _repo.GetByAuthId(authId);
+        var user = await _repo.GetByAuthIdAsync(authId);
 
         if (user is null)
         {
@@ -41,11 +41,11 @@ public class UsersService : IUsersService
 
         return ToUserResponseDTO(user);
     }
-    public UserResponse Post(UserRequest request)
+    public async Task<UserResponse> PostAsync(UserRequest request)
     {
         var user = ToUser(request);
 
-        _repo.Add(user);
+        await _repo.AddAsync(user);
 
         _repo.Complete();
 
@@ -57,7 +57,12 @@ public class UsersService : IUsersService
         return _httpContext?.HttpContext?.User.Identity?.Name!;
     }
 
-    public string? GetAuthIdByUserId(int id) => _repo.GetById(id)?.AuthId;
+    public async Task<string?> GetAuthIdByUserIdAsync(int id)
+    {
+        var user = await _repo.GetByIdAsync(id);
+
+        return user?.AuthId;
+    }
     public UserResponse ToUserResponseDTO(User user)
     {
         var response = new UserResponse()

@@ -13,11 +13,11 @@ internal class ConversationsRepository : Repository<Conversation>, IConversation
     public ConversationsRepository(ConversationsContext context) : base(context)
     {}
 
-    public new IEnumerable<Conversation> GetAll()
+    public new async Task<IEnumerable<Conversation>> GetAllAsync()
     {
-        return ConversationsContext!.Conversations
+        return await ConversationsContext!.Conversations
                     .Include(conversation => conversation.Messages)
-                    .ToList();
+                    .ToListAsync();
     }
 
     public ConversationsContext? ConversationsContext

@@ -16,16 +16,18 @@ public class NoticesService : INoticesService
         _repo = repo;
     }
     
-    public IEnumerable<NoticeResponse> GetAll()
+    public async Task<IEnumerable<NoticeResponse>> GetAllAsync()
     {
-        return _repo.GetAll()
-                    .Select(ToNoticeResponseDTO)
-                    .ToList();
+        var entities = await _repo.GetAllAsync();
+        
+        return entities
+                .Select(ToNoticeResponseDTO)
+                .ToList();
     }
 
-    public NoticeResponse? GetById(int id)
+    public async Task<NoticeResponse?> GetByIdAsync(int id)
     {
-        var notice = _repo.GetById(id);
+        var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
         {
@@ -35,9 +37,9 @@ public class NoticesService : INoticesService
         return ToNoticeResponseDTO(notice);
     } 
 
-    public NoticeResponse? PutById(int id, NoticeRequest request)
+    public async Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request)
     {
-        var notice = _repo.GetById(id);
+        var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
         {
@@ -48,27 +50,27 @@ public class NoticesService : INoticesService
         var updatedNotice = ToNotice(request);
         updatedNotice.Id = notice.Id;
 
-        _repo.Add(updatedNotice);
+        await _repo.AddAsync(updatedNotice);
         _repo.Complete();
 
 
         return ToNoticeResponseDTO(updatedNotice);
     }
 
-    public NoticeResponse Post(NoticeRequest request)
+    public async Task<NoticeResponse> PostAsync(NoticeRequest request)
     {
         var notice = ToNotice(request);
 
-        _repo.Add(notice);
+        await _repo.AddAsync(notice);
 
         _repo.Complete();
 
         return ToNoticeResponseDTO(notice);
     }
 
-    public Notice? DeleteById(int id)
+    public async Task<Notice?> DeleteByIdAsync(int id)
     {
-        var notice = _repo.GetById(id);
+        var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
         {

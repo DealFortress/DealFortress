@@ -19,17 +19,17 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<UserResponse> getLoggedInUser(string id, string idType)
+    public async Task<ActionResult<UserResponse>> getLoggedInUserAsync(string id, string idType)
     {
         UserResponse? response = null;
 
         if (int.TryParse(id,out int parsedId ) && idType.ToLower() == "id") 
         {
-            response = _service.GetById(parsedId);
+            response = await _service.GetByIdAsync(parsedId);
         } 
         else if (idType.ToLower() == "authid") 
         {
-            response = _service.GetByAuthId(id);
+            response = await _service.GetByAuthIdAsync(id);
         } 
 
         return response is null ? NotFound() : Ok(response);
@@ -39,23 +39,27 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<UserResponse> PostUser(UserRequest request)
+    public async Task<ActionResult<UserResponse>> PostUserAsyncAsync(UserRequest request)
     {
-        var response = _service.Post(request);
+        var response = await _service.PostAsync(request);
 
         return CreatedAtAction("getLoggedInUser", new { id = response.Id }, response);
     }
 
     [NonAction]
-    public virtual bool IsUserEntityCreator(int id, string? authId = null)
+    public virtual async Task<bool> IsUserEntityCreatorAsync(int id, string? authId = null)
     {
         if (authId is not null)
         {
-            return _service.GetByAuthId(authId)?.Id == id;
-        }
+            var entity = await _service.GetByAuthIdAsync(authId);
+            return entity?.Id == id;
 
-        var currentUserAuthId = _service.GetCurrentUserAuthId();
-        return _service.GetByAuthId(currentUserAuthId)?.Id == id;
+        } else 
+        {
+            var currentUserAuthId = _service.GetCurrentUserAuthId();
+            var entity = await _service.GetByAuthIdAsync(currentUserAuthId);
+            return entity?.Id == id;
+        }
     }
 
     [NonAction]
@@ -65,14 +69,15 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual string? GetAuthIdByUserId(int userId)
+    public virtual async Task<string?> GetAuthIdByUserIdAsync(int userId)
     {
-        return _service.GetAuthIdByUserId(userId);
+        return await _service.GetAuthIdByUserIdAsync(userId);
     }
 
     [NonAction]
-    public virtual int? getLoggedInUserIdByAuthId(string authId)
+    public virtual async Task<int?> getLoggedInUserIdByAuthIdAsync(string authId)
     {
-        return _service.GetByAuthId(authId)?.Id;
+        var entity = await _service.GetByAuthIdAsync(authId);
+        return entity?.Id;
     }
 }

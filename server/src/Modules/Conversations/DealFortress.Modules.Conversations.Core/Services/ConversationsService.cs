@@ -19,26 +19,30 @@ public class ConversationsService : IConversationsService
     }
 
 
-    public IEnumerable<ConversationResponse> GetAll()
+    public async Task<IEnumerable<ConversationResponse>> GetAllAsync()
     {
-        return _repo.GetAll()
+        var entities = await _repo.GetAllAsync();
+
+        return entities
                     .Select(ToConversationResponseDTO)
                     .ToList();
     }
 
-    public IEnumerable<ConversationResponse> GetAllByAuthId(string authId)
+    public async Task<IEnumerable<ConversationResponse>> GetAllByAuthIdAsync(string authId)
     {
-        var id = _usersController.getLoggedInUserIdByAuthId(authId);
+        var id = await _usersController.getLoggedInUserIdByAuthIdAsync(authId);
 
-        return _repo.GetAll()
+        var entities = await _repo.GetAllAsync();
+
+        return entities
                     .Where(conversation => conversation.BuyerId == id || conversation.SellerId == id)
                     .Select(ToConversationResponseDTO)
                     .ToList();
     }
 
-     public ConversationResponse? GetById(int id)
+     public async Task<ConversationResponse?> GetByIdAsync(int id)
     {
-        var conversation = _repo.GetById(id);
+        var conversation = await _repo.GetByIdAsync(id);
 
         if (conversation is null)
         {
@@ -48,11 +52,11 @@ public class ConversationsService : IConversationsService
         return ToConversationResponseDTO(conversation);
     } 
 
-     public ConversationResponse Post(ConversationRequest request)
+     public async Task<ConversationResponse> PostAsync(ConversationRequest request)
     {
         var conversation = ToConversation(request);
 
-        _repo.Add(conversation);
+        await _repo.AddAsync(conversation);
 
         _repo.Complete();
 

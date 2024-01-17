@@ -5,11 +5,9 @@ namespace DealFortress.Modules.Conversations.Core.Domain.Services;
 
 public interface IMessagesService
 {
-    // IEnumerable<MessageResponse> GetAllByAuthId(string authId);
+    Task<MessageResponse?> GetByIdAsync(int id);
 
-    MessageResponse? GetById(int id);
-
-    MessageResponse? Post(MessageRequest request);
+    Task<MessageResponse?> PostAsync(MessageRequest request);
 
     MessageResponse ToMessageResponseDTO(Message message);
 

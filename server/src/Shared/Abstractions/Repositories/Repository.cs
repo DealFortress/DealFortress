@@ -1,4 +1,5 @@
 using DealFortress.Shared.Abstractions.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Shared.Abstractions.Repositories;
 
@@ -11,33 +12,33 @@ public class Repository<T> : IRepository<T> where T : class
         Context = context;
     }
 
-    public IEnumerable<T> GetAll()
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
-        return Context.Set<T>().ToList();
+        return await Context.Set<T>().ToListAsync();
     }
 
-    public T? GetById(int id)
+    public async Task<T?> GetByIdAsync(int id)
     {
-        return Context.Set<T>().Find(id);
+        return await Context.Set<T>().FindAsync(id);
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        var entity = GetById(id);
+        var entity = await GetByIdAsync(id);
         if (entity is not null)
         {
             Context.Set<T>().Remove(entity);
         }
     }
 
-    public void Add(T entity)
+    public async Task AddAsync(T entity)
     {
-        Context.Set<T>().Add(entity);
+        await Context.Set<T>().AddAsync(entity);
     }
 
-    public void AddRange(IEnumerable<T> entities)
+    public async Task AddRangeAsync(IEnumerable<T> entities)
     {
-        Context.Set<T>().AddRange(entities);
+        await Context.Set<T>().AddRangeAsync(entities);
     }
 
     public void Remove(T entity)

@@ -28,6 +28,7 @@ export class ConversationDetailComponent implements OnInit {
 
     this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
+
     this.conversation$.subscribe(conversation => {
       if (conversation) {
         this.store.select(getUserIdByNoticeId(conversation.noticeId)).subscribe(recipientId => {

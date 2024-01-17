@@ -1,10 +1,10 @@
-using System.Runtime;
+
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO;
 using DealFortress.Modules.Users.Api.Controllers;
-using Microsoft.AspNetCore.Http.HttpResults;
+
 
 
 namespace DealFortress.Modules.Conversations.Core.Services;
@@ -24,26 +24,30 @@ public class MessagesService: IMessagesService
     }
 
 
-    public IEnumerable<MessageResponse> GetAll()
+    public async Task<IEnumerable<MessageResponse>> GetAllAsync()
     {
-        return _repo.GetAll()
+        var entities = await _repo.GetAllAsync();
+
+        return entities
                     .Select(ToMessageResponseDTO)
                     .ToList();
     }
 
-    public IEnumerable<MessageResponse> GetAllByAuthId(string authId)
+    public async Task<IEnumerable<MessageResponse>> GetAllByAuthIdAsync(string authId)
     {
-        var id = _usersController.getLoggedInUserIdByAuthId(authId);
+        var id = await _usersController.getLoggedInUserIdByAuthIdAsync(authId);
 
-        return _repo.GetAll()
+        var entity = await _repo.GetAllAsync();
+
+        return entity
                     .Where(message => message.SenderId == id)
                     .Select(ToMessageResponseDTO)
                     .ToList();
     }
 
-     public MessageResponse? GetById(int id)
+     public async Task<MessageResponse?> GetByIdAsync(int id)
     {
-        var message = _repo.GetById(id);
+        var message = await _repo.GetByIdAsync(id);
 
         if (message is null)
         {
@@ -53,7 +57,7 @@ public class MessagesService: IMessagesService
         return ToMessageResponseDTO(message);
     } 
 
-     public MessageResponse? Post(MessageRequest request)
+     public async Task<MessageResponse?> PostAsync(MessageRequest request)
     {
 
         return null;
