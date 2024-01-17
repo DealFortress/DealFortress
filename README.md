@@ -32,38 +32,46 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
 See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)
 
 ## Videos
-[2 minute video on the pitch deck](https://streamable.com/geq9mt)  
-[30 minute pair programmed coding session](https://youtu.be/bgvt1kpQ9RY)
+[2 minute video on the pitch deck](https://youtu.be/FD3JxMlWXQQ) 
 
+[Deal Fortress overview by Luc Siat - Sep. 2023](https://studio.youtube.com/video/abTcDyegfxM/edit) 
 
+[Demoing DealFortress features - Nov. 2023](https://studio.youtube.com/video/abTcDyegfxM/edit) 
+
+<!-- [30 minute pair programmed coding session](https://youtu.be/bgvt1kpQ9RY) -->
 
 
 ## Tech stack
 
+### Backend
 
-  - .NET with C# 
+  - .NET with C#
+
+  - SignalR Library
 
   - Entity Framework Library
 
-  - Angular 2 with NGRX
+  - Azure Sql DB & Azure web app services 
+
+### Frontend
+  
+  - Angular 17 with NGRX Store, SignalR
+
+  - Azure static webpages
+    
+  - TailwindCSS, DaisyUI & FontAwesome
+
+### Tools
 
   - Github Actions & Project
+    
+  - Auth0
 
-  - Azure Sql DB, Azure web app services & Azure static webpages
-
-
-## Tools & Libraries
-
-
-  <!-- - Auth0
-  - Formik -->
   - Design sketch: [Figma prototype and components](https://www.figma.com/file/6pMA53jsPBJ6p0kguOzKba/Deal-Fortress-prototype?type=design&node-id=0-1&t=9esxib8YXRiofpYN-0)
   
   - Wireframe: [Excalidraw](https://excalidraw.com/#room=2ab6f5d1e7b980f0d720,gnL2G7lG_2TnaVrYLOBTKg)
   
   - UML and Data sketches: [Eraser](https://app.eraser.io/workspace/fNTcdg5ZpTmM6w0OyhfA)
-  
-  - Tailwind
 
 <!-- ![Screenshot](./screenshot.png) -->
 

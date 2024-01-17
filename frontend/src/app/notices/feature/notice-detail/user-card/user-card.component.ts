@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '@app/shared/models/user/user.model';
-import { getLoggedInUser, getNoticeOwner } from '@app/users/data-access/store/users.selectors';
+import { getLoggedInUser} from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { EmitFlags } from 'typescript';
 

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
+import { getUserIdByNoticeId } from '@app/notices/data-access/store/notices.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
-import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
-import { getNoticeOwner, getLoggedInUser } from '@app/users/data-access/store/users.selectors';
+import { User } from '@app/shared/models/user/user.model';
+import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -16,17 +17,26 @@ export class ConversationDetailComponent implements OnInit {
   @Input({required: true}) conversationId!: number;
   @Output() unselectConversation$ = new EventEmitter();
   public user$ = this.store.select(getLoggedInUser);
-  public recipient$ = this.store.select(getNoticeOwner);
+  public recipient$? : Observable<User | undefined>;
   public conversation$? : Observable<Conversation | undefined>;
 
   constructor(private store: Store) {
   }
   
   ngOnInit(): void {
+
+
     this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
-    this.store.dispatch(loadUserByIdRequest({id: notice.userId})) 
-    this.recipient$.subscribe(recipient => {if (recipient) { console.log(recipient)}})
+    this.conversation$.subscribe(conversation => {
+      if (conversation) {
+        this.store.select(getUserIdByNoticeId(conversation.noticeId)).subscribe(recipientId => {
+          if (recipientId) {
+            this.recipient$ = this.store.select(getUserById(recipientId));
+          }
+        }
+      )}
+    })
   }
 
   unselectConversation() {

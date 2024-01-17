@@ -5,7 +5,7 @@ import { Condition } from '@app/shared/models/condition.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { Product } from '@app/shared/models/product/product.model';
 import { SoldStatus } from '@app/shared/models/sold-status.model';
-import { getNoticeOwner, getLoggedInUser } from '@app/users/data-access/store/users.selectors';
+import { getLoggedInUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 

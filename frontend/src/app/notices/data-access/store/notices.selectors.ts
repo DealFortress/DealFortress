@@ -24,3 +24,8 @@ export const getNoticeById = (id: number) =>  createSelector(
     getNoticesState,
     state => state.entities[id]
 )
+
+export const getUserIdByNoticeId = (noticeId: number) => createSelector(
+    getNotices,
+    notices => notices.find(notice => notice.id == noticeId)?.userId
+)

@@ -3,8 +3,7 @@ import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 
 
 export interface UsersState extends EntityState<User> {
-    user?: User,
-    noticeOwner?: User,
+    loggedInUser?: User,
     errorMessage?: string,
     statusCode?: number
 }
