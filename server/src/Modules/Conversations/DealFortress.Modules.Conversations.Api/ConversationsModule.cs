@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Api.Modules.Conversations.Extensions;
+using DealFortress.Modules.Conversations.Api.Controllers;
 using DealFortress.Modules.Conversations.Core.Domain.HubConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,7 @@ internal static class ConversationsModule
     {
         services
             .AddCore(connectionString)
-            // .AddScoped<MessagesController>()
+            .AddScoped<ConversationsController>()
             .AddSignalR();
 
         return services;

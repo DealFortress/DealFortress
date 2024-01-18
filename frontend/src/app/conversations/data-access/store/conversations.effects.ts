@@ -59,12 +59,12 @@ export class ConversationsEffects {
         }
         return hub.send("postconversation", request).pipe(
             map((conversation) => {
-                ShowAlert({ message: 'Sending message failed', actionresult: 'fail' });
+                of(ShowAlert({ message: 'New conversation created', actionresult: 'pass' }));
                 return postConversationSuccess({conversation: conversation  as Conversation, statusCode: 200})
             }),
             catchError((_error) => 
                 of(
-                    ShowAlert({ message: 'Sending message failed', actionresult: 'fail' }),
+                    ShowAlert({ message: 'Conversation creation failed', actionresult: 'fail' }),
                     postConversationError({errorText: _error.message, statusCode: _error.status})
                 ))
             );
@@ -81,13 +81,13 @@ export class ConversationsEffects {
             .on("getmessage")
             .pipe(
                 map((message ) => {
-                    console.log("message has arrived!");
+                    ShowAlert({ message: 'new message received', actionresult: 'pass' })
                     return getMessageSuccess({message: message as Message})
                 }
                 ),
                 catchError((_error) => 
                     of(
-                        ShowAlert({ message: 'Getting messages failed', actionresult: 'fail' }),
+                        ShowAlert({ message: 'new message error', actionresult: 'fail' }),
                         getMessageError({errorText: _error.message, statusCode: _error.status})
                     )
                 ))
@@ -106,7 +106,7 @@ export class ConversationsEffects {
         }
         return hub.send("postmessage", request).pipe(
             map((message) => {
-                console.log("Post success")
+                ShowAlert({ message: 'Message sent!', actionresult: 'pass' })
                 return postMessageSuccess({message: message  as Message, statusCode: 200})
             }),
             catchError((_error) => 

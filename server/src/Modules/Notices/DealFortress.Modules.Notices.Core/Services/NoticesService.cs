@@ -2,7 +2,7 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
-using NuGet.Common;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -10,8 +10,10 @@ public class NoticesService : INoticesService
 {
     private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
-    public NoticesService(IProductsService productsService, INoticesRepository repo)
+    private readonly UsersController _usersController;
+    public NoticesService(IProductsService productsService, INoticesRepository repo, UsersController usersController)
     {
+        _usersController = usersController;
         _productsService = productsService;
         _repo = repo;
     }
@@ -46,6 +48,13 @@ public class NoticesService : INoticesService
             return null;
         }
 
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(notice.UserId);
+
+        if (!isCreator)
+        {
+            return null;
+        }
+
         _repo.Remove(notice);
         var updatedNotice = ToNotice(request);
         updatedNotice.Id = notice.Id;
@@ -73,6 +82,13 @@ public class NoticesService : INoticesService
         var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
+        {
+            return null;
+        }
+
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(notice.UserId);
+
+        if (!isCreator)
         {
             return null;
         }

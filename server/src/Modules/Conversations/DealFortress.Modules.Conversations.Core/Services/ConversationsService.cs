@@ -19,15 +19,6 @@ public class ConversationsService : IConversationsService
     }
 
 
-    public async Task<IEnumerable<ConversationResponse>> GetAllAsync()
-    {
-        var entities = await _repo.GetAllAsync();
-
-        return entities
-                    .Select(ToConversationResponseDTO)
-                    .ToList();
-    }
-
     public async Task<IEnumerable<ConversationResponse>> GetAllByAuthIdAsync(string authId)
     {
         var id = await _usersController.getLoggedInUserIdByAuthIdAsync(authId);
@@ -61,6 +52,21 @@ public class ConversationsService : IConversationsService
         _repo.Complete();
 
         return ToConversationResponseDTO(conversation);
+    }
+
+    public async Task<Conversation?> DeleteByIdAsync(int id)
+    {
+        var conversation = await _repo.GetByIdAsync(id);
+
+        if (conversation is null)
+        {
+            return null;
+        }
+
+        _repo.Remove(conversation);
+        _repo.Complete();
+
+        return conversation;
     }
 
     public ConversationResponse ToConversationResponseDTO(Conversation conversation)

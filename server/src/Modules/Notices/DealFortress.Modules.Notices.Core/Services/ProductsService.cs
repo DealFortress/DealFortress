@@ -38,6 +38,13 @@ public class ProductsService: IProductsService
         {
             return null;
         }
+               
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(product.Notice.UserId);
+
+        if (!isCreator)
+        {
+            return null;
+        }
 
         _repo.Remove(product);
         var updatedProduct = ToProduct(request, product.Notice);
@@ -55,6 +62,13 @@ public class ProductsService: IProductsService
         var product = await _repo.GetByIdAsync(id);
 
         if (product is null)
+        {
+            return null;
+        }
+               
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(product.Notice.UserId);
+
+        if (!isCreator)
         {
             return null;
         }

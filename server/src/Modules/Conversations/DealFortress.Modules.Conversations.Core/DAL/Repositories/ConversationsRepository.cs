@@ -20,6 +20,13 @@ internal class ConversationsRepository : Repository<Conversation>, IConversation
                     .ToListAsync();
     }
 
+    public new async Task<Conversation?> GetByIdAsync(int id)
+    {
+        return await ConversationsContext!.Conversations
+                    .Include(conversation => conversation.Messages)
+                    .FirstOrDefaultAsync(conversation => conversation.Id == id);
+    }
+
     public ConversationsContext? ConversationsContext
     {
         get { return Context as ConversationsContext; }

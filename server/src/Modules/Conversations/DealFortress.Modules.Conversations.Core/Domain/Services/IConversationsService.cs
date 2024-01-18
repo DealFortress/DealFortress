@@ -9,6 +9,8 @@ public interface IConversationsService
 
     Task<ConversationResponse> PostAsync(ConversationRequest request);
 
+    Task<Conversation> DeleteByIdAsync(int it);
+
     ConversationResponse ToConversationResponseDTO(Conversation Conversation);
 
     Conversation ToConversation(ConversationRequest request); 

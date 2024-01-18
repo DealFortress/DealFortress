@@ -5,7 +5,7 @@
     [ngClass]="conversations.length > 0 ? 'md:grid-cols-[1fr,2fr]' : '' " 
 >
     <aside  
-        class="bg-base-0 rounded basis-0 p-2 flex "
+        class="bg-base-0 rounded basis-0 p-2 flex flex-col "
         [ngClass]="selectedConversationId ? 'hidden md:block' : 'block' "
     >        
             <h3 *ngIf="conversations.length == 0 " class="text-justify text-2xl m-auto self-center">The conversations you are a part of will appear here</h3>
