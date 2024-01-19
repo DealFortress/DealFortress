@@ -19,7 +19,7 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserResponse>> getLoggedInUserAsync(string id, string idType)
+    public async Task<ActionResult<UserResponse>> getUserByIdAsync(string id, string idType)
     {
         UserResponse? response = null;
 
@@ -39,7 +39,7 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserResponse>> PostUserAsyncAsync(UserRequest request)
+    public async Task<ActionResult<UserResponse>> PostUserAsync(UserRequest request)
     {
         var response = await _service.PostAsync(request);
 
@@ -75,7 +75,7 @@ public class UsersController : ControllerBase
     }
 
     [NonAction]
-    public virtual async Task<int?> getLoggedInUserIdByAuthIdAsync(string authId)
+    public virtual async Task<int?> getUserIdByAuthIdAsync(string authId)
     {
         var entity = await _service.GetByAuthIdAsync(authId);
         return entity?.Id;

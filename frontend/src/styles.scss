@@ -153,6 +153,11 @@ $frontend-theme: mat.define-dark-theme((
   background-color: #F5F5F5;
 }
 
+.hidden-scrollbar > ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+
 ::-webkit-scrollbar-thumb
 {
   border-radius: 2px;

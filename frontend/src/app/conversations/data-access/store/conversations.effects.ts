@@ -1,6 +1,6 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { getConversationsSuccess, getMessageError, getMessageSuccess, postConversationError, postConversationRequest, postConversationSuccess, postMessageError, postMessageRequest, postMessageSuccess } from "./conversations.actions";
+import { getConversationError, getConversationSuccess, getConversationsSuccess, getMessageError, getMessageSuccess, postConversationError, postConversationRequest, postConversationSuccess, postMessageError, postMessageRequest, postMessageSuccess } from "./conversations.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, merge } from "rxjs";
 import { Injectable } from "@angular/core";
@@ -46,6 +46,30 @@ export class ConversationsEffects {
         })
     )
     );
+
+    listenToConversation$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(signalrConnected),
+        mergeMapHubToAction(({ hub }) => {
+        // TODO : add event listeners
+        
+        const getConversation$ = hub
+            .on("getconversation")
+            .pipe(
+                map((conversation ) => {
+                    of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
+                    return getConversationSuccess({conversation: conversation as Conversation})
+                }
+                ),
+                catchError((_error) => 
+                    of(
+                        ShowAlert({ message: 'error while fetching conversation', actionresult: 'fail' }),
+                        getConversationError({errorText: _error.message, statusCode: _error.status})
+                    )
+                ))
+        return merge(getConversation$);
+        })
+    ));
 
 
     postConversation$ = createEffect(() =>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
 import { getUserIdByNoticeId } from '@app/notices/data-access/store/notices.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   templateUrl: './conversation-detail.component.html',
   styleUrl: './conversation-detail.component.css'
 })
-export class ConversationDetailComponent implements OnInit {
+export class ConversationDetailComponent implements OnChanges {
   @Input({required: true}) conversationId!: number;
   @Output() unselectConversation$ = new EventEmitter();
   public loggedInUser$ = this.store.select(getLoggedInUser);
@@ -23,11 +23,8 @@ export class ConversationDetailComponent implements OnInit {
 
   constructor(private store: Store) {
   }
-  
-  ngOnInit(): void {
-
-
-    this.conversation$ =  this.store.select(getConversationById(this.conversationId));
+  ngOnChanges(changes: SimpleChanges): void {
+      this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
     this.conversation$.subscribe(conversation => {
       if (conversation) {

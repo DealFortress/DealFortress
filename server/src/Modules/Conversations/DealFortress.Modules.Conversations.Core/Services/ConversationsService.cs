@@ -21,7 +21,7 @@ public class ConversationsService : IConversationsService
 
     public async Task<IEnumerable<ConversationResponse>> GetAllByAuthIdAsync(string authId)
     {
-        var id = await _usersController.getLoggedInUserIdByAuthIdAsync(authId);
+        var id = await _usersController.getUserIdByAuthIdAsync(authId);
 
         var entities = await _repo.GetAllAsync();
 
@@ -94,9 +94,9 @@ public class ConversationsService : IConversationsService
             SellerId = request.SellerId
         };
 
-        if (request.MessagesRequests is not null)
+        if (request.MessageRequests is not null)
         {
-            conversation.Messages = request.MessagesRequests.ConvertAll(message => _messagesService.ToMessage(message, conversation));
+            conversation.Messages = request.MessageRequests.ConvertAll(message => _messagesService.ToMessage(message, conversation));
         }
 
         return conversation;

@@ -19,16 +19,18 @@ export const conversationsReducer = createReducer(
             errorMessage: action.errorText,
         }
     }),
-
-// change getmessage to post message 10/01/24
     on(getMessageSuccess, (state, action) => {  
+
         const conversation = state.entities[action.message.conversationId]
             let updatedConversation = {...conversation!};
             updatedConversation.messages = [...updatedConversation.messages, action.message];               
             return conversationsAdapter.upsertOne(updatedConversation,state);
     }),
 
-    on(postConversationSuccess, (state, action) => {
+    on(getConversationSuccess, (state, action) => {
+       if (action.conversation == undefined) {
+        return state;
+       }
        return conversationsAdapter.addOne(action.conversation, {
         ...state,
         })

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { postConversationRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { ConversationRequest } from '@app/shared/models/conversation/conversation-request.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
@@ -19,7 +20,7 @@ export class ConversationCreateComponent implements OnInit{
   @Input({required: true}) recipient! : User;
 
 
-  constructor( private formBuilder: FormBuilder, private store : Store) {}
+  constructor( private formBuilder: FormBuilder, private store : Store, private router: Router) {}
 
   ngOnInit(): void {
     this.messageFormGroup.controls.text
@@ -55,14 +56,15 @@ export class ConversationCreateComponent implements OnInit{
       name: this.notice.title,
       buyerId: this.sender.id,
       sellerId: this.recipient.id,
-      // messageRequests: this.formBuilder.array([
-      //   this.messageFormGroup
-      // ])
+      messageRequests: this.formBuilder.array([
+        this.messageFormGroup
+      ])
     })
 
     const conversationRequest = conversationFormGroup.value as ConversationRequest;
     console.log(conversationRequest);
     this.store.dispatch(postConversationRequest({ request: conversationRequest }));
+    this.router.navigate(['messages/']);
   }
 
   getErrorMessage(formControl : AbstractControl) {

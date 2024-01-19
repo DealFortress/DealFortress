@@ -3,5 +3,5 @@
         <h2 class="card-title">{{conversation.name}}</h2>
         <h3 class="font-bold">from {{((recipient$ | async )?.username | uppercase)}}</h3>
     </div>
-  <p>{{getLatestMessagePreview(conversation)}}</p>
+  <p *ngIf="conversation.messages.length > 0">{{getLatestMessagePreview(conversation)}}</p>
 </a>

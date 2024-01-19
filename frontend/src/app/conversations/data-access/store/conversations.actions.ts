@@ -16,6 +16,10 @@ export const GET_CONVERSATION_REQUEST = '[Conversations] get conversation reques
 export const GET_CONVERSATION_SUCCESS = '[Conversations] get conversation success';
 export const GET_CONVERSATION_ERROR = '[Conversations] get conversation error';
 
+export const GET_CONVERSATIONS_REQUEST = '[Conversations] get conversations request';
+export const GET_CONVERSATIONS_SUCCESS = '[Conversations] get conversations success';
+export const GET_CONVERSATIONS_ERROR = '[Conversations] get conversations error';
+
 export const POST_CONVERSATION_REQUEST = '[Conversations] post conversation request';
 export const POST_CONVERSATION_SUCCESS = '[Conversations] post conversation success';
 export const POST_CONVERSATION_ERROR = '[Conversations] post conversation error';
@@ -28,8 +32,8 @@ export const postMessageRequest = createAction(POST_MESSAGE_REQUEST, props<{requ
 export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{message: Message, statusCode: number}>());
 export const postMessageError = createAction(POST_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
 
-export const getConversationsSuccess = createAction(GET_CONVERSATION_SUCCESS, props<{conversations : Conversation[]}>())
-export const getConversationsError = createAction(GET_CONVERSATION_SUCCESS, props<{errorText: string}>())
+export const getConversationsSuccess = createAction(GET_CONVERSATIONS_SUCCESS, props<{conversations : Conversation[]}>())
+export const getConversationsError = createAction(GET_CONVERSATIONS_SUCCESS, props<{errorText: string}>())
 
 export const getConversationSuccess = createAction(GET_CONVERSATION_SUCCESS, props<{conversation : Conversation}>());
 export const getConversationError = createAction(GET_CONVERSATION_ERROR, props<{errorText: string, statusCode: number}>());

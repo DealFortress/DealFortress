@@ -34,8 +34,8 @@ public class ConversationsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<MessageResponse>>> GetConversations()
     {
-
-        var response = await _conversationsService.GetAllByAuthIdAsync();
+        var userAuthId = _usersController.GetCurrentUserAuthId();
+        var response = await _conversationsService.GetAllByAuthIdAsync(userAuthId);
         
         return Ok(response);
     }

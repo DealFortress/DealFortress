@@ -35,7 +35,7 @@ public class MessagesService: IMessagesService
 
     public async Task<IEnumerable<MessageResponse>> GetAllByAuthIdAsync(string authId)
     {
-        var id = await _usersController.getLoggedInUserIdByAuthIdAsync(authId);
+        var id = await _usersController.getUserIdByAuthIdAsync(authId);
 
         var entity = await _repo.GetAllAsync();
 
@@ -99,5 +99,4 @@ public class MessagesService: IMessagesService
             Conversation = conversation
         };
     }
-
 }

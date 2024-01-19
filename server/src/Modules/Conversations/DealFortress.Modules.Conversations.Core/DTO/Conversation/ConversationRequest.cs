@@ -7,5 +7,5 @@ public class ConversationRequest {
     public required string Name { get; set; }
     public required int BuyerId { get; set; }
     public required int SellerId { get; set; }
-    public List<NestedMessageRequest>? MessagesRequests { get; set; }
+    public List<NestedMessageRequest>? MessageRequests { get; set; }
 }
