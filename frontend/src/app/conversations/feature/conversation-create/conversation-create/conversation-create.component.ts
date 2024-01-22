@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder, MinLengthValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postConversationRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
@@ -43,13 +43,13 @@ export class ConversationCreateComponent implements OnInit{
 
   onConversationSubmit() {
     const conversationFormGroup = this.formBuilder.group({
-      noticeId: this.notice.id,
-      name: this.notice.title,
-      buyerId: this.sender.id,
-      sellerId: this.recipient.id,
-      messageRequests: this.formBuilder.array([
+      noticeId: [this.notice.id, [Validators.required]],
+      name: [this.notice.title, [Validators.required]],
+      buyerId: [this.sender.id, [Validators.required]],
+      sellerId: [this.recipient.id, [Validators.required]],
+      messageRequests: [this.formBuilder.array([
         this.messageFormGroup
-      ])
+      ], [Validators.required, Validators.minLength(1), Validators.maxLength(1)])]
     })
 
     const conversationRequest = conversationFormGroup.value as ConversationRequest;

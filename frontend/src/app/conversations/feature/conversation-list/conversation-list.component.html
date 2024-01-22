@@ -1,7 +1,7 @@
 <app-loader *ngIf="!(conversations$ | async)"></app-loader>
 <div 
   *ngIf="(conversations$ | async) as conversations" 
-  class="hidden-scrollbar overflow-hidden h-[90vh] md:container md:mx-auto grid border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0  rounded-md" 
+  class="hidden-scrollbar overflow-hidden h-[90vh] md:container md:mx-auto grid border border-[rgba(0,0,0,0.2)] shadow-md md:p-2 bg-base-0  rounded-md" 
   [ngClass]="conversations.length > 0 ? 'md:grid-cols-[1fr,2fr]' : '' " 
 >
   <aside  
@@ -16,7 +16,7 @@
   <div   
   *ngIf="conversations.length > 0"          
   [ngClass]="selectedConversationId ? 'flex' : 'hidden md:flex'" 
-  class="bg-base-100 rounded-md flex-col justify-center shadow-inner relative overflow-y-scroll "   
+  class="bg-base-100 rounded-md flex-col justify-center shadow-inner relative overflow-y-scroll min-h-screen"   
   >
     <app-conversation-detail
     *ngIf="selectedConversationId; else noConversationSelected"  

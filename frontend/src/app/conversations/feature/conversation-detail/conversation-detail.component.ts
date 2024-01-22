@@ -29,12 +29,11 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    setTimeout(() => this.scrollToLatestMessage(), 1)
-    
   }
 
   
   ngOnChanges(changes: SimpleChanges): void {
+    setTimeout(() => this.scrollToLatestMessage(), 1)
     this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
     this.conversation$.subscribe(conversation => {
@@ -55,13 +54,9 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
     this.router.navigate(['conversations/'])
   }
 
-  navigateToNotice(notice : Notice) {
-        this.router.navigate(['notices/', notice.id])
-  }
 
   scrollToLatestMessage() {
     this.scrollTarget?.nativeElement.scrollIntoView({
-      behavior: "smooth",
       block: "start"
     });
   }
