@@ -35,8 +35,11 @@ import {
     faTrashCan as fasTrashCan,
     faDove as fasDove,
     faAngleLeft as fasAngleLeft,
-    faAngleRight as fasAngleRight
+    faAngleRight as fasAngleRight,
   } from '@fortawesome/free-solid-svg-icons';
+import {
+    faMessage as farMessage
+} from '@fortawesome/free-regular-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
@@ -163,7 +166,8 @@ export class AppModule {
       fasTrashCan,
       fasDove,
       fasAngleLeft,
-      fasAngleRight
+      fasAngleRight,
+      farMessage
     );
   }
  }
