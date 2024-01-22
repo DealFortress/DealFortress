@@ -18,7 +18,8 @@ const routes: Routes = [
   {path: 'notices/create', component: NoticeCreateComponent},
   {path: 'notices/:id/edit', component: NoticeEditComponent},
   {path: 'notices/:id', component: NoticeDetailComponent },
-  {path: 'messages', component: ConversationListComponent },
+  {path: 'conversations', component: ConversationListComponent },
+  {path: 'conversations/:id', component: ConversationListComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

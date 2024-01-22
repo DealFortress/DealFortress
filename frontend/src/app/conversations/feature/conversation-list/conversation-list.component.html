@@ -1,29 +1,33 @@
 <app-loader *ngIf="!(conversations$ | async)"></app-loader>
 <main 
-    *ngIf="(conversations$ | async) as conversations" 
-    class="hidden-scrollbar overflow-hidden h-[90vh] md:container md:mx-auto grid border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0  rounded-md" 
-    [ngClass]="conversations.length > 0 ? 'md:grid-cols-[1fr,2fr]' : '' " 
+  *ngIf="(conversations$ | async) as conversations" 
+  class="hidden-scrollbar overflow-hidden h-[90vh] md:container md:mx-auto grid border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0  rounded-md" 
+  [ngClass]="conversations.length > 0 ? 'md:grid-cols-[1fr,2fr]' : '' " 
 >
-    <aside  
-        class="bg-base-0 rounded basis-0 p-2 flex flex-col overflow-y-scroll hidden-scrollbar"
-        [ngClass]="selectedConversationId ? 'hidden md:block' : 'block' "
-    >        
-            <h3 *ngIf="conversations.length == 0 " class="text-justify text-2xl m-auto self-center">The conversations you are a part of will appear here</h3>
-            <ng-container *ngFor="let conversation of conversations">
-                <app-conversation-card [conversation]="conversation" (click)="selectedConversationId = conversation.id"></app-conversation-card>
-            </ng-container>
-    </aside>
-    <div   
-        *ngIf="conversations.length > 0"          
-        [ngClass]="selectedConversationId ? 'block' : 'hidden md:block'" 
-        class="bg-base-100 p-2 rounded-md flex flex-col justify-between shadow-inner relative"   
+  <aside  
+  [ngClass]="selectedConversationId ? 'hidden md:flex' : 'flex' "
+  class="bg-base-0 rounded basis-0 p-2 flex-col overflow-y-scroll"
+  >        
+    <h3 *ngIf="conversations.length == 0 " class="text-center text-2xl m-auto self-center justify-self-center">The conversations you are a part of will appear here</h3>
+    <ng-container *ngFor="let conversation of conversations">
+        <app-conversation-card [conversation]="conversation" (click)="router.navigate(['/conversations',conversation.id])"></app-conversation-card>
+    </ng-container>
+  </aside>
+  <div   
+  *ngIf="conversations.length > 0"          
+  [ngClass]="selectedConversationId ? 'flex' : 'hidden md:flex'" 
+  class="bg-base-100 rounded-md flex-col justify-center shadow-inner relative overflow-y-scroll "   
+  >
+    <app-conversation-detail
+    *ngIf="selectedConversationId; else noConversationSelected"  
+    class="md:block h-full" 
+    [conversationId]="selectedConversationId ? selectedConversationId : conversations[0].id"
     >
-        <app-conversation-detail  
-            class="md:block overflow-y-scroll h-full " 
-            [conversationId]="selectedConversationId ? selectedConversationId : conversations[0].id"
-            (unselectConversation$)="unselectConversation()"
-            >
-        </app-conversation-detail>
-    </div>
+    </app-conversation-detail>
+  </div>
 </main>
+
+<ng-template #noConversationSelected>
+    <h3 class="text-center text-2xl">No conversation selected</h3>
+</ng-template>
 

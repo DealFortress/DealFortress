@@ -1,26 +1,32 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
-import { Conversation } from '@app/shared/models/conversation/conversation.model';
-import { Message } from '@app/shared/models/message/message';
+
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-conversation-list',
   templateUrl: './conversation-list.component.html',
   styleUrl: './conversation-list.component.css'
 })
-export class ConversationListComponent {
+export class ConversationListComponent implements OnInit{
   public conversations$ = this.store.select(getConversations);
-  public selectedConversationId?: number;  
+  selectedConversationId? : number;
+  router = this.Router;
   
 
-  constructor(private store: Store, private formBuilder: FormBuilder) {
+  constructor(private store: Store, private route: ActivatedRoute, private Router: Router) {
   }
 
-  unselectConversation() {
-    this.selectedConversationId = undefined;
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(paramMap => {
+      const currentConversation = paramMap.get('id')
+      if (currentConversation) {
+      this.selectedConversationId = +currentConversation;
+    }
+    })
   }
+
 
 }

@@ -2,11 +2,15 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { AbstractControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postConversationRequest } from '@app/conversations/data-access/store/conversations.actions';
+import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
+import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { ConversationRequest } from '@app/shared/models/conversation/conversation-request.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
+import { ShowAlert } from '@app/shared/store/app.actions';
 
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-conversation-create',
@@ -24,23 +28,12 @@ export class ConversationCreateComponent implements OnInit{
 
   ngOnInit(): void {
     this.messageFormGroup.controls.text
-      .patchValue(`\n Hey ${this.recipient.username}, 
-      \n I have a question about '${this.notice.title}' 
-      \n \n Kind regards,
-      \n ${this.sender.username}`)
+      .patchValue(`\r\n Hey ${this.recipient.username}, 
+      \r\n I have a question about '${this.notice.title}' 
+      \r\n \r\n Kind regards,
+      \r\n ${this.sender.username}`)
     
       this.messageFormGroup.controls.senderId.patchValue(this.sender.id)
-
-    // if (this.notice && this.conversationId == undefined) {
-    //   const conversation = this.store.select(getConversationByNoticeId(this.notice.id));
-    //   conversation.subscribe(conversation => { 
-    //     if (conversation) {
-    //       this.conversationId = conversation.id;
-    //       this.messageFormGroup.patchValue({ conversationId: conversation.id });
-    //       return;
-    //     }
-    //   })
-    // }
   }
 
   messageFormGroup = this.formBuilder.group({
@@ -48,9 +41,7 @@ export class ConversationCreateComponent implements OnInit{
     senderId: -1,
   })
 
-
-
-   onConversationSubmit() {
+  onConversationSubmit() {
     const conversationFormGroup = this.formBuilder.group({
       noticeId: this.notice.id,
       name: this.notice.title,
@@ -62,9 +53,9 @@ export class ConversationCreateComponent implements OnInit{
     })
 
     const conversationRequest = conversationFormGroup.value as ConversationRequest;
-    console.log(conversationRequest);
     this.store.dispatch(postConversationRequest({ request: conversationRequest }));
-    this.router.navigate(['messages/']);
+
+    this.redirectToConversation()
   }
 
   getErrorMessage(formControl : AbstractControl) {
@@ -75,23 +66,13 @@ export class ConversationCreateComponent implements OnInit{
     return formControl.hasError('minlength') ? `this field must be at least ${formControl.errors?.['minlength'].requiredLength} characters` : '';
   }
 
-    // onFormSubmit() {
-  //  if ( this.conversationId == -1) {
-  //   this.onConversationSubmit()
-  //  }
-  // }
-
-  // onConversationSubmit() {
-
-  //   const conversationFormGroup = this.formBuilder.group({
-  //     noticeId: this.notice?.id,
-  //     name: this.notice?.title,
-  //     buyerId: this.senderId,
-  //     SellerId: this.recipientId,
-  //     messageRequest: this.messageFormGroup
-  //   })
-
-  //   const conversationRequest = conversationFormGroup.value as ConversationRequest;
-  //   this.store.dispatch(postConversationRequest({ request: conversationRequest }));
-  // }
+  redirectToConversation() {
+    this.store.select(getConversationByNoticeId(this.notice.id)).subscribe(createdConversation => {
+      if (createdConversation == undefined) {
+        this.router.navigate(['messages/']);
+      } else if (createdConversation) {
+        this.router.navigate(['messages/', createdConversation.id]);
+      }
+    })
+  }
 }

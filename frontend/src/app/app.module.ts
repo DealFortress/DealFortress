@@ -12,7 +12,7 @@ import { NoticeFormComponent } from '@app/notices/utils/notice-form/notice-form.
 import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NoticeCardComponent } from '@app/notices/feature/notice-list/notice-card/notice-card.component';
+import { NoticeCardComponent } from '@app/notices/utils/notice-card/notice-card.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'environments/environment.production';
 import { AuthLoginButtonComponent } from './shared/auth/auth-login-button/auth-login-button.component';
@@ -48,7 +48,7 @@ import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
-import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
+import { UserCardComponent } from './users/utils/user-card/user-card.component';
 import { ProductCardComponent } from './notices/feature/notice-detail/product-card/product-card.component';
 import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
 import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
@@ -68,6 +68,8 @@ import { ConversationListComponent } from './conversations/feature/conversation-
 import { ConversationCardComponent } from './conversations/feature/conversation-list/conversation-card/conversation-card/conversation-card.component';
 import { ConversationCreateComponent } from "./conversations/feature/conversation-create/conversation-create/conversation-create.component";
 import { MessagesCreateComponent } from './conversations/feature/conversation-create/messages-create/messages-create.component';
+import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/minimal-notice-card.component';
+import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
 
 @NgModule({
     declarations: [
@@ -98,7 +100,9 @@ import { MessagesCreateComponent } from './conversations/feature/conversation-cr
         ConversationListComponent,
         ConversationCardComponent,
         ConversationCreateComponent,
-        MessagesCreateComponent
+        MessagesCreateComponent,
+        MinimalNoticeCardComponent,
+        MessageCardComponent
     ],
     providers: [
         NoticesApiService,

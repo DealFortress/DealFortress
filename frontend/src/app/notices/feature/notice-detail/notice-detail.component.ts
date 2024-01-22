@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
 import { deleteNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Notice } from '@app/shared/models/notice/notice.model';
@@ -55,10 +56,22 @@ export class NoticeDetailComponent implements OnInit{
   handleMessagePopup() {
     this.authService.isAuthenticated$.subscribe(isAuthenticated => {
       if (isAuthenticated) {
-        this.toggleMessagePopup = true;
+        this.dispatchMessage()
       } else {
         this.authService.loginWithPopup()
       }
     })
   }
+
+  dispatchMessage() {
+    this.store.select(getConversationByNoticeId(+this.id!)).subscribe(existingConversation => {
+      if (existingConversation == undefined ) {
+        this.toggleMessagePopup = true;
+        return;
+      } else if (existingConversation) {
+        this.router.navigate(['conversations/', existingConversation.id]);
+      }
+    })
+  }
+      
 }

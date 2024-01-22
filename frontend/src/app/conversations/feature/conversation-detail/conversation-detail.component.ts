@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Router } from '@angular/router';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
-import { getUserIdByNoticeId } from '@app/notices/data-access/store/notices.selectors';
+import { getNoticeById, getUserIdByNoticeId } from '@app/notices/data-access/store/notices.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
+import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
 import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
@@ -16,18 +18,23 @@ import { Observable } from 'rxjs';
 })
 export class ConversationDetailComponent implements OnChanges {
   @Input({required: true}) conversationId!: number;
-  @Output() unselectConversation$ = new EventEmitter();
   public loggedInUser$ = this.store.select(getLoggedInUser);
   public recipient$? : Observable<User | undefined>;
   public conversation$? : Observable<Conversation | undefined>;
+  public notice$? :  Observable<Notice | undefined>;
+  
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
   }
+
+  
   ngOnChanges(changes: SimpleChanges): void {
-      this.conversation$ =  this.store.select(getConversationById(this.conversationId));
+    this.conversation$ =  this.store.select(getConversationById(this.conversationId));
     
     this.conversation$.subscribe(conversation => {
       if (conversation) {
+        this.notice$ = this.store.select(getNoticeById(conversation.noticeId))
+
         this.loggedInUser$.subscribe(loggedInUser => {
           if (loggedInUser) {
             let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
@@ -38,8 +45,11 @@ export class ConversationDetailComponent implements OnChanges {
     })
   }
 
-  unselectConversation() {
-    this.unselectConversation$.emit();
+  navigateBack() {
+    this.router.navigate(['conversations/'])
   }
-  
+
+  navigateToNotice(notice : Notice) {
+        this.router.navigate(['notices/', notice.id])
+  }
 }

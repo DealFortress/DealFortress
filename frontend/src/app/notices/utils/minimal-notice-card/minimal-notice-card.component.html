@@ -1,0 +1,17 @@
+<a class="card w-6 bg-neutral text-neutral-content w-full" [routerLink]="['/notices', notice.id]" >
+    <div class="card-body items-left text-left">
+      <h2 class="card-title">{{notice.title}}</h2>
+      <p>{{notice.description.slice(30)}}...</p>
+      <div class="card-actions justify-end">
+        <p><strong>{{notice.city }}</strong></p>
+        <p class="text-end"><strong>{{minutesSinceCreation}}</strong></p>
+      </div>
+    </div>
+
+    <div class="card card-side bg-base-100 shadow-xl">
+        <figure><img *ngIf="notice.products[0].images[0]" [src]="notice.products[0].images[0]" alt="first product"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">{{notice.title}}</h2>
+        </div>
+      </div>
+  </a>

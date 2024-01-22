@@ -1,32 +1,30 @@
 <ng-container *ngIf="(loggedInUser$ | async) as user ; else skeleton">
   <ng-container *ngIf="(conversation$ | async) as conversation; else skeleton">
+    <!-- <header class="md:hidden flex p-4 fixed top-0 w-screen z-50 bg-base-200 left-0">
+      <button (click)="navigateBack()" class="btn btn-square btn-ghost text-2xl">
+        <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
+      </button>
+      <button *ngIf="(notice$ | async) as notice" (click)="navigateToNotice(notice)" class="btn btn-square btn-ghost text-2xl">
+        <app-minimal-notice-card [notice]="notice"></app-minimal-notice-card>
+      </button>
+    </header> -->
+    
     <div 
     *ngIf="(recipient$ | async) as recipient" 
-    class="h-full flex justify-between flex-col">
-      <section class="p-4" >
-          <button (click)="unselectConversation()" class="md:hidden btn btn-square btn-ghost text-2xl absolute left-2 top-2">
-            <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
-          </button>
-          <ng-container *ngIf="conversation.messages.length > 0">
-            <div #chat 
-            [scrollTop]="chat.scrollHeight" 
-            *ngFor="let message of conversation.messages">
-              <div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
-                <div class="chat-image avatar">
-                  <div class="w-10 rounded-full">
-                    <img alt="avatar" [src]="message.senderId == user.id ? user.avatar : recipient.avatar" />
-                  </div>
-                </div>
-                <div class="chat-bubble">{{message.text}}</div>
-              </div>
-            </div>
-          </ng-container>
-        </section>
-        <app-messages-create 
-        [senderId]="user.id" 
-        [recipientId]="recipient.id" 
-        [conversationId]="conversationId">
-      </app-messages-create>
+    class="min-h-full flex justify-between flex-col relative">
+    <section *ngIf="conversation.messages.length > 0" class="px-2 py-4">
+      <div #chat 
+      [scrollTop]="chat.scrollHeight" 
+      *ngFor="let message of conversation.messages">
+        <app-message-card [message]="message" [user]="user" [recipient]="recipient"></app-message-card>
+      </div>
+    </section>
+    <app-messages-create 
+      class="sticky bottom-0 z-30"
+      [senderId]="user.id" 
+      [recipientId]="recipient.id" 
+      [conversationId]="conversationId">
+    </app-messages-create>
     </div>
   </ng-container>
 </ng-container>
