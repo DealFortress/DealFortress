@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
 import { getNoticeById, getUserIdByNoticeId } from '@app/notices/data-access/store/notices.selectors';
@@ -16,15 +16,21 @@ import { Observable } from 'rxjs';
   templateUrl: './conversation-detail.component.html',
   styleUrl: './conversation-detail.component.css'
 })
-export class ConversationDetailComponent implements OnChanges {
+export class ConversationDetailComponent implements OnChanges, OnInit {
   @Input({required: true}) conversationId!: number;
   public loggedInUser$ = this.store.select(getLoggedInUser);
   public recipient$? : Observable<User | undefined>;
   public conversation$? : Observable<Conversation | undefined>;
   public notice$? :  Observable<Notice | undefined>;
+  @ViewChild("scrollTarget", { static: false }) scrollTarget?: ElementRef;
   
 
   constructor(private store: Store, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => this.scrollToLatestMessage(), 1)
+    
   }
 
   
@@ -34,7 +40,7 @@ export class ConversationDetailComponent implements OnChanges {
     this.conversation$.subscribe(conversation => {
       if (conversation) {
         this.notice$ = this.store.select(getNoticeById(conversation.noticeId))
-
+        
         this.loggedInUser$.subscribe(loggedInUser => {
           if (loggedInUser) {
             let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
@@ -51,5 +57,12 @@ export class ConversationDetailComponent implements OnChanges {
 
   navigateToNotice(notice : Notice) {
         this.router.navigate(['notices/', notice.id])
+  }
+
+  scrollToLatestMessage() {
+    this.scrollTarget?.nativeElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   }
 }

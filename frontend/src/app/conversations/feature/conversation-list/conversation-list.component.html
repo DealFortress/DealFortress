@@ -1,5 +1,5 @@
 <app-loader *ngIf="!(conversations$ | async)"></app-loader>
-<main 
+<div 
   *ngIf="(conversations$ | async) as conversations" 
   class="hidden-scrollbar overflow-hidden h-[90vh] md:container md:mx-auto grid border border-[rgba(0,0,0,0.2)] shadow-md p-2 bg-base-0  rounded-md" 
   [ngClass]="conversations.length > 0 ? 'md:grid-cols-[1fr,2fr]' : '' " 
@@ -25,7 +25,7 @@
     >
     </app-conversation-detail>
   </div>
-</main>
+</div>
 
 <ng-template #noConversationSelected>
     <h3 class="text-center text-2xl">No conversation selected</h3>
