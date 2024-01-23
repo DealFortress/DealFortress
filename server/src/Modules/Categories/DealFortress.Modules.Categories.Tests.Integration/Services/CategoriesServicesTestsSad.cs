@@ -24,10 +24,10 @@ public class CategoriesServicesTestsSad : IClassFixture<CategoriesFixture>
     }
 
     [Fact]
-    public void GetAll_should_return_all_notices()
+    public async void GetAll_should_return_all_notices()
     {
         // Act
-        var noticeResponses = _service.GetById(-1);
+        var noticeResponses = await _service.GetByIdAsync(-1);
 
         // Assert 
         noticeResponses.Should().Be(null);

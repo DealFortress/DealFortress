@@ -26,28 +26,28 @@ public class ControllerTestsHappy
     }
     
     [Fact]
-    public void GetCategories_returns_ok()
+    public async void GetCategories_returns_ok()
     {
         // arrange
         var content = new List<CategoryResponse>(){ _response };
-        _service.Setup(service => service.GetAll()).Returns(content);
+        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<CategoryResponse>>(content));
         
         // act
-        var httpResponse = _controller.GetCategories();
+        var httpResponse = await _controller.GetCategoriesAsync();
 
         // assert
         httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void GetCategories_list_of_response_when_service_returns_response()
+    public async void GetCategories_list_of_response_when_service_returns_response()
     {
         // arrange
         var list = new List<CategoryResponse>(){ _response };
-        _service.Setup(service => service.GetAll()).Returns(list);
+        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<CategoryResponse>>(list));
         
         // act
-        var httpResponse = _controller.GetCategories();
+        var httpResponse = await _controller.GetCategoriesAsync();
 
         // assert
         var content = httpResponse.Result.As<OkObjectResult>().Value;
@@ -55,65 +55,65 @@ public class ControllerTestsHappy
     }
 
     [Fact]
-    public void GetCategory_returns_ok_when_service_returns_response()
+    public async void GetCategory_returns_ok_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.GetById(1)).Returns(_response);
+        _service.Setup(service => service.GetByIdAsync(1)).Returns(Task.FromResult<CategoryResponse?>(_response));
 
         // act
-        var httpResponse = _controller.GetCategory(1);
+        var httpResponse = await _controller.GetCategoryAsync(1);
 
         // assert
         httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void GetCategory_returns_category_response_when_service_returns_response()
+    public async void GetCategory_returns_category_response_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.GetById(1)).Returns(_response);
+        _service.Setup(service => service.GetByIdAsync(1)).Returns(Task.FromResult<CategoryResponse?>(_response));
 
         // act
-        var httpResponse = _controller.GetCategory(1);
+        var httpResponse = await _controller.GetCategoryAsync(1);
 
         // assert
         httpResponse.Result.As<OkObjectResult>().Value.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void PostCategory_returns_created_when_service_returns_response()
+    public async void PostCategory_returns_created_when_service_returns_response()
     {
         // arrange
-        _service.Setup(service => service.Post(_request)).Returns(_response);
+        _service.Setup(service => service.PostAsync(_request)).Returns(Task.FromResult<CategoryResponse?>(_response));
 
         // act
-        var httpResponse = _controller.PostCategory(_request);
+        var httpResponse = await _controller.PostCategoryAsync(_request);
 
         // assert
         httpResponse.Result.Should().BeOfType<CreatedAtActionResult>();
     }
 
     [Fact]
-    public void PostCategory_returns_categoryResponse_when_service_returns_response()
+    public async Task PostCategory_returns_categoryResponse_when_service_returns_responseAsync()
     {
         // arrange
-        _service.Setup(item => item.Post(_request)).Returns(_response);
+        _service.Setup(item => item.PostAsync(_request)).Returns(Task.FromResult<CategoryResponse>(_response));
 
         // act
-        var httpResponse = _controller.PostCategory(_request);
+        var httpResponse = await _controller.PostCategoryAsync(_request);
 
         // assert
         httpResponse.Result.As<CreatedAtActionResult>().Value.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void GetCategoryNameById_returns_name_of_category_when_service_returns_response()
+    public async Task GetCategoryNameById_returns_name_of_category_when_service_returns_responseAsync()
     {
         // arrange
-        _service.Setup(item => item.GetById(1)).Returns(_response);
+        _service.Setup(item => item.GetByIdAsync(1)).Returns(Task.FromResult<CategoryResponse?>(_response));
 
         // act
-        var response = _controller.GetCategoryNameById(1);
+        var response = await _controller.GetCategoryNameById(1);
 
         //assert
         response.Should().Be("test");

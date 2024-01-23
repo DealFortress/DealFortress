@@ -21,13 +21,13 @@ public class ControllerTestsSad
 
 
     [Fact]
-    public void GetCategory_returns_not_found_when_service_returns_null()
+    public async void GetCategory_returns_not_found_when_service_returns_null()
     {
         // Arrange
-        _service.Setup(service => service.GetById(1));
+        _service.Setup(service => service.GetByIdAsync(1));
 
         // Act
-        var httpResponse = _controller.GetCategory(1);
+        var httpResponse = await _controller.GetCategoryAsync(1);
 
         // Assert 
         httpResponse.Result.Should().BeOfType<NotFoundResult>();

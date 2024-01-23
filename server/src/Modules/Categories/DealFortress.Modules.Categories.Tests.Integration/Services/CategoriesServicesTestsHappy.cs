@@ -28,21 +28,21 @@ public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
     }
 
     [Fact]
-    public void GetAll_should_return_all_categories()
+    public async void GetAll_should_return_all_categories()
     {
         // Act
-        var categoryResponses = _service.GetAll();
+        var categoryResponses = await _service.GetAllAsync();
 
         // Assert 
         categoryResponses.Count().Should().Be(2);
     }
 
     [Fact]
-    public void GetById_should_return_the_category_matching_id()
+    public async void GetById_should_return_the_category_matching_id()
     {
         // Act
 
-        var categoryResponse = _service.GetById(1);
+        var categoryResponse = await _service.GetByIdAsync(1);
 
         // Assert 
         categoryResponse?.Name.Should().Be("Name 1");
@@ -50,10 +50,10 @@ public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
     }
 
     [Fact]
-    public void Post_should_add_category_in_db()
+    public async void Post_should_add_category_in_db()
     {
         // Act
-        var postResponse = _service.Post(_request);
+        var postResponse = await _service.PostAsync(_request);
 
         // Assert
         Fixture?.Context.Categories.Find(postResponse.Id)?.Name.Should().Be(_request.Name);
