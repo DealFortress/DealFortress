@@ -32,109 +32,109 @@ public class ProductsServiceTestsSad
     }
 
     [Fact]
-    public void PutById_returns_null_when_id_doesnt_exist()
+    public async Task PutById_returns_null_when_id_doesnt_existAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // act
-        var response = _service.PutById(1, _request);
+        var response = await _service.PutByIdAsync(1, _request);
 
         // assert
         response.Should().BeNull();
     }
 
     [Fact]
-    public void PutDTO_should_not_replace_data_if_product_not_found()
+    public async Task PutDTO_should_not_replace_data_if_product_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        _service.PutById(1, _request);
+        await _service.PutByIdAsync(1, _request);
 
         // Assert 
-        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Never());
         _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
     }
 
     [Fact]
-    public void PutDTO_should_not_complete_if_product_not_found()
+    public async Task PutDTO_should_not_complete_if_product_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        _service.PutById(1, _request);
+        await _service.PutByIdAsync(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
     }
 
     [Fact]
-    public void PutDTO_should_return_null_if_product_not_found()
+    public async Task PutDTO_should_return_null_if_product_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        var response = _service.PutById(1, _request);
+        var response = await _service.PutByIdAsync(1, _request);
 
         // Assert 
         response.Should().BeNull();
     }
 
     [Fact]
-    public void PatchSoldStatusById_should_not_replace_data_if_product_not_found()
+    public async Task PatchSoldStatusById_should_not_replace_data_if_product_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
-        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
+        _repo.Setup(repo => repo.GetByIdAsync(1));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
 
         // Act
-        _service.PatchSoldStatusById(1, SoldStatus.Available);
+        await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
 
         // Assert 
-        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Never());
         _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
     }
 
     [Fact]
-    public void PatchSoldStatusById_should_not_complete_if_product_not_found()
+    public async Task PatchSoldStatusById_should_not_complete_if_product_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
-        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
+        _repo.Setup(repo => repo.GetByIdAsync(1));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
 
         // Act
-        _service.PatchSoldStatusById(1, SoldStatus.Available);
+        await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
     }
 
     [Fact]
-    public void PatchSoldStatusById_should_return_null_if_product_not_found()
+    public async Task PatchSoldStatusById_should_return_null_if_product_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
-        _usersController.Setup(controller => controller.IsUserEntityCreator(1, "")).Returns(true);
+        _repo.Setup(repo => repo.GetByIdAsync(1));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
 
         // Act
-        var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
+        var response = await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
 
         // Assert 
         response.Should().BeNull();
     }
 
     [Fact]
-    public void DeleteById_should_not_remove_data_and_complete_if_id_doesnt_exist()
+    public async Task DeleteById_should_not_remove_data_and_complete_if_id_doesnt_existAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        _service.DeleteById(1);
+        await _service.DeleteByIdAsync(1);
 
         // Assert 
         _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
@@ -142,13 +142,13 @@ public class ProductsServiceTestsSad
     }
 
     [Fact]
-    public void DeleteById_should_not_return_product_if_id_doesnt_exist()
+    public async Task DeleteById_should_not_return_product_if_id_doesnt_existAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        var response = _service.DeleteById(1);
+        var response = await _service.DeleteByIdAsync(1);
 
         // Assert 
         response.Should().BeNull();
