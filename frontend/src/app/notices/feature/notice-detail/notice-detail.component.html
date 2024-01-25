@@ -1,6 +1,6 @@
 <app-main-container>
-  <div *ngIf="(notice$ | async) as notice" class="relative flex justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
-    <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUserId$ | async)">
+  <div *ngIf="(notice$ | async) as notice" class="relative justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
+    <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUser$ | async)?.id">
       <button routerLink="edit" class="top-0 right-20 btn btn-ghost btn-circle text-2xl md:text-4xl bg-darkblue md:btn-lg">
         <fa-icon [icon]="['fas', 'feather']"></fa-icon>
       </button>
@@ -10,22 +10,22 @@
     </div>
     <div class="py-6 flex mt-10 flex-col gap-12 ">
       <div>
-        <h1 class="lg:text-8xl text-4xl w-full font-thin break-words">{{notice.title.toUpperCase()}}</h1> 
+        <h1 class="lg:text-8xl text-6xl w-full font-thin break-words">{{notice.title.toUpperCase()}}</h1> 
         <p class="py-12 break-words text-[lightgrey] ">{{notice.description}}</p>
       </div>
       <div class="flex flex-col justify-between mb-8">
-        <ul class="font-start grid grid-cols-2  gap-14 text-3xl">
+        <ul class="font-start grid grid-cols-2 gap-4 md:gap-14 text-2xl md:text-3xl">
           <li ><fa-icon class="text-[grey]" [icon]="['fas','chess-rook']" /> {{notice.city[0].toUpperCase() + notice.city.slice(1).toLocaleLowerCase()}}</li>
           <li class="text-end">{{notice.deliveryMethods}} <fa-icon class="text-[lightgrey]" [icon]="['fas','crow']"/></li>
           <li class=""><fa-icon class="text-[sienna]" [icon]="['fas','sack-dollar']"/> {{notice.payments}}</li>
-          <li class=" text-end text-4xl">{{ getTotalPrice(notice) }} SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
+          <li class=" text-end text-2xl md:text-4xl">{{ getTotalPrice(notice) }} SEK <fa-icon class="text-[gold]" [icon]="['fas','coins']"></fa-icon></li>
         </ul>
       </div>
       <app-product-detail [product]="selectedProduct ? selectedProduct : notice.products[0]"></app-product-detail>
     </div>
     <div class="flex flex-col-reverse lg:flex-col w-full">
       <ng-container *ngIf="(creator$ | async) as user;">
-        <app-user-card [user]="user" class="mt-20"></app-user-card>
+        <app-user-card [user]="user" (toggleMessagePopup$)="handleMessagePopup()" class="mt-20" ></app-user-card>
       </ng-container>
       <div class="flex flex-col gap-6">
         <ng-container *ngFor="let product of notice.products">
@@ -39,10 +39,19 @@
 </app-main-container>
 
 <app-popup-card *ngIf="showDeletePopup">
-    <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
-        Abort!
-    </button>
-    <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
-        Burn it!
-    </button>
+  <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
+    Abort!
+  </button>
+  <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
+    Burn it!
+  </button>
 </app-popup-card>
+
+<app-conversation-create 
+  *ngIf="toggleMessagePopup && (currentUser$ | async)  && (notice$ | async) && (creator$ | async) as user" 
+  (toggleMessagePopup$)="toggleMessagePopup = false"
+  [sender]="(currentUser$ | async)!"
+  [recipient]="user"
+  [notice]="(notice$ | async)!"
+  >
+</app-conversation-create>

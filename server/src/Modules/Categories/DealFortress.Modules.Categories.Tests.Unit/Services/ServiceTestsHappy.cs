@@ -27,10 +27,10 @@ public class ServiceTestsHappy
     }
 
     [Fact]
-    public void Post_should_complete_before_sending_back_DTO()
+    public async void Post_should_complete_before_sending_back_DTO()
     {
         // Act
-        _service.Post(_request);
+        await _service.PostAsync(_request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
@@ -38,27 +38,27 @@ public class ServiceTestsHappy
     }
 
     [Fact]
-    public void GetById_returns_response_when_repo_returns_a_category()
+    public async Task GetById_returns_response_when_repo_returns_a_categoryAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1)).Returns(_category);
+        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Category?>(_category));
 
         // act
-        var response = _service.GetById(1);
+        var response = await _service.GetByIdAsync(1);
 
         // assert
         response.Should().BeOfType<CategoryResponse>();
     }
 
     [Fact]
-    public void GetAll_returns_response()
+    public async void GetAll_returns_response()
     {
         // arrange
         var list = new List<Category>(){ _category }; 
-        _repo.Setup(repo => repo.GetAll()).Returns(list);
+        _repo.Setup(repo => repo.GetAllAsync()).Returns(Task.FromResult<IEnumerable<Category?>>(list));
 
         // act
-        var response = _service.GetAll();
+        var response = await _service.GetAllAsync();
 
         // assert
         response.Should().BeOfType<List<CategoryResponse>>();

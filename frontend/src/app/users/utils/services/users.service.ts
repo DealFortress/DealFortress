@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserRequest } from '@app/shared/models/user-request.model';
+import { UserRequest } from '@app/shared/models/user/user-request.model';
 import { loadUserByAuthIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
 import { getStatusCode } from '@app/users/data-access/store/users.selectors';
 import { User } from '@auth0/auth0-angular';

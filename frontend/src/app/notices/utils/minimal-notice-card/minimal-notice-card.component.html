@@ -1,0 +1,7 @@
+<a class="card text-neutral-content w-full flex-row items-center justify-between py-0" [routerLink]="['/notices', notice.id]" >
+  <div class="flex gap-6 items-center ">
+    <figure><img *ngIf="notice.products[0].images[0].url" [src]="notice.products[0].images[0].url" alt="first product" class=" aspect-square h-16 rounded-full"/></figure>
+    <h2 class="text-lg md:text-1xl">{{notice.title.length > 40 ? notice.title.slice(0, 40) + '...' : notice.title}}</h2>
+  </div>
+  <fa-icon class="text-2xl md:text-3xl btn btn-ghost btn-circle" [icon]="['fas', 'angle-right']"></fa-icon>
+</a>

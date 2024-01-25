@@ -1,12 +1,9 @@
-using System.Security.Claims;
 using DealFortress.Modules.Notices.Api.Controllers;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Tests.Shared;
-using DealFortress.Modules.Users.Api.Controllers;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -17,7 +14,7 @@ public class ProductControllersTestsHappy
     private readonly ProductsController _controller;
     private readonly Mock<IProductsService> _service;
     private readonly ProductResponse _response;
-    private readonly Product _Product;
+    private readonly Product _product;
 
     public ProductControllersTestsHappy()
     {
@@ -27,55 +24,55 @@ public class ProductControllersTestsHappy
 
         _response = NoticesTestModels.CreateNoticeResponse().Products!.First();
 
-        _Product = NoticesTestModels.CreateNotice().Products!.First();
+        _product = NoticesTestModels.CreateNotice().Products!.First();
 
         _controller.CreateFakeClaims();
     }
 
 
     [Fact]
-    public void GetProducts_should_return_ok()
+    public async void GetProducts_should_return_ok()
     {
         // Arrange
-        var content = new List<ProductResponse> { _response };
-        _service.Setup(service => service.GetAll()).Returns(content);
+        var list = new List<ProductResponse> { _response };
+        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<ProductResponse>>(list));
         // Act
-        var httpResponses = _controller.GetProducts();
+        var httpResponses = await _controller.GetProductsAsync();
         // Assert 
         httpResponses.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void GetProducts_return_list_of_response_when_server_returns_responses()
+    public async Task GetProducts_return_list_of_response_when_server_returns_responsesAsync()
     {
         // Arrange
         var list = new List<ProductResponse> { _response };
-        _service.Setup(service => service.GetAll()).Returns(list);
+        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<ProductResponse>>(list));
         // Act
-        var httpResponses = _controller.GetProducts();
+        var httpResponses = await _controller.GetProductsAsync();
         // Assert 
         var content = httpResponses.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<List<ProductResponse>>();
     }
 
     [Fact]
-    public void PatchProductSoldStatus_return_ok_object_response_when_service_return_response()
+    public async Task PatchProductSoldStatus_return_ok_object_response_when_service_return_responseAsync()
     {
         // Arrange
-        _service.Setup(service => service.PatchSoldStatusById(1, SoldStatus.Available)).Returns(_response);
+        _service.Setup(service => service.PatchSoldStatusByIdAsync(1, SoldStatus.Available)).Returns(Task.FromResult<ProductResponse?>(_response));
         // Act
-        var httpResponse = _controller.PatchProductSoldStatus(1, SoldStatus.Available);
+        var httpResponse = await _controller.PatchProductSoldStatusAsync(1, SoldStatus.Available);
         // Assert 
         httpResponse.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void DeleteProduct_should_return_no_content()
+    public async Task DeleteProduct_should_return_no_contentAsync()
     {
         // Arrange
-        _service.Setup(service => service.DeleteById(1)).Returns(_Product);
+        _service.Setup(service => service.DeleteByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
         // Act
-        var httpResponse = _controller.DeleteProduct(1);
+        var httpResponse = await _controller.DeleteProductAsync(1);
         // Assert 
         httpResponse.Should().BeOfType<NoContentResult>();
     }
