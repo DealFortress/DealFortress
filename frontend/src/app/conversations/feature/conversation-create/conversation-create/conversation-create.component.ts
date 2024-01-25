@@ -47,14 +47,14 @@ export class ConversationCreateComponent implements OnInit{
       name: [this.notice.title, [Validators.required]],
       buyerId: [this.sender.id, [Validators.required]],
       sellerId: [this.recipient.id, [Validators.required]],
-      messageRequests: [this.formBuilder.array([
+      messageRequests: this.formBuilder.array([
         this.messageFormGroup
-      ], [Validators.required, Validators.minLength(1), Validators.maxLength(1)])]
+      ])
     })
 
     const conversationRequest = conversationFormGroup.value as ConversationRequest;
-    this.store.dispatch(postConversationRequest({ request: conversationRequest }));
 
+    this.store.dispatch(postConversationRequest({ request: conversationRequest }));
     this.redirectToConversation()
   }
 
