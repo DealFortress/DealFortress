@@ -5,7 +5,6 @@ import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-lis
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { NoticeCreateComponent } from '@app/notices/feature/notice-create/notice-create.component';
 import { NoticeEditComponent } from '@app/notices/feature/notice-edit/notice-edit.component';
-import { ConversationListComponent } from '@app/conversations/feature/conversation-list/conversation-list.component';
 
 
 
@@ -18,8 +17,6 @@ const routes: Routes = [
   {path: 'notices/create', component: NoticeCreateComponent},
   {path: 'notices/:id/edit', component: NoticeEditComponent},
   {path: 'notices/:id', component: NoticeDetailComponent },
-  {path: 'conversations', component: ConversationListComponent },
-  {path: 'conversations/:id', component: ConversationListComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

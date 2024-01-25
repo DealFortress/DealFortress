@@ -21,27 +21,18 @@ public class ProductsService: IProductsService
     }
 
 
-    public async Task<IEnumerable<ProductResponse>> GetAllAsync()
+    public IEnumerable<ProductResponse> GetAll()
     {
-        var entities = await _repo.GetAllAsync();
-                    
-        return entities
-                .Select(ToProductResponseDTO)
-                .ToList();
+        return _repo.GetAll()
+                    .Select(ToProductResponseDTO)
+                    .ToList();
     }
 
-    public async Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request)
+    public ProductResponse? PutById(int id, ProductRequest request)
     {
-        var product = await _repo.GetByIdAsync(id);
+        var product = _repo.GetById(id);
 
         if (product is null)
-        {
-            return null;
-        }
-               
-        var isCreator = await _usersController.IsUserEntityCreatorAsync(product.Notice.UserId);
-
-        if (!isCreator)
         {
             return null;
         }
@@ -50,25 +41,18 @@ public class ProductsService: IProductsService
         var updatedProduct = ToProduct(request, product.Notice);
         updatedProduct.Id = product.Id;
 
-        await _repo.AddAsync(updatedProduct);
+        _repo.Add(updatedProduct);
         _repo.Complete();
 
 
         return ToProductResponseDTO(updatedProduct);
     }
 
-    public async Task<Product?> DeleteByIdAsync(int id)
+    public Product? DeleteById(int id)
     {
-        var product = await _repo.GetByIdAsync(id);
+        var product = _repo.GetById(id);
 
         if (product is null)
-        {
-            return null;
-        }
-               
-        var isCreator = await _usersController.IsUserEntityCreatorAsync(product.Notice.UserId);
-
-        if (!isCreator)
         {
             return null;
         }
@@ -79,16 +63,17 @@ public class ProductsService: IProductsService
         return product;
     }
 
-    public async Task<ProductResponse?> PatchSoldStatusByIdAsync(int id, SoldStatus soldStatus)
+    public ProductResponse? PatchSoldStatusById(int id, SoldStatus soldStatus)
     {
-        var product = await _repo.GetByIdAsync(id);
+        var product = _repo.GetById(id);
         
+
         if (product is null)
         {
             return null;
         }
         
-        var isCreator = await _usersController.IsUserEntityCreatorAsync(product.Notice.UserId);
+        var isCreator = _usersController.IsUserNoticeCreator(product.Notice.UserId);
 
         if (!isCreator)
         {

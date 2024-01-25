@@ -1,31 +1,26 @@
 import { createFeatureSelector, createSelector} from '@ngrx/store';
 import { NoticesState, noticesAdapter } from './notices.state';
 
-const getNoticesState = createFeatureSelector<NoticesState>('noticesState');
+const getNoticeState = createFeatureSelector<NoticesState>('noticesState');
  
 const { selectAll } = noticesAdapter.getSelectors();
 
 export const getNotices = createSelector(
-    getNoticesState,
+    getNoticeState,
     selectAll
 );
 
-export const getLoggedInUserLatestNoticeId = createSelector(
-    getNoticesState,
+export const getUserLatestNoticeId = createSelector(
+    getNoticeState,
     (state) => state.userLatestNoticeId
 )
 
 export const getNoticesStatus = createSelector(
-    getNoticesState,
+    getNoticeState,
     (state) => state.status
 )
 
 export const getNoticeById = (id: number) =>  createSelector(
-    getNoticesState,
+    getNoticeState,
     state => state.entities[id]
-)
-
-export const getUserIdByNoticeId = (noticeId: number) => createSelector(
-    getNotices,
-    notices => notices.find(notice => notice.id == noticeId)?.userId
 )
