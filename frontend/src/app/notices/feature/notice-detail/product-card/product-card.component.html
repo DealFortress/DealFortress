@@ -7,7 +7,7 @@
               <li *ngIf="this.product.soldStatus != SoldStatus.Reserved"><a (click)="toggleSoldStatus(SoldStatus.Reserved)">Reserved</a></li>
               <li><a (click)="toggleSoldPopup = true">Sold</a></li>
             </ul>
-          </div>
+        </div>
     </div>
     <div    
         class='absolute h-6 rounded flex justify-center items-center z-20 p-4 font-bold' 
@@ -16,7 +16,7 @@
     </div>
     <div 
         *ngIf="this.product.soldStatus == SoldStatus.Sold" 
-        class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes border border-black">
+        class="absolute w-full h-full rounded text-8xl flex justify-center items-center z-10 top-0 left-0 stripes border border-[grey]">
         SOLD
     </div>
     <span class="bg-gradient-to-b from-black to-[#454545] opacity-60 md:opacity-0 h-full w-full absolute rounded-xl"></span>
