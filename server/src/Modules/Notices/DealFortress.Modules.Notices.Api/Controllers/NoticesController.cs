@@ -20,17 +20,17 @@ public class NoticesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<NoticeResponse>> GetNotices()
+    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync()
     {
-        return Ok(_service.GetAll());
+        return  Ok(await _service.GetAllAsync());
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<NoticeResponse> GetNotice(int id)
+    public async Task< ActionResult<NoticeResponse>> GetNoticeAsync(int id)
     {
-       var response = _service.GetById(id);
+       var response = await _service.GetByIdAsync(id);
 
        return response is null ? NotFound() : Ok(response);
     }
@@ -39,9 +39,9 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<NoticeResponse> PutNotice(int id, NoticeRequest request)
+    public async Task<ActionResult<NoticeResponse>> PutNoticeAsync(int id, NoticeRequest request)
     {
-        var response = _service.PutById(id, request);
+        var response = await _service.PutByIdAsync(id, request);
 
         return response is null ? NotFound() : Ok(response);
     }
@@ -50,9 +50,9 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<NoticeResponse> PostNotice(NoticeRequest request)
+    public async Task<ActionResult<NoticeResponse>> PostNoticeAsync(NoticeRequest request)
     {
-        var response = _service.Post(request);
+        var response = await _service.PostAsync(request);
         
         return CreatedAtAction("GetNotice", new { id = response.Id }, response);
     }
@@ -61,9 +61,9 @@ public class NoticesController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult DeleteNotice(int id)
+    public async Task<IActionResult> DeleteNoticeAsync(int id)
     {
-        var notice = _service.DeleteById(id);
+        var notice = await _service.DeleteByIdAsync(id);
         
         return notice is null ? NotFound() : NoContent();
     }

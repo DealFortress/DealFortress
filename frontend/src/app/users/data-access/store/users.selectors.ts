@@ -3,14 +3,14 @@ import { UsersState } from './users.state';
 
 const getUsersState = createFeatureSelector<UsersState>('userState');
  
-export const getUser = createSelector(
+export const getLoggedInUser = createSelector(
     getUsersState,
-    (state) => state.user
+    (state) => state.loggedInUser
 );
 
-export const getUserId = createSelector(
+export const getLoggedInUserId = createSelector(
     getUsersState,
-    (state) => state.user?.id
+    (state) => state.loggedInUser?.id
 );
 
 export const getErrorMessage = createSelector(
@@ -23,7 +23,7 @@ export const getStatusCode = createSelector(
     (state) => state.statusCode
 )
 
-export const getCurrentlyShownUser =  createSelector(
+export const getUserById = (id: number) =>  createSelector(
     getUsersState,
-    (state) => state.currentlyShownUser
+    (state) => state.entities[id]
 )

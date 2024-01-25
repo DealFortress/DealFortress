@@ -10,20 +10,20 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
     public ProductsRepository(NoticesContext context) : base(context)
     {}
 
-    public new IEnumerable<Product> GetAll()
+    public new async Task<IEnumerable<Product>> GetAllAsync()
     {
-        return NoticesContext!.Products
+        return await NoticesContext!.Products
                         .Include(product => product.Notice)
                         .Include(product => product.Images)
-                        .ToList();
+                        .ToListAsync();
     }
 
-    public new Product? GetById(int id)
+    public new async Task<Product?> GetByIdAsync(int id)
     {
-        return NoticesContext!.Products
+        return await NoticesContext!.Products
                         .Include(product => product.Notice)
                         .Include(product => product.Images)
-                        .FirstOrDefault(product => product.Id == id);
+                        .FirstOrDefaultAsync(product => product.Id == id);
     }
 
     public NoticesContext? NoticesContext

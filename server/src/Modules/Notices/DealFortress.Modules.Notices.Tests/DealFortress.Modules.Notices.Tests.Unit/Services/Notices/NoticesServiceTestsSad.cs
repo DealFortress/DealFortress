@@ -6,6 +6,7 @@ using FluentAssertions;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Tests.Shared;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
@@ -20,76 +21,77 @@ public class NoticesServiceTestsSad
     {
         _repo = new Mock<INoticesRepository>();
 
-        var productsService = new Mock<IProductsService>();
-
-        _service = new NoticesService(productsService.Object, _repo.Object);
-
         _request = NoticesTestModels.CreateNoticeRequest();
 
         _notice = NoticesTestModels.CreateNotice();
+
+        var productsService = new Mock<IProductsService>();
+        var usersController = new Mock<UsersController>(null);
+
+        _service = new NoticesService(productsService.Object, _repo.Object, usersController.Object);
     }
 
     [Fact]
-    public void GetById_returns_null_when_notice_is_not_found()
+    public async Task GetById_returns_null_when_notice_is_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // act
-        var response = _service.GetById(1);
+        var response = await _service.GetByIdAsync(1);
 
         // assert
         response.Should().BeNull();
     }
 
     [Fact]
-    public void PutDTO_should_not_replace_data_if_notice_not_found()
+    public async Task PutDTO_should_not_replace_data_if_notice_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        _service.PutById(1, _request);
+        await _service.PutByIdAsync(1, _request);
 
         // Assert 
-        _repo.Verify(repo => repo.Add(It.IsAny<Notice>()), Times.Never());
+        _repo.Verify(repo => repo.AddAsync(It.IsAny<Notice>()), Times.Never());
         _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.Never());
     }
 
     [Fact]
-    public void PutDTO_should_not_complete_if_notice_not_found()
+    public async Task PutDTO_should_not_complete_if_notice_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        _service.PutById(1, _request);
+        await _service.PutByIdAsync(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.Never());
     }
 
     [Fact]
-    public void PutDTO_should_return_null_if_notice_not_found()
+    public async Task PutDTO_should_return_null_if_notice_not_foundAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        var response = _service.PutById(1, _request);
+        var response = await _service.PutByIdAsync(1, _request);
 
         // Assert 
         response.Should().BeNull();
     }
 
     [Fact]
-    public void DeleteById_should_not_remove_data_and_complete_if_id_doesnt_exist()
+    public async Task DeleteById_should_not_remove_data_and_complete_if_id_doesnt_existAsync()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        _service.DeleteById(1);
+       await _service.DeleteByIdAsync(1);
 
         // Assert 
         _repo.Verify(repo => repo.Remove(It.IsAny<Notice>()), Times.Never());
@@ -97,13 +99,13 @@ public class NoticesServiceTestsSad
     }
 
     [Fact]
-    public void DeleteById_should_not_return_Notice_if_id_doesnt_exist()
+    public async void DeleteById_should_not_return_Notice_if_id_doesnt_exist()
     {
         // arrange
-        _repo.Setup(repo => repo.GetById(1));
+        _repo.Setup(repo => repo.GetByIdAsync(1));
 
         // Act
-        var response = _service.DeleteById(1);
+        var response = await _service.DeleteByIdAsync(1);
 
         // Assert 
         response.Should().BeNull();

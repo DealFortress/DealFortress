@@ -1,6 +1,6 @@
-import { NoticeRequest } from '@app/shared/models/notice-request.model';
-import { Notice } from '@app/shared/models/notice.model';
-import { Product } from '@app/shared/models/product.model';
+import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
+import { Notice } from '@app/shared/models/notice/notice.model';
+import { Product } from '@app/shared/models/product/product.model';
 import { SoldStatus } from '@app/shared/models/sold-status.model';
 import { createAction, props } from '@ngrx/store';
 
