@@ -1,11 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { postConversationRequest, postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
-import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
-import { ConversationRequest } from '@app/shared/models/conversation/conversation-request.model';
+import { Component, Input } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { MessageRequest } from '@app/shared/models/message/message-request';
-import { Notice } from '@app/shared/models/notice/notice.model';
-import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
+
 import { Store } from '@ngrx/store';
 
 @Component({

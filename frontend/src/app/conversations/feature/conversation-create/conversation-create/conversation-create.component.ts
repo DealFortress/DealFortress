@@ -69,9 +69,9 @@ export class ConversationCreateComponent implements OnInit{
   redirectToConversation() {
     this.store.select(getConversationByNoticeId(this.notice.id)).subscribe(createdConversation => {
       if (createdConversation == undefined) {
-        this.router.navigate(['messages/']);
+        this.router.navigate(['conversations/']);
       } else if (createdConversation) {
-        this.router.navigate(['messages/', createdConversation.id]);
+        this.router.navigate(['conversations/', createdConversation.id]);
       }
     })
   }
