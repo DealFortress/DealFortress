@@ -87,8 +87,12 @@ $frontend-theme: mat.define-dark-theme((
 }
 
 .min-h-screen {
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 150px);
 }
+
+.h-screen {
+  height: calc(100vh - 150px);
+}l
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled){
   background-color: transparent !important;
@@ -105,7 +109,7 @@ $frontend-theme: mat.define-dark-theme((
   border: none;
 }
  #fullscreen {
-  height:calc(100vh - 150px);
+  height:calc(100vh - 100px);
   width:100%;
   position:  absolute;
   top: 0;
@@ -135,6 +139,32 @@ $frontend-theme: mat.define-dark-theme((
     transform: translateZ(0);
     animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
   }
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 0px;
+  background-color: #F5F5F5;
+}
+
+.hidden-scrollbar ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  @apply bg-darkblue;
+}
+
 
 
   @keyframes mltShdSpin {

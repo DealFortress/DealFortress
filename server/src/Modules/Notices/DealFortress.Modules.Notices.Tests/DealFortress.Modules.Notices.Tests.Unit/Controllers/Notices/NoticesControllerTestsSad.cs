@@ -33,39 +33,39 @@ public class NoticeControllersTestsSad
 
 
     [Fact]
-    public void getNotice_returns_not_found_when_service_returns_null()
+    public async Task getNotice_returns_not_found_when_service_returns_nullAsync()
     {
         // Arrange
-        _service.Setup(service => service.GetById(1));
+        _service.Setup(service => service.GetByIdAsync(1));
 
         // Act
-        var httpResponse = _controller.GetNotice(1);
+        var httpResponse = await _controller.GetNoticeAsync(1);
 
         // Assert 
         httpResponse.Result.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
-    public void putNotice_returns_not_found_when_service_returns_null()
+    public async Task putNotice_returns_not_found_when_service_returns_nullAsync()
     {
         // Arrange
-        _service.Setup(service => service.PutById(1, _request));
+        _service.Setup(service => service.PutByIdAsync(1, _request));
 
         // Act
-        var httpResponse = _controller.PutNotice(1, _request);
+        var httpResponse = await _controller.PutNoticeAsync(1, _request);
 
         // Assert 
         httpResponse.Result.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
-    public void deleteNotice_returns_not_found_when_service_returns_null()
+    public async void deleteNotice_returns_not_found_when_service_returns_null()
     {
         // Arrange
-        _service.Setup(service => service.DeleteById(1));
+        _service.Setup(service => service.DeleteByIdAsync(1));
 
         // Act
-        var httpResponse = _controller.DeleteNotice(1);
+        var httpResponse = await _controller.DeleteNoticeAsync(1);
 
         // Assert 
         httpResponse.Should().BeOfType<NotFoundResult>();

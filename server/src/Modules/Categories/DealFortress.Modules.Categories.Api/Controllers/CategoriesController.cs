@@ -21,17 +21,17 @@ public class CategoriesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<CategoryResponse>> GetCategories()
+    public async Task<ActionResult<IEnumerable<CategoryResponse>>> GetCategoriesAsync()
     {
-        return Ok(_service.GetAll());
+        return Ok(await _service.GetAllAsync());
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<CategoryResponse> GetCategory(int id)
+    public async Task<ActionResult<CategoryResponse>> GetCategoryAsync(int id)
     {
-        var response = _service.GetById(id);
+        var response = await _service.GetByIdAsync(id);
 
         return response is null ? NotFound() : Ok(response);
     }
@@ -41,16 +41,17 @@ public class CategoriesController : ControllerBase
     [Authorize(Policy = "PostCategories")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<CategoryResponse> PostCategory(CategoryRequest request)
+    public async Task<ActionResult<CategoryResponse>> PostCategoryAsync(CategoryRequest request)
     {
-        var response = _service.Post(request);
+        var response = await _service.PostAsync(request);
         return CreatedAtAction("GetCategory", new { id = response.Id }, response);
     }
 
     [NonAction]
-    public virtual string? GetCategoryNameById(int id)
+    public virtual async Task<string?> GetCategoryNameById(int id)
     {
-        return _service.GetById(id)?.Name;
+        var entity = await _service.GetByIdAsync(id);
+        return entity?.Name;
     }
 }
 

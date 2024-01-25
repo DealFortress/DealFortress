@@ -2,7 +2,7 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
-using NuGet.Common;
+using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -10,22 +10,26 @@ public class NoticesService : INoticesService
 {
     private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
-    public NoticesService(IProductsService productsService, INoticesRepository repo)
+    private readonly UsersController _usersController;
+    public NoticesService(IProductsService productsService, INoticesRepository repo, UsersController usersController)
     {
+        _usersController = usersController;
         _productsService = productsService;
         _repo = repo;
     }
     
-    public IEnumerable<NoticeResponse> GetAll()
+    public async Task<IEnumerable<NoticeResponse>> GetAllAsync()
     {
-        return _repo.GetAll()
-                    .Select(ToNoticeResponseDTO)
-                    .ToList();
+        var entities = await _repo.GetAllAsync();
+        
+        return entities
+                .Select(ToNoticeResponseDTO)
+                .ToList();
     }
 
-    public NoticeResponse? GetById(int id)
+    public async Task<NoticeResponse?> GetByIdAsync(int id)
     {
-        var notice = _repo.GetById(id);
+        var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
         {
@@ -35,11 +39,18 @@ public class NoticesService : INoticesService
         return ToNoticeResponseDTO(notice);
     } 
 
-    public NoticeResponse? PutById(int id, NoticeRequest request)
+    public async Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request)
     {
-        var notice = _repo.GetById(id);
+        var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
+        {
+            return null;
+        }
+
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(notice.UserId);
+
+        if (!isCreator)
         {
             return null;
         }
@@ -48,29 +59,36 @@ public class NoticesService : INoticesService
         var updatedNotice = ToNotice(request);
         updatedNotice.Id = notice.Id;
 
-        _repo.Add(updatedNotice);
+        await _repo.AddAsync(updatedNotice);
         _repo.Complete();
 
 
         return ToNoticeResponseDTO(updatedNotice);
     }
 
-    public NoticeResponse Post(NoticeRequest request)
+    public async Task<NoticeResponse> PostAsync(NoticeRequest request)
     {
         var notice = ToNotice(request);
 
-        _repo.Add(notice);
+        await _repo.AddAsync(notice);
 
         _repo.Complete();
 
         return ToNoticeResponseDTO(notice);
     }
 
-    public Notice? DeleteById(int id)
+    public async Task<Notice?> DeleteByIdAsync(int id)
     {
-        var notice = _repo.GetById(id);
+        var notice = await _repo.GetByIdAsync(id);
 
         if (notice is null)
+        {
+            return null;
+        }
+
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(notice.UserId);
+
+        if (!isCreator)
         {
             return null;
         }
@@ -127,7 +145,7 @@ public class NoticesService : INoticesService
 
         if (request.ProductRequests is not null)
         {
-            notice.Products = request.ProductRequests.Select(product => _productsService.ToProduct(product, notice)).ToList();
+            notice.Products = request.ProductRequests.Select(productRequest => _productsService.ToProduct(productRequest, notice)).ToList();
         }
         
         return notice;

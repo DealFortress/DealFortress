@@ -30,7 +30,9 @@ public static class NoticesTestModels
             Name = "test",
             Price = 1,
             HasReceipt = true,
-            Images = new List<Image>(),
+            Images = new List<Image>(
+                
+            ),
             SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Warranty = "month",
@@ -38,6 +40,11 @@ public static class NoticesTestModels
             Condition = Condition.New,
             Notice = notice
         });
+
+        notice.Products.Select(product => {
+            product.Images?.Add(new Image(){Url= "testUrl", Product=product});
+            return product;
+            });
 
         return notice;
     }
