@@ -26,7 +26,7 @@ public class NoticesServiceTestsSad
         _notice = NoticesTestModels.CreateNotice();
 
         var productsService = new Mock<IProductsService>();
-        var usersController = new Mock<UsersController>();
+        var usersController = new Mock<UsersController>(null);
 
         _service = new NoticesService(productsService.Object, _repo.Object, usersController.Object);
     }

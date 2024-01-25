@@ -145,7 +145,7 @@ public class NoticesService : INoticesService
 
         if (request.ProductRequests is not null)
         {
-            notice.Products = request.ProductRequests.Select(product => _productsService.ToProduct(product, notice)).ToList();
+            notice.Products = request.ProductRequests.Select(productRequest => _productsService.ToProduct(productRequest, notice)).ToList();
         }
         
         return notice;

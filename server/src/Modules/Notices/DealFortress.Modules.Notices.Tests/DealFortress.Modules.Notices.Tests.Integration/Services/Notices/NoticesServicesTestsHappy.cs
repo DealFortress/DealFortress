@@ -37,9 +37,9 @@ public class NoticesServicesTestsHappy
 
         _productsService = new Mock<IProductsService>();
 
-        var usersController = new Mock<UsersController>().Object;
+        var usersController = new Mock<UsersController>(null);
 
-        return new NoticesService(_productsService.Object, noticesRepository, usersController);
+        return new NoticesService(_productsService.Object, noticesRepository, usersController.Object);
     }
 
     [Fact]

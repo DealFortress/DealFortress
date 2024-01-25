@@ -59,6 +59,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
          await _service.PutByIdAsync(1, _request);
@@ -73,6 +74,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
          await _service.PutByIdAsync(1, _request);
@@ -86,6 +88,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
         var response =  await _service.PutByIdAsync(1, _request);
@@ -99,7 +102,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
          await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
@@ -115,7 +118,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
          await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
@@ -129,7 +132,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
         var response =  await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
@@ -143,7 +146,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, "")).Returns(Task.FromResult<bool>(true));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
         var response =  await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
@@ -158,6 +161,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
          await _service.DeleteByIdAsync(1);
@@ -172,6 +176,7 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
+        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
 
         // Act
         var response =  await _service.DeleteByIdAsync(1);

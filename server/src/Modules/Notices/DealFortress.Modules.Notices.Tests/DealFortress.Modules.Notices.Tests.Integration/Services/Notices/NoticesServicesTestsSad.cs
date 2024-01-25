@@ -33,7 +33,7 @@ public class NoticesServicesTestsSad
 
         var productsService = new Mock<IProductsService>().Object;
 
-        var usersController = new Mock<UsersController>().Object;
+        var usersController = new Mock<UsersController>(null).Object;
 
 
         return new NoticesService(productsService, noticesRepository, usersController);

@@ -25,8 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../DealFortress.Modules.Users.Core/DealFortress.Modules.Users.Core.csproj" />
-    <ProjectReference Include="../DealFortress.Modules.Users.Api/DealFortress.Modules.Users.Api.csproj" />
+    <ProjectReference Include="../../DealFortress.Modules.Users.Core/DealFortress.Modules.Users.Core.csproj" />
+    <ProjectReference Include="../../DealFortress.Modules.Users.Api/DealFortress.Modules.Users.Api.csproj" />
+    
+
   </ItemGroup>
 
 </Project>

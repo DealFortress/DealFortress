@@ -43,11 +43,11 @@ public class UsersServicesTestsHappy
     }
 
     [Fact]
-    public void GetById_should_return_the_notice_matching_id()
+    public async Task GetById_should_return_the_notice_matching_idAsync()
     {
         // Act
 
-        var noticeResponse = _service.GetById(1);
+        var noticeResponse = await _service.GetByIdAsync(1);
 
         // Assert 
         noticeResponse?.Username.Should().Be("User1");
@@ -55,33 +55,12 @@ public class UsersServicesTestsHappy
     }
 
     [Fact]
-    public void Post_should_add_notice_in_db()
+    public async Task Post_should_add_notice_in_dbAsync()
     {
         // Act
-        var postResponse = _service.Post(_request);
+        var postResponse = await _service.PostAsync(_request);
 
         // Assert
         Fixture?.Context.Users.Find(postResponse?.Id)?.Username.Should().Be(_request.Username);
     }
-
-    // [Fact]
-    // public void PutById_should_replace_notice_in_db()
-    // {
-    //     // Act
-    //     var putResponse = _service.PutById(1, _request);
-
-    //     // Assert
-    //     Fixture?.Context.Users.Find(putResponse?.Id)?.Title.Should().Be(_request.Title);
-    // }  
-
-    // [Fact]
-    // public void DeleteById_should_remove_notice_in_db()
-    // {
-    //     // Act
-    //     _service.DeleteById(1);
-
-    //     // Assert 
-    //     Fixture?.Context.Users.Find(1).Should().BeNull();
-    // }
-
 }
