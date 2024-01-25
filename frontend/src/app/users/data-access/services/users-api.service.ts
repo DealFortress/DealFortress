@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { UserRequest } from "@app/shared/models/user/user-request.model";
-import { User } from "@app/shared/models/user/user.model";
+import { UserRequest } from "@app/shared/models/user-request.model";
+import { User } from "@app/shared/models/user.model";
 import { environment } from "environments/environment.production";
 import { Observable } from "rxjs";
 
@@ -13,13 +13,13 @@ export class UsersApiService {
 
     constructor(private httpClient: HttpClient) {}
 
-    getLoggedInUserByIdAPI(id: number): Observable<User> {
+    getUserByIdAPI(id: number): Observable<User> {
         return this.httpClient
             .get(`${this.usersUrl}/${id}?idType=id`)
             .pipe((data) => data as Observable<User>);
     }
 
-    getLoggedInUserByAuthIdAPI(authId : string): Observable<User> {
+    getUserByAuthIdAPI(authId : string): Observable<User> {
         return this.httpClient
             .get(`${this.usersUrl}/${authId}?idType=authid`)
             .pipe((data) => data as Observable<User>);

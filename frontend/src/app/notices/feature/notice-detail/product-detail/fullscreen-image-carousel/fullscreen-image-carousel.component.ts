@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
-import { Image } from '@app/shared/models/image/image.model'
+import { Image } from '@app/shared/models/image.model'
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,

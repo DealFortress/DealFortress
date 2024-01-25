@@ -21,18 +21,18 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync()
+    public ActionResult<IEnumerable<ProductResponse>> GetProducts()
     {
-        return Ok(await _service.GetAllAsync());
+        return Ok(_service.GetAll());
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> PatchProductSoldStatusAsync(int id, SoldStatus soldStatus)
+    public IActionResult PatchProductSoldStatus(int id, SoldStatus soldStatus)
     {
-        var response = await _service.PatchSoldStatusByIdAsync(id, soldStatus);
+        var response = _service.PatchSoldStatusById(id, soldStatus);
 
         return response is null ? NotFound() : Ok(response);
     }
@@ -41,9 +41,9 @@ public class ProductsController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProductAsync(int id)
+    public IActionResult DeleteProduct(int id)
     {
-        var product = await _service.DeleteByIdAsync(id);
+        var product = _service.DeleteById(id);
 
         return product is null ? NotFound() : NoContent();
     }

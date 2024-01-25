@@ -2,7 +2,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { NoticesApiService } from '../services/notices-api/notices-api.service';
 import { ProductsApiService } from '../services/products-api/products-api.service';
 
-import { Notice } from '@app/shared/models/notice/notice.model';
+import { Notice } from '@app/shared/models/notice.model';
 import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {    
@@ -16,7 +16,7 @@ import {
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { Update } from '@ngrx/entity';
-import { Product } from '@app/shared/models/product/product.model';
+import { Product } from '@app/shared/models/product.model';
 
 @Injectable()
 export class NoticesEffects {
@@ -49,10 +49,12 @@ export class NoticesEffects {
         ofType(postNoticeRequest),
         mergeMap(action =>
             this.noticesApiService.postNoticeAPI(action.request).pipe(
-                map(notice => {
-                    ShowAlert({ message: 'Created successfully.', actionresult: 'pass' });
-                    return postNoticeSuccess({ notice: notice as Notice });
-                }),
+                mergeMap(notice => 
+                        of(
+                        postNoticeSuccess({ notice: notice as Notice }),
+                        ShowAlert({ message: 'Created successfully.', actionresult: 'pass' })                  
+                        )
+                    ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to create notice.', actionresult: 'fail' }))),
                 )
             )
@@ -64,11 +66,11 @@ export class NoticesEffects {
         ofType(putNoticeRequest),
         mergeMap(action =>
             this.noticesApiService.putNoticeAPI(action.request, action.noticeId).pipe(
-                map(notice => {
-                    ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' });                 
-                    return putNoticeSuccess({ notice: notice as Notice });
-                }
-                    
+                mergeMap(notice => 
+                    of(
+                    putNoticeSuccess({ notice: notice as Notice }),
+                    ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' })                    
+                    )
                 ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to update notice.', actionresult: 'fail' }))),
                 )
@@ -81,10 +83,12 @@ export class NoticesEffects {
         ofType(deleteNoticeRequest),
         mergeMap(action =>
             this.noticesApiService.deleteNoticeAPI(action.noticeId).pipe(
-                map(() => {
-                    ShowAlert({ message: 'Deleted successfully.', actionresult: 'pass' });                   
-                    return deleteNoticeSuccess({noticeId: action.noticeId});
-                }),
+                mergeMap(() => 
+                        of(
+                        deleteNoticeSuccess({noticeId: action.noticeId}),
+                        ShowAlert({ message: 'Deleted successfully.', actionresult: 'pass' })                    
+                        )
+                    ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to delete notice.', actionresult: 'fail' }))),
                 )
             )
@@ -97,10 +101,12 @@ export class NoticesEffects {
         ofType(patchProductSoldStatusRequest),
         mergeMap(action =>
             this.productsApiService.patchProductSoldStatusAPI(action.productId, action.soldStatus).pipe(
-                map(product => {
-                    ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' });
-                    return patchProductSoldStatusSuccess({ product: product as Product });
-                }),
+                mergeMap(product => 
+                        of(
+                            patchProductSoldStatusSuccess({ product: product as Product }),
+                            ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' })                    
+                        )
+                    ),
                 catchError((_error) => of(ShowAlert({ message: 'Failed to update sold status.', actionresult: 'fail' }))),
                 )
             )

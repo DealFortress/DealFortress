@@ -33,69 +33,69 @@ public class NoticeControllersTestsHappy
 
 
     [Fact]
-    public async void GetNotices_should_return_ok()
+    public void GetNotices_should_return_ok()
     {
         // Arrange
-        var list = new List<NoticeResponse> { _response };
-        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<NoticeResponse>>(list));
+        var content = new List<NoticeResponse> { _response };
+        _service.Setup(service => service.GetAll()).Returns(content);
         // Act
-        var httpResponses = await _controller.GetNoticesAsync();
+        var httpResponses = _controller.GetNotices();
         // Assert 
         httpResponses.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public async Task GetNotices_return_list_of_response_when_server_returns_responsesAsync()
+    public void GetNotices_return_list_of_response_when_server_returns_responses()
     {
         // Arrange
         var list = new List<NoticeResponse> { _response };
-        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<NoticeResponse>>(list));
+        _service.Setup(service => service.GetAll()).Returns(list);
         // Act
-        var httpResponses = await _controller.GetNoticesAsync();
+        var httpResponses = _controller.GetNotices();
         // Assert 
         var content = httpResponses.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<List<NoticeResponse>>();
     }
     [Fact]
-    public async Task GetNotice_return_ok_when_service_return_responseAsync()
+    public void GetNotice_return_ok_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.GetByIdAsync(1)).Returns(Task.FromResult<NoticeResponse?>(_response));
+        _service.Setup(service => service.GetById(1)).Returns(_response);
         // Act
-        var httpResponse = await _controller.GetNoticeAsync(1);
+        var httpResponse = _controller.GetNotice(1);
         // Assert 
         httpResponse.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public async Task GetNotice_return_response_when_server_returns_responseAsync()
+    public void GetNotice_return_response_when_server_returns_response()
     {
         // Arrange
-        _service.Setup(service => service.GetByIdAsync(1)).Returns(Task.FromResult<NoticeResponse?>(_response));
+        _service.Setup(service => service.GetById(1)).Returns(_response);
         // Act
-        var httpResponse = await _controller.GetNoticeAsync(1);
+        var httpResponse = _controller.GetNotice(1);
         // Assert 
         var content = httpResponse.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<NoticeResponse>();
     }
     [Fact]
-    public async Task PutNotice_returns_response_when_service_return_responseAsync()
+    public void PutNotice_returns_response_when_service_return_response()
     {
         // Arrange
-        _service.Setup(service => service.PutByIdAsync(1, _request)).Returns(Task.FromResult<NoticeResponse?>(_response));
+        _service.Setup(service => service.PutById(1, _request)).Returns(_response);
         // Act
-        var httpResponse = await _controller.PutNoticeAsync(1, _request);
+        var httpResponse = _controller.PutNotice(1, _request);
         // Assert 
         var content = httpResponse.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<NoticeResponse>();
     }
     [Fact]
-    public async Task DeleteNotice_should_return_no_contentAsync()
+    public void DeleteNotice_should_return_no_content()
     {
         // Arrange
-        _service.Setup(service => service.DeleteByIdAsync(1)).Returns(Task.FromResult<Notice?>(_notice));
+        _service.Setup(service => service.DeleteById(1)).Returns(_notice);
         // Act
-        var httpResponse = await _controller.DeleteNoticeAsync(1);
+        var httpResponse = _controller.DeleteNotice(1);
         // Assert 
         httpResponse.Should().BeOfType<NoContentResult>();
     }

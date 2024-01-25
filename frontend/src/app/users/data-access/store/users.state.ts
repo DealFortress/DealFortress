@@ -1,9 +1,11 @@
-import { User } from "@app/shared/models/user/user.model";
+import { sortByDate } from "@app/notices/data-access/store/notices.state";
+import { User } from "@app/shared/models/user.model";
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 
 
 export interface UsersState extends EntityState<User> {
-    loggedInUser?: User,
+    user?: User,
+    currentlyShownUser?: User,
     errorMessage?: string,
     statusCode?: number
 }

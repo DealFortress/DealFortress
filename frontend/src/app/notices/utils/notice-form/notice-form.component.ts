@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
+import { NoticeRequest } from '@app/shared/models/notice-request.model';
 import { AuthService} from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
-import {getLoggedInUserId } from '@app/users/data-access/store/users.selectors';
+import {getUserId } from '@app/users/data-access/store/users.selectors';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { of } from 'rxjs';
 import { SoldStatus } from '@app/shared/models/sold-status.model';
@@ -33,7 +33,7 @@ export class NoticeFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.store.select(getLoggedInUserId).subscribe(id => this.creatorId = id)
+    this.store.select(getUserId).subscribe(id => this.creatorId = id)
 
     window.scroll({
       top: 0,

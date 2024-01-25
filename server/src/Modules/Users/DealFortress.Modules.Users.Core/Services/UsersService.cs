@@ -15,12 +15,11 @@ public class UsersService : IUsersService
     {
         _repo = repo;
         _httpContext = httpContext;
-        
     }
 
-    public async Task<UserResponse?> GetByIdAsync(int id)
+    public UserResponse? GetById(int id)
     {
-        var user = await _repo.GetByIdAsync(id);
+        var user = _repo.GetById(id);
 
         if (user is null)
         {
@@ -30,9 +29,9 @@ public class UsersService : IUsersService
         return ToUserResponseDTO(user);
     }
 
-    public async Task<UserResponse?> GetByAuthIdAsync(string authId)
+    public UserResponse? GetByAuthId(string authId)
     {
-        var user = await _repo.GetByAuthIdAsync(authId);
+        var user = _repo.GetByAuthId(authId);
 
         if (user is null)
         {
@@ -41,11 +40,11 @@ public class UsersService : IUsersService
 
         return ToUserResponseDTO(user);
     }
-    public async Task<UserResponse> PostAsync(UserRequest request)
+    public UserResponse Post(UserRequest request)
     {
         var user = ToUser(request);
 
-        await _repo.AddAsync(user);
+        _repo.Add(user);
 
         _repo.Complete();
 
@@ -57,12 +56,7 @@ public class UsersService : IUsersService
         return _httpContext?.HttpContext?.User.Identity?.Name!;
     }
 
-    public async Task<string?> GetAuthIdByUserIdAsync(int id)
-    {
-        var user = await _repo.GetByIdAsync(id);
-
-        return user?.AuthId;
-    }
+    public string? GetAuthIdByUserId(int id) => _repo.GetById(id)?.AuthId;
     public UserResponse ToUserResponseDTO(User user)
     {
         var response = new UserResponse()

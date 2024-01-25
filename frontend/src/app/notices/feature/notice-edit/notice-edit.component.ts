@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { putNoticeRequest } from '@app/notices/data-access/store/notices.actions';
-import { getNoticeById, getLoggedInUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
-import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
-import { Product } from '@app/shared/models/product/product.model';
-import { Image } from '@app/shared/models/image/image.model';
+import { getNoticeById, getUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';
+import { NoticeRequest } from '@app/shared/models/notice-request.model';
+import { Product } from '@app/shared/models/product.model';
+import { Image } from '@app/shared/models/image.model';
 import { Store } from '@ngrx/store';
-import { Notice } from '@app/shared/models/notice/notice.model';
+import { Notice } from '@app/shared/models/notice.model';
 
 @Component({
   selector: 'app-notice-edit',

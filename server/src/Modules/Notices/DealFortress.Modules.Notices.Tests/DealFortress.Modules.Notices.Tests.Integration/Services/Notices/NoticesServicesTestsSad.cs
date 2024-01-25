@@ -5,8 +5,8 @@ using DealFortress.Modules.Notices.Core.Services;
 using DealFortress.Modules.Notices.Tests.Integration.Fixture;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
+using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Tests.Shared;
-using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -29,41 +29,38 @@ public class NoticesServicesTestsSad
 
         Fixture = new NoticesFixture();
 
-        var noticesRepository = new NoticesRepository(Fixture.Context);
+        var repo = new NoticesRepository(Fixture.Context);
 
-        var productsService = new Mock<IProductsService>().Object;
+        var productsService = new Mock<IProductsService>();
 
-        var usersController = new Mock<UsersController>(null).Object;
-
-
-        return new NoticesService(productsService, noticesRepository, usersController);
+        return new NoticesService(productsService.Object, repo);
     }
 
     [Fact]
-    public async Task GetById_returns_null_when_notice_is_not_foundAsync()
+    public void GetById_returns_null_when_notice_is_not_found()
     {
         // Act
-        var noticeResponses = await _service.GetByIdAsync(-1);
+        var noticeResponses = _service.GetById(-1);
 
         // Assert 
         noticeResponses.Should().Be(null);
     }
 
     [Fact]
-    public async Task PutById_returns_null_when_notice_is_not_foundAsync()
+    public void PutById_returns_null_when_notice_is_not_found()
     {
         // Act
-        var response = await _service.PutByIdAsync(-1, _request);
+        var response = _service.PutById(-1, _request);
 
         // Assert
         response.Should().BeNull();
     }
 
     [Fact]
-    public async Task DeleteById_returns_null_when_notice_is_not_foundAsync()
+    public void DeleteById_returns_null_when_notice_is_not_found()
     {
         // Act
-        var response = await _service.DeleteByIdAsync(-1);
+        var response = _service.DeleteById(-1);
 
         // Assert
         response.Should().BeNull();

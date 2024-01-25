@@ -23,13 +23,13 @@ public class ProductControllersTestsSad
     }
 
     [Fact]
-    public async void deleteNotice_returns_not_found_when_service_returns_null()
+    public void deleteNotice_returns_not_found_when_service_returns_null()
     {
         // Arrange
-        _service.Setup(service => service.DeleteByIdAsync(1));
+        _service.Setup(service => service.DeleteById(1));
 
         // Act
-        var httpResponse = await _controller.DeleteProductAsync(1);
+        var httpResponse = _controller.DeleteProduct(1);
 
         // Assert 
         httpResponse.Should().BeOfType<NotFoundResult>();

@@ -5,15 +5,15 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface INoticesService
 {
-    Task<IEnumerable<NoticeResponse>> GetAllAsync();
+    IEnumerable<NoticeResponse> GetAll();
 
-    Task<NoticeResponse?> GetByIdAsync(int id);
+    NoticeResponse? GetById(int id);
 
-    Task<NoticeResponse> PostAsync(NoticeRequest request);
+    NoticeResponse Post(NoticeRequest request);
 
-    Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request);
+    NoticeResponse? PutById(int id, NoticeRequest request);
 
-    Task<Notice?> DeleteByIdAsync(int id);
+    Notice? DeleteById(int id);
 
     NoticeResponse ToNoticeResponseDTO(Notice notice);
 
