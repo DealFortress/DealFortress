@@ -9,7 +9,6 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using Microsoft.Build.Framework;
-using DealFortress.Modules.Users.Api.Controllers;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -33,31 +32,29 @@ public class NoticesServicesTestsHappy
 
         Fixture = new NoticesFixture();
 
-        var noticesRepository = new NoticesRepository(Fixture.Context);
+        var repo = new NoticesRepository(Fixture.Context);
 
         _productsService = new Mock<IProductsService>();
 
-        var usersController = new Mock<UsersController>(null);
-
-        return new NoticesService(_productsService.Object, noticesRepository, usersController.Object);
+        return new NoticesService(_productsService.Object, repo);
     }
 
     [Fact]
-    public async void GetAll_should_return_all_notices()
+    public void GetAll_should_return_all_notices()
     {
         // Act
-        var noticeResponses = await _service.GetAllAsync();
+        var noticeResponses = _service.GetAll();
 
         // Assert 
         noticeResponses.Count().Should().Be(2);
     }
 
     [Fact]
-    public async Task GetById_should_return_the_notice_matching_idAsync()
+    public void GetById_should_return_the_notice_matching_id()
     {
         // Act
 
-        var noticeResponse = await _service.GetByIdAsync(1);
+        var noticeResponse = _service.GetById(1);
 
         // Assert 
         noticeResponse?.Title.Should().Be("title 1");
@@ -65,38 +62,38 @@ public class NoticesServicesTestsHappy
     }
 
     [Fact]
-    public async void Post_should_add_notice_in_db()
+    public void Post_should_add_notice_in_db()
     {
         // Arrange
         var product = NoticesTestModels.CreateNotice().Products!.First();
         _productsService?.Setup(service => service.ToProduct(It.IsAny<ProductRequest>(), It.IsAny<Notice>())).Returns(product);
 
         // Act
-        var postResponse = await _service.PostAsync(_request);
+        var postResponse = _service.Post(_request);
 
         // Assert
         Fixture?.Context.Notices.Find(postResponse?.Id)?.Title.Should().Be(_request.Title);
     }
 
     [Fact]
-    public async void PutById_should_replace_notice_in_db()
+    public void PutById_should_replace_notice_in_db()
     {
         // Arrange
         var product = NoticesTestModels.CreateNotice().Products!.First();
         _productsService?.Setup(service => service.ToProduct(It.IsAny<ProductRequest>(), It.IsAny<Notice>())).Returns(product);
 
         // Act
-        var putResponse = await _service.PutByIdAsync(1, _request);
+        var putResponse = _service.PutById(1, _request);
 
         // Assert
         Fixture?.Context.Notices.Find(putResponse?.Id)?.Title.Should().Be(_request.Title);
     }
 
     [Fact]
-    public async Task DeleteById_should_remove_notice_in_dbAsync()
+    public void DeleteById_should_remove_notice_in_db()
     {
         // Act
-        await _service.DeleteByIdAsync(1);
+        _service.DeleteById(1);
 
         // Assert 
         Fixture?.Context.Notices.Find(1).Should().BeNull();

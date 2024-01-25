@@ -1,0 +1,10 @@
+<a class="card w-96 bg-neutral text-neutral-content w-full" [routerLink]="['/notices', notice.id]" >
+    <div class="card-body items-left text-left">
+      <h2 class="card-title">{{notice.title}}</h2>
+      <p>{{notice.description.slice(30)}}...</p>
+      <div class="card-actions justify-end">
+        <p><strong>{{notice.city }}</strong></p>
+        <p class="text-end"><strong>{{minutesSinceCreation}}</strong></p>
+      </div>
+    </div>
+  </a>

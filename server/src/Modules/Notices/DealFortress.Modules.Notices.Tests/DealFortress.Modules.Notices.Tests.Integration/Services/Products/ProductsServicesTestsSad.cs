@@ -39,20 +39,20 @@ public class ProductsServicesTestsSad
     }
 
     [Fact]
-    public async void PutById_returns_null_when_product_is_not_found()
+    public void PutById_returns_null_when_product_is_not_found()
     {
         // Act
-        var response = await _service.PutByIdAsync(-1, _request);
+        var response = _service.PutById(-1, _request);
 
         // Assert
         response.Should().BeNull();
     }
 
     [Fact]
-    public async void DeleteById_returns_null_when_product_is_not_found()
+    public void DeleteById_returns_null_when_product_is_not_found()
     {
         // Act
-        var response = await _service.DeleteByIdAsync(-1);
+        var response = _service.DeleteById(-1);
 
         // Assert
         response.Should().BeNull();

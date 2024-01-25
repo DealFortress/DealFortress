@@ -1,14 +1,15 @@
 import { createReducer, on } from "@ngrx/store";
-import { UsersState, initialState, usersAdapter } from "./users.state";
-import { loadUserByAuthIdError,loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
+import { UsersState, initialState } from "./users.state";
+import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
 
 
 export const usersReducer = createReducer(
     initialState,
     on(loadUserByIdSuccess,(state,action)=>{
-        return usersAdapter.addOne(action.user, {
+        return {
             ...state,
-        });
+            currentlyShownUser: action.user,
+        }
     }),
     on(loadUserByIdError,(state,action)=>{
         return {
@@ -17,10 +18,10 @@ export const usersReducer = createReducer(
         }
     }),
     on(loadUserByAuthIdSuccess,(state,action)=>{
-        return usersAdapter.addOne(action.user, {
+        return {
             ...state,
-            loggedInUser: action.user
-        });
+            user: action.user,
+        }
     }),
     on(loadUserByAuthIdError,(state,action)=>{
         return {
@@ -29,10 +30,10 @@ export const usersReducer = createReducer(
         }
     }),
     on(postUserSuccess, (state, action) => {
-        return usersAdapter.addOne(action.user, {
+        return {
             ...state,
-            loggedInUser: action.user
-        });
+            user: action.user
+        }
     }),
     on(postUserError, (state, action) => {
         return {

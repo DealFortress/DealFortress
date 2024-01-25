@@ -12,7 +12,7 @@ import { NoticeFormComponent } from '@app/notices/utils/notice-form/notice-form.
 import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { NotFoundComponent } from '@app/shared/not-found/not-found.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NoticeCardComponent } from '@app/notices/utils/notice-card/notice-card.component';
+import { NoticeCardComponent } from '@app/notices/feature/notice-list/notice-card/notice-card.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'environments/environment.production';
 import { AuthLoginButtonComponent } from './shared/auth/auth-login-button/auth-login-button.component';
@@ -33,13 +33,7 @@ import {
     faSackDollar as fasSackDollar,
     faFeather as fasFeather,
     faTrashCan as fasTrashCan,
-    faDove as fasDove,
-    faAngleLeft as fasAngleLeft,
-    faAngleRight as fasAngleRight,
   } from '@fortawesome/free-solid-svg-icons';
-import {
-    faMessage as farMessage
-} from '@fortawesome/free-regular-svg-icons';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
@@ -52,7 +46,7 @@ import { UsersEffect } from './users/data-access/store/users.effects';
 import { usersReducer } from './users/data-access/store/users.reducer';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { RequestRetryInterceptor } from './shared/interceptors/request-retry.interceptor';
-import { UserCardComponent } from './users/utils/user-card/user-card.component';
+import { UserCardComponent } from './notices/feature/notice-detail/user-card/user-card.component';
 import { ProductCardComponent } from './notices/feature/notice-detail/product-card/product-card.component';
 import { ProductDetailComponent } from './notices/feature/notice-detail/product-detail/product-detail.component';
 import { ImageCarouselComponent } from './notices/feature/notice-detail/product-detail/image-carousel/image-carousel.component';
@@ -76,80 +70,63 @@ import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/
 import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NoticeListComponent,
-        ErrorComponent,
-        SearchBarComponent,
-        NavBarComponent,
-        LoaderComponent,
-        MainContainerComponent,
-        NoticeFormComponent,
-        NoticeDetailComponent,
-        NotFoundComponent,
-        NoticeCardComponent,
-        AuthLoginButtonComponent,
-        AuthLogoutButtonComponent,
-        PopupCardComponent,
-        UserProfileComponent,
-        ProductDetailComponent,
-        UserCardComponent,
-        ProductCardComponent,
-        ImageCarouselComponent,
-        FullscreenImageCarouselComponent,
-        ProductFormComponent,
-        NoticeCreateComponent,
-        NoticeEditComponent,
-        ConversationDetailComponent,
-        ConversationListComponent,
-        ConversationCardComponent,
-        ConversationCreateComponent,
-        MessagesCreateComponent,
-        MinimalNoticeCardComponent,
-        MessageCardComponent
-    ],
-    providers: [
-        NoticesApiService,
-        CategoriesApiService,
-        UsersApiService,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true }
-    ],
-    bootstrap: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FontAwesomeModule,
-        MaterialModule,
-        FormsModule,
-        HttpClientModule,
-        AsyncPipe,
-        AuthModule.forRoot({
-            domain: environment.auth0Domain!,
-            clientId: environment.auth0ClientId!,
-            authorizationParams: {
-                audience: environment.auth0Audience,
-                redirect_uri: window.location.origin
-            }
-        }),
-        BrowserAnimationsModule,
-        StoreModule.forRoot({
-            noticesState: noticesReducer,
-            userState: usersReducer,
-            categoriesState: categoriesReducer,
-            conversationsState: conversationsReducer,
-            signalr: signalrReducer
-        }),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
-        EffectsModule.forRoot([
-            NoticesEffects,
-            AppEffects,
-            UsersEffect,
-            CategoriesEffects,
-            ConversationsEffects,
-            SignalREffects
-        ]),
-    ]
+  declarations: [
+    AppComponent,
+    NoticeListComponent,
+    ErrorComponent,
+    SearchBarComponent,
+    NavBarComponent,
+    LoaderComponent,
+    MainContainerComponent,
+    NoticeFormComponent,
+    NoticeDetailComponent,
+    NotFoundComponent,
+    NoticeCardComponent,
+    AuthLoginButtonComponent,
+    AuthLogoutButtonComponent,
+    PopupCardComponent,
+    UserProfileComponent,
+    ProductDetailComponent,
+    UserCardComponent,
+    ProductCardComponent,
+    ImageCarouselComponent,
+    FullscreenImageCarouselComponent,
+    ProductFormComponent,
+    NoticeCreateComponent,
+    NoticeEditComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    MaterialModule,
+    FormsModule,
+    HttpClientModule,
+    AsyncPipe,
+    AuthModule.forRoot({
+      domain: environment.auth0Domain!,
+      clientId: environment.auth0ClientId!,
+      authorizationParams: {
+        audience: environment.auth0Audience,
+        redirect_uri: window.location.origin
+      }
+    }),
+    BrowserAnimationsModule,
+    StoreModule.forRoot({
+      noticesState: noticesReducer,
+      userState: usersReducer,
+      categoriesState: categoriesReducer
+    }),
+    EffectsModule.forRoot([NoticesEffects, AppEffects, UsersEffect, CategoriesEffects]),
+  ],
+  providers: [
+    NoticesApiService, 
+    CategoriesApiService,
+    UsersApiService, 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 
@@ -163,11 +140,7 @@ export class AppModule {
       fasCoins,
       fasSackDollar,
       fasFeather,
-      fasTrashCan,
-      fasDove,
-      fasAngleLeft,
-      fasAngleRight,
-      farMessage
+      fasTrashCan
     );
   }
  }

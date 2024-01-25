@@ -1,5 +1,5 @@
-import { UserRequest } from '@app/shared/models/user/user-request.model';
-import { User } from '@app/shared/models/user/user.model';
+import { UserRequest } from '@app/shared/models/user-request.model';
+import { User } from '@app/shared/models/user.model';
 import { createAction, props } from '@ngrx/store';
 
 export const LOAD_USER_BY_ID_REQUEST = '[Users] load user by id request';

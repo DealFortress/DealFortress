@@ -1,41 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
 import { deleteNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
-import { Notice } from '@app/shared/models/notice/notice.model';
-import { Product } from '@app/shared/models/product/product.model';
-import { User } from '@app/shared/models/user/user.model';
+import { Notice } from '@app/shared/models/notice.model';
+import { Product } from '@app/shared/models/product.model';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
-import { getUserById, getLoggedInUser} from '@app/users/data-access/store/users.selectors';
-import { AuthService } from '@auth0/auth0-angular';
+import { getCurrentlyShownUser, getUserId} from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-notice-detail',
   templateUrl: './notice-detail.component.html',
   styleUrls: ['./notice-detail.component.css']
 })
-export class NoticeDetailComponent implements OnInit{
+export class NoticeDetailComponent{
   id = this.route.snapshot.paramMap.get('id');
   notice$ = this.store.select(getNoticeById(+this.id!));
-  creator$? : Observable<User | undefined>;
+  creator$ = this.store.select(getCurrentlyShownUser);
   selectedProduct? : Product; 
-  currentUser$ = this.store.select(getLoggedInUser);
+  currentUserId$ = this.store.select(getUserId);
   showDeletePopup = false;
-  toggleMessagePopup = false;
 
-  constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router, public authService: AuthService) {
-  }
-  
-  ngOnInit(): void {
+  constructor(private store: Store<{notices: Notice[]}>, private route: ActivatedRoute, private router: Router) {
     this.notice$.subscribe(notice => {
       if (notice) {
-        this.store.dispatch(loadUserByIdRequest({id: notice.userId}));
-        this.selectedProduct = notice.products[0];
-
-        this.creator$ = this.store.select(getUserById(notice.userId));
+        this.store.dispatch(loadUserByIdRequest({id: notice.userId}))
+        this.selectedProduct = notice.products[0]
       }
     })
   }
@@ -52,26 +42,4 @@ export class NoticeDetailComponent implements OnInit{
     this.store.dispatch(deleteNoticeRequest({noticeId: +this.id!}))
     this.router.navigate(['/']);
   }
-
-  handleMessagePopup() {
-    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        this.dispatchMessage()
-      } else {
-        this.authService.loginWithPopup()
-      }
-    })
-  }
-
-  dispatchMessage() {
-    this.store.select(getConversationByNoticeId(+this.id!)).subscribe(existingConversation => {
-      if (existingConversation == undefined ) {
-        this.toggleMessagePopup = true;
-        return;
-      } else if (existingConversation) {
-        this.router.navigate(['conversations/', existingConversation.id]);
-      }
-    })
-  }
-      
 }

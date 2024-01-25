@@ -3,12 +3,12 @@ namespace DealFortress.Shared.Abstractions.Repositories;
 
 public interface IRepository<T> : IDisposable where T : class
 {
-    Task<IEnumerable<T>> GetAllAsync();
-    Task<T?> GetByIdAsync(int id);
-    Task DeleteAsync(int id);
+    IEnumerable<T> GetAll();
+    T? GetById(int id);
+    void Delete(int id);
 
-    Task AddAsync(T entity);
-    Task AddRangeAsync(IEnumerable<T> entities);
+    void Add(T entity);
+    void AddRange(IEnumerable<T> entities);
 
     void Remove(T entity);
     void RemoveRange(IEnumerable<T> entities);

@@ -13,18 +13,16 @@ public class CategoriesService : ICategoriesService
         _repo = repo;
     }
 
-    public async Task<IEnumerable<CategoryResponse>> GetAllAsync()
+    public IEnumerable<CategoryResponse> GetAll()
     {
-        var entities = await _repo.GetAllAsync();
-
-        return entities
-                .Select(ToCategoryResponseDTO)
-                .ToList();
+        return _repo.GetAll()
+                    .Select(category => ToCategoryResponseDTO(category))
+                    .ToList();
     }
 
-    public async Task<CategoryResponse?> GetByIdAsync(int id)
+    public CategoryResponse? GetById(int id)
     {
-        var category = await _repo.GetByIdAsync(id);
+        var category = _repo.GetById(id);
         
         if (category is null)
         {
@@ -34,11 +32,11 @@ public class CategoriesService : ICategoriesService
         return ToCategoryResponseDTO(category);
     }
 
-    public async Task<CategoryResponse> PostAsync(CategoryRequest request) // Refactor for error handling
+    public CategoryResponse Post(CategoryRequest request) // Refactor for error handling
     {
         var category = ToCategory(request);
 
-        await _repo.AddAsync(category);
+        _repo.Add(category);
         _repo.Complete();
 
         return ToCategoryResponseDTO(category);

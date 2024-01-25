@@ -33,10 +33,10 @@ public class ProductsServicesTestsHappy
     }
 
     [Fact]
-    public async Task GetAll_should_return_all_ProductsAsync()
+    public void GetAll_should_return_all_Products()
     {
         // Act
-        var productResponses = await _service.GetAllAsync();
+        var productResponses = _service.GetAll();
 
         // Assert 
         productResponses.Count().Should().Be(2);
