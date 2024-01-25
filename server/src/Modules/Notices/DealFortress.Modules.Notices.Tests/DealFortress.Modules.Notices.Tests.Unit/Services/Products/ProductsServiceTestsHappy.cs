@@ -40,116 +40,113 @@ public class ProductsServiceTestsHappy
 
     
     [Fact]
-    public async Task GetAll_returns_responseAsync()
+    public void GetAll_returns_response()
     {
         // arrange
         var list = new List<Product>() { _product };
-        _repo.Setup(repo => repo.GetAllAsync()).Returns(Task.FromResult<IEnumerable<Product>>(list));
-        _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns(Task.FromResult<string?>("CPU"));
+        _repo.Setup(repo => repo.GetAll()).Returns(list);
+        _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns("CPU");
 
         // act
-        var response = await _service.GetAllAsync();
+        var response = _service.GetAll();
 
         // assert
         response.Should().BeOfType<List<ProductResponse>>();
     }
 
     [Fact]
-    public async Task PutDTO_should_replace_dataAsync()
+    public void PutDTO_should_replace_data()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-         await _service.PutByIdAsync(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
-        _repo.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.AtLeastOnce());
+        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.AtLeastOnce());
         _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.AtLeastOnce());
     }
 
     [Fact]
-    public async Task PutDTO_should_complete_before_sending_back_DTOAsync()
+    public void PutDTO_should_complete_before_sending_back_DTO()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-         await _service.PutByIdAsync(1, _request);
+        _service.PutById(1, _request);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
     }
 
     [Fact]
-    public async Task PutDTO_should_return_responseAsync()
+    public void PutDTO_should_return_response()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-        var response =  await _service.PutByIdAsync(1, _request);
+        var response = _service.PutById(1, _request);
 
         // Assert 
         response.Should().BeOfType<ProductResponse>();
     }
 
     [Fact]
-    public async Task PatchSoldStatusById_should_update_dataAsync()
+    public void PatchSoldStatusById_should_update_data()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
 
         // Act
-         await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
+        _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
-        _repo.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Never());
+        _repo.Verify(repo => repo.Add(It.IsAny<Product>()), Times.Never());
         _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.Never());
         _repo.Verify(repo => repo.Update(It.IsAny<Product>()), Times.AtLeastOnce());
     }
 
     [Fact]
-    public async Task PatchSoldStatusById_should_complete_before_sending_back_DTOAsync()
+    public void PatchSoldStatusById_should_complete_before_sending_back_DTO()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator(1)).Returns(true);
 
         // Act
-         await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
+        _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
     }
 
     [Fact]
-    public async Task PatchSoldStatusById_should_return_responseAsync()
+    public void PatchSoldStatusById_should_return_response()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
 
         // Act
-        var response =  await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
+        var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         response.Should().BeOfType<ProductResponse>();
     }
 
     [Fact]
-    public async Task PatchSoldStatusById_should_flip_isSoldAsync()
+    public void PatchSoldStatusById_should_flip_isSold()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
+        _usersController.Setup(controller => controller.IsUserNoticeCreator( 1)).Returns(true);
 
         // Act
-        var response =  await _service.PatchSoldStatusByIdAsync(1, SoldStatus.Available);
+        var response = _service.PatchSoldStatusById(1, SoldStatus.Available);
 
         // Assert 
         response?.SoldStatus.Should().Be(SoldStatus.Available);
@@ -157,14 +154,13 @@ public class ProductsServiceTestsHappy
 
 
     [Fact]
-    public async Task DeleteById_should_remove_data_and_completeAsync()
+    public void DeleteById_should_remove_data_and_complete()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-         await _service.DeleteByIdAsync(1);
+        _service.DeleteById(1);
 
         // Assert 
         _repo.Verify(repo => repo.Remove(It.IsAny<Product>()), Times.AtLeastOnce());
@@ -172,14 +168,13 @@ public class ProductsServiceTestsHappy
     }
 
     [Fact]
-    public async Task DeleteById_should_return_ProductAsync()
+    public void DeleteById_should_return_Product()
     {
         // arrange
-        _repo.Setup(repo => repo.GetByIdAsync(1)).Returns(Task.FromResult<Product?>(_product));
-        _usersController.Setup(controller => controller.IsUserEntityCreatorAsync(1, null)).Returns(Task.FromResult<bool>(true));
+        _repo.Setup(repo => repo.GetById(1)).Returns(_product);
 
         // Act
-        var response =  await _service.DeleteByIdAsync(1);
+        var response = _service.DeleteById(1);
 
         // Assert 
         response.Should().Be(_product);

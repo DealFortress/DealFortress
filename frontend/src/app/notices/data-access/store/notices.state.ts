@@ -1,5 +1,5 @@
 import { Status } from "@app/shared/models/state.model"
-import { Notice } from "../../../shared/models/notice/notice.model"
+import { Notice } from "../../../shared/models/notice.model"
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity"
 import { NoticesService } from "@app/notices/utils/services/notices.services"
 

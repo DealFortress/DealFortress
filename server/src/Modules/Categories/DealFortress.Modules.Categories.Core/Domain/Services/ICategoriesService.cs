@@ -5,11 +5,11 @@ namespace DealFortress.Modules.Categories.Core.Domain.Services;
 
 public interface ICategoriesService
 {
-    Task<IEnumerable<CategoryResponse>> GetAllAsync();
+    IEnumerable<CategoryResponse> GetAll();
 
-    Task<CategoryResponse?> GetByIdAsync(int id);
+    CategoryResponse? GetById(int id);
 
-    Task<CategoryResponse> PostAsync(CategoryRequest request);
+    CategoryResponse Post(CategoryRequest request);
 
     CategoryResponse ToCategoryResponseDTO(Category category);
 

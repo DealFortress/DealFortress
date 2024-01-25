@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { getCategoryById } from '@app/categories/data-access/store/categories.selectors';
 import { Category } from '@app/shared/models/category.model';
 import { Condition } from '@app/shared/models/condition.model';
-import { Product } from '@app/shared/models/product/product.model';
+import { Product } from '@app/shared/models/product.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 

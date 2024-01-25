@@ -6,15 +6,15 @@ namespace DealFortress.Modules.Users.Core.Domain.Services;
 public interface IUsersService
 {
 
-    Task<UserResponse?> GetByIdAsync(int id);
+    UserResponse? GetById(int id);
 
-    Task<UserResponse?> GetByAuthIdAsync(string authId);
+    UserResponse? GetByAuthId(string authId);
 
     string GetCurrentUserAuthId();
 
-    Task<string?> GetAuthIdByUserIdAsync(int id);
+    string? GetAuthIdByUserId(int id);
 
-    Task<UserResponse> PostAsync(UserRequest request);
+    UserResponse Post(UserRequest request);
 
     UserResponse ToUserResponseDTO(User user);
 

@@ -1,5 +1,5 @@
 import { pluralize } from "@app/shared/helper-functions/helper-functions";
-import { Notice } from "@app/shared/models/notice/notice.model";
+import { Notice } from "@app/shared/models/notice.model";
 
 
 export class NoticesService {
