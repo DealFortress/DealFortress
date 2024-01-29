@@ -56,7 +56,6 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
 
 
   scrollToLatestMessage() {
-    console.log('called')
     this.scrollTarget?.nativeElement.scrollIntoView({
       block: "start"
     });
