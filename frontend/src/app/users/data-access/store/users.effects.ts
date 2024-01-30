@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, delay, exhaustMap, map, mergeMap, tap} from 'rxjs/operators';
+import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import { EmptyAction, ShowAlert } from '@app/shared/store/app.actions';
 import { UsersApiService } from '../services/users-api.service';
 import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from './users.actions';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserRequest } from '@app/shared/models/user/user-request.model';
 import { loadUserByAuthIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
 import { getStatusCode } from '@app/users/data-access/store/users.selectors';
-import { User } from '@auth0/auth0-angular';
+import { AuthService, User } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -10,24 +10,31 @@ import { Store } from '@ngrx/store';
 })
 export class UsersService {
 
-  constructor(private store: Store) { }
+  constructor(private store: Store,private authService: AuthService) { }
 
   setCurrentUser(authUser: User) {
     const isNewUser = authUser['/isNewUser'];
+    console.log(isNewUser);
 
     if (isNewUser) {
-      this.createUser(authUser)
-      return;
-    }
-
-    if (authUser.sub) {
-      this.store.dispatch(loadUserByAuthIdRequest({authId: authUser.sub}))
-
-      this.store.select(getStatusCode).subscribe(code => {
-        if (code == 404 ) {
-          this.createUser(authUser);
+      this.authService.getAccessTokenSilently().subscribe(token  => {
+        if (token) {
+          this.createUser(authUser)
+          this.store.dispatch(loadUserByAuthIdRequest({authId: authUser['authId']}))
         }
       })
+    }
+
+    if (authUser.sub && !isNewUser) {
+      this.store.dispatch(loadUserByAuthIdRequest({authId: authUser.sub}))
+
+      // this.store.select(getStatusCode).subscribe(code => {
+      //   console.log(code)
+      //   if (code == 404 ) {
+      //     console.log('in the code');
+      //     this.createUser(authUser);
+      //   }
+      // })
     }
     
   }
@@ -43,5 +50,7 @@ export class UsersService {
       } as UserRequest;
 
     this.store.dispatch(postUserRequest(postRequest))
+    
+   
   }
 }

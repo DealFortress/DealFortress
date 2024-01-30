@@ -8,36 +8,42 @@ export const usersReducer = createReducer(
     on(loadUserByIdSuccess,(state,action)=>{
         return usersAdapter.addOne(action.user, {
             ...state,
+            statusCode: action.statusCode
         });
     }),
     on(loadUserByIdError,(state,action)=>{
         return {
             ...state,
-            errorMessage:action.errorText
+            errorMessage:action.errorText,
+            statusCode: action.statusCode
         }
     }),
     on(loadUserByAuthIdSuccess,(state,action)=>{
         return usersAdapter.addOne(action.user, {
             ...state,
-            loggedInUser: action.user
+            loggedInUser: action.user,
+            statusCode: action.statusCode
         });
     }),
     on(loadUserByAuthIdError,(state,action)=>{
         return {
             ...state,
-            errorMessage:action.errorText
+            errorMessage:action.errorText,
+            statusCode: action.statusCode
         }
     }),
     on(postUserSuccess, (state, action) => {
         return usersAdapter.addOne(action.user, {
             ...state,
-            loggedInUser: action.user
+            loggedInUser: action.user,
+            statusCode: action.statusCode
         });
     }),
     on(postUserError, (state, action) => {
         return {
             ...state,
-            errorMessage: action.errorText
+            errorMessage: action.errorText,
+            statusCode: action.statusCode
         }
     })
 );
