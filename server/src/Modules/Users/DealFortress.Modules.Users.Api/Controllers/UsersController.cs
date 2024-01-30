@@ -17,9 +17,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ActionName("GetUserByIdAsync")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserResponse>> getUserByIdAsync(string id, string idType)
+    public async Task<ActionResult<UserResponse>> getUserByIdAsync(string id, string idType )
     {
         UserResponse? response = null;
 
@@ -35,6 +36,20 @@ public class UsersController : ControllerBase
         return response is null ? NotFound() : Ok(response);
     }
 
+
+
+    
+//    [HttpGet("{id}", Name = "getUserAsync")]
+//     [ProducesResponseType(StatusCodes.Status200OK)]
+//     [ProducesResponseType(StatusCodes.Status404NotFound)]
+//     public async Task<ActionResult<UserResponse>> getUserAsync(int id)
+//     {
+
+//         var    response = await _service.GetByIdAsync(id);
+ 
+//         return response is null ? NotFound() : Ok(response);
+//     }
+
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -43,7 +58,7 @@ public class UsersController : ControllerBase
     {
         var response = await _service.PostAsync(request);
 
-        return CreatedAtAction("getLoggedInUser", new { id = response.Id }, response);
+        return CreatedAtAction(nameof(getUserByIdAsync), new { id = response.Id }, response);
     }
 
     [NonAction]

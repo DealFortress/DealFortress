@@ -42,8 +42,9 @@ export class AppComponent implements OnInit{
       }
     })
 
-    this.authService.user$.subscribe(async user => {
+    this.authService.user$.subscribe( user => {
       if (user) {
+        console.log(user);
         this.usersService.setCurrentUser(user);
       }
     })

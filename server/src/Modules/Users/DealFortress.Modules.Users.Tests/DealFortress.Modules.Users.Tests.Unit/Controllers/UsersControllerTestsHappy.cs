@@ -14,6 +14,7 @@ public class UsersControllersTestsHappy
     private readonly UsersController _controller;
     private readonly Mock<IUsersService> _service;
     private readonly UserResponse _response;
+    private readonly UserRequest _request;
 
     public UsersControllersTestsHappy()
     {
@@ -22,6 +23,8 @@ public class UsersControllersTestsHappy
         _controller = new UsersController(_service.Object);
 
         _response = UsersTestModels.CreateUserResponse();
+
+        _request = UsersTestModels.CreateUserRequest();
     }
 
 
@@ -50,4 +53,16 @@ public class UsersControllersTestsHappy
         var content = httpResponse.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<UserResponse>();
     }
+
+     [Fact]
+     public async Task postAsync_return_created_at_when_service_return_response_async()
+     {
+        _service.Setup(service => service.PostAsync(_request)).Returns(Task.FromResult<UserResponse?>(_response));
+        // Act
+        var httpResponse = await _controller.PostUserAsync(_request);
+        // Assert 
+        var content = httpResponse.Result.As<CreatedAtActionResult>().Value;
+        httpResponse.Result.Should().BeOfType<CreatedAtActionResult>();
+        content.Should().BeOfType<UserResponse>();
+     }
 }

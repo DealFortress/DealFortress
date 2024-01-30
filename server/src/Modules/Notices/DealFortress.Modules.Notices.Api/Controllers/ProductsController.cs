@@ -20,6 +20,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync()
     {

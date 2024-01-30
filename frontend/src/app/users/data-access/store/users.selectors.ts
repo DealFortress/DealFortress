@@ -18,7 +18,7 @@ export const getErrorMessage = createSelector(
     (state) => state.errorMessage
 )
 
-export const getStatusCode = createSelector(
+export const getUserStatusCode = createSelector(
     getUsersState,
     (state) => state.statusCode
 )

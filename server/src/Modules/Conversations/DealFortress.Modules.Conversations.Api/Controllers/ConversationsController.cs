@@ -50,21 +50,6 @@ public class ConversationsController : ControllerBase
        return response is null ? NotFound() : Ok(response);
     }
 
-    // [HttpPost("{conversationId}/messages")]
-    // [Authorize]
-    // [ProducesResponseType(StatusCodes.Status201Created)]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // public async Task<ActionResult<MessageResponse>> PostMessage(StandaloneMessageRequest request, int conversationId)
-    // {
-    //     var response = await _messagesService.PostAsync(request);
-
-    //     if (response is null) {
-    //         return BadRequest();
-    //     }
-
-    //     return CreatedAtAction("GetMessage", new { id = response.Id }, response);
-    // }
-
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -77,7 +62,7 @@ public class ConversationsController : ControllerBase
             return BadRequest();
         }
 
-        return CreatedAtAction("GetConversation", new { id = response.Id }, response);
+        return CreatedAtAction(nameof(GetConversation), new { id = response.Id }, response);
     }
 
     [HttpDelete("{id}")]
