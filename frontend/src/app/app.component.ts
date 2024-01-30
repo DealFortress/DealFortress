@@ -9,6 +9,7 @@ import { loadCategoriesRequest } from './categories/data-access/store/categories
 import { createSignalRHub} from 'ngrx-signalr-core';
 import { conversationHub } from './conversations/utils/conversation.hub';
 import { loadUserByIdRequest } from './users/data-access/store/users.actions';
+import { getLoggedInUserStatusCode } from './users/data-access/store/users.selectors';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +42,7 @@ export class AppComponent implements OnInit{
       }
     })
 
-    this.authService.user$.subscribe(async user => {
+    this.authService.user$.subscribe( user => {
       if (user) {
         this.usersService.setCurrentUser(user);
       }

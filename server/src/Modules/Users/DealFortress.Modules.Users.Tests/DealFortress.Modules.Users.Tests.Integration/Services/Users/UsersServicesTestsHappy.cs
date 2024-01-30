@@ -43,19 +43,19 @@ public class UsersServicesTestsHappy
     }
 
     [Fact]
-    public async Task GetById_should_return_the_notice_matching_idAsync()
+    public async Task GetById_should_return_the_user_matching_idAsync()
     {
         // Act
 
-        var noticeResponse = await _service.GetByIdAsync(1);
+        var userResponse = await _service.GetByIdAsync(1);
 
         // Assert 
-        noticeResponse?.Username.Should().Be("User1");
-        noticeResponse?.Id.Should().Be(1);
+        userResponse?.Username.Should().Be("User1");
+        userResponse?.Id.Should().Be(1);
     }
 
     [Fact]
-    public async Task Post_should_add_notice_in_dbAsync()
+    public async Task Post_should_add_user_in_dbAsync()
     {
         // Act
         var postResponse = await _service.PostAsync(_request);

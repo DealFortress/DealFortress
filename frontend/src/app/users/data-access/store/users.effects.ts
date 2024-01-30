@@ -1,10 +1,10 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, delay, exhaustMap, map, mergeMap, tap} from 'rxjs/operators';
+import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import { EmptyAction, ShowAlert } from '@app/shared/store/app.actions';
 import { UsersApiService } from '../services/users-api.service';
-import { loadUserByAuthIdError, loadUserByAuthIdRequest, loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from './users.actions';
+import { loadLoggedInUserByAuthIdError, loadLoggedInUserByAuthIdRequest, loadLoggedInUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from './users.actions';
 import { User } from '@app/shared/models/user/user.model';
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -18,18 +18,19 @@ export class UsersEffect {
         ) {}
 
 
-    loadUserByAuthId$ = createEffect(() => 
+    loadLoggedInUserByAuthId$ = createEffect(() => 
         this.actions$.pipe(
-            ofType(loadUserByAuthIdRequest),
+            ofType(loadLoggedInUserByAuthIdRequest),
             mergeMap(action => {
                 return this.usersApiService.getLoggedInUserByAuthIdAPI(action.authId).pipe(
                     map((user) => (
-                        ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' }),
-                        loadUserByAuthIdSuccess({user: user, statusCode: 200})
+                        of(ShowAlert({ message: `Welcome back squire ${user.username}!`, actionresult: 'pass' })),
+                        loadLoggedInUserByAuthIdSuccess({user: user, loggedInUserStatusCode: 200})
                         )
                     ),
                     catchError((_error) => of(
-                        loadUserByAuthIdError({errorText: _error.message, statusCode: _error.status}) 
+                        ShowAlert({ message: `Error getting your profile, try refreshing squire`, actionresult: 'fail' }),
+                        loadLoggedInUserByAuthIdError({errorText: _error.message, loggedInUserStatusCode: _error.status}) 
                     )
                     )
                 );
@@ -63,12 +64,12 @@ export class UsersEffect {
             this.usersApiService.postUserAPI(action).pipe(
                 map(user => {
                             ShowAlert({ message: 'Welcome Squire!', actionresult: 'pass' });
-                            return postUserSuccess({ user: user as User, statusCode: 201 });               
+                            return postUserSuccess({ user: user as User, loggedInUserStatusCode: 201 });               
                         }
                     ),
                     catchError((_error) => of(
                             ShowAlert({ message: 'Failed to get user from server, please reconnect squire.', actionresult: 'fail' }),
-                            postUserError({ errorText: _error.message, statusCode: _error.status})
+                            postUserError({ errorText: _error.message, loggedInUserStatusCode: _error.status})
                         )
                     ),
                 )

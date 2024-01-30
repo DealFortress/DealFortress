@@ -42,12 +42,12 @@ public class UsersServicesTestsSad
     }
 
     [Fact]
-    public async void GetById_returns_null_when_notice_is_not_found()
+    public async void GetById_returns_null_when_user_is_not_found()
     {
         // Act
-        var noticeResponses = await _service.GetByIdAsync(-1);
+        var userResponses = await _service.GetByIdAsync(-1);
 
         // Assert 
-        noticeResponses.Should().Be(null);
+        userResponses.Should().Be(null);
     }
 }

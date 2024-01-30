@@ -5,7 +5,8 @@ import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 export interface UsersState extends EntityState<User> {
     loggedInUser?: User,
     errorMessage?: string,
-    statusCode?: number
+    statusCode?: number,
+    loggedInUserStatusCode?: number
 }
 
 export const usersAdapter: EntityAdapter<User> = createEntityAdapter<User>({})

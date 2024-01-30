@@ -26,6 +26,7 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ActionName("GetNoticeAsync")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task< ActionResult<NoticeResponse>> GetNoticeAsync(int id)
@@ -54,7 +55,7 @@ public class NoticesController : ControllerBase
     {
         var response = await _service.PostAsync(request);
         
-        return CreatedAtAction("GetNotice", new { id = response.Id }, response);
+        return CreatedAtAction(nameof(GetNoticeAsync), new { id = response.Id }, response);
     }
 
     [HttpDelete("{id}")]

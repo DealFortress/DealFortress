@@ -27,6 +27,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ActionName("GetCategoryAsync")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CategoryResponse>> GetCategoryAsync(int id)
@@ -44,7 +45,7 @@ public class CategoriesController : ControllerBase
     public async Task<ActionResult<CategoryResponse>> PostCategoryAsync(CategoryRequest request)
     {
         var response = await _service.PostAsync(request);
-        return CreatedAtAction("GetCategory", new { id = response.Id }, response);
+        return CreatedAtAction("GetCategoryAsync", new { id = response.Id }, response);
     }
 
     [NonAction]
