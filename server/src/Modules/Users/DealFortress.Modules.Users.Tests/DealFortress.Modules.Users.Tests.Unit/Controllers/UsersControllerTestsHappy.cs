@@ -57,7 +57,7 @@ public class UsersControllersTestsHappy
      [Fact]
      public async Task postAsync_return_created_at_when_service_return_response_async()
      {
-        _service.Setup(service => service.PostAsync(_request)).Returns(Task.FromResult<UserResponse?>(_response));
+        _service.Setup(service => service.PostAsync(_request)).Returns(Task.FromResult<UserResponse>(_response));
         // Act
         var httpResponse = await _controller.PostUserAsync(_request);
         // Assert 
