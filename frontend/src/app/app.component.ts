@@ -9,6 +9,7 @@ import { loadCategoriesRequest } from './categories/data-access/store/categories
 import { createSignalRHub} from 'ngrx-signalr-core';
 import { conversationHub } from './conversations/utils/conversation.hub';
 import { loadUserByIdRequest } from './users/data-access/store/users.actions';
+import { getLoggedInUserStatusCode } from './users/data-access/store/users.selectors';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,6 @@ export class AppComponent implements OnInit{
 
     this.authService.getAccessTokenSilently().subscribe(token => {
       if (token) {
-        console.log(token);
         conversationHub.options = {
           accessTokenFactory: () => {
             return token;
@@ -44,7 +44,6 @@ export class AppComponent implements OnInit{
 
     this.authService.user$.subscribe( user => {
       if (user) {
-        console.log(user);
         this.usersService.setCurrentUser(user);
       }
     })

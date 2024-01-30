@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { UsersState, initialState, usersAdapter } from "./users.state";
-import { loadUserByAuthIdError,loadUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
+import { loadLoggedInUserByAuthIdError,loadLoggedInUserByAuthIdSuccess, loadUserByIdError, loadUserByIdRequest, loadUserByIdSuccess, postUserError, postUserRequest, postUserSuccess } from "./users.actions";
 
 
 export const usersReducer = createReducer(
@@ -18,32 +18,32 @@ export const usersReducer = createReducer(
             statusCode: action.statusCode
         }
     }),
-    on(loadUserByAuthIdSuccess,(state,action)=>{
+    on(loadLoggedInUserByAuthIdSuccess,(state,action)=>{
         return usersAdapter.addOne(action.user, {
             ...state,
             loggedInUser: action.user,
-            statusCode: action.statusCode
+            loggedInUserStatusCode: action.loggedInUserStatusCode
         });
     }),
-    on(loadUserByAuthIdError,(state,action)=>{
+    on(loadLoggedInUserByAuthIdError,(state,action)=>{
         return {
             ...state,
             errorMessage:action.errorText,
-            statusCode: action.statusCode
+            loggedInUserStatusCode: action.loggedInUserStatusCode
         }
     }),
     on(postUserSuccess, (state, action) => {
         return usersAdapter.addOne(action.user, {
             ...state,
             loggedInUser: action.user,
-            statusCode: action.statusCode
+            loggedInUserStatusCode: action.loggedInUserStatusCode
         });
     }),
     on(postUserError, (state, action) => {
         return {
             ...state,
             errorMessage: action.errorText,
-            statusCode: action.statusCode
+            loggedInUserStatusCode: action.loggedInUserStatusCode
         }
     })
 );

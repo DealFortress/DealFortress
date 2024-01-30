@@ -18,10 +18,11 @@ export const getErrorMessage = createSelector(
     (state) => state.errorMessage
 )
 
-export const getUserStatusCode = createSelector(
+export const getLoggedInUserStatusCode = createSelector(
     getUsersState,
-    (state) => state.statusCode
+    (state) => state.loggedInUserStatusCode
 )
+
 
 export const getUserById = (id: number) =>  createSelector(
     getUsersState,
