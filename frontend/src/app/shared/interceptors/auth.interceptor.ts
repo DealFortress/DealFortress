@@ -17,21 +17,25 @@ export class AuthInterceptor implements HttpInterceptor{
         return this.authService.isAuthenticated$.pipe(
             switchMap(isAuthenticated => {
                 if (isAuthenticated) {
-                    return this.authService.getAccessTokenSilently().pipe( 
-                        switchMap(token => { 
-                            const tokenizedRequest = request.clone({
-                            setHeaders: {
-                                Authorization: `Bearer ${token}`
-                            }
-                            });
-                            return next.handle(tokenizedRequest);
-                        })
-                    )
+                    return this.tokenizeRequest(request, next);
                 } else {
                     return next.handle(request);
                 }
             })
-        )
-           
-        }
+        )     
     }
+    
+    tokenizeRequest(request: HttpRequest<unknown>, next: HttpHandler) {
+        return this.authService.getAccessTokenSilently().pipe( 
+            switchMap(token => { 
+                const tokenizedRequest = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`
+                }
+                });
+                return next.handle(tokenizedRequest);
+            })
+        )
+    }
+    }
+
