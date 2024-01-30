@@ -17,12 +17,9 @@ export class UsersService {
     console.log(isNewUser);
 
     if (isNewUser) {
-      this.authService.getAccessTokenSilently().subscribe(token  => {
-        if (token) {
-          this.createUser(authUser)
-          this.store.dispatch(loadUserByAuthIdRequest({authId: authUser['authId']}))
-        }
-      })
+      console.log('pre create user')
+      this.createUser(authUser)
+      this.store.dispatch(loadUserByAuthIdRequest({authId: authUser['authId']}))
     }
 
     if (authUser.sub && !isNewUser) {
@@ -49,8 +46,8 @@ export class UsersService {
         avatar: authUser.picture
       } as UserRequest;
 
+    console.log(postRequest);
+
     this.store.dispatch(postUserRequest(postRequest))
-    
-   
   }
 }

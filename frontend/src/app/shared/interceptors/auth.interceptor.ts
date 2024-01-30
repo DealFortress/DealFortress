@@ -1,36 +1,37 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { AuthService } from "@auth0/auth0-angular";
 import { switchMap, tap } from "rxjs/operators";
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor, OnInit {
-    isAuthenticated? : boolean = false;
+export class AuthInterceptor implements HttpInterceptor{
 
-    constructor(private authService: AuthService) {}
-
-    ngOnInit(): void {
-        this.authService.isAuthenticated$.subscribe(isAuthenticated => this.isAuthenticated = isAuthenticated)
+    constructor(private authService: AuthService) { 
     }
+
 
     
   
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler) {
-        if (this.isAuthenticated == true) {
-            return this.authService.getAccessTokenSilently().pipe( 
-                switchMap(token => { 
-                    console.log(token);
-                    const tokenizedRequest = request.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${token}`
-                    }
-                    });
-                    return next.handle(tokenizedRequest);
-                })
-            )
-        } else {
-            return next.handle(request);
+        return this.authService.isAuthenticated$.pipe(
+            switchMap(isAuthenticated => {
+                if (isAuthenticated) {
+                    return this.authService.getAccessTokenSilently().pipe( 
+                        switchMap(token => { 
+                            const tokenizedRequest = request.clone({
+                            setHeaders: {
+                                Authorization: `Bearer ${token}`
+                            }
+                            });
+                            return next.handle(tokenizedRequest);
+                        })
+                    )
+                } else {
+                    return next.handle(request);
+                }
+            })
+        )
+           
         }
     }
-}
