@@ -94,8 +94,7 @@ public class MessagesService: IMessagesService
         return new Message()
         {
             Text= request.Text,
-            SenderId = request.SenderId, 
-            CreatedAt = DateTime.UtcNow, 
+            SenderId = request.SenderId,  
             Conversation = conversation
         };
     }
