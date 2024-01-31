@@ -1,8 +1,10 @@
 
+using System.Runtime.CompilerServices;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO;
+using DealFortress.Modules.Conversations.Core.DTO.Message;
 using DealFortress.Modules.Users.Api.Controllers;
 
 
@@ -11,14 +13,14 @@ namespace DealFortress.Modules.Conversations.Core.Services;
 
 public class MessagesService: IMessagesService
 {
-    private readonly IMessagesRepository _repo;
+    private readonly IMessagesRepository _messagesRepo;
     private readonly UsersController _usersController;
 
     private readonly IConversationsRepository _conversationsRepo;
 
-    public MessagesService(IMessagesRepository repo, UsersController usersController, IConversationsRepository conversationsRepo)
+    public MessagesService(IMessagesRepository messagesRepo, UsersController usersController, IConversationsRepository conversationsRepo)
     {
-        _repo = repo;
+        _messagesRepo = messagesRepo;
         _usersController = usersController;
         _conversationsRepo = conversationsRepo;
     }
@@ -26,7 +28,7 @@ public class MessagesService: IMessagesService
 
     public async Task<IEnumerable<MessageResponse>> GetAllAsync()
     {
-        var entities = await _repo.GetAllAsync();
+        var entities = await _messagesRepo.GetAllAsync();
 
         return entities
                     .Select(ToMessageResponseDTO)
@@ -37,7 +39,7 @@ public class MessagesService: IMessagesService
     {
         var id = await _usersController.getUserIdByAuthIdAsync(authId);
 
-        var entity = await _repo.GetAllAsync();
+        var entity = await _messagesRepo.GetAllAsync();
 
         return entity
                     .Where(message => message.SenderId == id)
@@ -47,7 +49,7 @@ public class MessagesService: IMessagesService
 
      public async Task<MessageResponse?> GetByIdAsync(int id)
     {
-        var message = await _repo.GetByIdAsync(id);
+        var message = await _messagesRepo.GetByIdAsync(id);
 
         if (message is null)
         {
@@ -56,6 +58,22 @@ public class MessagesService: IMessagesService
 
         return ToMessageResponseDTO(message);
     } 
+
+    public async Task<MessageResponse?> PatchAsync(PatchMessageIsReadRequest request)
+    {
+        var message = await _messagesRepo.GetByIdAsync(request.MessageId);
+
+        if (message is null)
+        {
+            return null;
+        }
+
+        message.IsRead = true;
+        _messagesRepo.Update(message);
+        _messagesRepo.Complete();
+
+        return ToMessageResponseDTO(message);
+    }
 
      public async Task<MessageResponse?> PostAsync(StandaloneMessageRequest request)
     {
@@ -68,9 +86,9 @@ public class MessagesService: IMessagesService
         
         var message = ToMessage(request, conversation);
 
-        await _repo.AddAsync(message);
+        await _messagesRepo.AddAsync(message);
 
-        _repo.Complete();
+        _messagesRepo.Complete();
 
         return ToMessageResponseDTO(message);
     }

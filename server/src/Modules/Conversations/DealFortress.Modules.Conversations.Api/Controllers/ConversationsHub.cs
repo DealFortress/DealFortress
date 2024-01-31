@@ -2,6 +2,7 @@ using DealFortress.Modules.Conversations.Core.Domain.Clients;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO;
+using DealFortress.Modules.Conversations.Core.DTO.Message;
 using DealFortress.Modules.Users.Api.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -81,30 +82,30 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         await Clients.User(sellerAuthId!).GetMessage(response);
     }
 
-    // public async Task PatchMessageIsRead()
-    // {
-    //    var authId = Context.User!.Identity!.Name!;
-    //     var isCreator = await _usersController.IsUserEntityCreatorAsync(request.SenderId, authId);
+    public async Task PatchMessageIsRead(PatchMessageIsReadRequest request)
+    {
+        var authId = Context.User!.Identity!.Name!;
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(request.SenderId, authId);
 
-    //     if (!isCreator) 
-    //     {
-    //         return;
-    //     }
+        if (!isCreator) 
+        {
+            return;
+        }
 
-    //     var response = await _messagesService.PatchAsync(request);
+        var response = await _messagesService.PatchAsync(request);
 
-    //     if (response is null)
-    //     {
-    //         return;
-    //     }
+        if (response is null)
+        {
+            return;
+        }
 
-    //     var conversation = await _conversationService.GetByIdAsync(response.ConversationId);
+        var conversation = await _conversationService.GetByIdAsync(response.ConversationId);
 
       
-    //     var buyerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.BuyerId);
-    //     var sellerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.SellerId);
+        var buyerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.BuyerId);
+        var sellerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.SellerId);
 
-    //     await Clients.User(buyerAuthId!).GetMessage(response);
-    //     await Clients.User(sellerAuthId!).GetMessage(response); 
-    // }
+        await Clients.User(buyerAuthId!).GetMessage(response);
+        await Clients.User(sellerAuthId!).GetMessage(response); 
+    }
 }
