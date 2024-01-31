@@ -2,13 +2,10 @@
 
 # DealFortress <img  width="50px" height="50px" src="https://cdn.discordapp.com/attachments/1086348202283909260/1171381217606782976/BigDFPixel.png?ex=655c78c5&is=654a03c5&hm=c96da9a03b38368630b7f396c522bd9b90aed76d62f13caf6a9bba50aec0a326&"/>
 Deal Fortress is a full-stack web application 
-made in pair programming by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
+full pair programmed (until january 2024) by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 
-Frontend is a singlepage application using React and backend is a REST api with a modular monolith architecture. 
-
-<strong>
-  
-  Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/)  
+<strong> 
+  Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/) (Please note that there is a cold start on the DB, give it 20 seconds on the first launch) 
 </strong>
 
 ### Context
@@ -23,6 +20,10 @@ Sweden is missing a modern marketplace for used computer parts which DealFortres
   - Website has a notice page
   - Website has a notices index
 
+#### Features that have been developed without pair programming:
+
+Luc:
+  - Conversation system with notifications
 
 
 
@@ -45,7 +46,7 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
 ### Backend
 
-  - .NET with C#
+  -  .NET/C# REST API using a modular monolith architecture
 
   - SignalR Library
 
@@ -55,7 +56,11 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
 ### Frontend
   
-  - Angular 17 with NGRX Store, SignalR
+  - Angular 17
+    
+  - NGRX Store
+  - 
+  - SignalR
 
   - Azure static webpages
     
@@ -67,7 +72,7 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
     
   - Auth0
 
-  - Design sketch: [Figma prototype and components](https://www.figma.com/file/6pMA53jsPBJ6p0kguOzKba/Deal-Fortress-prototype?type=design&node-id=0-1&t=9esxib8YXRiofpYN-0)
+  <!-- - Design sketch: [Figma prototype and components](https://www.figma.com/file/6pMA53jsPBJ6p0kguOzKba/Deal-Fortress-prototype?type=design&node-id=0-1&t=9esxib8YXRiofpYN-0) -->
   
   - Wireframe: [Excalidraw](https://excalidraw.com/#room=2ab6f5d1e7b980f0d720,gnL2G7lG_2TnaVrYLOBTKg)
   
