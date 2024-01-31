@@ -8,29 +8,22 @@ full pair programmed (until january 2024) by [Luc Siat](https://github.com/Luc-S
   Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/) (Please note that there is a cold start on the DB, give it 20 seconds on the first launch) 
 </strong>
 
-### Context
+### Pitch
 
-Sweden is missing a modern marketplace for used computer parts which DealFortress looks to fix.
-
-#### MVP plan:
-
-  - Website has authentication
-  - User can post a notice
-  - User can reply to author of post
-  - Website has a notice page
-  - Website has a notices index
-
-#### Features that have been developed without pair programming:
-
-Luc:
-  - Conversation system with notifications
-
+DealFortress aims to bridge the gap between the UI of first hand and the concept of second hand. 
+  - We do not want people to spend hours reading ad description hoping to find what they want. Here they will be able to utilize the filters and the DB separation of the ad and the different products. This means they can filter to get this product at this price.
+  - We want to leverage the community to flag scams and rate sellers. Here they will have a dedicated website with a reputation system, this solves the scam issue that bigger platforms like Tradera or Facebook Market might be facing. And who knows maybe one day we will have BankID?
 
 
 ## Project
 
 <strong>Github project board for DealFortress can be found <strong>[here](https://github.com/orgs/DealFortress/projects/2/views/1)  
 See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)
+
+#### Features that have been developed without pair programming:
+
+Luc:
+  - Conversation system with notifications
 
 ## Videos
 [2 minute video on the pitch deck](https://youtu.be/FD3JxMlWXQQ) 
