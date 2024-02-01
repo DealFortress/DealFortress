@@ -1,13 +1,17 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { getConversationError, getConversationSuccess, getConversationsSuccess, getMessageError, getMessageSuccess, postConversationError, postConversationRequest, postConversationSuccess, postMessageError, postMessageRequest, postMessageSuccess } from "./conversations.actions";
+import { getConversationError, getConversationSuccess, getConversationsSuccess,
+    getMessageError, getMessageSuccess, patchLastReadMessageError,
+    patchLastReadMessageRequest, patchLastReadMessageSuccess,
+    postConversationError, postConversationRequest, postConversationSuccess,
+    postMessageError, postMessageRequest, postMessageSuccess} from "./conversations.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, merge } from "rxjs";
 import { Injectable } from "@angular/core";
-import { Message } from "@app/shared/models/message/message";
 import { startSignalRHub, signalrHubUnstarted, signalrConnected, mergeMapHubToAction, findHub, hubNotFound } from "ngrx-signalr-core";
 import { conversationHub } from "@app/conversations/utils/conversation.hub";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
+import { Message } from "@app/shared/models/message/message.model";
 
 @Injectable()
 export class ConversationsEffects {
@@ -95,12 +99,34 @@ export class ConversationsEffects {
         })
     ));
 
+    patchConversationLastMessageRead$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(patchLastReadMessageRequest), 
+        mergeMap(({ request }) => {
+
+        const hub = findHub(conversationHub);
+        if (!hub) {
+            return of(hubNotFound(conversationHub));
+        }
+        return hub.send("patchconversationlastreadmessage", request).pipe(
+            map((conversation) => {
+                return patchLastReadMessageSuccess({conversation: conversation  as Conversation, statusCode: 200})
+            }),
+            catchError((_error) => 
+                of(
+                    patchLastReadMessageError({errorText: _error.message, statusCode: _error.status})
+                ))
+            );
+        })
+    ));
+
+
+
     listenToMessage$ = createEffect(() =>
     this.actions$.pipe(
         ofType(signalrConnected),
         mergeMapHubToAction(({ hub }) => {
-        // TODO : add event listeners
-        
+
         const getMessage$ = hub
             .on("getmessage")
             .pipe(

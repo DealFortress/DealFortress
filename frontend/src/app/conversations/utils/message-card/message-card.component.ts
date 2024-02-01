@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Message } from '@app/shared/models/message/message';
+import { Message } from '@app/shared/models/message/message.model';
 import { User } from '@app/shared/models/user/user.model';
 
 @Component({

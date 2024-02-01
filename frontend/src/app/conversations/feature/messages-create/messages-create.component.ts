@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
-import { MessageRequest } from '@app/shared/models/message/message-request';
-
+import { MessageRequest } from '@app/shared/models/message/message-request.model';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -31,4 +30,5 @@ export class MessagesCreateComponent{
     const messageRequest = this.messageFormGroup.value as MessageRequest;
     this.store.dispatch(postMessageRequest({ request: messageRequest }));
   }
+
 }

@@ -1,10 +1,8 @@
 
-using System.Runtime.CompilerServices;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO;
-using DealFortress.Modules.Conversations.Core.DTO.Message;
 using DealFortress.Modules.Users.Api.Controllers;
 
 
@@ -59,28 +57,19 @@ public class MessagesService: IMessagesService
         return ToMessageResponseDTO(message);
     } 
 
-    public async Task<MessageResponse?> PatchAsync(PatchMessageIsReadRequest request)
+     public async Task<MessageResponse?> PostAsync(StandaloneMessageRequest request, string? authId)
     {
-        var message = await _messagesRepo.GetByIdAsync(request.MessageId);
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(request.SenderId, authId);
 
-        if (message is null)
+        if (!isCreator) 
         {
             return null;
         }
 
-        message.IsRead = true;
-        _messagesRepo.Update(message);
-        _messagesRepo.Complete();
-
-        return ToMessageResponseDTO(message);
-    }
-
-     public async Task<MessageResponse?> PostAsync(StandaloneMessageRequest request)
-    {
-
         var conversation = await _conversationsRepo.GetByIdAsync(request.ConversationId);
 
-        if( conversation is null ) {
+        if( conversation is null ) 
+        {
             return null;
         }
         

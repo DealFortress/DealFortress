@@ -8,5 +8,7 @@ public class ConversationResponse {
     public required string Name { get; set; }
     public required int BuyerId { get; set; }
     public required int SellerId { get; set; }
+    public int? BuyerLastReadMessageId { get; set; }
+    public int? SellerLastReadMessageId { get; set; }
     public List<MessageResponse>? Messages { get; set; }
 }

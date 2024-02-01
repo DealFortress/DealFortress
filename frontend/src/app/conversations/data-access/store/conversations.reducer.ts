@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { conversationsAdapter, initialState } from "./conversations.state";
-import { getConversationSuccess, getConversationsError, getConversationsSuccess, getMessageSuccess, postConversationSuccess, postMessageError, postMessageSuccess } from "./conversations.actions";
+import { getConversationSuccess, getConversationsError, getConversationsSuccess, getMessageSuccess, postMessageError} from "./conversations.actions";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
 import { Status } from "@app/shared/models/state.model";
 
@@ -42,5 +42,5 @@ export const conversationsReducer = createReducer(
             errorMessage:action.errorText,
             status: Status.error
         }
-    })
+    }),
 );
