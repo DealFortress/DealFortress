@@ -6,7 +6,8 @@
           <button (click)="navigateBack()" class="visible md:hidden btn btn-circle btn-ghost text-2xl">
             <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
           </button>
-          <h3 class="text-1xl md:text-2xl">{{(recipient$ | async)?.username}}</h3>
+          <img [src]="(recipient$ | async)?.avatar" alt="avatar" class="w-10 rounded-full aspect-square">
+          <h3 class="text-2xl">{{(recipient$ | async)?.username}}</h3>
         </div>
         <hr class="">
         <div *ngIf="(notice$ | async) as notice" class="flex justify-start gap-2 items-center flex-1">
