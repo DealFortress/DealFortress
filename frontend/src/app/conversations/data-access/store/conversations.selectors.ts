@@ -21,3 +21,4 @@ export const getConversationByNoticeId = (noticeId: number) =>  createSelector(
     getConversations,
     conversations => conversations.find(conversation => conversation.noticeId == noticeId)
 );
+

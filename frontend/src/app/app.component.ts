@@ -51,9 +51,7 @@ export class AppComponent implements OnInit{
 
   startConversationsHub() {
     this.authService.getAccessTokenSilently().subscribe(token => {
-      console.log('out');
       if (token) {
-        console.log('in');
         conversationHub.options = {
           accessTokenFactory: () => {
             return token;

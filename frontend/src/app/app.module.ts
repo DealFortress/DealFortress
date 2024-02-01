@@ -74,6 +74,7 @@ import { ConversationCreateComponent } from "./conversations/feature/conversatio
 import { MessagesCreateComponent } from './conversations/feature/messages-create/messages-create.component';
 import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/minimal-notice-card.component';
 import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
+import { ConversationsNotificationsDropdownComponent } from './conversations/utils/conversations-notifications-dropdown/conversations-notifications-dropdown.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { MessageCardComponent } from './conversations/utils/message-card/message
         ConversationCreateComponent,
         MessagesCreateComponent,
         MinimalNoticeCardComponent,
-        MessageCardComponent
+        MessageCardComponent,
+        ConversationsNotificationsDropdownComponent
     ],
     providers: [
         NoticesApiService,

@@ -47,7 +47,7 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
         
         this.loggedInUser$.subscribe(loggedInUser => {
           if (loggedInUser) {
-            this.setLoggedInUserLastReadMessageId(loggedInUser, conversation);
+            this.setUsersLastReadMessageId(loggedInUser, conversation);
             this.setRecipient(loggedInUser, conversation);
             this.patchLastReadMessage(loggedInUser, conversation)
           }
@@ -95,7 +95,7 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
       }
   }
 
-  setLoggedInUserLastReadMessageId(loggedInUser : User, conversation: Conversation) {
+  setUsersLastReadMessageId(loggedInUser : User, conversation: Conversation) {
     if (conversation.buyerId == loggedInUser.id) {
       this.loggedInUserLastReadMessageId = conversation.buyerLastReadMessageId;
       this.recipientLastReadMessageId = conversation.sellerLastReadMessageId;

@@ -1,0 +1,18 @@
+<div class="dropdown dropdown-end dropdown-hover relative">
+    <div *ngIf="notifications.length > 1" class="bg-red aspect-square w-4 rounded-full absolute top-[-5px] right-[5px]"></div>
+    <a routerLink="/conversations"><fa-icon  [icon]="['far','message']" class="hover:text-base-200" ></fa-icon></a>
+      <ul
+      *ngIf="notifications.length > 1; else noNotifications"  
+      class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box md:w-40 min-h-8">
+        <li *ngFor="let notification of notifications;">
+          <a [routerLink]="['conversations']" >
+            <p>{{notification.text}}</p>
+            <p>{{notification.messageCreatedAt.toLocaleString()}}</p>
+          </a>
+        </li>
+      </ul>
+</div>
+
+<ng-template #noNotifications>
+  <p class="dropdown-content z-[1]  menu p-2 shadow bg-base-100 rounded-box md:w-40 min-h-8">No new messages...</p>
+</ng-template>
