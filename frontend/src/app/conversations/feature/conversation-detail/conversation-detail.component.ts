@@ -7,6 +7,7 @@ import { Conversation } from '@app/shared/models/conversation/conversation.model
 import { PatchLastReadMessageRequest } from '@app/shared/models/conversation/patch-last-read-message-request.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
+import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
 import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -23,6 +24,8 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   public recipient$? : Observable<User | undefined>;
   public conversation$? : Observable<Conversation | undefined>;
   public notice$? :  Observable<Notice | undefined>;
+  public loggedInUserLastReadMessageId? : number; 
+  public recipientLastReadMessageId? : number;
   @ViewChild("scrollTarget", { static: false }) scrollTarget?: ElementRef;
   
 
@@ -44,6 +47,7 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
         
         this.loggedInUser$.subscribe(loggedInUser => {
           if (loggedInUser) {
+            this.setLoggedInUserLastReadMessageId(loggedInUser, conversation);
             this.setRecipient(loggedInUser, conversation);
             this.patchLastReadMessage(loggedInUser, conversation)
           }
@@ -65,16 +69,42 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
 
   setRecipient(loggedInUser : User, conversation: Conversation) {
     let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
-    this.recipient$ = this.store.select(getUserById(recipientId)); 
+
+    this.store.select(getUserById(recipientId)).subscribe(recipient => {
+      if (recipient == undefined) {
+        this.store.dispatch(loadUserByIdRequest({id :recipientId}));
+      }
+      this.recipient$ = this.store.select(getUserById(recipientId)); 
+    })
   }
 
   patchLastReadMessage(loggedInUser : User, conversation: Conversation) {
-    const patchRequest : PatchLastReadMessageRequest = {
-      conversationId: conversation.id,
-      readerId: loggedInUser.id,
-      messageId: conversation.messages.slice(-1)[0].id
-    }
-    this.store.dispatch(patchLastReadMessageRequest({request: patchRequest}))
+
+    const lastReadMessage = conversation.messages
+      .filter(message => message.senderId != loggedInUser.id)
+      .sort((a, b ) => a.createdAt.valueOf() - b.createdAt.valueOf())
+      .slice(-1)[0];
+
+    if (lastReadMessage.id != this.loggedInUserLastReadMessageId) {
+        const patchRequest : PatchLastReadMessageRequest = {
+          conversationId: conversation.id,
+          readerId: loggedInUser.id,
+          messageId: lastReadMessage.id
+        }
+        this.store.dispatch(patchLastReadMessageRequest({request: patchRequest}))
+      }
   }
+
+  setLoggedInUserLastReadMessageId(loggedInUser : User, conversation: Conversation) {
+    if (conversation.buyerId == loggedInUser.id) {
+      this.loggedInUserLastReadMessageId = conversation.buyerLastReadMessageId;
+      this.recipientLastReadMessageId = conversation.sellerLastReadMessageId;
+    } else if (conversation.sellerId == loggedInUser.id) {
+      this.loggedInUserLastReadMessageId = conversation.sellerLastReadMessageId;
+      this.recipientLastReadMessageId = conversation.buyerLastReadMessageId;
+    }
+  }
+
+
 
 }

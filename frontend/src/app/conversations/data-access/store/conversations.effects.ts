@@ -32,7 +32,7 @@ export class ConversationsEffects {
     this.actions$.pipe(
         ofType(signalrConnected),
         mergeMapHubToAction(({ hub }) => {
-        // TODO : add event listeners
+
         const getConversations$ = hub
             .on("getconversations")
             .pipe(
@@ -110,6 +110,7 @@ export class ConversationsEffects {
         }
         return hub.send("patchconversationlastreadmessage", request).pipe(
             map((conversation) => {
+                console.log(conversation)
                 return patchLastReadMessageSuccess({conversation: conversation  as Conversation, statusCode: 200})
             }),
             catchError((_error) => 
