@@ -1,7 +1,7 @@
 import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { UserRequest } from '@app/shared/models/user/user-request.model';
-import { loadLoggedInUserByAuthIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
-import { getLoggedInUserStatusCode } from '@app/users/data-access/store/users.selectors';
+import { loadLoggedInUserByAuthIdRequest, loadUserByIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
+import { getLoggedInUserStatusCode, getUserById } from '@app/users/data-access/store/users.selectors';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 
@@ -55,4 +55,15 @@ export class UsersService {
 
     this.store.dispatch(postUserRequest(postRequest))
   }
+
+  // loadUserById(id: number) {
+  //   return this.store.select(getUserById(id)).pipe(recipient => {
+  //     if (recipient == undefined) {
+  //       this.store.dispatch(loadUserByIdRequest({id :id}));
+  //       return this.store.select(getUserById(id)); 
+  //     } else {
+  //       return this.store.select(getUserById(id)); 
+  //     }
+  //   })
+  // }
 }

@@ -69,7 +69,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
 import { ConversationDetailComponent } from './conversations/feature/conversation-detail/conversation-detail.component';
 import { ConversationListComponent } from './conversations/feature/conversation-list/conversation-list.component';
-import { ConversationCardComponent } from './conversations/utils/conversation-card/conversation-card/conversation-card.component';
+import { ConversationCardComponent } from './conversations/utils/conversation-card/conversation-card.component';
 import { ConversationCreateComponent } from "./conversations/feature/conversation-create/conversation-create.component";
 import { MessagesCreateComponent } from './conversations/feature/messages-create/messages-create.component';
 import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/minimal-notice-card.component';

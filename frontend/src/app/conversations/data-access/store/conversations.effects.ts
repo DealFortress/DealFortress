@@ -12,12 +12,16 @@ import { startSignalRHub, signalrHubUnstarted, signalrConnected, mergeMapHubToAc
 import { conversationHub } from "@app/conversations/utils/conversation.hub";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
 import { Message } from "@app/shared/models/message/message.model";
+import { Store } from "@ngrx/store";
+import { UsersService} from "@app/users/utils/services/users.service"
 
 @Injectable()
 export class ConversationsEffects {
 
     constructor(
         private actions$: Actions,
+        private store : Store,
+        private usersService : UsersService
         ) {}
 
 
@@ -36,7 +40,11 @@ export class ConversationsEffects {
         const getConversations$ = hub
             .on("getconversations")
             .pipe(
-                map((conversations ) => {
+                map((conversations : unknown ) => {
+                    (conversations as Conversation[]).forEach(conversation => {
+                        this.usersService.loadUserById(conversation.buyerId);
+                        this.usersService.loadUserById(conversation.sellerId);
+                    })
                     return getConversationsSuccess({conversations: conversations as Conversation[]})
                 }
                 ),

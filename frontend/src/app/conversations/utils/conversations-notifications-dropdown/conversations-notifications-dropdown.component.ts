@@ -6,6 +6,8 @@ import { Notification } from '@app/shared/models/notification.model';
 import { User } from '@app/shared/models/user/user.model';
 import { getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
+import {formatDate} from '@angular/common';
+import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
 
 @Component({
   selector: 'app-conversations-notifications-dropdown',
@@ -15,7 +17,7 @@ import { Store } from '@ngrx/store';
 export class ConversationsNotificationsDropdownComponent implements OnInit {
   conversations = this.store.select(getConversations);
   notifications : Notification[] = []  ;
-  public loggedInUserLastReadMessageId? : number; 
+  loggedInUserLastReadMessageId? : number; 
   @Input({required: true}) loggedInUser! : User;
 
   constructor(private store : Store) {}
@@ -46,16 +48,36 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
     })
   }
 
+  // setMessageSender(recipientId : number) {
+  //   return this.store.select(getUserById(recipientId)).subscribe(recipient => {
+  //     if (recipient == undefined) {
+  //       this.store.dispatch(loadUserByIdRequest({id :recipientId}));
+  //       return this.store.select(getUserById(recipientId)); 
+  //     } else {
+  //       return this.store.select(getUserById(recipientId)); 
+  //     }
+  //   })
+  // }
+
   createNotification(lastReceivedMessage: Message, conversation: Conversation) {
     console.log('creating');
+    // return this.store.select(getUserById(lastReceivedMessage.senderId)).subscribe(recipient => {
+    //   if (recipient == undefined) {
+    //     this.store.dispatch(loadUserByIdRequest({id :lastReceivedMessage.senderId}));
+    //     return this.store.select(getUserById(recipientId)); 
+    //   } else {
+    //     return this.store.select(getUserById(recipientId)); 
+    //   }
+    // })
     this.store.select(getUserById(lastReceivedMessage.senderId)).subscribe(sender => {
       if (sender) {
-        this.notifications?.push({
+        this.notifications.push({
           conversationId: conversation.id,
           senderName: sender.username,
           text: lastReceivedMessage.text,
-          messageCreatedAt: lastReceivedMessage.createdAt
+          messageCreatedAt: formatDate(lastReceivedMessage.createdAt,'yyyy-MM-dd','en-US')
         } as Notification)
+        console.log(this.notifications)
       }
     })
   }

@@ -1,5 +1,6 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Store, createFeatureSelector, createSelector } from '@ngrx/store';
 import { UsersState } from './users.state';
+import { loadUserByIdRequest } from './users.actions';
 
 const getUsersState = createFeatureSelector<UsersState>('userState');
  
@@ -28,3 +29,15 @@ export const getUserById = (id: number) =>  createSelector(
     getUsersState,
     (state) => state.entities[id]
 )
+
+// export const getorLoadUserById = (id: number, store : Store) =>  createSelector(
+//     getUsersState,
+//     (state) => {
+//         const user = getUserById(state.);
+//         if (user) {
+//             return user
+//         } else {
+//             return store.dispatch(loadUserByIdRequest({id: id}))
+//         }
+//     }
+// )

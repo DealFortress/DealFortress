@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 
 import { Store } from '@ngrx/store';
-import { signalrHubUnstarted, signalrReconnecting } from 'ngrx-signalr-core';
-import { unstarted } from 'ngrx-signalr-core/lib/hubStatus';
 
 
 @Component({
