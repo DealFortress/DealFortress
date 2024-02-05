@@ -36,6 +36,7 @@ import {
     faDove as fasDove,
     faAngleLeft as fasAngleLeft,
     faAngleRight as fasAngleRight,
+    faCircle as fasCircle,
   } from '@fortawesome/free-solid-svg-icons';
 import {
     faMessage as farMessage
@@ -170,7 +171,8 @@ export class AppModule {
       fasDove,
       fasAngleLeft,
       fasAngleRight,
-      farMessage
+      farMessage,
+      fasCircle
     );
   }
  }

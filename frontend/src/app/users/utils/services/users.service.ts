@@ -1,8 +1,8 @@
 import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { UserRequest } from '@app/shared/models/user/user-request.model';
 import { loadLoggedInUserByAuthIdRequest, loadUserByIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
-import { getLoggedInUserStatusCode, getUserById } from '@app/users/data-access/store/users.selectors';
-import { AuthService, User } from '@auth0/auth0-angular';
+import { getLoggedInUserId, getLoggedInUserStatusCode, getUserById } from '@app/users/data-access/store/users.selectors';
+import {  User as authUser } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -10,10 +10,10 @@ import { Store } from '@ngrx/store';
 })
 export class UsersService {
 
-  constructor(private store: Store,private authService: AuthService) { }
+  constructor(private store: Store) { }
 
 
-  setCurrentUser(authUser: User) {
+  setCurrentUser(authUser: authUser) {
     const isNewUser = authUser['/isNewUser'];
 
     if (isNewUser) {
@@ -43,7 +43,7 @@ export class UsersService {
 
   
 
-  createUser(authUser: User) {
+  createUser(authUser: authUser) {
     const postRequest: UserRequest = {
         authId: authUser['sub'],
         email: authUser['email'],
@@ -51,19 +51,20 @@ export class UsersService {
         avatar: authUser['picture']
       } as UserRequest;
 
-      console.log(postRequest);
-
     this.store.dispatch(postUserRequest(postRequest))
   }
 
-  // loadUserById(id: number) {
-  //   return this.store.select(getUserById(id)).pipe(recipient => {
-  //     if (recipient == undefined) {
-  //       this.store.dispatch(loadUserByIdRequest({id :id}));
-  //       return this.store.select(getUserById(id)); 
-  //     } else {
-  //       return this.store.select(getUserById(id)); 
-  //     }
-  //   })
-  // }
+  loadUserById(id: number) {
+    this.store.select(getUserById(id)).subscribe(async recipient => {
+      if (recipient == undefined ) {
+
+        this.store.select(getLoggedInUserId).subscribe(loggedInUserId => {
+          if (loggedInUserId != id) {
+            this.store.dispatch(loadUserByIdRequest({id :id}));
+          }
+        })
+
+      } 
+    })
+  }
 }

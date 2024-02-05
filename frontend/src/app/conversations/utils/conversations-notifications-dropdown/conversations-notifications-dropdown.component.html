@@ -1,6 +1,9 @@
 <div class="dropdown dropdown-end dropdown-hover relative">
-    <div *ngIf="notifications.length > 1" class="bg-red aspect-square w-4 rounded-full absolute top-[-5px] right-[5px]"></div>
-    <a routerLink="/conversations"><fa-icon  [icon]="['far','message']" class="hover:text-base-200 p-2" ></fa-icon></a>
+
+    <a routerLink="/conversations" class="hover:opacity-80">
+      <fa-icon  [icon]="['far','message']" class=" p-2" ></fa-icon>    
+      <span *ngIf="notifications.length > 0" class="absolute top-[-1px] right-1 text-xs text-red">      <fa-icon  [icon]="['fas','circle']" ></fa-icon> </span>
+    </a>
       <ul
       *ngIf="notifications.length > 0; else noNotifications"  
       class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box md:w-64 min-h-8 p-4">

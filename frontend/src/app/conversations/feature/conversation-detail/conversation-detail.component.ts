@@ -7,7 +7,6 @@ import { Conversation } from '@app/shared/models/conversation/conversation.model
 import { PatchLastReadMessageRequest } from '@app/shared/models/conversation/patch-last-read-message-request.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
-import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
 import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -70,12 +69,14 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   setRecipient(loggedInUser : User, conversation: Conversation) {
     let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
 
-    this.store.select(getUserById(recipientId)).subscribe(recipient => {
-      if (recipient == undefined) {
-        this.store.dispatch(loadUserByIdRequest({id :recipientId}));
-      }
-      this.recipient$ = this.store.select(getUserById(recipientId)); 
-    })
+    
+    this.recipient$ = this.store.select(getUserById(recipientId));
+    // this.store.select(getUserById(recipientId)).subscribe(recipient => {
+    //   if (recipient == undefined) {
+    //     this.store.dispatch(loadUserByIdRequest({id :recipientId}));
+    //   }
+    //   this.recipient$ = this.store.select(getUserById(recipientId)); 
+    // })
   }
 
   patchLastReadMessage(loggedInUser : User, conversation: Conversation) {

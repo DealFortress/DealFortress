@@ -31,7 +31,6 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
     this.conversations.subscribe(conversations => {    
       if (conversations) {
          conversations.forEach(conversation => {
-          console.log(conversation);
           const userLastReadMessageId = this.getLoggedInUserLastReadMessageId(this.loggedInUser!, conversation);
           const lastReadMessage = conversation.messages.find(message => message.id == userLastReadMessageId);
 
@@ -48,27 +47,7 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
     })
   }
 
-  // setMessageSender(recipientId : number) {
-  //   return this.store.select(getUserById(recipientId)).subscribe(recipient => {
-  //     if (recipient == undefined) {
-  //       this.store.dispatch(loadUserByIdRequest({id :recipientId}));
-  //       return this.store.select(getUserById(recipientId)); 
-  //     } else {
-  //       return this.store.select(getUserById(recipientId)); 
-  //     }
-  //   })
-  // }
-
   createNotification(lastReceivedMessage: Message, conversation: Conversation) {
-    console.log('creating');
-    // return this.store.select(getUserById(lastReceivedMessage.senderId)).subscribe(recipient => {
-    //   if (recipient == undefined) {
-    //     this.store.dispatch(loadUserByIdRequest({id :lastReceivedMessage.senderId}));
-    //     return this.store.select(getUserById(recipientId)); 
-    //   } else {
-    //     return this.store.select(getUserById(recipientId)); 
-    //   }
-    // })
     this.store.select(getUserById(lastReceivedMessage.senderId)).subscribe(sender => {
       if (sender) {
         this.notifications.push({

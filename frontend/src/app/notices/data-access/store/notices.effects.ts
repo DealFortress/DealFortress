@@ -17,6 +17,7 @@ import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
 import { Update } from '@ngrx/entity';
 import { Product } from '@app/shared/models/product/product.model';
+import { UsersService } from '@app/users/utils/services/users.service';
 
 @Injectable()
 export class NoticesEffects {
@@ -24,6 +25,7 @@ export class NoticesEffects {
     constructor(
         private noticesApiService: NoticesApiService,
         private productsApiService: ProductsApiService,
+        private usersService: UsersService,
         private actions$: Actions,
         ) {}
 
@@ -34,6 +36,9 @@ export class NoticesEffects {
             mergeMap(() => {
                 return this.noticesApiService.getAllNoticesAPI().pipe(
                     map((notices) => {
+                        notices.forEach(notice => {
+                            this.usersService.loadUserById(notice.userId);
+                        })
                         return (loadNoticesSuccess({notices: notices}));
                     }),
                     catchError((_error) => {

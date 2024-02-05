@@ -42,6 +42,7 @@ export class ConversationsEffects {
             .pipe(
                 map((conversations : unknown ) => {
                     (conversations as Conversation[]).forEach(conversation => {
+                        console.log(conversations)
                         this.usersService.loadUserById(conversation.buyerId);
                         this.usersService.loadUserById(conversation.sellerId);
                     })

@@ -29,15 +29,3 @@ export const getUserById = (id: number) =>  createSelector(
     getUsersState,
     (state) => state.entities[id]
 )
-
-// export const getorLoadUserById = (id: number, store : Store) =>  createSelector(
-//     getUsersState,
-//     (state) => {
-//         const user = getUserById(state.);
-//         if (user) {
-//             return user
-//         } else {
-//             return store.dispatch(loadUserByIdRequest({id: id}))
-//         }
-//     }
-// )
