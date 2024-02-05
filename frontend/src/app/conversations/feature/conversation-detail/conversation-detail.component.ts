@@ -2,6 +2,7 @@ import { Component, ElementRef,  Input, OnChanges, OnInit, SimpleChanges, ViewCh
 import { Router } from '@angular/router';
 import { patchLastReadMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
+import { ConversationsService } from '@app/conversations/utils/services/conversation.services';
 import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { PatchLastReadMessageRequest } from '@app/shared/models/conversation/patch-last-read-message-request.model';
@@ -28,7 +29,7 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   @ViewChild("scrollTarget", { static: false }) scrollTarget?: ElementRef;
   
 
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private router: Router, private conversationsService: ConversationsService) {
   }
 
   ngOnInit(): void {
@@ -68,29 +69,19 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
 
   setRecipient(loggedInUser : User, conversation: Conversation) {
     let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
-
     
     this.recipient$ = this.store.select(getUserById(recipientId));
-    // this.store.select(getUserById(recipientId)).subscribe(recipient => {
-    //   if (recipient == undefined) {
-    //     this.store.dispatch(loadUserByIdRequest({id :recipientId}));
-    //   }
-    //   this.recipient$ = this.store.select(getUserById(recipientId)); 
-    // })
   }
 
   patchLastReadMessage(loggedInUser : User, conversation: Conversation) {
 
-    const lastReadMessage = conversation.messages
-      .filter(message => message.senderId != loggedInUser.id)
-      .sort((a, b ) => a.createdAt.valueOf() - b.createdAt.valueOf())
-      .slice(-1)[0];
+    const lastUnreadMessage = ConversationsService.getLastUnreadMessage(conversation, loggedInUser);
 
-    if (lastReadMessage.id != this.loggedInUserLastReadMessageId) {
+    if (lastUnreadMessage.id != this.loggedInUserLastReadMessageId) {
         const patchRequest : PatchLastReadMessageRequest = {
           conversationId: conversation.id,
           readerId: loggedInUser.id,
-          messageId: lastReadMessage.id
+          messageId: lastUnreadMessage.id
         }
         this.store.dispatch(patchLastReadMessageRequest({request: patchRequest}))
       }
