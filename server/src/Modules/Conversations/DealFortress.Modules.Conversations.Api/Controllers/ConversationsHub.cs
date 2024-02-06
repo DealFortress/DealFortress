@@ -65,8 +65,8 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
 
         var recipientAuthId = await _usersController.GetAuthIdByUserIdAsync(recipientId);
 
-        await Clients.User(recipientAuthId!).GetConversation(response);
-        await Clients.User(authId).GetConversation(response);
+        await Clients.User(recipientAuthId!).UpdateConversation(response);
+        await Clients.User(authId).UpdateConversation(response);
     }
 
     public async Task PostMessage(StandaloneMessageRequest request) 

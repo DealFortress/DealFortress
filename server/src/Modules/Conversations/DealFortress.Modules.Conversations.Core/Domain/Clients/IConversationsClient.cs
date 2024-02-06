@@ -12,5 +12,6 @@ public interface IConversationsClient
     Task SendJoinText(string message);
     Task GetConversations(IEnumerable<ConversationResponse> conversations);
     Task GetConversation(ConversationResponse conversation);
+    Task UpdateConversation(ConversationResponse conversation);
     Task GetMessage(MessageResponse message);
 }

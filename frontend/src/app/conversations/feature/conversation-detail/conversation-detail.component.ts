@@ -74,8 +74,8 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   }
 
   patchLastReadMessage(loggedInUser : User, conversation: Conversation) {
-
     const lastUnreadMessage = ConversationsService.getLastUnreadMessage(conversation, loggedInUser);
+    console.log(lastUnreadMessage);
     if (lastUnreadMessage.id != this.loggedInUserLastReadMessageId) {
         const patchRequest : PatchLastReadMessageRequest = {
           conversationId: conversation.id,

@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
 import { getConversationError, getConversationSuccess, getConversationsSuccess,
-    getMessageError, getMessageSuccess, patchLastReadMessageError,
+    getMessageError, getMessageSuccess, getUpdatedConversationError, getUpdatedConversationSuccess, patchLastReadMessageError,
     patchLastReadMessageRequest, patchLastReadMessageSuccess,
     postConversationError, postConversationRequest, postConversationSuccess,
     postMessageError, postMessageRequest, postMessageSuccess} from "./conversations.actions";
@@ -69,6 +69,7 @@ export class ConversationsEffects {
             .on("getconversation")
             .pipe(
                 map((conversation ) => {
+                    console.log(conversation)
                         this.usersService.loadUserById((conversation as Conversation).buyerId);
                         this.usersService.loadUserById((conversation as Conversation).sellerId);
                     of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
@@ -82,6 +83,30 @@ export class ConversationsEffects {
                     )
                 ))
         return merge(getConversation$);
+        })
+    ));
+
+    listenToUpdatedConversation$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(signalrConnected),
+        mergeMapHubToAction(({ hub }) => {
+        // TODO : add event listeners
+        
+        const getUpdatedConversation$ = hub
+            .on("updateconversation")
+            .pipe(
+                map((conversation ) => {
+                    of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
+                    return getUpdatedConversationSuccess({conversation: conversation as Conversation})
+                }
+                ),
+                catchError((_error) => 
+                    of(
+                        ShowAlert({ message: 'error while fetching conversation', actionresult: 'fail' }),
+                        getUpdatedConversationError({errorText: _error.message, statusCode: _error.status})
+                    )
+                ))
+        return merge(getUpdatedConversation$);
         })
     ));
 

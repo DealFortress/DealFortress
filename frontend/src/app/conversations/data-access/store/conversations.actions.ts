@@ -5,7 +5,6 @@ import { MessageRequest } from '@app/shared/models/message/message-request.model
 import { Message } from '@app/shared/models/message/message.model';
 import { createAction, props } from '@ngrx/store';
 
-export const GET_MESSAGE_REQUEST = '[Messages] get message request';
 export const GET_MESSAGE_SUCCESS = '[Messages] get message success';
 export const GET_MESSAGE_ERROR = '[Messages] get message error';
 
@@ -13,13 +12,14 @@ export const POST_MESSAGE_REQUEST = '[Messages] post message request';
 export const POST_MESSAGE_SUCCESS = '[Messages] post message success';
 export const POST_MESSAGE_ERROR = '[Messages] post message error';
 
-export const GET_CONVERSATION_REQUEST = '[Conversations] get conversation request';
 export const GET_CONVERSATION_SUCCESS = '[Conversations] get conversation success';
 export const GET_CONVERSATION_ERROR = '[Conversations] get conversation error';
 
-export const GET_CONVERSATIONS_REQUEST = '[Conversations] get conversations request';
 export const GET_CONVERSATIONS_SUCCESS = '[Conversations] get conversations success';
 export const GET_CONVERSATIONS_ERROR = '[Conversations] get conversations error';
+
+export const GET_UPDATED_CONVERSATION_SUCCESS = '[Conversations] get updated conversation success';
+export const GET_UPDATED_CONVERSATION_ERROR = '[Conversations] get updated conversation error';
 
 export const POST_CONVERSATION_REQUEST = '[Conversations] post conversation request';
 export const POST_CONVERSATION_SUCCESS = '[Conversations] post conversation success';
@@ -40,6 +40,9 @@ export const getConversationsError = createAction(GET_CONVERSATIONS_SUCCESS, pro
 
 export const getConversationSuccess = createAction(GET_CONVERSATION_SUCCESS, props<{conversation : Conversation}>());
 export const getConversationError = createAction(GET_CONVERSATION_ERROR, props<{errorText: string, statusCode: number}>());
+
+export const getUpdatedConversationSuccess = createAction(GET_UPDATED_CONVERSATION_SUCCESS, props<{conversation : Conversation}>());
+export const getUpdatedConversationError = createAction(GET_UPDATED_CONVERSATION_ERROR, props<{errorText: string, statusCode: number}>());
 
 export const postMessageRequest = createAction(POST_MESSAGE_REQUEST, props<{request: MessageRequest}>());
 export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{message: Message, statusCode: number}>());
