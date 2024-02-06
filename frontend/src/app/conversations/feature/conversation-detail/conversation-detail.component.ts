@@ -29,7 +29,7 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   @ViewChild("scrollTarget", { static: false }) scrollTarget?: ElementRef;
   
 
-  constructor(private store: Store, private router: Router, private conversationsService: ConversationsService) {
+  constructor(private store: Store, private router: Router) {
   }
 
   ngOnInit(): void {

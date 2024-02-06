@@ -42,7 +42,6 @@ export class ConversationsEffects {
             .pipe(
                 map((conversations : unknown ) => {
                     (conversations as Conversation[]).forEach(conversation => {
-                        console.log(conversations)
                         this.usersService.loadUserById(conversation.buyerId);
                         this.usersService.loadUserById(conversation.sellerId);
                     })
@@ -70,6 +69,8 @@ export class ConversationsEffects {
             .on("getconversation")
             .pipe(
                 map((conversation ) => {
+                        this.usersService.loadUserById((conversation as Conversation).buyerId);
+                        this.usersService.loadUserById((conversation as Conversation).sellerId);
                     of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
                     return getConversationSuccess({conversation: conversation as Conversation})
                 }

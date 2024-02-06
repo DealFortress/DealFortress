@@ -1,6 +1,10 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
+import { ConversationsService } from '@app/conversations/utils/services/conversation.services';
+import { Conversation } from '@app/shared/models/conversation/conversation.model';
+import { User } from '@app/shared/models/user/user.model';
+import { getLoggedInUser } from '@app/users/data-access/store/users.selectors';
 
 import { Store } from '@ngrx/store';
 
@@ -14,10 +18,11 @@ export class ConversationListComponent implements OnInit{
   public conversations$ = this.store.select(getConversations);
   selectedConversationId? : number;
   router = this.Router;
-  
+  public loggedInUser$ = this.store.select(getLoggedInUser);
 
   constructor(private store: Store, private route: ActivatedRoute, private Router: Router) {
   }
+
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
@@ -27,6 +32,5 @@ export class ConversationListComponent implements OnInit{
     }
     })
   }
-
 
 }

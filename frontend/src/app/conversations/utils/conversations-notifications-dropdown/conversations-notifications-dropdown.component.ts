@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { Message } from '@app/shared/models/message/message.model';
@@ -14,7 +14,7 @@ import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions'
   templateUrl: './conversations-notifications-dropdown.component.html',
   styleUrl: './conversations-notifications-dropdown.component.css'
 })
-export class ConversationsNotificationsDropdownComponent implements OnInit {
+export class ConversationsNotificationsDropdownComponent implements OnChanges {
   conversations = this.store.select(getConversations);
   notifications : Notification[] = []  ;
   loggedInUserLastReadMessageId? : number; 
@@ -22,10 +22,10 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
 
   constructor(private store : Store) {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.setNotifications()
-    console.log(this.notifications);
   }
+
 
   setNotifications() {
     this.conversations.subscribe(conversations => {    
@@ -41,7 +41,10 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
             
             if (lastReadMessage && lastReadMessage.createdAt.valueOf() < lastReceivedMessage.createdAt.valueOf() ) {
             this.createNotification(lastReceivedMessage, conversation)
-          }
+          } 
+          // else if (lastReadMessage?.id == lastReceivedMessage.id ) {
+
+          // }
         })
       }
     })

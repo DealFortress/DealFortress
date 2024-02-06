@@ -1,7 +1,7 @@
 <main class="md:relative min-h-full flex flex-col justify-end md:justify-between gap-4 pb-16 md:pb-0">
   <ng-container *ngIf="(loggedInUser$ | async) as user ; else skeleton">
     <ng-container *ngIf="(conversation$ | async) as conversation; else skeleton">
-      <header class="flex px-2 md:px-6 py-2 fixed md:sticky top-0 w-full z-50 bg-base-200 left-0 flex-col gap-2 shadow-md md:shadow-none">
+      <header class="flex px-2 md:px-6 py-2 fixed md:sticky top-0 w-full z-50 md:z-0 bg-base-200 left-0 flex-col gap-2 shadow-md md:shadow-none">
         <div class="flex justify-start gap-2 items-center flex-1 py-2">
           <button (click)="navigateBack()" class="visible md:hidden btn btn-circle btn-ghost text-2xl">
             <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
