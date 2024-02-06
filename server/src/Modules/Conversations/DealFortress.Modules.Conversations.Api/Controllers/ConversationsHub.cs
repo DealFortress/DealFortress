@@ -44,9 +44,10 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
         }
 
         var sellerAuthId = await _usersController.GetAuthIdByUserIdAsync(request.SellerId);
-
+    
         await Clients.User(sellerAuthId!).GetConversation(response);
         await Clients.User(authId).GetConversation(response);
+
     }
 
     public async Task PatchConversationLastReadMessage(PatchLastMessageReadRequest request)
@@ -87,11 +88,12 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
 
         var conversation = await _conversationService.GetByIdAsync(response.ConversationId);
 
-      
         var buyerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.BuyerId);
         var sellerAuthId = await _usersController.GetAuthIdByUserIdAsync(conversation!.SellerId);
 
-        await Clients.User(buyerAuthId!).GetMessage(response);
         await Clients.User(sellerAuthId!).GetMessage(response);
+        await Clients.User(buyerAuthId!).GetMessage(response);
+
+
     }
 }

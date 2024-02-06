@@ -27,7 +27,6 @@ export class ConversationCardComponent implements OnChanges {
   }
 
   setHasUnreadMessage(conversation: Conversation, loggedInUser : User) {
-    console.log(conversation);
     if (loggedInUser.id == conversation.buyerId) {
       return conversation.buyerLastReadMessageId != ConversationsService.getLastUnreadMessage(conversation, loggedInUser).id;
     } else if (loggedInUser.id == conversation.sellerId) {

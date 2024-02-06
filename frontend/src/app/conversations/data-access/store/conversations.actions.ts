@@ -35,15 +35,15 @@ export const PATCH_CONVERSATION_LAST_READ_MESSAGE_ERROR = '[Conversations] patch
 export const getMessageSuccess = createAction(GET_MESSAGE_SUCCESS, props<{message : Message}>());
 export const getMessageError = createAction(GET_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
 
-export const postMessageRequest = createAction(POST_MESSAGE_REQUEST, props<{request: MessageRequest}>());
-export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{message: Message, statusCode: number}>());
-export const postMessageError = createAction(POST_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
-
 export const getConversationsSuccess = createAction(GET_CONVERSATIONS_SUCCESS, props<{conversations : Conversation[]}>())
 export const getConversationsError = createAction(GET_CONVERSATIONS_SUCCESS, props<{errorText: string}>())
 
 export const getConversationSuccess = createAction(GET_CONVERSATION_SUCCESS, props<{conversation : Conversation}>());
 export const getConversationError = createAction(GET_CONVERSATION_ERROR, props<{errorText: string, statusCode: number}>());
+
+export const postMessageRequest = createAction(POST_MESSAGE_REQUEST, props<{request: MessageRequest}>());
+export const postMessageSuccess = createAction(POST_MESSAGE_SUCCESS, props<{message: Message, statusCode: number}>());
+export const postMessageError = createAction(POST_MESSAGE_ERROR, props<{errorText: string, statusCode: number}>());
 
 export const postConversationRequest = createAction(POST_CONVERSATION_REQUEST, props<{request: ConversationRequest}>());
 export const postConversationSuccess = createAction(POST_CONVERSATION_SUCCESS, props<{conversation: Conversation, statusCode: number}>());

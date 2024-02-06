@@ -59,7 +59,6 @@ export class ConversationsNotificationsDropdownComponent implements OnChanges {
           text: lastReceivedMessage.text,
           messageCreatedAt: formatDate(lastReceivedMessage.createdAt,'yyyy-MM-dd','en-US')
         } as Notification)
-        console.log(this.notifications)
       }
     })
   }
