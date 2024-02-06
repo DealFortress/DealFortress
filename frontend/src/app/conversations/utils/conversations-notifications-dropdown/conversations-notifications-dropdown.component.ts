@@ -2,12 +2,13 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { Message } from '@app/shared/models/message/message.model';
-import { Notification } from '@app/shared/models/notification.model';
 import { User } from '@app/shared/models/user/user.model';
 import { getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import {formatDate} from '@angular/common';
 import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions';
+import { MessageNotificationsServices } from '../services/message-notifications.services';
+
 
 @Component({
   selector: 'app-conversations-notifications-dropdown',
@@ -16,60 +17,15 @@ import { loadUserByIdRequest } from '@app/users/data-access/store/users.actions'
 })
 export class ConversationsNotificationsDropdownComponent implements OnChanges {
   conversations = this.store.select(getConversations);
-  notifications : Notification[] = []  ;
   loggedInUserLastReadMessageId? : number; 
   @Input({required: true}) loggedInUser! : User;
 
-  constructor(private store : Store) {}
+  constructor(private store : Store, private messageNotificationsService: MessageNotificationsServices) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setNotifications()
   }
 
 
-  setNotifications() {
-    this.conversations.subscribe(conversations => {    
-      if (conversations) {
-         conversations.forEach(conversation => {
-          const userLastReadMessageId = this.getLoggedInUserLastReadMessageId(this.loggedInUser!, conversation);
-          const lastReadMessage = conversation.messages.find(message => message.id == userLastReadMessageId);
-
-          const lastReceivedMessage = conversation.messages
-            .filter(message => message.senderId != this.loggedInUser!.id)
-            .slice(-1)[0];
-          
-            
-            if (lastReadMessage && lastReadMessage.createdAt.valueOf() < lastReceivedMessage.createdAt.valueOf() ) {
-            this.createNotification(lastReceivedMessage, conversation)
-          } 
-          // else if (lastReadMessage?.id == lastReceivedMessage.id ) {
-
-          // }
-        })
-      }
-    })
-  }
-
-  createNotification(lastReceivedMessage: Message, conversation: Conversation) {
-    this.store.select(getUserById(lastReceivedMessage.senderId)).subscribe(sender => {
-      if (sender) {
-        this.notifications.push({
-          conversationId: conversation.id,
-          senderName: sender.username,
-          text: lastReceivedMessage.text,
-          messageCreatedAt: formatDate(lastReceivedMessage.createdAt,'yyyy-MM-dd','en-US')
-        } as Notification)
-      }
-    })
-  }
-
-  getLoggedInUserLastReadMessageId(loggedInUser : User, conversation: Conversation) {
-    if (conversation.buyerId == loggedInUser.id) {
-      return conversation.buyerLastReadMessageId;
-    } else if (conversation.sellerId == loggedInUser.id) {
-      return conversation.sellerLastReadMessageId;
-    }
-    return null;
   }
 
   

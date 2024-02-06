@@ -76,6 +76,7 @@ import { MessagesCreateComponent } from './conversations/feature/messages-create
 import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/minimal-notice-card.component';
 import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
 import { ConversationsNotificationsDropdownComponent } from './conversations/utils/conversations-notifications-dropdown/conversations-notifications-dropdown.component';
+import { MessageNotificationsServices } from './conversations/utils/services/message-notifications.services';
 
 
 @NgModule({
@@ -115,6 +116,7 @@ import { ConversationsNotificationsDropdownComponent } from './conversations/uti
     providers: [
         NoticesApiService,
         CategoriesApiService,
+        MessageNotificationsServices,
         UsersApiService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: RequestRetryInterceptor, multi: true }

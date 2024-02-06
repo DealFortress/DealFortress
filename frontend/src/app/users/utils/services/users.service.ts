@@ -56,15 +56,16 @@ export class UsersService {
 
   loadUserById(id: number) {
     this.store.select(getUserById(id)).subscribe(async recipient => {
-      if (recipient == undefined ) {
+      if (recipient ) {
+        return;
+      }
 
-        this.store.select(getLoggedInUserId).subscribe(loggedInUserId => {
-          if (loggedInUserId != id) {
-            this.store.dispatch(loadUserByIdRequest({id :id}));
-          }
-        })
-
-      } 
+      this.store.select(getLoggedInUserId).subscribe(loggedInUserId => {
+        if (loggedInUserId == id) {
+          return;
+        }
+        this.store.dispatch(loadUserByIdRequest({id :id}));
+      })
     })
   }
 }

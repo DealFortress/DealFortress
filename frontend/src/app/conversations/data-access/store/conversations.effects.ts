@@ -63,8 +63,7 @@ export class ConversationsEffects {
     this.actions$.pipe(
         ofType(signalrConnected),
         mergeMapHubToAction(({ hub }) => {
-        // TODO : add event listeners
-        
+
         const getConversation$ = hub
             .on("getconversation")
             .pipe(

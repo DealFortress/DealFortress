@@ -33,9 +33,11 @@ export const conversationsReducer = createReducer(
         }
     }),
     on(getConversationSuccess, (state, action) => {
-        console.log(action)
        if (action.conversation == undefined) {
         return state;
+       }
+       if (state.entities[action.conversation.id]) {
+        return conversationsAdapter.upsertOne(action.conversation, {...state})
        }
        return conversationsAdapter.addOne(action.conversation, {...state})
     }),
@@ -46,7 +48,6 @@ export const conversationsReducer = createReducer(
         }
     }),
     on(getUpdatedConversationSuccess, (state, action) => {
-        console.log(action)
        if (action.conversation == undefined) {
         return state;
        }

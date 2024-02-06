@@ -1,4 +1,4 @@
-export type Notification = {
+export type MessageNotification = {
     conversationId: number,
     text: string,
     senderName: string,
