@@ -1,40 +1,28 @@
-<div class="dropdown dropdown-end dropdown-hover relative">
-    <a routerLink="/conversations" class="hover:opacity-80">
+
+<div  class="dropdown dropdown-end relative" >
+    <a class="hover:opacity-80" tabindex="0" role="button" #close >
       <fa-icon  [icon]="['far','message']" class="text-2xl p-2" ></fa-icon>    
       <span *ngIf="(notifications$ | async)!.length > 0" class="absolute top-[-1px] right-1 text-xs text-red">
         <fa-icon  [icon]="['fas','circle']" ></fa-icon> 
       </span>
     </a>
 
-    <ul
+    <ul  
+    tabindex="0"
     *ngIf="(notifications$ | async)!.length > 0; else noNotifications"  
-    class="dropdown-content z-[1] menu shadow bg-base-100 rounded-lg md:w-80 min-h-8 px-3 py-2 !fixed md:!absolute top-0">
+    class="dropdown-content z-[1] menu shadow bg-base-100 md:rounded-lg md:w-80 min-h-8 px-3 py-2 !fixed md:!absolute top-0">
         <div class="w-full h-20 md:hidden flex justify-start items-center px-2">
-          <button  class="btn btn-square">
+          <button  class="btn btn-square" [routerLink]="['/']">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
         <li *ngFor="let notification of (notifications$ | async);" class="border-b border-grey">
-          <a 
-          *ngIf="(getSender(notification.senderId) |async) as sender"  
-          [routerLink]="['conversations', notification.conversationId]" 
-          class="flex gap-2 rounded-sm md:w-full items-start justify-evenly md:justify-between px-2 py-3 w-[95vw] box-border">
-              <img [src]="sender.avatar" alt="avatar" class="w-10 aspect-square">
-              <div  class="flex flex-col justify-between gap-2">
-                <div>
-                  <p class="text-xl md:text-base font-semibold">{{sender.username}} sent you a message!</p> 
-                  <p class="text-base md:text-sm">{{getNotificationTextPreview(notification.text)}}</p>
-                </div>
-                <div class="flex justify-between text-sm md:text-xs w-full gap-2">
-                  <p>{{getMinutesSinceCreation(notification.messageCreatedAt)}}</p>
-                  <p class="">{{getDateinString(notification.messageCreatedAt)}}</p>
-                </div>
-              </div>
-          </a>
+          <app-notification-card [notification]="notification"></app-notification-card>
         </li>
         <a [routerLink]="['conversations']" class="text-xl md:text-base pt-2 w-auto text-end hover:opacity-90">See all</a>
       </ul>
 </div>
+
 
 <ng-template #noNotifications>
   <p class="dropdown-content z-[1]  menu p-2 shadow bg-base-100 rounded-box md:w-40 min-h-8">No new messages...</p>

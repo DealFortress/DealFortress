@@ -70,23 +70,7 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
                 .filter(message => message.senderId != loggedInUser.id)
                 .slice(-1)[0];
   }
-  getSender(senderId : number) {
-    return this.store.select(getUserById(senderId));
-  }
-
-  getMinutesSinceCreation(time : Date) {
-    return convertMinutesToClosestTimeValue(time);
-  }
-  getDateinString(createdAt : Date) {
-    return formatDate(createdAt,'yyyy-MM-dd','en-US')
-  }
-
-  getNotificationTextPreview(text : string) {
-    if (text.length > 30) {
-      return text.slice(0, 30) + '...';
-    }
-    return text;
-  }
+  
 
 }
 
