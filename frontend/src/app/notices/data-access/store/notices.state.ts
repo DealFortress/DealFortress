@@ -1,7 +1,7 @@
 import { Status } from "@app/shared/models/state.model"
 import { Notice } from "../../../shared/models/notice/notice.model"
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity"
-import { NoticesService } from "@app/notices/utils/services/notices.services"
+import { convertDateToMinutes } from "@app/shared/helper-functions/helper-functions"
 
 export interface NoticesState extends EntityState<Notice> {
     userLatestNoticeId?: number,
@@ -10,7 +10,7 @@ export interface NoticesState extends EntityState<Notice> {
 }
 
 export const sortByDate = (a: Notice, b: Notice) => {
-    return NoticesService.convertDateToMinutes(b.createdAt) - NoticesService.convertDateToMinutes(a.createdAt) 
+    return convertDateToMinutes(b.createdAt) - convertDateToMinutes(a.createdAt) 
 }
 
 export const noticesAdapter: EntityAdapter<Notice> = createEntityAdapter<Notice>({

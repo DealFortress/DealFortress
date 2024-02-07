@@ -20,17 +20,17 @@ export class ConversationListComponent implements OnInit{
   router = this.Router;
   public loggedInUser$ = this.store.select(getLoggedInUser);
 
-  constructor(private store: Store, private route: ActivatedRoute, private Router: Router) {
+  constructor(private store: Store,  private Router: Router, private route : ActivatedRoute) {
   }
 
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      const currentConversation = paramMap.get('id')
-      if (currentConversation) {
-      this.selectedConversationId = +currentConversation;
-    }
+      if (paramMap.get('id') == null ) {
+        return;
+      }
+
+      this.selectedConversationId = +(paramMap.get('id'))!;
     })
   }
-
 }

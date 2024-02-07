@@ -20,16 +20,10 @@
     class="bg-base-100 rounded-md flex-col justify-center shadow-inner relative overflow-y-scroll min-h-screen"   
     >
       <app-conversation-detail
-      *ngIf="selectedConversationId; else noConversationSelected"  
       class="md:block h-full" 
-      [conversationId]="selectedConversationId ? selectedConversationId : conversations[0].id"
       >
       </app-conversation-detail>
     </div>
   </div>
 </ng-container>
-
-<ng-template #noConversationSelected>
-  <h3 class="text-center text-2xl">No conversation selected</h3>
-</ng-template>
 

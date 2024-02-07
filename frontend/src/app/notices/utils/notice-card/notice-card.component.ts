@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NoticesService } from '@app/notices/utils/services/notices.services';
+import { convertMinutesToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
+
 import { Notice } from '@app/shared/models/notice/notice.model';
 
 @Component({
@@ -13,6 +14,6 @@ export class NoticeCardComponent implements OnInit {
 
   constructor() {}
   ngOnInit(): void {
-    this.minutesSinceCreation = NoticesService.convertMinutesToClosestTimeValue(this.notice.createdAt);
+    this.minutesSinceCreation = convertMinutesToClosestTimeValue(this.notice.createdAt);
   }
 }

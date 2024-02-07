@@ -1,4 +1,4 @@
-<main class="md:relative min-h-full flex flex-col justify-end md:justify-between gap-4 pb-16 md:pb-0">
+<main *ngIf="conversationId; else noConversationSelected" class="md:relative min-h-full flex flex-col justify-end md:justify-between gap-4 pb-16 md:pb-0">
   <ng-container *ngIf="(loggedInUser$ | async) as user ; else skeleton">
     <ng-container *ngIf="(conversation$ | async) as conversation; else skeleton">
       <header class="flex px-2 md:px-6 py-2 fixed md:sticky top-0 w-full z-50 md:z-10 bg-base-200 left-0 flex-col gap-2 shadow-md md:shadow-none">
@@ -41,11 +41,20 @@
 </main>
 
 
-
+<ng-template #noConversationSelected>
+  <h3 class="text-center text-2xl w-full h-full flex justify-center items-center">No conversation selected</h3>
+</ng-template>
 
 
 
 <ng-template #skeleton>
+  <div class="chat chat-end">
+    <div class="chat-image avatar">
+      <div class="w-10 rounded-full bg-base-grey">
+      </div>
+    </div>
+    <div class="chat-bubble w-10 bg-base-grey"></div>
+  </div>
   <div class="chat chat-end">
     <div class="chat-image avatar">
       <div class="w-10 rounded-full bg-base-grey">

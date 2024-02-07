@@ -1,5 +1,5 @@
-import { Component, ElementRef,  Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef,  Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {  ActivatedRoute, Router } from '@angular/router';
 import { patchLastReadMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
 import { ConversationsService } from '@app/conversations/utils/services/conversation.services';
@@ -9,6 +9,7 @@ import { PatchLastReadMessageRequest } from '@app/shared/models/conversation/pat
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
 import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -18,45 +19,56 @@ import { Observable } from 'rxjs';
   templateUrl: './conversation-detail.component.html',
   styleUrl: './conversation-detail.component.css'
 })
-export class ConversationDetailComponent implements OnChanges, OnInit {
-  @Input({required: true}) conversationId!: number;
+export class ConversationDetailComponent implements OnInit{
+  conversationId?: number;
   public loggedInUser$ = this.store.select(getLoggedInUser);
   public recipient$? : Observable<User | undefined>;
   public conversation$? : Observable<Conversation | undefined>;
   public notice$? :  Observable<Notice | undefined>;
   public loggedInUserLastReadMessageId? : number; 
   public recipientLastReadMessageId? : number;
+
   @ViewChild("scrollTarget", { static: false }) scrollTarget?: ElementRef;
   
 
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private router: Router, private route : ActivatedRoute) {
   }
 
   ngOnInit(): void {
-  }
+    this.route.paramMap.subscribe(paramMap => {
+      if (paramMap.get('id') == null ) {
+        this.conversationId = undefined;
+        return
+      }
+      this.conversationId = +(paramMap.get('id'))!;
 
-  
-  ngOnChanges(changes: SimpleChanges): void {
-    this.conversation$ =  this.store.select(getConversationById(this.conversationId));
+      this.conversation$ =  this.store.select(getConversationById(this.conversationId));
+      this.conversation$?.subscribe(conversation => {
+
+        if (conversation) {
+          setTimeout(() => this.scrollToLatestMessage(), 1);
+          this.notice$ = this.store.select(getNoticeById(conversation.noticeId));
+          
     
-    this.conversation$.subscribe(conversation => {
-      if (conversation) {
-        setTimeout(() => this.scrollToLatestMessage(), 1)
-
-        this.notice$ = this.store.select(getNoticeById(conversation.noticeId))
-        
-        this.loggedInUser$.subscribe(loggedInUser => {
-          if (loggedInUser) {
+          this.loggedInUser$.subscribe(loggedInUser => {
+            if (!loggedInUser) {
+              return;
+            }
             this.setUsersLastReadMessageId(loggedInUser, conversation);
             this.setRecipient(loggedInUser, conversation);
-            this.patchLastReadMessage(loggedInUser, conversation)
-          }
-        })
-      }
+            if (conversation.id != this.conversationId) {
+              return;
+            }
+            this.patchLastReadMessage(loggedInUser, conversation);
+          })
+        }   
+      })
     })
   }
 
+ 
   navigateBack() {
+    this.conversationId = undefined;
     this.router.navigate(['conversations/'])
   }
 
@@ -74,16 +86,20 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
   }
 
   patchLastReadMessage(loggedInUser : User, conversation: Conversation) {
+    if (conversation.id != this.conversationId) {
+      return;
+    }
     const lastUnreadMessage = ConversationsService.getLastUnreadMessage(conversation, loggedInUser);
-    console.log(lastUnreadMessage);
-    if (lastUnreadMessage.id != this.loggedInUserLastReadMessageId) {
-        const patchRequest : PatchLastReadMessageRequest = {
-          conversationId: conversation.id,
-          readerId: loggedInUser.id,
-          messageId: lastUnreadMessage.id
-        }
-        this.store.dispatch(patchLastReadMessageRequest({request: patchRequest}))
+    if (lastUnreadMessage.id != this.loggedInUserLastReadMessageId ) {
+      console.log('in');
+    
+      const patchRequest : PatchLastReadMessageRequest = {
+        conversationId: conversation.id,
+        readerId: loggedInUser.id,
+        messageId: lastUnreadMessage.id
       }
+      this.store.dispatch(patchLastReadMessageRequest({request: patchRequest}))
+    }
   }
 
   setUsersLastReadMessageId(loggedInUser : User, conversation: Conversation) {
@@ -95,7 +111,5 @@ export class ConversationDetailComponent implements OnChanges, OnInit {
       this.recipientLastReadMessageId = conversation.buyerLastReadMessageId;
     }
   }
-
-
 
 }
