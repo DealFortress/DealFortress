@@ -1,11 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
-import { ConversationsService } from '@app/conversations/utils/services/conversation.services';
-import { Conversation } from '@app/shared/models/conversation/conversation.model';
-import { User } from '@app/shared/models/user/user.model';
 import { getLoggedInUser } from '@app/users/data-access/store/users.selectors';
-
 import { Store } from '@ngrx/store';
 
 

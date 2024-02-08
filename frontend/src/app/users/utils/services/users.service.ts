@@ -1,4 +1,4 @@
-import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { UserRequest } from '@app/shared/models/user/user-request.model';
 import { loadLoggedInUserByAuthIdRequest, loadUserByIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
 import { getLoggedInUserId, getLoggedInUserStatusCode, getUserById } from '@app/users/data-access/store/users.selectors';

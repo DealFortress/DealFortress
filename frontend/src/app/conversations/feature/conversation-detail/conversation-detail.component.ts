@@ -1,4 +1,4 @@
-import { Component, ElementRef,  Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {  ActivatedRoute, Router } from '@angular/router';
 import { patchLastReadMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversationById } from '@app/conversations/data-access/store/conversations.selectors';
@@ -9,7 +9,7 @@ import { PatchLastReadMessageRequest } from '@app/shared/models/conversation/pat
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
 import {  getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
+
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 

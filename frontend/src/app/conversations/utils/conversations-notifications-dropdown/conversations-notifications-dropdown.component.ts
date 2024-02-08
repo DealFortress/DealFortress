@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input,  OnInit, SimpleChanges } from '@angular/core';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { User } from '@app/shared/models/user/user.model';
 import { Store } from '@ngrx/store';
@@ -6,11 +6,8 @@ import { MessageNotification } from '@app/shared/models/message-notification.mod
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Message } from '@app/shared/models/message/message.model';
-import { formatDate } from '@angular/common';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
-import { getUserById } from '@app/users/data-access/store/users.selectors';
-import { ReturnStatement } from '@angular/compiler';
-import { convertMinutesToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
+
 
 
 @Component({
