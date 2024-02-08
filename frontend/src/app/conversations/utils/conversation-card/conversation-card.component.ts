@@ -5,6 +5,7 @@ import { getLoggedInUser, getUserById } from '@app/users/data-access/store/users
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ConversationsService } from '../services/conversation.services';
+import { last } from 'rxjs/operators';
 
 
 @Component({
@@ -27,10 +28,13 @@ export class ConversationCardComponent implements OnChanges {
   }
 
   setHasUnreadMessage(conversation: Conversation, loggedInUser : User) {
-    if (loggedInUser.id == conversation.buyerId) {
-      return conversation.buyerLastReadMessageId != ConversationsService.getLastUnreadMessage(conversation, loggedInUser).id;
+    const lastUnreadMessage = ConversationsService.getLastUnreadMessage(conversation, loggedInUser)?.id;
+    if(lastUnreadMessage == undefined) {
+      return false;
+    } else if (loggedInUser.id == conversation.buyerId ) {
+      return conversation.buyerLastReadMessageId != lastUnreadMessage;
     } else if (loggedInUser.id == conversation.sellerId) {
-      return conversation.sellerLastReadMessageId != ConversationsService.getLastUnreadMessage(conversation, loggedInUser).id;
+      return conversation.sellerLastReadMessageId != lastUnreadMessage;
     } else {
       return false;
     }

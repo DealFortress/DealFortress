@@ -55,7 +55,7 @@ export class UsersService {
   }
 
   loadUserById(id: number) {
-    let cache : number[];
+    let cache : number[] = [];
 
     this.store.select(getUserById(id)).subscribe(recipient => {
       if (recipient) {
