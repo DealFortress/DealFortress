@@ -6,7 +6,7 @@ import { UsersService } from './users/utils/services/users.service';
 import { getNotices, getNoticesStatus } from './notices/data-access/store/notices.selectors';
 import { Status } from './shared/models/state.model';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
-import { createSignalRHub} from 'ngrx-signalr-core';
+import { createSignalRHub, startSignalRHub} from 'ngrx-signalr-core';
 import { conversationHub } from './conversations/utils/conversation.hub';
 import { loadUserByIdRequest } from './users/data-access/store/users.actions';
 import { getLoggedInUserStatusCode } from './users/data-access/store/users.selectors';
@@ -30,15 +30,9 @@ export class AppComponent implements OnInit{
     this.store.dispatch(loadNoticesRequest());
     this.store.dispatch(loadCategoriesRequest());
 
-    this.authService.getAccessTokenSilently().subscribe(token => {
-      if (token) {
-        conversationHub.options = {
-          accessTokenFactory: () => {
-            return token;
-          }
-        };
-
-        this.store.dispatch(createSignalRHub(conversationHub));
+    this.authService.isAuthenticated$.subscribe(isAuth => {
+      if (isAuth) {
+        this.startConversationsHub();
       }
     })
 
@@ -51,6 +45,20 @@ export class AppComponent implements OnInit{
     this.notices.subscribe(notices => {
       if (notices) {
         notices.forEach(notice => this.store.dispatch(loadUserByIdRequest({id: notice.userId})))
+      }
+    })
+  }
+
+  startConversationsHub() {
+    this.authService.getAccessTokenSilently().subscribe(token => {
+      if (token) {
+        conversationHub.options = {
+          accessTokenFactory: () => {
+            return token;
+          }
+        };
+        
+        this.store.dispatch(createSignalRHub(conversationHub));
       }
     })
   }

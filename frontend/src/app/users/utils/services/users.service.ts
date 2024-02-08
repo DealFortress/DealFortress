@@ -1,8 +1,8 @@
-import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { UserRequest } from '@app/shared/models/user/user-request.model';
-import { loadLoggedInUserByAuthIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
-import { getLoggedInUserStatusCode } from '@app/users/data-access/store/users.selectors';
-import { AuthService, User } from '@auth0/auth0-angular';
+import { loadLoggedInUserByAuthIdRequest, loadUserByIdRequest, postUserRequest } from '@app/users/data-access/store/users.actions';
+import { getLoggedInUserId, getLoggedInUserStatusCode, getUserById } from '@app/users/data-access/store/users.selectors';
+import {  User as authUser } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -10,10 +10,10 @@ import { Store } from '@ngrx/store';
 })
 export class UsersService {
 
-  constructor(private store: Store,private authService: AuthService) { }
+  constructor(private store: Store) { }
 
 
-  setCurrentUser(authUser: User) {
+  setCurrentUser(authUser: authUser) {
     const isNewUser = authUser['/isNewUser'];
 
     if (isNewUser) {
@@ -43,7 +43,7 @@ export class UsersService {
 
   
 
-  createUser(authUser: User) {
+  createUser(authUser: authUser) {
     const postRequest: UserRequest = {
         authId: authUser['sub'],
         email: authUser['email'],
@@ -51,8 +51,28 @@ export class UsersService {
         avatar: authUser['picture']
       } as UserRequest;
 
-      console.log(postRequest);
-
     this.store.dispatch(postUserRequest(postRequest))
+  }
+
+  loadUserById(id: number) {
+    let cache : number[];
+
+    this.store.select(getUserById(id)).subscribe(recipient => {
+      if (recipient) {
+        return;
+      }
+
+      this.store.select(getLoggedInUserId).subscribe(loggedInUserId => {
+        if (loggedInUserId == id) {
+          return;
+        }
+        cache.push(id)
+
+        if (cache.length > 4) {
+          cache.pop()
+        }
+        this.store.dispatch(loadUserByIdRequest({id :id}));
+      })
+    })
   }
 }

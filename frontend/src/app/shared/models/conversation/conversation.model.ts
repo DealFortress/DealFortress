@@ -1,4 +1,4 @@
-import { Message } from "../message/message"
+import { Message } from "../message/message.model"
 
 export type Conversation = {
     id: number,
@@ -6,5 +6,7 @@ export type Conversation = {
     name: string,
     buyerId: number,
     sellerId: number,
+    buyerLastReadMessageId: number,
+    sellerLastReadMessageId: number,
     messages: Message[]
 }

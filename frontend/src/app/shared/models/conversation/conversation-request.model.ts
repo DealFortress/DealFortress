@@ -1,4 +1,4 @@
-import { MessageRequest } from "../message/message-request"
+import { MessageRequest } from "../message/message-request.model"
 
 export type ConversationRequest = {
     noticeId: number,

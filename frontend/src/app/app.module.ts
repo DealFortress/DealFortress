@@ -36,6 +36,7 @@ import {
     faDove as fasDove,
     faAngleLeft as fasAngleLeft,
     faAngleRight as fasAngleRight,
+    faCircle as fasCircle,
   } from '@fortawesome/free-solid-svg-icons';
 import {
     faMessage as farMessage
@@ -69,12 +70,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SignalREffects, signalrReducer } from 'ngrx-signalr-core';
 import { ConversationDetailComponent } from './conversations/feature/conversation-detail/conversation-detail.component';
 import { ConversationListComponent } from './conversations/feature/conversation-list/conversation-list.component';
-import { ConversationCardComponent } from './conversations/feature/conversation-list/conversation-card/conversation-card/conversation-card.component';
+import { ConversationCardComponent } from './conversations/utils/conversation-card/conversation-card.component';
 import { ConversationCreateComponent } from "./conversations/feature/conversation-create/conversation-create.component";
 import { MessagesCreateComponent } from './conversations/feature/messages-create/messages-create.component';
 import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/minimal-notice-card.component';
 import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
-
+import { ConversationsNotificationsDropdownComponent } from './conversations/utils/conversations-notifications-dropdown/conversations-notifications-dropdown.component';
+import { NotificationCardComponent } from './conversations/utils/notification-card/notification-card.component';
 
 @NgModule({
     declarations: [
@@ -107,7 +109,9 @@ import { MessageCardComponent } from './conversations/utils/message-card/message
         ConversationCreateComponent,
         MessagesCreateComponent,
         MinimalNoticeCardComponent,
-        MessageCardComponent
+        MessageCardComponent,
+        ConversationsNotificationsDropdownComponent,
+        NotificationCardComponent
     ],
     providers: [
         NoticesApiService,
@@ -168,7 +172,8 @@ export class AppModule {
       fasDove,
       fasAngleLeft,
       fasAngleRight,
-      farMessage
+      farMessage,
+      fasCircle
     );
   }
  }

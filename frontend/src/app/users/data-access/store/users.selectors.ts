@@ -1,5 +1,6 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Store, createFeatureSelector, createSelector } from '@ngrx/store';
 import { UsersState } from './users.state';
+import { loadUserByIdRequest } from './users.actions';
 
 const getUsersState = createFeatureSelector<UsersState>('userState');
  

@@ -1,7 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
-
+import { getLoggedInUser } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 
 
@@ -14,19 +14,19 @@ export class ConversationListComponent implements OnInit{
   public conversations$ = this.store.select(getConversations);
   selectedConversationId? : number;
   router = this.Router;
-  
+  public loggedInUser$ = this.store.select(getLoggedInUser);
 
-  constructor(private store: Store, private route: ActivatedRoute, private Router: Router) {
+  constructor(private store: Store,  private Router: Router, private route : ActivatedRoute) {
   }
+
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      const currentConversation = paramMap.get('id')
-      if (currentConversation) {
-      this.selectedConversationId = +currentConversation;
-    }
+      if (paramMap.get('id') == null ) {
+        return;
+      }
+
+      this.selectedConversationId = +(paramMap.get('id'))!;
     })
   }
-
-
 }

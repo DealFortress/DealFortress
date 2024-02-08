@@ -1,19 +1,27 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { getConversationError, getConversationSuccess, getConversationsSuccess, getMessageError, getMessageSuccess, postConversationError, postConversationRequest, postConversationSuccess, postMessageError, postMessageRequest, postMessageSuccess } from "./conversations.actions";
+import { getConversationError, getConversationSuccess, getConversationsSuccess,
+    getMessageError, getMessageSuccess, getUpdatedConversationError, getUpdatedConversationSuccess, patchLastReadMessageError,
+    patchLastReadMessageRequest, patchLastReadMessageSuccess,
+    postConversationError, postConversationRequest, postConversationSuccess,
+    postMessageError, postMessageRequest, postMessageSuccess} from "./conversations.actions";
 import { ShowAlert } from "@app/shared/store/app.actions";
 import { of, merge } from "rxjs";
 import { Injectable } from "@angular/core";
-import { Message } from "@app/shared/models/message/message";
 import { startSignalRHub, signalrHubUnstarted, signalrConnected, mergeMapHubToAction, findHub, hubNotFound } from "ngrx-signalr-core";
 import { conversationHub } from "@app/conversations/utils/conversation.hub";
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
+import { Message } from "@app/shared/models/message/message.model";
+import { Store } from "@ngrx/store";
+import { UsersService} from "@app/users/utils/services/users.service"
 
 @Injectable()
 export class ConversationsEffects {
 
     constructor(
         private actions$: Actions,
+        private store : Store,
+        private usersService : UsersService
         ) {}
 
 
@@ -28,11 +36,15 @@ export class ConversationsEffects {
     this.actions$.pipe(
         ofType(signalrConnected),
         mergeMapHubToAction(({ hub }) => {
-        // TODO : add event listeners
+
         const getConversations$ = hub
             .on("getconversations")
             .pipe(
-                map((conversations ) => {
+                map((conversations : unknown ) => {
+                    (conversations as Conversation[]).forEach(conversation => {
+                        this.usersService.loadUserById(conversation.buyerId);
+                        this.usersService.loadUserById(conversation.sellerId);
+                    })
                     return getConversationsSuccess({conversations: conversations as Conversation[]})
                 }
                 ),
@@ -51,12 +63,13 @@ export class ConversationsEffects {
     this.actions$.pipe(
         ofType(signalrConnected),
         mergeMapHubToAction(({ hub }) => {
-        // TODO : add event listeners
-        
+
         const getConversation$ = hub
             .on("getconversation")
             .pipe(
                 map((conversation ) => {
+                        this.usersService.loadUserById((conversation as Conversation).buyerId);
+                        this.usersService.loadUserById((conversation as Conversation).sellerId);
                     of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
                     return getConversationSuccess({conversation: conversation as Conversation})
                 }
@@ -68,6 +81,29 @@ export class ConversationsEffects {
                     )
                 ))
         return merge(getConversation$);
+        })
+    ));
+
+    listenToUpdatedConversation$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(signalrConnected),
+        mergeMapHubToAction(({ hub }) => {
+        
+        const getUpdatedConversation$ = hub
+            .on("updateconversation")
+            .pipe(
+                map((conversation ) => {
+                    of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
+                    return getUpdatedConversationSuccess({conversation: conversation as Conversation})
+                }
+                ),
+                catchError((_error) => 
+                    of(
+                        ShowAlert({ message: 'error while fetching conversation', actionresult: 'fail' }),
+                        getUpdatedConversationError({errorText: _error.message, statusCode: _error.status})
+                    )
+                ))
+        return merge(getUpdatedConversation$);
         })
     ));
 
@@ -95,12 +131,34 @@ export class ConversationsEffects {
         })
     ));
 
+    patchConversationLastMessageRead$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(patchLastReadMessageRequest), 
+        mergeMap(({ request }) => {
+
+        const hub = findHub(conversationHub);
+        if (!hub) {
+            return of(hubNotFound(conversationHub));
+        }
+        return hub.send("patchconversationlastreadmessage", request).pipe(
+            map((conversation) => {
+                return patchLastReadMessageSuccess({conversation: conversation  as Conversation, statusCode: 200})
+            }),
+            catchError((_error) => 
+                of(
+                    patchLastReadMessageError({errorText: _error.message, statusCode: _error.status})
+                ))
+            );
+        })
+    ));
+
+
+
     listenToMessage$ = createEffect(() =>
     this.actions$.pipe(
         ofType(signalrConnected),
         mergeMapHubToAction(({ hub }) => {
-        // TODO : add event listeners
-        
+
         const getMessage$ = hub
             .on("getmessage")
             .pipe(

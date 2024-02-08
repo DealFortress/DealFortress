@@ -1,5 +1,4 @@
 import { Conversation } from "@app/shared/models/conversation/conversation.model";
-import { Message } from "@app/shared/models/message/message";
 import { Status } from "@app/shared/models/state.model";
 
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";

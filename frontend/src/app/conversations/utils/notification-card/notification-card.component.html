@@ -1,0 +1,16 @@
+<a 
+*ngIf="(getSender(notification.senderId) |async) as sender"  
+[routerLink]="['conversations', notification.conversationId]" 
+class="flex gap-2 rounded-sm md:w-full items-start justify-evenly md:justify-between px-2 py-3 box-border">
+    <img [src]="sender.avatar" alt="avatar" class="w-10 aspect-square">
+    <div  class="flex flex-col justify-between gap-2">
+    <div>
+        <p class="text-xl md:text-base font-semibold">{{sender.username}} sent you a message!</p> 
+        <p class="text-base md:text-sm">{{getNotificationTextPreview(notification.text)}}</p>
+    </div>
+    <div class="flex justify-between text-sm md:text-xs w-full gap-2">
+        <p>{{getMinutesSinceCreation(notification.messageCreatedAt)}}</p>
+        <p class="">{{getDateinString(notification.messageCreatedAt)}}</p>
+    </div>
+    </div>
+</a>

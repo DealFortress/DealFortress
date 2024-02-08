@@ -2,7 +2,9 @@
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
+using DealFortress.Modules.Conversations.Core.DTO.Conversation;
 using DealFortress.Modules.Users.Api.Controllers;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace DealFortress.Modules.Conversations.Core.Services;
 public class ConversationsService : IConversationsService
@@ -43,12 +45,57 @@ public class ConversationsService : IConversationsService
         return ToConversationResponseDTO(conversation);
     } 
 
-     public async Task<ConversationResponse> PostAsync(ConversationRequest request)
+    public async Task<ConversationResponse?> PostAsync(ConversationRequest request, string? authId)
     {
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(request.BuyerId, authId);
+
+        if (!isCreator) 
+        {
+            return null;
+        }
+
         var conversation = ToConversation(request);
 
         await _repo.AddAsync(conversation);
 
+        _repo.Complete();
+
+        return ToConversationResponseDTO(conversation);
+    }
+
+    public async Task<ConversationResponse?> PatchLastReadMessageAsync(PatchLastMessageReadRequest request, string authId)
+    {
+       var conversation = await _repo.GetByIdAsync(request.ConversationId);
+
+        if (conversation is null || conversation.Messages is null )
+        {
+            return null;
+        }
+
+        var loggedInUserId = await _usersController.getUserIdByAuthIdAsync(authId);
+
+        if (loggedInUserId != conversation.BuyerId && loggedInUserId != conversation.SellerId) 
+        {
+            return null;
+        }
+
+        var message = conversation.Messages.Find(message => message.Id == request.MessageId);
+
+        if (message is null)
+        {
+            return null;
+        }
+
+        if (request.ReaderId == conversation.BuyerId) 
+        {
+            conversation.BuyerLastReadMessageId = message.Id;
+        } 
+        else if (request.ReaderId == conversation.SellerId) 
+        {
+            conversation.SellerLastReadMessageId = message.Id;
+        }
+
+        _repo.Update(conversation);
         _repo.Complete();
 
         return ToConversationResponseDTO(conversation);
@@ -78,6 +125,8 @@ public class ConversationsService : IConversationsService
             Name = conversation.Name,
             BuyerId = conversation.BuyerId,
             SellerId = conversation.SellerId,
+            BuyerLastReadMessageId = conversation.BuyerLastReadMessageId,
+            SellerLastReadMessageId = conversation.SellerLastReadMessageId,
             Messages = conversation.Messages?.ConvertAll(message => _messagesService.ToMessageResponseDTO(message))
         };
 

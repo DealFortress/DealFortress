@@ -22,7 +22,6 @@ export class ProductFormComponent{
   
   addImage() {
     this.imagesFormArray.push(this.formBuilder.group({ url: ''}));
-    console.log(this.productForm);
   }
   
   isRemovable() { return this.imagesFormArray.length > 1; }
