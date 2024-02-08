@@ -71,6 +71,12 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
                 .slice(-1)[0];
   }
   
+  closeDropdown() {
+    const element = document.activeElement;
+    if (element &&  document.activeElement instanceof HTMLElement) {
+      (element as HTMLElement).blur();
+    }
+  }
 
 }
 
