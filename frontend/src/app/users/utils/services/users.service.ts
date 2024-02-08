@@ -55,14 +55,21 @@ export class UsersService {
   }
 
   loadUserById(id: number) {
-    this.store.select(getUserById(id)).subscribe(async recipient => {
-      if (recipient ) {
+    let cache : number[];
+
+    this.store.select(getUserById(id)).subscribe(recipient => {
+      if (recipient) {
         return;
       }
 
       this.store.select(getLoggedInUserId).subscribe(loggedInUserId => {
         if (loggedInUserId == id) {
           return;
+        }
+        cache.push(id)
+
+        if (cache.length > 4) {
+          cache.pop()
         }
         this.store.dispatch(loadUserByIdRequest({id :id}));
       })

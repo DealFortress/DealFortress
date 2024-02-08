@@ -68,7 +68,6 @@ export class ConversationsEffects {
             .on("getconversation")
             .pipe(
                 map((conversation ) => {
-                    console.log(conversation)
                         this.usersService.loadUserById((conversation as Conversation).buyerId);
                         this.usersService.loadUserById((conversation as Conversation).sellerId);
                     of(ShowAlert({ message: 'new conversation', actionresult: 'pass' }))
