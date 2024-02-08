@@ -40,7 +40,7 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public async Task GetById_returns_null_when_notice_is_not_foundAsync()
+    public async Task GetByIdAsync_returns_null_when_notice_is_not_found()
     {
         // Act
         var noticeResponses = await _service.GetByIdAsync(-1);
@@ -50,7 +50,7 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public async Task PutById_returns_null_when_notice_is_not_foundAsync()
+    public async Task PutByIdAsync_returns_null_when_notice_is_not_found()
     {
         // Act
         var response = await _service.PutByIdAsync(-1, _request);
@@ -60,7 +60,7 @@ public class NoticesServicesTestsSad
     }
 
     [Fact]
-    public async Task DeleteById_returns_null_when_notice_is_not_foundAsync()
+    public async Task DeleteByIdAsync_returns_null_when_notice_is_not_found()
     {
         // Act
         var response = await _service.DeleteByIdAsync(-1);
