@@ -6,11 +6,11 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  selector: 'app-user-detail',
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.css']
 })
-export class UserProfileComponent implements OnInit{
+export class UserDetailComponent implements OnInit{
   user? : Observable<User | undefined>;
 
   constructor(private store: Store, private route : ActivatedRoute) {}

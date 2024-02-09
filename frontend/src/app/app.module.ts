@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AuthLogoutButtonComponent } from './shared/auth/auth-logout-button/auth-logout-button.component';
 import { PopupCardComponent } from './shared/popup-card/popup-card.component';
-import { UserProfileComponent } from './users/feature/user-profile/user-profile.component';
+import { UserDetailComponent } from './users/feature/user-detail/user-detail.component';
 import { UsersApiService } from './users/data-access/services/users-api.service';
 import { AsyncPipe } from '@angular/common';
 import {
@@ -94,7 +94,7 @@ import { NotificationCardComponent } from './conversations/utils/notification-ca
         AuthLoginButtonComponent,
         AuthLogoutButtonComponent,
         PopupCardComponent,
-        UserProfileComponent,
+        UserDetailComponent,
         ProductDetailComponent,
         UserCardComponent,
         ProductCardComponent,
