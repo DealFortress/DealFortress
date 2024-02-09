@@ -4,7 +4,7 @@ import { User } from '@app/shared/models/user/user.model';
 import { Store } from '@ngrx/store';
 import { MessageNotification } from '@app/shared/models/message-notification.model';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { last, map } from 'rxjs/operators';
 import { Message } from '@app/shared/models/message/message.model';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 
@@ -26,22 +26,25 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
   ngOnInit(): void {
 
     this.notifications$ = this.conversations.pipe(map(conversations => {
-      return conversations.map((conversation) => {
-        const userLastReadMessage = this.getLoggedInUserLastReadMessage(this.loggedInUser, conversation);
-        const lastReceivedMessage = this.getLastReceivedMessage(conversation, this.loggedInUser);
-        
-        if (userLastReadMessage&& userLastReadMessage.createdAt.valueOf() < lastReceivedMessage.createdAt.valueOf()) {
-          return this.createNotification(lastReceivedMessage, conversation)
-        }
-        return undefined
-      }).filter((item): item is MessageNotification => !!item);
+      if (conversations) {
+        console.log('in')
+        return conversations.map((conversation) => {
+          console.log(this.loggedInUser, conversation)
+          const userLastReadMessage = this.getLoggedInUserLastReadMessage(this.loggedInUser, conversation);
+          const lastReceivedMessage = this.getLastReceivedMessage(conversation, this.loggedInUser);
+          
+          if (userLastReadMessage && lastReceivedMessage && 
+              userLastReadMessage.createdAt.valueOf() >= lastReceivedMessage?.createdAt.valueOf()) {
+            return undefined
+          } else if (lastReceivedMessage) {
+            return this.createNotification(lastReceivedMessage, conversation)
+          }
+          return undefined
+        }).filter((item): item is MessageNotification => !!item);
+      }
+      return [];
     }))
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
-  }
-
 
   createNotification(lastReceivedMessage: Message, conversation: Conversation) {
     const notification : MessageNotification = {
@@ -53,7 +56,7 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
     return notification;  
   }
 
-  getLoggedInUserLastReadMessage(loggedInUser : User, conversation: Conversation) {
+  getLoggedInUserLastReadMessage(loggedInUser : User, conversation: Conversation) : Message | undefined | null {
     if (conversation.buyerId == loggedInUser.id) {
         return conversation.messages.find(message => message.id == conversation.buyerLastReadMessageId);
     } else if (conversation.sellerId == loggedInUser.id) {
@@ -62,7 +65,7 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
     return null;
   }
 
-  getLastReceivedMessage(conversation : Conversation, loggedInUser : User) {
+  getLastReceivedMessage(conversation : Conversation, loggedInUser : User) : Message | undefined {
     return conversation.messages
                 .filter(message => message.senderId != loggedInUser.id)
                 .slice(-1)[0];

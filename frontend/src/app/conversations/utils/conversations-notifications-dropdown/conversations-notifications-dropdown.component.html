@@ -14,7 +14,7 @@
     class="dropdown-content z-[1] menu shadow bg-base-100 md:rounded-lg md:w-80 min-h-8 px-3 py-2 !fixed md:!absolute top-0">
         <div class="w-full h-20 md:h-10 flex justify-start items-center ps-2 md:ps-0">
           <button  class="btn btn-square md:btn-sm" (click)="closeDropdown()">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
         <li *ngFor="let notification of (notifications$ | async);" class="border-b border-grey">
@@ -26,5 +26,11 @@
 
 
 <ng-template #noNotifications>
-  <p class="dropdown-content z-[1]  menu p-2 shadow bg-base-100 rounded-box md:w-40 min-h-8">No new messages...</p>
+  <div class="dropdown-content z-[1]  menu p-2 shadow bg-base-100 rounded-box md:w-64 min-h-8 !fixed md:!absolute top-0 w-full">
+    <button  class="btn btn-square md:btn-sm" (click)="closeDropdown()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+    <p class="text-lg border-b border-grey py-3">No new messages...</p>
+    <a [routerLink]="['conversations']" class="text-xl md:text-base pt-2 w-auto text-end hover:opacity-90">See all</a>
+  </div>
 </ng-template>
