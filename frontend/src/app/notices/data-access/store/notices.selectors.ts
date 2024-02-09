@@ -29,3 +29,7 @@ export const getUserIdByNoticeId = (noticeId: number) => createSelector(
     getNotices,
     notices => notices.find(notice => notice.id == noticeId)?.userId
 )
+export const getNoticeByUserId = (userId: number) => createSelector(
+    getNotices,
+    notices => notices.filter(notice => notice.userId == userId)
+)

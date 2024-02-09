@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { getNoticeById, getNoticeByUserId } from '@app/notices/data-access/store/notices.selectors';
+import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
 import { getUserById } from '@app/users/data-access/store/users.selectors';
 import { UsersService } from '@app/users/utils/services/users.service';
@@ -13,6 +15,7 @@ import { Observable } from 'rxjs';
 })
 export class UserDetailComponent implements OnInit{
   user? : Observable<User | undefined>;
+  userNotices? : Observable<Notice[] | undefined>;
 
   constructor(private store: Store, private route : ActivatedRoute, private usersService : UsersService) {}
 
@@ -23,6 +26,7 @@ export class UserDetailComponent implements OnInit{
         const id = +(paramMap.get('id')!);
         this.usersService.loadUserById(id)
         this.user = this.store.select(getUserById(id));
+        this.userNotices = this.store.select(getNoticeByUserId(id));
       }
     })
   }

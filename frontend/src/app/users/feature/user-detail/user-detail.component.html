@@ -1,3 +1,9 @@
 <main *ngIf="(user | async) as user" class="container flex justify-start flex-col items-center gap-8 bg-base-0 py-32 m-auto min-h-screen rounded-lg">
    <img [src]="user.avatar" alt="avatar" class="w-80 rounded-full aspect-square">
+   <h2 class="text-4xl">{{user.username}}</h2>
+    <ul>
+        <li *ngFor="let notice of (userNotices | async )">
+            <p>{{notice.title}}</p>
+        </li>
+    </ul>
 </main>
