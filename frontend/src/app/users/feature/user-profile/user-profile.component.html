@@ -1,1 +1,3 @@
-<p>user-profile works!</p>
+<main *ngIf="(user |async) as user">
+    <p>{{user}}</p>
+</main>
