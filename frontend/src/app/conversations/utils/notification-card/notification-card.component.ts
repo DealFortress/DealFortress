@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { convertMinutesToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
+import { convertDateToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
 import { MessageNotification } from '@app/shared/models/message-notification.model';
 import { getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,7 @@ export class NotificationCardComponent {
   }
 
   getMinutesSinceCreation(time : Date) {
-    return convertMinutesToClosestTimeValue(time);
+    return convertDateToClosestTimeValue(time);
   }
   getDateinString(createdAt : Date) {
     return formatDate(createdAt,'yyyy-MM-dd','en-US')

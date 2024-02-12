@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getNoticeById, getNoticeByUserId } from '@app/notices/data-access/store/notices.selectors';
+import { convertDateToMinutes, convertDateToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
 import { getUserById } from '@app/users/data-access/store/users.selectors';
@@ -35,6 +36,10 @@ export class UserDetailComponent implements OnInit{
 
   setActiveTab(tabName : TabName) {
     this.activeTab = tabName;
+  }
+
+  getUserJoinTimeLapse(user : User) {
+    return convertDateToClosestTimeValue(user.createdAt);
   }
 
 }

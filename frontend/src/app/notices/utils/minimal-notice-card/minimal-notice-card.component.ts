@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { convertMinutesToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
+import { convertDateToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
 
 import { Notice } from '@app/shared/models/notice/notice.model';
 
@@ -14,6 +14,6 @@ export class MinimalNoticeCardComponent {
 
   constructor() {}
   ngOnInit(): void {
-    this.minutesSinceCreation = convertMinutesToClosestTimeValue(this.notice.createdAt);
+    this.minutesSinceCreation = convertDateToClosestTimeValue(this.notice.createdAt);
   }
 }
