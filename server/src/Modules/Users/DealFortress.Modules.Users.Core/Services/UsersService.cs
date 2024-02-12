@@ -70,7 +70,8 @@ public class UsersService : IUsersService
             Id = user.Id,
             Email = user.Email,
             Username = user.Username,
-            Avatar = user.Avatar
+            Avatar = user.Avatar,
+            CreatedAt = user.CreatedAt
         };
 
         return response;
@@ -83,7 +84,7 @@ public class UsersService : IUsersService
             AuthId = request.AuthId,
             Email = request.Email,
             Username = request.Username,
-            Avatar = request.Avatar
+            Avatar = request.Avatar,
         };
 
         return user;
