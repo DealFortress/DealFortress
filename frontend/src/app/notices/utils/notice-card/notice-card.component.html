@@ -3,7 +3,7 @@
       <h2 class="card-title">{{notice.title}}</h2>
       <p>{{notice.description.slice(30)}}...</p>
       <div class="card-actions justify-end">
-        <p><strong>{{notice.city }}</strong></p>
+        <p><strong>{{notice.city[0].toUpperCase() + notice.city.slice(1).toLocaleLowerCase()}}</strong></p>
         <p class="text-end"><strong>{{minutesSinceCreation}}</strong></p>
       </div>
     </div>

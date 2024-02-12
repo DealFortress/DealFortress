@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getNoticeById, getNoticeByUserId } from '@app/notices/data-access/store/notices.selectors';
 import { Notice } from '@app/shared/models/notice/notice.model';
@@ -16,12 +16,14 @@ import { Observable } from 'rxjs';
 export class UserDetailComponent implements OnInit{
   user? : Observable<User | undefined>;
   userNotices? : Observable<Notice[] | undefined>;
+  tabName = TabName;
+  activeTab = this.tabName.notices;
+
 
   constructor(private store: Store, private route : ActivatedRoute, private usersService : UsersService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      console.log(paramMap)
       if (paramMap.get('id')) {
         const id = +(paramMap.get('id')!);
         this.usersService.loadUserById(id)
@@ -30,4 +32,14 @@ export class UserDetailComponent implements OnInit{
       }
     })
   }
+
+  setActiveTab(tabName : TabName) {
+    this.activeTab = tabName;
+  }
+
+}
+
+enum TabName {
+  notices = 'notices',
+  reviews = 'reviews'
 }

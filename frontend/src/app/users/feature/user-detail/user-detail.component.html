@@ -1,9 +1,30 @@
-<main *ngIf="(user | async) as user" class="container flex justify-start flex-col items-center gap-8 bg-base-0 py-32 m-auto min-h-screen rounded-lg">
-   <img [src]="user.avatar" alt="avatar" class="w-80 rounded-full aspect-square">
-   <h2 class="text-4xl">{{user.username}}</h2>
-    <ul>
-        <li *ngFor="let notice of (userNotices | async )">
-            <p>{{notice.title}}</p>
-        </li>
-    </ul>
+<main *ngIf="(user | async) as user" class="container flex justify-start flex-col items-start gap-8 bg-base-200 pt-32 m-auto min-h-screen rounded-lg px-16 pb-16">
+  <div class="flex gap-16 justify-start items-start w-full">
+    <img [src]="user.avatar" alt="avatar" class="w-64 rounded-full aspect-square">
+      <h2 class="text-4xl">{{user.username}}</h2>
+  </div>
+
+  <section class="w-full h-full flex flex-col grow">
+    <div class="tabs grow-0">
+        <button *ngFor="let tab of tabName | keyvalue" class="tab tab-lifted tab-lg" [ngClass]="{'tab-active': activeTab == tab.value}" (click)="activeTab = tab.value">{{tab.value}}</button>
+    </div>
+    <span class="py-2 bg-base-100 w-full rounded-lg h-full p-2 grow">
+      <div class="card" [ngClass]="{'hidden': activeTab != tabName.notices}">
+        <ul *ngIf="(userNotices | async )!.length > 0; else noNotice" >
+          <li *ngFor="let notice of (userNotices | async )">
+            <app-notice-card [notice]="notice"></app-notice-card>
+          </li>
+        </ul>
+      </div>
+      <div class="card grow" [ngClass]="{'hidden': activeTab != tabName.reviews}">
+          <ul class="flex items-center justify-center h-full grow">
+            <li class="text-xl">Review system not implement yet!</li>
+          </ul>
+      </div>
+    </span>
+  </section>
 </main>
+
+<ng-template #noNotice>
+  The user has not posted a notice yet!
+</ng-template>
