@@ -20,6 +20,14 @@ export class NoticesApiService {
             .pipe(data => data as Observable<Notice[]>);
     }
 
+    getNoticeByIdAPI(id: number): Observable<Notice>{
+        return this.httpClient
+            .get(`${this.noticesUrl}/${id}`)
+            .pipe(data => data as Observable<Notice>);
+    }
+
+
+
     postNoticeAPI(request: NoticeRequest): Observable<Notice> {
         return this.httpClient
             .post(

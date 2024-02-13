@@ -7,6 +7,9 @@ import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {    
             deleteNoticeRequest, deleteNoticeSuccess, 
+            loadNoticeByIdError, 
+            loadNoticeByIdRequest, 
+            loadNoticeByIdSuccess, 
             loadNoticesError, loadNoticesRequest, 
             loadNoticesSuccess, 
             patchProductSoldStatusRequest, patchProductSoldStatusSuccess, 
@@ -43,6 +46,23 @@ export class NoticesEffects {
                     }),
                     catchError((_error) => {
                         return of(loadNoticesError({errorText: _error.message}));
+                    })
+                );
+            })
+        );
+    })
+
+    loadNotice$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadNoticeByIdRequest),
+            mergeMap((action) => {
+                return this.noticesApiService.getNoticeByIdAPI(action.id).pipe(
+                    map((notice) => {         
+                        this.usersService.loadUserById(notice.userId);
+                        return (loadNoticeByIdSuccess({notice: notice}));
+                    }),
+                    catchError((_error) => {
+                        return of(loadNoticeByIdError({errorText: _error.message}));
                     })
                 );
             })

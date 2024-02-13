@@ -1,4 +1,6 @@
-<app-main-container>
+<app-loader *ngIf="(status | async ) == Status.loading"></app-loader>
+<app-error *ngIf="(status | async ) == Status.error"></app-error>
+<app-main-container *ngIf="(status | async ) == Status.success">
   <div *ngIf="(notice$ | async) as notice" class="relative justify-between grid xl:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
     <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUser$ | async)?.id">
       <button routerLink="edit" class="top-0 right-20 btn btn-ghost btn-circle text-2xl md:text-4xl bg-darkblue md:btn-lg">

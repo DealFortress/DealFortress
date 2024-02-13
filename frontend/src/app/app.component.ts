@@ -17,17 +17,13 @@ import { getLoggedInUserStatusCode } from './users/data-access/store/users.selec
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  status = this.store.select(getNoticesStatus);
-  Status = Status;
   notices = this.store.select(getNotices);
-  
 
   constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
 
   }
 
   async ngOnInit(): Promise<void> {
-    this.store.dispatch(loadNoticesRequest());
     this.store.dispatch(loadCategoriesRequest());
 
     this.authService.isAuthenticated$.subscribe(isAuth => {

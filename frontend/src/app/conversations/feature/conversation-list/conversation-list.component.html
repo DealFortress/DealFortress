@@ -1,5 +1,5 @@
 <ng-container *ngIf="(loggedInUser$ | async) as loggedInUser">
-  <app-loader *ngIf="!(conversations$ | async) || !loggedInUser "></app-loader>
+  <app-loader *ngIf="!(conversations$ | async) || !loggedInUser"></app-loader>
   <div 
     *ngIf="(conversations$ | async) as conversations" 
     class="hidden-scrollbar overflow-hidden h-[90vh] md:container md:mx-auto grid border border-[rgba(0,0,0,0.2)] shadow-md md:p-2 bg-base-0  rounded-md" 

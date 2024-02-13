@@ -1,21 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NoticesState } from '@app/notices/data-access/store/notices.state';
-import { getNotices } from '@app/notices/data-access/store/notices.selectors';
-import { Notice } from '@app/shared/models/notice/notice.model';
+import { Component,OnInit } from '@angular/core';
+import { getNotices, getNoticesStatus } from '@app/notices/data-access/store/notices.selectors';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store'
-import { Observable } from 'rxjs';
+import { loadNoticesRequest } from '@app/notices/data-access/store/notices.actions';
+import { Status } from '@app/shared/models/state.model';
 
 @Component({
   selector: 'app-notice-list',
   templateUrl: './notice-list.component.html',
   styleUrls: ['./notice-list.component.css']
 })
-export class NoticeListComponent {
+export class NoticeListComponent implements OnInit{
   faPlusCircle = faPlusCircle;
-  notices$ : Observable<Notice[]>;
+  notices$ = this.store.select(getNotices);
+  status = this.store.select(getNoticesStatus);
+  Status = Status;
 
-  constructor(store: Store<{noticesState: NoticesState}>) {
-    this.notices$ = store.select(getNotices);
+  constructor(private store: Store) {
+  }
+
+  ngOnInit(): void {
+    console.log('test');
+    this.store.dispatch(loadNoticesRequest());
   }
 }

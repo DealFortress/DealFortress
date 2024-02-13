@@ -93,7 +93,5 @@ public sealed class ConversationsHub : Hub<IConversationsClient>
 
         await Clients.User(sellerAuthId!).GetMessage(response);
         await Clients.User(buyerAuthId!).GetMessage(response);
-
-
     }
 }

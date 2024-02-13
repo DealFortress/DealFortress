@@ -1,8 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
-import { deleteNoticeRequest, deleteNoticeSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusSuccess, postNoticeSuccess, putNoticeSuccess } from "./notices.actions";
+import { deleteNoticeError, deleteNoticeSuccess, loadNoticeByIdError, loadNoticeByIdRequest, loadNoticeByIdSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusError, patchProductSoldStatusSuccess, postNoticeError, postNoticeSuccess, putNoticeError, putNoticeSuccess } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
-import { getNoticeById } from "./notices.selectors";
 import { Notice } from "@app/shared/models/notice/notice.model";
 import { Product } from "@app/shared/models/product/product.model";
 
@@ -28,17 +27,57 @@ export const noticesReducer = createReducer(
             status: Status.error
         }
     }),
+    on(loadNoticeByIdRequest, (state) => {
+        return {
+            ...state,
+            status: Status.loading
+        };
+    }),
+    on(loadNoticeByIdSuccess,(state,action)=>{
+        return noticesAdapter.addOne(action.notice, {
+            ...state,
+            status: Status.success,
+          });
+    }),
+    on(loadNoticeByIdError,(state,action)=>{
+        return {
+            ...state,
+            errorMessage:action.errorText,
+            status: Status.error
+        }
+    }),
     on(postNoticeSuccess,(state,action)=>{
         return noticesAdapter.addOne(action.notice, {
             ...state,
             userLatestNoticeId: action.notice.id
         });
     }),
+    on(postNoticeError,(state,action)=>{
+        return {
+            ...state,
+            errorMessage:action.errorText,
+            status: Status.error
+        }
+    }),
     on(putNoticeSuccess,(state,action)=>{
         return noticesAdapter.upsertOne(action.notice, state);
     }),
+    on(putNoticeError,(state,action)=>{
+        return {
+            ...state,
+            errorMessage:action.errorText,
+            status: Status.error
+        }
+    }),
     on(deleteNoticeSuccess, (state, action)=> {
         return noticesAdapter.removeOne(action.noticeId, state)
+    }),
+    on(deleteNoticeError,(state,action)=>{
+        return {
+            ...state,
+            errorMessage:action.errorText,
+            status: Status.error
+        }
     }),
     on(patchProductSoldStatusSuccess,(state,action)=>{
         let notice = {...state.entities[action.product.noticeId]} as Notice;
@@ -52,5 +91,12 @@ export const noticesReducer = createReducer(
             })
         }
         return noticesAdapter.upsertOne(notice!, state);
+    }),
+    on(patchProductSoldStatusError,(state,action)=>{
+        return {
+            ...state,
+            errorMessage:action.errorText,
+            status: Status.error
+        }
     }),
 );

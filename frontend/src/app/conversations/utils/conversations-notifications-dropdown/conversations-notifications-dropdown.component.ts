@@ -27,9 +27,7 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
 
     this.notifications$ = this.conversations.pipe(map(conversations => {
       if (conversations) {
-        console.log('in')
         return conversations.map((conversation) => {
-          console.log(this.loggedInUser, conversation)
           const userLastReadMessage = this.getLoggedInUserLastReadMessage(this.loggedInUser, conversation);
           const lastReceivedMessage = this.getLastReceivedMessage(conversation, this.loggedInUser);
           
