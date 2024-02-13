@@ -20,9 +20,15 @@ public class NoticesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync()
+    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync(int? userId, int? page, int pageSize = 20)
     {
-        return  Ok(await _service.GetAllAsync());
+        var notices = await _service.GetAllAsync();
+        
+        return Ok(notices
+            .Where(notice => userId is null || notice.UserId == userId)
+            .Skip(page ?? 0 * pageSize)
+            .Take(pageSize)
+        );
     }
 
     [HttpGet("{id}")]

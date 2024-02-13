@@ -22,11 +22,12 @@ public class ProductsController : ControllerBase
     [HttpGet]
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync(int? page, int pageSize = 20)
+    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync(int? noticeId, int? page, int pageSize = 20)
     {
-        var notices = await _service.GetAllAsync();
+        var products = await _service.GetAllAsync();
         
-        return Ok(notices
+        return Ok(products
+            .Where(product => noticeId is null || product.NoticeId == noticeId)
             .Skip(page ?? 0 * pageSize)
             .Take(pageSize)
         );
