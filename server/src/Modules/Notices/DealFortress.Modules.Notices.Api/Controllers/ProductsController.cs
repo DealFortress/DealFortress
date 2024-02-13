@@ -22,9 +22,14 @@ public class ProductsController : ControllerBase
     [HttpGet]
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync()
+    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync(int? page, int pageSize = 20)
     {
-        return Ok(await _service.GetAllAsync());
+        var notices = await _service.GetAllAsync();
+        
+        return Ok(notices
+            .Skip(page ?? 0 * pageSize)
+            .Take(pageSize)
+        );
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]
