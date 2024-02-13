@@ -1,3 +1,4 @@
 export type Pagination = {
-    page: number,
+    pageIndex: number,
+    pageSize: number,
 }

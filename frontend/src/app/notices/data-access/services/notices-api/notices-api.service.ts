@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NoticeRequest } from "@app/shared/models/notice/notice-request.model";
 import { Injectable } from "@angular/core";
+import { Pagination } from "@app/shared/models/pagination.model";
 
 
 @Injectable()
@@ -14,9 +15,9 @@ export class NoticesApiService {
     constructor(private httpClient: HttpClient) {
     }
 
-    getAllNoticesAPI(): Observable<Notice[]>{
+    getAllNoticesAPI(pagination : Pagination): Observable<Notice[]>{
         return this.httpClient
-            .get(this.noticesUrl)
+            .get(`${this.noticesUrl}?page=${pagination.pageIndex}&pageSize=${pagination.pageSize}`)
             .pipe(data => data as Observable<Notice[]>);
     }
 

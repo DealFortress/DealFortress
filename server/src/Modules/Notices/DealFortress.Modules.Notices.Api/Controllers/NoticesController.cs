@@ -21,20 +21,20 @@ public class NoticesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync(int? userId, int? page, int pageSize = 20, HTTPFilter filter = HTTPFilter.createdAt)
+    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync(int? userId, int page = 0, int pageSize = 20, HTTPFilter filter = HTTPFilter.createdAt)
     {
         var notices = await _service.GetAllAsync();
 
         
         return Ok(notices
-            .OrderBy(notice => {
-                    return filter switch {
-                        HTTPFilter.createdAt => notice.CreatedAt,
-                        _ => notice.CreatedAt,
-                    };
-            })
+            // .OrderBy(notice => {
+            //         return filter switch {
+            //             HTTPFilter.createdAt => notice.CreatedAt.Millisecond,
+            //             _ => notice.CreatedAt.Millisecond,
+            //         };
+            // })
             .Where(notice => userId is null || notice.UserId == userId)
-            .Skip(page ?? 0 * pageSize)
+            .Skip(page * pageSize)
             .Take(pageSize)
         );
     }

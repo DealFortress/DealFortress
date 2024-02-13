@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector} from '@ngrx/store';
 import { NoticesState, noticesAdapter } from './notices.state';
+import { Pagination } from '@app/shared/models/pagination.model';
 
 const getNoticesState = createFeatureSelector<NoticesState>('noticesState');
  
@@ -10,9 +11,9 @@ export const getNotices = createSelector(
     selectAll
 );
 
-export const getNotices = createSelector(
-    get,
-    selectAll
+export const getPaginatedNotices = (pagination : Pagination) => createSelector(
+    getNotices,
+    (state) => state.slice(pagination.pageIndex * pagination.pageSize, pagination.pageSize)
 );
 
 export const getLoggedInUserLatestNoticeId = createSelector(

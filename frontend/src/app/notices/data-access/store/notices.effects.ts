@@ -36,8 +36,8 @@ export class NoticesEffects {
     loadNotices$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadNoticesRequest),
-            mergeMap(() => {
-                return this.noticesApiService.getAllNoticesAPI().pipe(
+            mergeMap((action) => {
+                return this.noticesApiService.getAllNoticesAPI({pageIndex: action.pageIndex, pageSize: action.pageSize}).pipe(
                     map((notices) => {
                         notices.forEach(notice => {
                             this.usersService.loadUserById(notice.userId);
