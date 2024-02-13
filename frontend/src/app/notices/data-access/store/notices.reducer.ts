@@ -1,9 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
-import { deleteNoticeError, deleteNoticeSuccess, loadNoticeByIdError, loadNoticeByIdRequest, loadNoticeByIdSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusError, patchProductSoldStatusSuccess, postNoticeError, postNoticeSuccess, putNoticeError, putNoticeSuccess } from "./notices.actions";
+import { deleteNoticeError, deleteNoticeSuccess, loadNoticeByIdError, loadNoticeByIdRequest, loadNoticeByIdSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusError, patchProductSoldStatusSuccess, postNoticeError, postNoticeSuccess, putNoticeError, putNoticeSuccess, setPageSize } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 import { Notice } from "@app/shared/models/notice/notice.model";
 import { Product } from "@app/shared/models/product/product.model";
+import { state } from "@angular/animations";
 
 
 export const noticesReducer = createReducer(
@@ -99,4 +100,10 @@ export const noticesReducer = createReducer(
             status: Status.error
         }
     }),
+    on(setPageSize, (state, action) => {
+        return {
+            ...state,
+            pageSize: action.pageSize
+        }
+    })
 );

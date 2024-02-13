@@ -1,9 +1,10 @@
 import { Component,OnInit } from '@angular/core';
-import { getNotices, getNoticesStatus } from '@app/notices/data-access/store/notices.selectors';
+import { getNoticePageSize, getNotices, getNoticesStatus } from '@app/notices/data-access/store/notices.selectors';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store'
-import { loadNoticesRequest } from '@app/notices/data-access/store/notices.actions';
+import { loadNoticesRequest, setPageSize } from '@app/notices/data-access/store/notices.actions';
 import { Status } from '@app/shared/models/state.model';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-notice-list',
@@ -12,15 +13,23 @@ import { Status } from '@app/shared/models/state.model';
 })
 export class NoticeListComponent implements OnInit{
   faPlusCircle = faPlusCircle;
-  notices$ = this.store.select(getNotices);
+  notices$ = this.store.select(getPaginatedNotices);
   status = this.store.select(getNoticesStatus);
   Status = Status;
+  pageSize = this.store.select(getNoticePageSize);
 
   constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    console.log('test');
-    this.store.dispatch(loadNoticesRequest());
+    this.store.dispatch(loadNoticesRequest({page: 0}));
+  }
+
+  onPaginationEvent(event : PageEvent) {
+    this.store.select(getNoticePageSize).subscribe(pageSize => {
+      if (pageSize && pageSize != event.pageSize) {
+        this.store.dispatch(setPageSize({pageSize: event.pageSize}));
+      }
+    })
   }
 }

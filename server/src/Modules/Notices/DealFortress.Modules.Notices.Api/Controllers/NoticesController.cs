@@ -1,3 +1,4 @@
+using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -20,11 +21,18 @@ public class NoticesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync(int? userId, int? page, int pageSize = 20)
+    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync(int? userId, int? page, int pageSize = 20, HTTPFilter filter = HTTPFilter.createdAt)
     {
         var notices = await _service.GetAllAsync();
+
         
         return Ok(notices
+            .OrderBy(notice => {
+                    return filter switch {
+                        HTTPFilter.createdAt => notice.CreatedAt,
+                        _ => notice.CreatedAt,
+                    };
+            })
             .Where(notice => userId is null || notice.UserId == userId)
             .Skip(page ?? 0 * pageSize)
             .Take(pageSize)

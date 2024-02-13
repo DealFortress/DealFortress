@@ -6,7 +6,8 @@ import { convertDateToMinutes } from "@app/shared/helper-functions/helper-functi
 export interface NoticesState extends EntityState<Notice> {
     userLatestNoticeId?: number,
     errorMessage: string,
-    status: Status
+    status: Status,
+    pageSize: number
 }
 
 export const sortByDate = (a: Notice, b: Notice) => {
@@ -17,4 +18,4 @@ export const noticesAdapter: EntityAdapter<Notice> = createEntityAdapter<Notice>
     sortComparer: sortByDate
 })
 
-export const initialState : NoticesState = noticesAdapter.getInitialState({ errorMessage: '', status: Status.loading });
+export const initialState : NoticesState = noticesAdapter.getInitialState({ errorMessage: '', status: Status.loading, pageSize: 20 });

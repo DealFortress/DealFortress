@@ -19,7 +19,7 @@ import { getLoggedInUserStatusCode } from './users/data-access/store/users.selec
 export class AppComponent implements OnInit{
   notices = this.store.select(getNotices);
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
+  constructor(private authService: AuthService, private usersService: UsersService, private store: Store) {
 
   }
 
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit{
 
     this.notices.subscribe(notices => {
       if (notices) {
-        notices.forEach(notice => this.store.dispatch(loadUserByIdRequest({id: notice.userId})))
+        notices.forEach(notice => this.usersService.loadUserById(notice.userId))
       }
     })
   }

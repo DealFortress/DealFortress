@@ -10,6 +10,11 @@ export const getNotices = createSelector(
     selectAll
 );
 
+export const getNotices = createSelector(
+    get,
+    selectAll
+);
+
 export const getLoggedInUserLatestNoticeId = createSelector(
     getNoticesState,
     (state) => state.userLatestNoticeId
@@ -28,4 +33,9 @@ export const getNoticeById = (id: number) =>  createSelector(
 export const getUserIdByNoticeId = (noticeId: number) => createSelector(
     getNotices,
     notices => notices.find(notice => notice.id == noticeId)?.userId
+)
+
+export const getNoticePageSize = createSelector(
+    getNoticesState,
+    (state) => state.pageSize
 )

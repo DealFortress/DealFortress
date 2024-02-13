@@ -103,6 +103,12 @@ $frontend-theme: mat.define-dark-theme((
   color: rgb(192, 192, 192);
 }
 
+.mat-mdc-paginator-container {
+  justify-content: center !important;
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
+}
+
 .green-snackbar button {
   background-color:#7dac99;
   color: white !important;

@@ -77,6 +77,7 @@ import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/
 import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
 import { ConversationsNotificationsDropdownComponent } from './conversations/utils/conversations-notifications-dropdown/conversations-notifications-dropdown.component';
 import { NotificationCardComponent } from './conversations/utils/notification-card/notification-card.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
     declarations: [
@@ -129,6 +130,7 @@ import { NotificationCardComponent } from './conversations/utils/notification-ca
         FormsModule,
         HttpClientModule,
         AsyncPipe,
+        MatPaginatorModule,
         AuthModule.forRoot({
             domain: environment.auth0Domain!,
             clientId: environment.auth0ClientId!,
