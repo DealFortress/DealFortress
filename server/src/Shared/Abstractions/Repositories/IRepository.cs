@@ -4,6 +4,7 @@ namespace DealFortress.Shared.Abstractions.Repositories;
 public interface IRepository<T> : IDisposable where T : class
 {
     Task<IEnumerable<T>> GetAllAsync();
+    IQueryable<T> GetAll();
     Task<T?> GetByIdAsync(int id);
     Task DeleteAsync(int id);
 

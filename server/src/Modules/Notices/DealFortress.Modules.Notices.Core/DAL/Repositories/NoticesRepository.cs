@@ -13,6 +13,12 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public NoticesRepository(NoticesContext context) : base(context)
     {}
 
+    public new IQueryable<Notice> GetAll(){
+        return NoticesContext!.Notices
+                    .Include(notice => notice.Products!)
+                    .ThenInclude(product => product.Images);              
+    }
+
     public new async Task<IEnumerable<Notice>> GetAllAsync()
     {
         return await NoticesContext!.Notices

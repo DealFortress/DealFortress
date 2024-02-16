@@ -2,6 +2,8 @@ using Bogus;
 using DealFortress.Modules.Categories.Core.DAL;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Modules.Users.Core.DAL;
+using DealFortress.Modules.Users.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,13 +16,35 @@ public static class SeedData
         using var scope = serviceProvider.CreateScope();
         using (var context = new NoticesContext(scope.ServiceProvider.GetRequiredService<DbContextOptions<NoticesContext>>()))
         {
-            if(context.Notices!.ToList().Count > 3)
-            {
-                return;
-            }
 
             var categoryContext = new CategoriesContext(scope.ServiceProvider.GetRequiredService<DbContextOptions<CategoriesContext>>());
             var categories = categoryContext.Categories.ToList();
+
+            var usersContext = new UsersContext(scope.ServiceProvider.GetRequiredService<DbContextOptions<UsersContext>>());
+            var users = usersContext.Users.ToList();
+
+            var cityNames = new string[]{
+                "Huddinge",
+                "Jokkmokk",
+                "Göteborg",
+                "Gällivare",
+                "Umeå",
+                "Piteå",
+                "Malmö",
+                "Östersund"
+            };
+
+            var descriptions = new string[]{
+                "Hej! Som rubrik lyder är jag på jakt efter en Razer Viper Mini Signature Edition, gärna i så nära nyskick det går ",
+                "Säljer av ett gäng grafikkort som legat på min hylla ett tag.\nHar i vanlig ordning mer projekt än tid så får göra lite plats för andra porjekt.\nJag vet inte vad det är för modeller mer än att det är ett RX 580 som är ett gamalt miningkort med, det har jag ej fått att funka med vanliga drivrutiner, men ger bild. Resten har fungerat när jag har testat dom men jag tar inget ansvar för funktionen. Vill ni veta modell får ni försöka läsa vad det står på bilderna.",
+                "Säljer av min gamla processor med kylare på grund av uppgradering av datorn. Den har funkat klockrent och kylaren har varit kanon.",
+                "Finns även ett Gigabyte Z390 M Gaming moderkort samt Corsair Vengeance DDR4 3200MHz 2x8GB RAM-minnen.",
+                "Har en Anthem MRX-510 till salu, bra skick och fungerar bra.",
+                "Hej har lite prylar till salu som bara ligger. Skulle helst vilja sälja allt som ett paket ",
+                "DDR5 kit som jag fick i RMA från Inet. Oöppnad. Första kittet köptes Nov-22. Fick denna i ersättning Dec-23 men hade redan köpt snabbare minne. Fin RGB kit. 1-års garanti som har egentligen gått ut men tillverkaren ger sk limited life warranty."
+            };
+
+
 
             var NoticeNames = new string[]
             {
@@ -218,19 +242,21 @@ public static class SeedData
 
 
 
-            var Notices = new Faker<Notice>()
+            var notices = new Faker<Notice>()
             .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(NoticeNames))
-            .RuleFor(a => a.Description, bogus => bogus.Lorem.Sentences(bogus.Random.Number(8)))
-            .RuleFor(a => a.City, bogus => bogus.Address.City())
+            .RuleFor(a => a.Description, bogus => bogus.Random.ArrayElement<string>(descriptions))
+            .RuleFor(a => a.City, bogus => bogus.Random.ArrayElement<string>(cityNames))
             .RuleFor(a => a.Payments, bogus => bogus.Random.ArrayElement<string>(payment))
             .RuleFor(a => a.CreatedAt, bogus => DateTime.UtcNow)
             .RuleFor(a => a.Products, bogus => null)
             .RuleFor(a => a.DeliveryMethods, bogus => bogus.Random.ArrayElement<string>(delivery))
-            .Generate(75);
+            .RuleFor(a => a.UserId, bogus => bogus.Random.ListItem<User>(users).Id)
+            .Generate(1);
 
             var categoryId = 1;
 
-            context.Notices.AddRange(Notices);
+            context.Notices.AddRange(notices);
+            context.SaveChanges();
 
             var products = new Faker<Product>()
             .RuleFor(a => a.Price, bogus => bogus.Random.Int(200,4000))
@@ -249,21 +275,26 @@ public static class SeedData
                 return nameArray[randomNameArrayIndex];
             })
             .RuleFor(a => a.Condition, bogus => bogus.Random.Enum<Condition>())
-            .RuleFor(a => a.Notice, bogus => bogus.Random.ListItem<Notice>(Notices))
-            .Generate(75);
+            .RuleFor(a => a.Notice, bogus => bogus.Random.ListItem<Notice>(notices))
+            .Generate(2);
 
             context.Products.AddRange(products);
+            context.SaveChanges();
 
             foreach (var product in products)
             {
-               var image = new Faker<Image>()
-                .RuleFor(a => a.Url, bogus => {
-                    var currentCategoryName = categories.Find(category => category.Id == categoryId)!.Name;
+                var currentCategoryName = categories.Find(category => category.Id == product.CategoryId)!.Name;
                 var urlArray = ImageUrlArrays[currentCategoryName];
-                var randomNameArrayIndex = bogus.Random.Number(0, (urlArray.Length! - 1));
-                return urlArray[randomNameArrayIndex]; 
-                });
+                var images = new List<Image>();
+                foreach (var element in urlArray)
+                {          
+                    var image = new Faker<Image>()
+                    .RuleFor(a => a.Url, bogus => element);
+                    images.Add(image);
+                }
+                product.Images = images;
             }
+
 
             context.SaveChanges();
         }

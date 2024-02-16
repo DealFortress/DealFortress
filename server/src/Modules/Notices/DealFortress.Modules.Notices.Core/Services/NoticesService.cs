@@ -3,6 +3,7 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Users.Api.Controllers;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -17,12 +18,22 @@ public class NoticesService : INoticesService
         _productsService = productsService;
         _repo = repo;
     }
-    
+
     public async Task<IEnumerable<NoticeResponse>> GetAllAsync()
     {
-        var entities = await _repo.GetAllAsync();
+        return (await _repo.GetAllAsync())
+            .Select(ToNoticeResponseDTO)
+            .ToList();
+    }
+
+    
+    public IEnumerable<NoticeResponse> GetAll(int? userId, int pageIndex, int pageSize)
+    {
+        var entities = _repo.GetAll();
+
+        var paginatedEntities = new PaginatedList<Notice>(entities, pageIndex, pageSize);
         
-        return entities
+        return paginatedEntities
                 .Select(ToNoticeResponseDTO)
                 .ToList();
     }

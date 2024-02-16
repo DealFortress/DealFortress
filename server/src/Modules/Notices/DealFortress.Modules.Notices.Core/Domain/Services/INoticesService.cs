@@ -5,6 +5,7 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface INoticesService
 {
+    IEnumerable<NoticeResponse> GetAll(int? userId, int pageIndex, int pageSize);
     Task<IEnumerable<NoticeResponse>> GetAllAsync();
 
     Task<NoticeResponse?> GetByIdAsync(int id);

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,11 @@ public class Repository<T> : IRepository<T> where T : class
     public async Task<IEnumerable<T>> GetAllAsync()
     {
         return await Context.Set<T>().ToListAsync();
+    }
+
+    public IQueryable<T> GetAll()
+    {
+        return Context.Set<T>().AsQueryable<T>();
     }
 
     public async Task<T?> GetByIdAsync(int id)
