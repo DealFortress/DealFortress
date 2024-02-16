@@ -24,6 +24,7 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
 Luc:
   - Conversation system with notifications
+  - Pagination
 
 ## Videos
 [2 minute video on the pitch deck](https://youtu.be/FD3JxMlWXQQ) 
