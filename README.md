@@ -40,7 +40,7 @@ Luc:
 
 ### Backend
 
-  -  .NET/C# REST API using a modular monolith architecture
+  - .NET/C# REST API using a modular monolith architecture
 
   - SignalR Library
 
@@ -53,7 +53,7 @@ Luc:
   - Angular 17
     
   - NGRX Store
-  - 
+    
   - SignalR
 
   - Azure static webpages
