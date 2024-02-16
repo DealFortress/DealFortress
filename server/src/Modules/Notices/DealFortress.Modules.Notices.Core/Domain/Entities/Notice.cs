@@ -8,7 +8,7 @@ namespace DealFortress.Modules.Notices.Core.Domain.Entities;
         public int Id { get; set; }
         public required int UserId { get; set; }
 
-        [StringLength(100, MinimumLength = 10 , ErrorMessage = "Title cannot be longer than 100 characters or less than 10 characters")]
+        [StringLength(125, MinimumLength = 10 , ErrorMessage = "Title cannot be longer than 125 characters or less than 10 characters")]
         public required string Title { get; set; }
 
         [StringLength(500, MinimumLength = 30 , ErrorMessage = "Description cannot be longer than 500 characters or less than 30 characters")]
