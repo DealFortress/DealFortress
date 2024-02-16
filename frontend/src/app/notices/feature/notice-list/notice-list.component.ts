@@ -7,13 +7,14 @@ import { Status } from '@app/shared/models/state.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
 import { Notice } from '@app/shared/models/notice/notice.model';
+import { Pagination } from '@app/shared/models/pagination.model';
 
 @Component({
   selector: 'app-notice-list',
   templateUrl: './notice-list.component.html',
   styleUrls: ['./notice-list.component.css']
 })
-export class NoticeListComponent implements OnInit, OnChanges{
+export class NoticeListComponent implements OnInit{
   Status = Status;
   currentPage = 0;
   pageSize = this.store.select(getNoticePageSize);
@@ -26,28 +27,27 @@ export class NoticeListComponent implements OnInit, OnChanges{
   ngOnInit(): void {
     this.pageSize.subscribe(pageSize => {
       if (pageSize) {
-        this.store.dispatch(loadNoticesRequest({pageIndex: this.currentPage, pageSize: pageSize}));
-        this.notices$ = this.store.select(getPaginatedNotices({pageIndex: this.currentPage, pageSize: pageSize}))
+        this.fetchAndSetNotices({pageIndex: this.currentPage, pageSize: pageSize});
       }
     })
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
-   
   }
 
   onPaginationEvent(event : PageEvent) {
     console.log(event)
     if (this.currentPage != event.pageIndex){
       this.currentPage = event.pageIndex;
-      this.store.dispatch(loadNoticesRequest({pageIndex: this.currentPage, pageSize: event.pageSize}));
-      this.notices$ = this.store.select(getPaginatedNotices({pageIndex: this.currentPage, pageSize: event.pageSize}))
+      this.fetchAndSetNotices({pageIndex: event.pageIndex, pageSize: event.pageSize});
     }
+
     this.store.select(getNoticePageSize).subscribe(pageSize => {
       if (pageSize && pageSize != event.pageSize) {
         this.store.dispatch(setPageSize({pageSize: event.pageSize}));
       }
     })
+  }
+
+  fetchAndSetNotices(pagination : Pagination) {
+    this.store.dispatch(loadNoticesRequest({pageIndex: pagination.pageIndex, pageSize: pagination.pageSize}));
+      this.notices$ = this.store.select(getPaginatedNotices({pageIndex: this.currentPage, pageSize: pagination.pageSize}))
   }
 }
