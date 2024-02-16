@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
+using DealFortress.Modules.Notices.Core.Domain.Data;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Services;
@@ -12,9 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace DealFortress.Api.Modules.Notices.Extensions;
 internal static class Extensions
 {
-    public static IServiceCollection AddCore(this IServiceCollection service, string connectionString)
+    public static IServiceCollection AddCore(this IServiceCollection services, string connectionString)
     {
-        return service
+        services
             .AddDbContext<NoticesContext>(options =>
                 options.UseSqlServer(connectionString))
             .AddScoped<INoticesRepository, NoticesRepository>()
@@ -22,5 +23,7 @@ internal static class Extensions
             .AddScoped<INoticesService, NoticesService>()
             .AddScoped<IProductsService, ProductsService>()
             .AddScoped<IImagesService, ImagesService>();
+
+        return services;
     }
 }

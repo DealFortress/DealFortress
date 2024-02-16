@@ -5,6 +5,7 @@ using DealFortress.Modules.Conversations.Api;
 using Bootstrapper.Auth;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using DealFortress.Modules.Notices.Core.Domain.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +49,8 @@ if (app.Environment.IsDevelopment())
         .AllowCredentials()  
         .AllowAnyHeader();
     });
+
+    app.Services.SeedNotices();
 }
 
 app.UseAuthentication();

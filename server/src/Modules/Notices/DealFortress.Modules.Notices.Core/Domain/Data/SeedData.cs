@@ -7,18 +7,19 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DealFortress.Modules.Notices.Core.Domain.Data;
 
-public class SeedData
+public static class SeedData
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using (var context = new NoticesContext(serviceProvider.GetRequiredService<DbContextOptions<NoticesContext>>()))
+        using var scope = serviceProvider.CreateScope();
+        using (var context = new NoticesContext(scope.ServiceProvider.GetRequiredService<DbContextOptions<NoticesContext>>()))
         {
-            if(context.Notices!.Any())
+            if(context.Notices!.ToList().Count > 3)
             {
                 return;
             }
 
-            var categoryContext = new CategoriesContext(serviceProvider.GetRequiredService<DbContextOptions<CategoriesContext>>());
+            var categoryContext = new CategoriesContext(scope.ServiceProvider.GetRequiredService<DbContextOptions<CategoriesContext>>());
             var categories = categoryContext.Categories.ToList();
 
             var NoticeNames = new string[]
@@ -31,7 +32,7 @@ public class SeedData
                 "Ducky x ONEofZERO, Watercooling radiators",
                 "Gigabyte Aurus 1080ti XTreme Ed.",
                 "Ryzen 7700X BNIB, Ryzen 5600 LNIB",
-                "i7-8700k with 64 DDR4 3200MHz RAM with MSI Z370 Gaming Pro Carbon AC Motherboard, RTX 2080 (FREE SHIPPING)",
+                "i7-8700k with 64 DDR4 3200MHz RAM with MSI Z370 Gaming Pro Carbon AC Motherboard",
                 "Selling an electric lawnmower and other stuff, dm for lawnmower info",
                 "CORSAIR Vengeance 32GB (2x16GB) DDR5 5600MHz CL36 Black 1.25V (CMK32GX5M2B5600C36)",
                 "3070FE, HP t740, iPad Pro, 27inch LCD, P1000, EVGA PSUs",
@@ -74,28 +75,28 @@ public class SeedData
                 "ASUS ROG STRIX 960 4GB"
             };
 
-            var MotherboardNames = new string[]{
+            var motherboardNames = new string[]{
                 "ASUS TUF Gaming B650-Plus WIFI",
                 "ASUS Prime Z790-A WIFI",
                 "MSI B760 Gaming Plus WIFI",
                 "Gigabyte B650 Gaming X AX"
             };
 
-            var CoolingNames = new string[]{
+            var coolingNames = new string[]{
                 "Arctic Freezer 7 X CO",
                 "Lian Li UNI FAN SL120 Reverse Infinity RGB PWM Svart",
                 "Noctua NF-A14 140mm PWM",
                 "Arctic P12 PWM Svart",
             };
 
-            var PeripheralNames = new string[]{
+            var peripheralNames = new string[]{
                 "Kyria v2 ergo",
                 "Ergodox",
                 "Keychron Q1",
                 "Logitech 900"
             };
 
-            var MonitorNames = new string[]{
+            var monitorNames = new string[]{
                 "GP27Q 27\"",
                 "Optix G24C",
                 "Odyssey G7 4k 32\"",
@@ -108,15 +109,39 @@ public class SeedData
                 "Corsai 4200mhz 16gb"
             };
 
+            var caseNames = new string[]{
+                "Hyte Y70 Touch Vit",
+                "Cooler Master Ncore 100 MAX",
+                "DAN Cases A4-SFX V4.1 Svart"
+            };
+
+            var SSDHDDNames = new string[]{
+                "Samsung 870 EVO SATA SSD 1TB",
+                "Kingston Fury Renegade M.2 NVMe SSD Gen 4 4TB"
+            };
+            var PCNames = new string[]{
+                "MSI MEG PRospect 700R",
+                "Samsung Galaxy Tab Active5 (128GB) 5G"
+            };
+
+            var miscNames = new string[]{
+                "Xiaomi Mi 16-i-1 Ratchet Skruvmejsel",
+            };
+
 
             var ProductsNameArrays = new Dictionary<string, string[]>();
                 ProductsNameArrays["CPU"] =  CPUNames;
                 ProductsNameArrays["GPU"] =  GPUNames;
-                ProductsNameArrays["Motherboard"] =  MotherboardNames;
-                ProductsNameArrays["Cooling"] =  CoolingNames;
-                ProductsNameArrays["Peripherals"] =  PeripheralNames;
-                ProductsNameArrays["Monitor/TV"] =  MonitorNames;
+                ProductsNameArrays["Motherboard"] =  motherboardNames;
+                ProductsNameArrays["Cooling"] =  coolingNames;
+                ProductsNameArrays["Peripherals"] =  peripheralNames;
+                ProductsNameArrays["Monitor/TV"] =  monitorNames;
                 ProductsNameArrays["RAM"] =  RAMNames;
+                ProductsNameArrays["SSD/HDD"] =  SSDHDDNames;
+                ProductsNameArrays["Case"] =  caseNames;
+                ProductsNameArrays["PC"] =  PCNames;
+                ProductsNameArrays["Misc"] =  miscNames;
+
 
            
             var CPUUrls = new string[]{
@@ -131,24 +156,24 @@ public class SeedData
 
             };
 
-            var MotherboardUrls = new string[]{
+            var motherboardUrls = new string[]{
                 "https://cdn.inet.se/product/688x386/6905786_9.png",
                 "https://cdn.inet.se/product/688x386/6905786_10.png",
                 "https://cdn.inet.se/product/688x386/6905786_11.png"
             };
 
-            var CoolingUrls = new string[]{
+            var coolingUrls = new string[]{
                 "https://cdn.inet.se/product/688x386/5324364_0.png",
                 "https://cdn.inet.se/product/688x386/5324364_1.png",
                 "https://cdn.inet.se/product/688x386/5324364_2.png",
             };
 
-            var PeripheralUrls = new string[]{
+            var peripheralUrls = new string[]{
                 "https://cdn.inet.se/product/688x386/6601832_2.png",
                 "https://cdn.inet.se/product/688x386/6601832_1.png"
             };
 
-            var MonitorUrls = new string[]{
+            var monitorUrls = new string[]{
                 "https://cdn.inet.se/product/688x386/2224813_3.png",
                 "https://cdn.inet.se/product/688x386/2224813_0.png",
                 "https://cdn.inet.se/product/688x386/2224813_1.png"
@@ -159,14 +184,39 @@ public class SeedData
                 "https://cdn.inet.se/product/688x386/5304947_7.png"
             };
 
+            var caseUrls = new string[]{
+                "https://cdn.inet.se/product/688x386/6903694_12.png",
+                "https://cdn.inet.se/product/688x386/6903694_15.png",
+                "https://cdn.inet.se/product/688x386/6903694_9.png"
+            };
+
+            var SSDHDDUrls = new string[]{
+                "https://cdn.inet.se/product/688x386/4302318_12.png",
+                "https://cdn.inet.se/product/1600x900/4302318_11.png"
+            };
+            var PCUrls = new string[]{
+                 "https://cdn.inet.se/product/688x386/6905970_0.png",
+                "https://cdn.inet.se/product/688x386/6905970_4.png"
+            };
+            var miscUrls = new string[]{
+                "https://cdn.inet.se/product/688x386/6602708_0.png",
+                "https://cdn.inet.se/product/688x386/6602708_1.png"
+            };
+
             var ImageUrlArrays = new Dictionary<string, string[]>();
             ImageUrlArrays["CPU"] =  CPUUrls;
             ImageUrlArrays["GPU"] =  GPUUrls;
-            ImageUrlArrays["Motherboard"] =  MotherboardUrls;
-            ImageUrlArrays["Cooling"] =  CoolingUrls;
-            ImageUrlArrays["Peripherals"] =  PeripheralUrls;
-            ImageUrlArrays["Monitor/TV"] =  MonitorUrls;
+            ImageUrlArrays["Motherboard"] =  motherboardUrls;
+            ImageUrlArrays["Cooling"] =  coolingUrls;
+            ImageUrlArrays["Peripherals"] =  peripheralUrls;
+            ImageUrlArrays["Monitor/TV"] =  monitorUrls;
             ImageUrlArrays["RAM"] =  RAMUrls;
+            ImageUrlArrays["SSD/HDD"] =  SSDHDDUrls;
+            ImageUrlArrays["Case"] =  caseUrls;
+            ImageUrlArrays["PC"] =  PCUrls;
+            ImageUrlArrays["Misc"] = miscUrls;
+
+
 
             var Notices = new Faker<Notice>()
             .RuleFor(a => a.Title, bogus => bogus.Random.ArrayElement<string>(NoticeNames))
@@ -178,7 +228,9 @@ public class SeedData
             .RuleFor(a => a.DeliveryMethods, bogus => bogus.Random.ArrayElement<string>(delivery))
             .Generate(75);
 
-            var categoryId = 0;
+            var categoryId = 1;
+
+            context.Notices.AddRange(Notices);
 
             var products = new Faker<Product>()
             .RuleFor(a => a.Price, bogus => bogus.Random.Int(200,4000))
@@ -187,18 +239,21 @@ public class SeedData
             .RuleFor(a => a.SoldStatus, bogus => bogus.PickRandom<SoldStatus>())
             .RuleFor(a => a.IsSoldSeparately, bogus => bogus.Random.Bool())
             .RuleFor(a => a.CategoryId, bogus => {
-                return categories[bogus.Random.Number(0, categories.Count! - 1)].Id;
+                categoryId = categories[bogus.Random.Number(0, categories.Count! - 1)].Id;
+                return categoryId;
                 })
             .RuleFor(a => a.Name, bogus => {
                 var currentCategoryName = categories.Find(category => category.Id == categoryId)!.Name;
-                var NameArray = ProductsNameArrays[currentCategoryName];
-                var randomNameArrayIndex = bogus.Random.Number(0, (NameArray.Length! - 1));
-                return NameArray[randomNameArrayIndex];
+                var nameArray = ProductsNameArrays[currentCategoryName];
+                var randomNameArrayIndex = bogus.Random.Number(0, (nameArray.Length! - 1));
+                return nameArray[randomNameArrayIndex];
             })
             .RuleFor(a => a.Condition, bogus => bogus.Random.Enum<Condition>())
             .RuleFor(a => a.Notice, bogus => bogus.Random.ListItem<Notice>(Notices))
             .Generate(75);
-            
+
+            context.Products.AddRange(products);
+
             foreach (var product in products)
             {
                var image = new Faker<Image>()
@@ -210,9 +265,6 @@ public class SeedData
                 });
             }
 
-
-            context.Notices.AddRange(Notices);
-            context.Products.AddRange(products);
             context.SaveChanges();
         }
     }
