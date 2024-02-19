@@ -22,7 +22,7 @@ public class ProductsController : ControllerBase
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<ProductResponse>> GetProductsAsync(int? noticeId, int pageIndex = 0, int pageSize = 20)
+    public ActionResult<IEnumerable<ProductResponse>> GetProducts(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
         return Ok(_service.GetAllPaginated(noticeId, pageIndex, pageSize));
     }
