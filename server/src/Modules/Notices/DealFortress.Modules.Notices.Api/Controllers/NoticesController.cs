@@ -24,7 +24,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<PaginatedList<NoticeResponse>> GetNoticesAsync(int? userId, int pageIndex = 0, int pageSize = 20, HTTPFilter filter = HTTPFilter.createdAt)
     {
-        return Ok(_service.GetAll(userId, pageIndex, pageSize));
+        return Ok(_service.GetAllPaginated(userId, pageIndex, pageSize));
     }
 
     [HttpGet("{id}")]

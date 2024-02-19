@@ -19,18 +19,12 @@ public class ProductsController : ControllerBase
         _service = service;
     }
 
+    
     [HttpGet]
-
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync(int? noticeId, int? page, int pageSize = 20)
+    public ActionResult<IEnumerable<ProductResponse>> GetProductsAsync(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
-        var products = await _service.GetAllAsync();
-        
-        return Ok(products
-            .Where(product => noticeId is null || product.NoticeId == noticeId)
-            .Skip(page ?? 0 * pageSize)
-            .Take(pageSize)
-        );
+        return Ok(_service.GetAllPaginated(noticeId, pageIndex, pageSize));
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]

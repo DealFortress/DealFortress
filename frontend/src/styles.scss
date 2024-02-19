@@ -86,6 +86,10 @@ $frontend-theme: mat.define-dark-theme((
   width: 300px;
 }
 
+.break-word{
+  word-break: break-word;
+}
+
 .min-h-screen {
   min-height: calc(100vh - 150px);
 }

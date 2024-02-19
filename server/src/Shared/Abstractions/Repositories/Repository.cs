@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Shared.Abstractions.Contexts;
+using DealFortress.Shared.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Shared.Abstractions.Repositories;
@@ -11,6 +12,12 @@ public class Repository<T> : IRepository<T> where T : class
     public Repository(IDbContext context)
     {
         Context = context;
+    }
+    public PaginatedList<T> GetAllPaginated(int pageIndex, int pageSize)
+    {
+        var paginatedEntities = PaginatedList<T>.Create(Context!.Set<T>(), pageIndex, pageSize);   
+
+        return paginatedEntities;
     }
 
     public async Task<IEnumerable<T>> GetAllAsync()

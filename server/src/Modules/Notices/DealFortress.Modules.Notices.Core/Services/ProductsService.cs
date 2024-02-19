@@ -1,8 +1,10 @@
+using AutoMapper;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Users.Api.Controllers;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -10,10 +12,11 @@ public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
     private readonly IImagesService _imagesService;
-    private UsersController _usersController;
+    private readonly UsersController _usersController;
+    private readonly IMapper _mapper;
 
 
-    public ProductsService(IProductsRepository repo, IImagesService imagesService, UsersController usersController)
+    public ProductsService(IMapper _mapper, IProductsRepository repo, IImagesService imagesService, UsersController usersController)
     {
         _repo = repo;
         _imagesService = imagesService;
@@ -21,13 +24,14 @@ public class ProductsService: IProductsService
     }
 
 
-    public async Task<IEnumerable<ProductResponse>> GetAllAsync()
+    public PaginatedList<ProductResponse> GetAllPaginated(int? noticeId, int pageIndex, int pageSize)
     {
-        var entities = await _repo.GetAllAsync();
+        var paginatedList = _repo.GetAllPaginated(noticeId, pageIndex, pageSize);
                     
-        return entities
-                .Select(ToProductResponseDTO)
-                .ToList();
+        var paginatedResponse = PaginatedList<ProductResponse>
+            .Create<Product>(paginatedList.Entities, pageIndex, pageSize, _mapper);     
+
+        return paginatedResponse;
     }
 
     public async Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request)
@@ -47,14 +51,13 @@ public class ProductsService: IProductsService
         }
 
         _repo.Remove(product);
-        var updatedProduct = ToProduct(request, product.Notice);
+        var updatedProduct = _mapper.Map<Product>(request);
         updatedProduct.Id = product.Id;
 
         await _repo.AddAsync(updatedProduct);
         _repo.Complete();
 
-
-        return ToProductResponseDTO(updatedProduct);
+        return _mapper.Map<ProductResponse>(updatedProduct);
     }
 
     public async Task<Product?> DeleteByIdAsync(int id)
@@ -147,4 +150,6 @@ public class ProductsService: IProductsService
         
         return product;
     }
+
+
 }

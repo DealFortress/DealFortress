@@ -1,12 +1,13 @@
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface IProductsService
 {
-    Task<IEnumerable<ProductResponse>> GetAllAsync();
-
+    PaginatedList<ProductResponse> GetAllPaginated(int? userId, int pageIndex, int pageSize);
+    
     Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request);
 
     Task<Product?> DeleteByIdAsync(int id);

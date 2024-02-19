@@ -1,3 +1,4 @@
+using AutoMapper;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
@@ -12,31 +13,25 @@ public class NoticesService : INoticesService
     private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
     private readonly UsersController _usersController;
-    public NoticesService(IProductsService productsService, INoticesRepository repo, UsersController usersController)
+    private readonly IMapper _mapper;
+    public NoticesService(IMapper mapper, IProductsService productsService, INoticesRepository repo, UsersController usersController)
     {
         _usersController = usersController;
         _productsService = productsService;
         _repo = repo;
+        _mapper = mapper;
     }
-
-    public async Task<IEnumerable<NoticeResponse>> GetAllAsync()
-    {
-        return (await _repo.GetAllAsync())
-            .Select(ToNoticeResponseDTO)
-            .ToList();
-    }
-
     
-    public IEnumerable<NoticeResponse> GetAll(int? userId, int pageIndex, int pageSize)
+    public PaginatedList<NoticeResponse> GetAllPaginated(int? userId, int pageIndex, int pageSize)
     {
-        var entities = _repo.GetAll();
+        var paginatedList = _repo.GetAllPaginated(userId, pageIndex, pageIndex);
+                    
+        var paginatedResponse = PaginatedList<NoticeResponse>
+            .Create<Notice>(paginatedList.Entities, pageIndex, pageSize, _mapper);     
 
-        var paginatedEntities = new PaginatedList<Notice>(entities, pageIndex, pageSize);
-        
-        return paginatedEntities
-                .Select(ToNoticeResponseDTO)
-                .ToList();
+        return paginatedResponse;
     }
+
 
     public async Task<NoticeResponse?> GetByIdAsync(int id)
     {
@@ -161,5 +156,7 @@ public class NoticesService : INoticesService
         
         return notice;
     }
+
+
 }
 
