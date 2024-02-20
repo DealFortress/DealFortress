@@ -72,7 +72,9 @@ public class MessagesService: IMessagesService
             return null;
         }
         
-        var entity =  _mapper.Map<Message>(request);;
+        var entity =  _mapper.Map<Message>(request, opt => {
+            opt.AfterMap((src, dest) => dest.Conversation = conversation);
+        });
 
         await _messagesRepo.AddAsync(entity);
 

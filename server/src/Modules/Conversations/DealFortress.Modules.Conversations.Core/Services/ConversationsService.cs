@@ -1,11 +1,9 @@
-
 using AutoMapper;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
 using DealFortress.Modules.Conversations.Core.DTO.Conversation;
 using DealFortress.Modules.Users.Api.Controllers;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace DealFortress.Modules.Conversations.Core.Services;
 public class ConversationsService : IConversationsService
