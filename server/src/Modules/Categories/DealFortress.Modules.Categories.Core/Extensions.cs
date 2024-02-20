@@ -18,6 +18,7 @@ namespace DealFortress.Modules.Categories.Core.Extensions;
                 .AddDbContext<CategoriesContext>(options =>
                     options.UseSqlServer(connectionString))
                 .AddScoped<ICategoriesRepository, CategoriesRepository>()
-                .AddScoped<ICategoriesService, CategoriesService>();
+                .AddScoped<ICategoriesService, CategoriesService>()
+                .AddAutoMapper
         }
     }
