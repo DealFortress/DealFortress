@@ -7,13 +7,13 @@ public interface IProductsService
 {
     Task<IEnumerable<ProductResponse>> GetAllAsync();
 
-    Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request);
+    // Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request);
 
-    Task<Product?> DeleteByIdAsync(int id);
+    // Task<Product?> DeleteByIdAsync(int id);
 
-    Task<ProductResponse?> PatchSoldStatusByIdAsync(int id, SoldStatus soldStatus);
+    // Task<ProductResponse?> PatchSoldStatusByIdAsync(int id, SoldStatus soldStatus);
 
-    ProductResponse ToProductResponseDTO(Product product);
+    // ProductResponse ToProductResponseDTO(Product product);
 
-    Product ToProduct(ProductRequest request, Notice notice);
+    // Product ToProduct(ProductRequest request, Notice notice);
 }

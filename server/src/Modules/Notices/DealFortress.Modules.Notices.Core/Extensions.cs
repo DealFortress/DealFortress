@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Abstractions.Automapper;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
@@ -21,7 +22,7 @@ internal static class Extensions
             .AddScoped<IProductsRepository, ProductsRepository>()
             .AddScoped<INoticesService, NoticesService>()
             .AddScoped<IProductsService, ProductsService>()
-            .AddScoped<IImagesService, ImagesService>();
-            // .AddAutoMapper(typeof(AutoMappingNoticeProfiles).Assembly);
+            .AddScoped<IImagesService, ImagesService>()
+            .AddAutoMapper(typeof(AutoMappingNoticeProfiles).Assembly);
     }
 }

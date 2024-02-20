@@ -27,25 +27,25 @@ public class ProductsController : ControllerBase
         return Ok(await _service.GetAllAsync());
     }
 
-    [HttpPatch("{id}/soldstatus/{soldstatus}")]
-    [Authorize]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> PatchProductSoldStatusAsync(int id, SoldStatus soldStatus)
-    {
-        var response = await _service.PatchSoldStatusByIdAsync(id, soldStatus);
+    // [HttpPatch("{id}/soldstatus/{soldstatus}")]
+    // [Authorize]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // public async Task<IActionResult> PatchProductSoldStatusAsync(int id, SoldStatus soldStatus)
+    // {
+    //     var response = await _service.PatchSoldStatusByIdAsync(id, soldStatus);
 
-        return response is null ? NotFound() : Ok(response);
-    }
+    //     return response is null ? NotFound() : Ok(response);
+    // }
 
-    [HttpDelete("{id}")]
-    [Authorize]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProductAsync(int id)
-    {
-        var product = await _service.DeleteByIdAsync(id);
+    // [HttpDelete("{id}")]
+    // [Authorize]
+    // [ProducesResponseType(StatusCodes.Status204NoContent)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // public async Task<IActionResult> DeleteProductAsync(int id)
+    // {
+    //     var product = await _service.DeleteByIdAsync(id);
 
-        return product is null ? NotFound() : NoContent();
-    }
+    //     return product is null ? NotFound() : NoContent();
+    // }
 }

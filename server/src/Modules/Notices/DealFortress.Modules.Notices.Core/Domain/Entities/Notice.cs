@@ -20,7 +20,7 @@ namespace DealFortress.Modules.Notices.Core.Domain.Entities;
         [StringLength(50, MinimumLength = 4 , ErrorMessage = "Payments cannot be longer than 50 characters or less than 4 characters")]
         public required string Payments { get; set; }
         public required DateTime CreatedAt { get; set; }
-        public virtual List<Product>? Products { get; set; }
+        public virtual IEnumerable<Product>? Products { get; set; }
         public required string DeliveryMethods { get; set; }
     }
 
