@@ -14,7 +14,7 @@ public interface IConversationsService
 
     Task<Conversation?> DeleteByIdAsync(int it);
 
-    ConversationResponse ToConversationResponseDTO(Conversation Conversation);
+    // ConversationResponse ToConversationResponseDTO(Conversation Conversation);
 
-    Conversation ToConversation(ConversationRequest request); 
+    // Conversation ToConversation(ConversationRequest request); 
 }

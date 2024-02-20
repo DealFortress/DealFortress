@@ -1,4 +1,5 @@
 
+using AutoMapper;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
@@ -12,12 +13,14 @@ public class ConversationsService : IConversationsService
     private readonly IConversationsRepository _repo;
     private readonly UsersController _usersController;
     private readonly IMessagesService _messagesService;
+    private readonly IMapper _mapper;
 
-    public ConversationsService(IConversationsRepository repo, UsersController usersController, IMessagesService messagesService)
+    public ConversationsService(IConversationsRepository repo, UsersController usersController, IMessagesService messagesService, IMapper mapper)
     {
         _repo = repo;
         _usersController = usersController;
         _messagesService = messagesService;
+        _mapper = mapper;
     }
 
 
@@ -25,24 +28,23 @@ public class ConversationsService : IConversationsService
     {
         var id = await _usersController.getUserIdByAuthIdAsync(authId);
 
-        var entities = await _repo.GetAllAsync();
+        var entities = 
+            (await _repo.GetAllAsync())
+            .Where(conversation => conversation.BuyerId == id || conversation.SellerId == id);
 
-        return entities
-                    .Where(conversation => conversation.BuyerId == id || conversation.SellerId == id)
-                    .Select(ToConversationResponseDTO)
-                    .ToList();
+        return _mapper.Map<IEnumerable<ConversationResponse>>(entities);
     }
 
      public async Task<ConversationResponse?> GetByIdAsync(int id)
     {
-        var conversation = await _repo.GetByIdAsync(id);
+        var entity = await _repo.GetByIdAsync(id);
 
-        if (conversation is null)
+        if (entity is null)
         {
             return null;
         }
 
-        return ToConversationResponseDTO(conversation);
+        return _mapper.Map<ConversationResponse>(entity);
     } 
 
     public async Task<ConversationResponse?> PostAsync(ConversationRequest request, string? authId)
@@ -54,13 +56,13 @@ public class ConversationsService : IConversationsService
             return null;
         }
 
-        var conversation = ToConversation(request);
+        var entity = _mapper.Map<Conversation>(request);
 
-        await _repo.AddAsync(conversation);
+        await _repo.AddAsync(entity);
 
         _repo.Complete();
 
-        return ToConversationResponseDTO(conversation);
+        return _mapper.Map<ConversationResponse>(entity);
     }
 
     public async Task<ConversationResponse?> PatchLastReadMessageAsync(PatchLastMessageReadRequest request, string authId)
@@ -98,7 +100,7 @@ public class ConversationsService : IConversationsService
         _repo.Update(conversation);
         _repo.Complete();
 
-        return ToConversationResponseDTO(conversation);
+        return _mapper.Map<ConversationResponse>(conversation);
     }
 
     public async Task<Conversation?> DeleteByIdAsync(int id)
@@ -112,41 +114,6 @@ public class ConversationsService : IConversationsService
 
         _repo.Remove(conversation);
         _repo.Complete();
-
-        return conversation;
-    }
-
-    public ConversationResponse ToConversationResponseDTO(Conversation conversation)
-    {
-        var response = new ConversationResponse()
-        {
-            Id = conversation.Id,
-            NoticeId = conversation.NoticeId,
-            Name = conversation.Name,
-            BuyerId = conversation.BuyerId,
-            SellerId = conversation.SellerId,
-            BuyerLastReadMessageId = conversation.BuyerLastReadMessageId,
-            SellerLastReadMessageId = conversation.SellerLastReadMessageId,
-            Messages = conversation.Messages?.ConvertAll(message => _messagesService.ToMessageResponseDTO(message))
-        };
-
-        return response;
-    }
-
-    public Conversation ToConversation(ConversationRequest request)
-    {
-        var conversation = new Conversation()
-        {
-            NoticeId = request.NoticeId,
-            Name = request.Name,
-            BuyerId = request.BuyerId,
-            SellerId = request.SellerId
-        };
-
-        if (request.MessageRequests is not null)
-        {
-            conversation.Messages = request.MessageRequests.ConvertAll(message => _messagesService.ToMessage(message, conversation));
-        }
 
         return conversation;
     }
