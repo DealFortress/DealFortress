@@ -15,8 +15,4 @@ public interface IUsersService
     Task<string?> GetAuthIdByUserIdAsync(int id);
 
     Task<UserResponse> PostAsync(UserRequest request);
-
-    UserResponse ToUserResponseDTO(User user);
-
-    User ToUser(UserRequest request);
 }
