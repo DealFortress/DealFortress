@@ -11,7 +11,7 @@ public interface ICategoriesService
 
     Task<CategoryResponse> PostAsync(CategoryRequest request);
 
-    CategoryResponse ToCategoryResponseDTO(Category category);
+    // CategoryResponse ToCategoryResponseDTO(Category category);
 
-    Category ToCategory(CategoryRequest request);
+    // Category ToCategory(CategoryRequest request);
 }

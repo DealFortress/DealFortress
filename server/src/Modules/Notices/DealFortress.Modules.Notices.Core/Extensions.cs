@@ -22,5 +22,6 @@ internal static class Extensions
             .AddScoped<INoticesService, NoticesService>()
             .AddScoped<IProductsService, ProductsService>()
             .AddScoped<IImagesService, ImagesService>();
+            // .AddAutoMapper(typeof(AutoMappingNoticeProfiles).Assembly);
     }
 }
