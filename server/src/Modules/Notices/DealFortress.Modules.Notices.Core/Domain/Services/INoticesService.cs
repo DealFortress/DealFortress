@@ -7,15 +7,12 @@ public interface INoticesService
 {
     Task<IEnumerable<NoticeResponse>> GetAllAsync();
 
-    // Task<NoticeResponse?> GetByIdAsync(int id);
+    Task<NoticeResponse?> GetByIdAsync(int id);
 
-    // Task<NoticeResponse> PostAsync(NoticeRequest request);
+    Task<NoticeResponse> PostAsync(NoticeRequest request);
 
-    // Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request);
+    Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request);
 
-    // Task<Notice?> DeleteByIdAsync(int id);
+    Task<Notice?> DeleteByIdAsync(int id);
 
-    // NoticeResponse ToNoticeResponseDTO(Notice notice);
-
-    // Notice ToNotice(NoticeRequest request);
 }

@@ -25,48 +25,48 @@ public class NoticesController : ControllerBase
         return  Ok(await _service.GetAllAsync());
     }
 
-    // [HttpGet("{id}")]
-    // [ActionName("GetNoticeAsync")]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task< ActionResult<NoticeResponse>> GetNoticeAsync(int id)
-    // {
-    //    var response = await _service.GetByIdAsync(id);
+    [HttpGet("{id}")]
+    [ActionName("GetNoticeAsync")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task< ActionResult<NoticeResponse>> GetNoticeAsync(int id)
+    {
+       var response = await _service.GetByIdAsync(id);
 
-    //    return response is null ? NotFound() : Ok(response);
-    // }
+       return response is null ? NotFound() : Ok(response);
+    }
 
-    // [HttpPut("{id}")]
-    // [Authorize]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task<ActionResult<NoticeResponse>> PutNoticeAsync(int id, NoticeRequest request)
-    // {
-    //     var response = await _service.PutByIdAsync(id, request);
+    [HttpPut("{id}")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<NoticeResponse>> PutNoticeAsync(int id, NoticeRequest request)
+    {
+        var response = await _service.PutByIdAsync(id, request);
 
-    //     return response is null ? NotFound() : Ok(response);
-    // }
+        return response is null ? NotFound() : Ok(response);
+    }
 
-    // [HttpPost]
-    // [Authorize]
-    // [ProducesResponseType(StatusCodes.Status201Created)]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // public async Task<ActionResult<NoticeResponse>> PostNoticeAsync(NoticeRequest request)
-    // {
-    //     var response = await _service.PostAsync(request);
+    [HttpPost]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<NoticeResponse>> PostNoticeAsync(NoticeRequest request)
+    {
+        var response = await _service.PostAsync(request);
         
-    //     return CreatedAtAction(nameof(GetNoticeAsync), new { id = response.Id }, response);
-    // }
+        return CreatedAtAction(nameof(GetNoticeAsync), new { id = response.Id }, response);
+    }
 
-    // [HttpDelete("{id}")]
-    // [Authorize]
-    // [ProducesResponseType(StatusCodes.Status204NoContent)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task<IActionResult> DeleteNoticeAsync(int id)
-    // {
-    //     var notice = await _service.DeleteByIdAsync(id);
+    [HttpDelete("{id}")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteNoticeAsync(int id)
+    {
+        var notice = await _service.DeleteByIdAsync(id);
         
-    //     return notice is null ? NotFound() : NoContent();
-    // }
+        return notice is null ? NotFound() : NoContent();
+    }
 }
 
