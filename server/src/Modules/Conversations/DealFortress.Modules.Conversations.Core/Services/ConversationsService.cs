@@ -12,14 +12,12 @@ public class ConversationsService : IConversationsService
 {
     private readonly IConversationsRepository _repo;
     private readonly UsersController _usersController;
-    private readonly IMessagesService _messagesService;
     private readonly IMapper _mapper;
 
-    public ConversationsService(IConversationsRepository repo, UsersController usersController, IMessagesService messagesService, IMapper mapper)
+    public ConversationsService(IConversationsRepository repo, UsersController usersController, IMapper mapper)
     {
         _repo = repo;
         _usersController = usersController;
-        _messagesService = messagesService;
         _mapper = mapper;
     }
 
