@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using Abstractions.Automapper;
+using AutoMapper;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
 using Microsoft.AspNetCore.Http;
@@ -8,8 +10,17 @@ namespace DealFortress.Modules.Notices.Tests.Shared;
 
 public static class NoticesTestModels
 {
-    public static Notice CreateNotice()
+    
+    public static IMapper CreateMapper(){
+        var mockMapper = 
+            new MapperConfiguration(cfg => {
+                cfg.AddProfile(new AutoMappingNoticeProfiles());
+            })
+            .CreateMapper();
+        return mockMapper;
+    }
 
+    public static Notice CreateNotice()
     {
         var notice = new Notice()
         {
@@ -24,27 +35,24 @@ public static class NoticesTestModels
             Products = new List<Product>()
         };
 
-        notice.Products.Add(new Product()
+        var product = new Product()
         {
             Id = 1,
             Name = "test",
             Price = 1,
             HasReceipt = true,
-            Images = new List<Image>(
-                
-            ),
+            Images = new List<Image>(),
             SoldStatus = SoldStatus.Available,
             IsSoldSeparately = false,
             Warranty = "month",
             CategoryId = 1,
             Condition = Condition.New,
             Notice = notice
-        });
+        };
 
-        notice.Products.Select(product => {
-            product.Images?.Add(new Image(){Url= "testUrl", Product=product});
-            return product;
-            });
+        product.Images.Add(new Image(){Url= "testUrl", Product=product});
+
+        notice.Products.Add(product);
 
         return notice;
     }

@@ -7,6 +7,7 @@ using DealFortress.Modules.Users.Core.Domain.Entities;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Users.Tests.Shared;
+using AutoMapper;
 
 namespace DealFortress.Modules.Users.Tests.Unit;
 
@@ -16,14 +17,17 @@ public class UsersServiceTestsSad
     private readonly Mock<IUsersRepository> _repo;
     private readonly UserRequest _request;
     private readonly User _user;
+    private readonly IMapper _mapper;
+
 
     public UsersServiceTestsSad()
     {
         _repo = new Mock<IUsersRepository>();
+        _mapper = UsersTestModels.CreateMapper(); 
 
         var httpContext = new Mock<IHttpContextAccessor>();
 
-        _service = new UsersService(_repo.Object, httpContext.Object);
+        _service = new UsersService(_repo.Object, httpContext.Object, _mapper);
 
         _request = UsersTestModels.CreateUserRequest();
 

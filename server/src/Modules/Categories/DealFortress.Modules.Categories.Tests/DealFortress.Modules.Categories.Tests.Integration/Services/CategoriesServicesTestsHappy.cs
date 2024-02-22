@@ -1,10 +1,11 @@
 using DealFortress.Modules.Categories.Core.DTO;
 using DealFortress.Modules.Categories.Core.Services;
 using FluentAssertions;
-using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Tests.Integration.Fixture;
 using DealFortress.Modules.Categories.Core.DAL.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Services;
+using AutoMapper;
+using DealFortress.Modules.Categories.Tests.Shared;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
@@ -14,6 +15,7 @@ public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
     private readonly CategoriesRepository _repo;
     private readonly CategoryRequest _request;
     public CategoriesFixture Fixture;
+    private readonly IMapper _mapper;
 
     public CategoriesServicesTestsHappy(CategoriesFixture fixture)
     {
@@ -22,9 +24,11 @@ public class CategoriesServicesTestsHappy: IClassFixture<CategoriesFixture>
         
         _repo = new CategoriesRepository(Fixture.Context);
 
-        _service = new CategoriesService(_repo);
+        _mapper = CategoriesTestModels.CreateMapper();
 
-        _request = new CategoryRequest() { Name = "test" };
+        _service = new CategoriesService(_repo, _mapper);
+
+        _request = CategoriesTestModels.CreateCategoryRequest();
     }
 
     [Fact]

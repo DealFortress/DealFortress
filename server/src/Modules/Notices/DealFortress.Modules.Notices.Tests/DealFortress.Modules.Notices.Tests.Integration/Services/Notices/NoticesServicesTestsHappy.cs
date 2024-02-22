@@ -5,11 +5,9 @@ using DealFortress.Modules.Notices.Core.Services;
 using DealFortress.Modules.Notices.Tests.Integration.Fixture;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
-using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Tests.Shared;
-using DealFortress.Modules.Notices.Core.Domain.Entities;
-using Microsoft.Build.Framework;
 using DealFortress.Modules.Users.Api.Controllers;
+using AutoMapper;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -17,17 +15,20 @@ public class NoticesServicesTestsHappy
 {
     private readonly INoticesService _service;
     private readonly NoticeRequest _request;
-    private Mock<IProductsService>? _productsService;
     public NoticesFixture? Fixture;
+    private readonly IMapper _mapper;
+
 
     public NoticesServicesTestsHappy()
     {
-        _service = CreateNewService();
+        _mapper = NoticesTestModels.CreateMapper(); 
+        
+        _service = CreateNewService(_mapper);
 
         _request = NoticesTestModels.CreateNoticeRequest();
     }
 
-    public INoticesService CreateNewService()
+    public INoticesService CreateNewService(IMapper mapper)
     {
         Fixture?.Dispose();
 
@@ -35,11 +36,9 @@ public class NoticesServicesTestsHappy
 
         var noticesRepository = new NoticesRepository(Fixture.Context);
 
-        _productsService = new Mock<IProductsService>();
-
         var usersController = new Mock<UsersController>(null);
 
-        return new NoticesService(_productsService.Object, noticesRepository, usersController.Object);
+        return new NoticesService(noticesRepository, usersController.Object, mapper);
     }
 
     [Fact]
@@ -56,7 +55,6 @@ public class NoticesServicesTestsHappy
     public async Task GetById_should_return_the_notice_matching_idAsync()
     {
         // Act
-
         var noticeResponse = await _service.GetByIdAsync(1);
 
         // Assert 
@@ -67,9 +65,7 @@ public class NoticesServicesTestsHappy
     [Fact]
     public async void Post_should_add_notice_in_db()
     {
-        // Arrange
-        var product = NoticesTestModels.CreateNotice().Products!.First();
-        _productsService?.Setup(service => service.ToProduct(It.IsAny<ProductRequest>(), It.IsAny<Notice>())).Returns(product);
+        // Arrangel
 
         // Act
         var postResponse = await _service.PostAsync(_request);
@@ -82,8 +78,6 @@ public class NoticesServicesTestsHappy
     public async void PutById_should_replace_notice_in_db()
     {
         // Arrange
-        var product = NoticesTestModels.CreateNotice().Products!.First();
-        _productsService?.Setup(service => service.ToProduct(It.IsAny<ProductRequest>(), It.IsAny<Notice>())).Returns(product);
 
         // Act
         var putResponse = await _service.PutByIdAsync(1, _request);
