@@ -1,6 +1,7 @@
 using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Categories.Core.Domain.Services;
 using DealFortress.Modules.Categories.Core.DTO;
+using DealFortress.Modules.Categories.Tests.Shared;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -20,9 +21,9 @@ public class ControllerTestsHappy
         
         _controller = new CategoriesController(_service.Object);
 
-        _request = new CategoryRequest(){ Name = "test" };
+        _request = CategoriesTestModels.CreateCategoryRequest();
 
-        _response = new CategoryResponse(){ Name = "test" };
+        _response = CategoriesTestModels.CreateCategoryResponse();
     }
     
     [Fact]

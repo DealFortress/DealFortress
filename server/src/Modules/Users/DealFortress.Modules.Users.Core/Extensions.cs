@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Abstractions.Automapper;
 using DealFortress.Modules.Users.Core.DAL;
 using DealFortress.Modules.Users.Core.DAL.Repositories;
 using DealFortress.Modules.Users.Core.Domain.Repositories;
@@ -18,6 +19,7 @@ internal static class Extensions
             .AddDbContext<UsersContext>(options =>
                 options.UseSqlServer(connectionString))
             .AddScoped<IUsersService, UsersService>()
-            .AddScoped<IUsersRepository, UsersRepository>();
+            .AddScoped<IUsersRepository, UsersRepository>()
+            .AddAutoMapper(typeof(AutoMappingUserProfiles));
     }
 }

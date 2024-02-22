@@ -7,6 +7,7 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Modules.Users.Api.Controllers;
+using AutoMapper;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
@@ -18,10 +19,13 @@ public class NoticesServiceTestsHappy
     private readonly Mock<UsersController> _usersController;
     private readonly Mock<IProductsService> _productsService;
     private readonly Notice _notice;
+    private readonly IMapper _mapper;
+
 
     public NoticesServiceTestsHappy()
     {
         _repo = new Mock<INoticesRepository>();
+        _mapper = NoticesTestModels.CreateMapper();  
 
         _request = NoticesTestModels.CreateNoticeRequest();
         _notice = NoticesTestModels.CreateNotice();
@@ -31,7 +35,7 @@ public class NoticesServiceTestsHappy
 
         _usersController = new Mock<UsersController>(null);
 
-        _service = new NoticesService(_productsService.Object, _repo.Object, _usersController.Object);
+        _service = new NoticesService(_repo.Object, _usersController.Object, _mapper);
     }
 
     [Fact]

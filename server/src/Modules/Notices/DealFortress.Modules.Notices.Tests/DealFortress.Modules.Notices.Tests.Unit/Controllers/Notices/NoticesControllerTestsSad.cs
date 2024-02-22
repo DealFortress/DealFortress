@@ -15,7 +15,6 @@ public class NoticeControllersTestsSad
     private readonly Mock<INoticesService> _service;
     private readonly NoticeRequest _request;
     private readonly NoticeResponse _response;
-
     private readonly Notice _notice;
 
     public NoticeControllersTestsSad()

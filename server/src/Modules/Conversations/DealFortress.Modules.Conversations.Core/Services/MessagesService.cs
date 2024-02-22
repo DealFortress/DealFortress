@@ -1,4 +1,5 @@
 
+using AutoMapper;
 using DealFortress.Modules.Conversations.Core.Domain.Entities;
 using DealFortress.Modules.Conversations.Core.Domain.Repositories;
 using DealFortress.Modules.Conversations.Core.Domain.Services;
@@ -13,14 +14,15 @@ public class MessagesService: IMessagesService
 {
     private readonly IMessagesRepository _messagesRepo;
     private readonly UsersController _usersController;
-
     private readonly IConversationsRepository _conversationsRepo;
+    private readonly IMapper _mapper;
 
-    public MessagesService(IMessagesRepository messagesRepo, UsersController usersController, IConversationsRepository conversationsRepo)
+    public MessagesService(IMessagesRepository messagesRepo, UsersController usersController, IConversationsRepository conversationsRepo, IMapper mapper)
     {
         _messagesRepo = messagesRepo;
         _usersController = usersController;
         _conversationsRepo = conversationsRepo;
+        _mapper = mapper;
     }
 
 
@@ -28,33 +30,30 @@ public class MessagesService: IMessagesService
     {
         var entities = await _messagesRepo.GetAllAsync();
 
-        return entities
-                    .Select(ToMessageResponseDTO)
-                    .ToList();
+        return _mapper.Map<IEnumerable<MessageResponse>>(entities);
+                    
     }
 
     public async Task<IEnumerable<MessageResponse>> GetAllByAuthIdAsync(string authId)
     {
         var id = await _usersController.getUserIdByAuthIdAsync(authId);
 
-        var entity = await _messagesRepo.GetAllAsync();
+        var entities = (await _messagesRepo.GetAllAsync())
+            .Where(message => message.SenderId == id);
 
-        return entity
-                    .Where(message => message.SenderId == id)
-                    .Select(ToMessageResponseDTO)
-                    .ToList();
+        return _mapper.Map<IEnumerable<MessageResponse>>(entities);
     }
 
      public async Task<MessageResponse?> GetByIdAsync(int id)
     {
-        var message = await _messagesRepo.GetByIdAsync(id);
+        var entity = await _messagesRepo.GetByIdAsync(id);
 
-        if (message is null)
+        if (entity is null)
         {
             return null;
         }
 
-        return ToMessageResponseDTO(message);
+        return  _mapper.Map<MessageResponse>(entity);;
     } 
 
      public async Task<MessageResponse?> PostAsync(StandaloneMessageRequest request, string? authId)
@@ -73,36 +72,15 @@ public class MessagesService: IMessagesService
             return null;
         }
         
-        var message = ToMessage(request, conversation);
+        var entity =  _mapper.Map<Message>(request, opt => {
+            opt.AfterMap((src, dest) => dest.Conversation = conversation);
+        });
 
-        await _messagesRepo.AddAsync(message);
+        await _messagesRepo.AddAsync(entity);
 
         _messagesRepo.Complete();
 
-        return ToMessageResponseDTO(message);
+        return  _mapper.Map<MessageResponse>(entity);
     }
 
-    public MessageResponse ToMessageResponseDTO(Message message)
-    {
-        var response = new MessageResponse()
-        {
-            Id = message.Id,
-            Text= message.Text,
-            SenderId = message.SenderId, 
-            CreatedAt = message.CreatedAt,
-            ConversationId = message.Conversation.Id           
-        };
-
-        return response;
-    }
-
-    public Message ToMessage(IMessageRequest request, Conversation conversation)
-    {
-        return new Message()
-        {
-            Text= request.Text,
-            SenderId = request.SenderId,  
-            Conversation = conversation
-        };
-    }
 }

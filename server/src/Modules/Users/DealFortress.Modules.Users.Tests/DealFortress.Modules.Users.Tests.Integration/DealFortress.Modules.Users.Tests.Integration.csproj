@@ -22,11 +22,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../../DealFortress.Modules.Users.Core/DealFortress.Modules.Users.Core.csproj" />
     <ProjectReference Include="../../DealFortress.Modules.Users.Api/DealFortress.Modules.Users.Api.csproj" />
+    <ProjectReference Include="../DealFortress.Modules.Users.Tests.Shared/DealFortress.Modules.Users.Tests.Shared.csproj" />
+
     
 
   </ItemGroup>

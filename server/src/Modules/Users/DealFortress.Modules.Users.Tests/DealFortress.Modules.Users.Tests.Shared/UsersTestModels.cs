@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using Abstractions.Automapper;
+using AutoMapper;
 using DealFortress.Modules.Users.Core.Domain.Entities;
 using DealFortress.Modules.Users.Core.DTO;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +10,12 @@ namespace DealFortress.Modules.Users.Tests.Shared;
 
 public static class UsersTestModels
 {
+    public static IMapper CreateMapper(){
+        var mockMapper = new MapperConfiguration(cfg => {
+            cfg.AddProfile(new AutoMappingUserProfiles());
+        });
+        return mockMapper.CreateMapper();
+    }
     public static UserRequest CreateUserRequest()
     {
         return new UserRequest()

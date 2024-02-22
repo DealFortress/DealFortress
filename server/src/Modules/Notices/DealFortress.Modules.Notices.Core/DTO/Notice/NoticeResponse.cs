@@ -10,6 +10,6 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required string[] Payments { get; set; }
         public required string[] DeliveryMethods { get; set; }
         public required DateTime CreatedAt { get; set; }
-        public virtual List<ProductResponse>? Products { get; set; }
+        public virtual IEnumerable<ProductResponse>? Products { get; set; }
     }
 

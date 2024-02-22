@@ -6,6 +6,7 @@ using DealFortress.Modules.Conversations.Core.Services;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Abstractions.Automapper;
 
 [assembly: InternalsVisibleTo("DealFortress.Modules.Conversations.Api")]
 
@@ -20,6 +21,7 @@ internal static class Extensions
             .AddScoped<IConversationsRepository, ConversationsRepository>()
             .AddScoped<IConversationsService, ConversationsService>()
             .AddScoped<IMessagesRepository, MessagesRepository>()
-            .AddScoped<IMessagesService, MessagesService>();
+            .AddScoped<IMessagesService, MessagesService>()
+            .AddAutoMapper(typeof(AutoMappingConversationProfiles).Assembly);
     }
 }

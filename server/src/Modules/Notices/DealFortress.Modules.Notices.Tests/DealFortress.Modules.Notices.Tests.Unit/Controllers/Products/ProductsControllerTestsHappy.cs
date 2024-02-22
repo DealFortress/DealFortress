@@ -14,7 +14,7 @@ public class ProductControllersTestsHappy
     private readonly ProductsController _controller;
     private readonly Mock<IProductsService> _service;
     private readonly ProductResponse _response;
-    private readonly Product _product;
+    private readonly Product? _product;
 
     public ProductControllersTestsHappy()
     {
@@ -24,7 +24,7 @@ public class ProductControllersTestsHappy
 
         _response = NoticesTestModels.CreateNoticeResponse().Products!.First();
 
-        _product = NoticesTestModels.CreateNotice().Products!.First();
+        _product = NoticesTestModels.CreateNotice().Products?.First();
 
         _controller.CreateFakeClaims();
     }

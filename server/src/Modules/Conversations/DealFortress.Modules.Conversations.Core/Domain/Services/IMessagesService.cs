@@ -8,8 +8,4 @@ public interface IMessagesService
     Task<MessageResponse?> GetByIdAsync(int id);
 
     Task<MessageResponse?> PostAsync(StandaloneMessageRequest request, string? authId = null);
-
-    MessageResponse ToMessageResponseDTO(Message message);
-
-    Message ToMessage(IMessageRequest request, Conversation conversation);
 }

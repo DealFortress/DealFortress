@@ -5,6 +5,9 @@ using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using FluentAssertions;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Core.Domain.Services;
+using AutoMapper;
+using DealFortress.Modules.Categories.Tests.Shared;
+using Microsoft.OpenApi.Any;
 
 namespace DealFortress.Modules.Categories.Tests.Unit;
 
@@ -14,25 +17,30 @@ public class ServiceTestsHappy
     private readonly Mock<ICategoriesRepository> _repo;
     private readonly CategoryRequest _request;
     private readonly Category _category;
+    private readonly IMapper _mapper;
+
 
     public ServiceTestsHappy()
     {
         _repo = new Mock<ICategoriesRepository>();
 
-        _service = new CategoriesService(_repo.Object);
+        _mapper = CategoriesTestModels.CreateMapper(); 
 
-        _request = new CategoryRequest() { Name = "test" };
+        _service = new CategoriesService(_repo.Object, _mapper);
 
-        _category = new Category() { Id = 1, Name = "test" };
+        _request = CategoriesTestModels.CreateCategoryRequest();
+
+        _category = CategoriesTestModels.CreateCategory();
     }
 
     [Fact]
-    public async void Post_should_complete_before_sending_back_DTO()
+    public async void Post_should_add_and_complete_before_sending_back_DTO()
     {
         // Act
         await _service.PostAsync(_request);
 
         // Assert 
+        _repo.Verify(repo => repo.AddAsync(It.IsAny<Category>()), Times.AtLeastOnce());
         _repo.Verify(repo => repo.Complete(), Times.AtLeastOnce());
 
     }

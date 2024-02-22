@@ -1,4 +1,4 @@
-using DealFortress.Modules.Categories.Api.Controllers;
+using AutoMapper;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
@@ -17,16 +17,18 @@ public class ProductsServiceTestsSad
     private readonly Mock<IProductsRepository> _repo;
     private readonly ProductRequest _request;
     private readonly Mock<UsersController> _usersController;
+    private readonly IMapper _mapper;
+
 
     public ProductsServiceTestsSad()
     {
         _repo = new Mock<IProductsRepository>();
 
-        var imagesService = new Mock<IImagesService>();
+        _mapper = NoticesTestModels.CreateMapper(); 
 
         _usersController = new Mock<UsersController>(null);
 
-        _service = new ProductsService(_repo.Object, imagesService.Object, _usersController.Object);
+        _service = new ProductsService(_repo.Object, _usersController.Object, _mapper);
 
         _request = NoticesTestModels.CreateNoticeRequest().ProductRequests.First();
     }

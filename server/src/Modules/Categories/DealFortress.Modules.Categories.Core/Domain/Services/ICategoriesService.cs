@@ -10,8 +10,4 @@ public interface ICategoriesService
     Task<CategoryResponse?> GetByIdAsync(int id);
 
     Task<CategoryResponse> PostAsync(CategoryRequest request);
-
-    CategoryResponse ToCategoryResponseDTO(Category category);
-
-    Category ToCategory(CategoryRequest request);
 }

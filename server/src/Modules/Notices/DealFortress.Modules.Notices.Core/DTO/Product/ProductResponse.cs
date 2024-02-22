@@ -13,7 +13,7 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public required SoldStatus SoldStatus { get; set; }
         public required int CategoryId { get; set; }
         public required Condition Condition { get; set; }
-        public virtual List<ImageResponse>? Images { get; set; }
+        public virtual IEnumerable<ImageResponse>? Images { get; set; }
         public required int NoticeId { get; set; }
     }
 

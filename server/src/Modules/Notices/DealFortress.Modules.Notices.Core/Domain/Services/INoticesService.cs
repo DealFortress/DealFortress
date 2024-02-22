@@ -15,7 +15,4 @@ public interface INoticesService
 
     Task<Notice?> DeleteByIdAsync(int id);
 
-    NoticeResponse ToNoticeResponseDTO(Notice notice);
-
-    Notice ToNotice(NoticeRequest request);
 }

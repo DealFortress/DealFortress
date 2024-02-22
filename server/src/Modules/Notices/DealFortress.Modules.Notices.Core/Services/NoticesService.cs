@@ -1,3 +1,4 @@
+using AutoMapper;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
@@ -8,73 +9,71 @@ namespace DealFortress.Modules.Notices.Core.Services;
 
 public class NoticesService : INoticesService
 {
-    private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
     private readonly UsersController _usersController;
-    public NoticesService(IProductsService productsService, INoticesRepository repo, UsersController usersController)
+    private readonly IMapper _mapper;
+    public NoticesService(INoticesRepository repo, UsersController usersController, IMapper mapper)
     {
         _usersController = usersController;
-        _productsService = productsService;
         _repo = repo;
+        _mapper = mapper;
     }
     
     public async Task<IEnumerable<NoticeResponse>> GetAllAsync()
     {
         var entities = await _repo.GetAllAsync();
         
-        return entities
-                .Select(ToNoticeResponseDTO)
-                .ToList();
+        return _mapper.Map<IEnumerable<Notice>, IEnumerable<NoticeResponse>>(entities);
     }
 
     public async Task<NoticeResponse?> GetByIdAsync(int id)
     {
-        var notice = await _repo.GetByIdAsync(id);
+        var entity = await _repo.GetByIdAsync(id);
 
-        if (notice is null)
+        if (entity is null)
         {
             return null;
         }
 
-        return ToNoticeResponseDTO(notice);
+        return _mapper.Map<Notice, NoticeResponse>(entity);
     } 
 
     public async Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request)
     {
-        var notice = await _repo.GetByIdAsync(id);
+        var entity = await _repo.GetByIdAsync(id);
 
-        if (notice is null)
+        if (entity is null)
         {
             return null;
         }
 
-        var isCreator = await _usersController.IsUserEntityCreatorAsync(notice.UserId);
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(entity.UserId);
 
         if (!isCreator)
         {
             return null;
         }
 
-        _repo.Remove(notice);
-        var updatedNotice = ToNotice(request);
-        updatedNotice.Id = notice.Id;
+        _repo.Remove(entity);
+        var updatedNotice = _mapper.Map<NoticeRequest, Notice>(request);
+        updatedNotice.Id = entity.Id;
 
         await _repo.AddAsync(updatedNotice);
         _repo.Complete();
 
 
-        return ToNoticeResponseDTO(updatedNotice);
+        return _mapper.Map<Notice, NoticeResponse>(updatedNotice);
     }
 
     public async Task<NoticeResponse> PostAsync(NoticeRequest request)
     {
-        var notice = ToNotice(request);
+        var notice = _mapper.Map<NoticeRequest, Notice>(request);
 
         await _repo.AddAsync(notice);
 
         _repo.Complete();
 
-        return ToNoticeResponseDTO(notice);
+        return _mapper.Map<Notice, NoticeResponse>(notice);
     }
 
     public async Task<Notice?> DeleteByIdAsync(int id)
@@ -99,56 +98,5 @@ public class NoticesService : INoticesService
         return notice;
     }
 
-
-    public NoticeResponse ToNoticeResponseDTO(Notice Notice)
-    {
-        var response = new NoticeResponse()
-        {
-            Id = Notice.Id,
-            UserId = Notice.UserId,
-            Title = Notice.Title,
-            Description = Notice.Description,
-            City = Notice.City,
-            Payments = Notice.Payments.Split(","),
-            DeliveryMethods = Notice.DeliveryMethods.Split(","),
-            CreatedAt = Notice.CreatedAt
-        };
-
-        if (Notice.Products is not null)
-        {
-            response.Products = Notice.Products.Select(product => _productsService.ToProductResponseDTO(product)).ToList();
-        }
-
-        return response;
-    }
-
-    public Notice ToNotice(NoticeRequest request)
-    {
-        
-        var creationDate = DateTime.UtcNow;
-        if (request.CreatedAt is DateTime) 
-        {
-            creationDate = (DateTime)request.CreatedAt;
-        } 
-
-        var notice = new Notice()
-        {
-            UserId = request.UserId,
-            Title = request.Title,
-            Description = request.Description,
-            City = request.City,
-            Payments = string.Join(",", request.Payments),
-            DeliveryMethods = string.Join(",", request.DeliveryMethods),
-            CreatedAt = creationDate,
-            Products = new List<Product>()
-        };
-
-        if (request.ProductRequests is not null)
-        {
-            notice.Products = request.ProductRequests.Select(productRequest => _productsService.ToProduct(productRequest, notice)).ToList();
-        }
-        
-        return notice;
-    }
 }
 

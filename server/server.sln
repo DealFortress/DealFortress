@@ -24,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{9E84B6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Shared.Abstractions", "src\Shared\Abstractions\DealFortress.Shared.Abstractions.csproj", "{120BEC60-055F-415C-A4FE-A9EFD80E539A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Categories.Tests.Integration", "src\Modules\Categories\DealFortress.Modules.Categories.Tests.Integration\DealFortress.Modules.Categories.Tests.Integration.csproj", "{DEDCE6AE-BDD7-4DC5-BA27-97421B73AE8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Categories.Tests.Integration", "src\Modules\Categories\DealFortress.Modules.Categories.Tests\DealFortress.Modules.Categories.Tests.Integration\DealFortress.Modules.Categories.Tests.Integration.csproj", "{DEDCE6AE-BDD7-4DC5-BA27-97421B73AE8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Categories.Tests.Unit", "src\Modules\Categories\DealFortress.Modules.Categories.Tests.Unit\DealFortress.Modules.Categories.Tests.Unit.csproj", "{45FADD69-F52A-4782-8AF5-00942001FF5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Categories.Tests.Unit", "src\Modules\Categories\DealFortress.Modules.Categories.Tests\DealFortress.Modules.Categories.Tests.Unit\DealFortress.Modules.Categories.Tests.Unit.csproj", "{45FADD69-F52A-4782-8AF5-00942001FF5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Notices.Tests.Unit", "src\Modules\Notices\DealFortress.Modules.Notices.Tests\DealFortress.Modules.Notices.Tests.Unit\DealFortress.Modules.Notices.Tests.Unit.csproj", "{6F85C3D3-B1CC-4044-BBD5-F26FA2194235}"
 EndProject
@@ -55,6 +55,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DealFortress.Modules.Users.Tests", "DealFortress.Modules.Users.Tests", "{EC03BECB-A5C2-4810-ADD4-F0DDD80FCB1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Users.Tests.Shared", "src\Modules\Users\DealFortress.Modules.Users.Tests\DealFortress.Modules.Users.Tests.Shared\DealFortress.Modules.Users.Tests.Shared.csproj", "{9F0B8BB9-EB8C-4AAB-BD38-E266DC1CD6D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeaFortress.Modules.Categories.Tests", "DeaFortress.Modules.Categories.Tests", "{5C96D975-091E-4A52-9E87-3473220BB12B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealFortress.Modules.Categories.Tests.Shared", "src\Modules\Categories\DealFortress.Modules.Categories.Tests\DealFortress.Modules.Categories.Tests.Shared\DealFortress.Modules.Categories.Tests.Shared.csproj", "{73EABACC-A46D-4B42-8D97-D93F8FB64FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +137,10 @@ Global
 		{9F0B8BB9-EB8C-4AAB-BD38-E266DC1CD6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F0B8BB9-EB8C-4AAB-BD38-E266DC1CD6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F0B8BB9-EB8C-4AAB-BD38-E266DC1CD6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EABACC-A46D-4B42-8D97-D93F8FB64FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EABACC-A46D-4B42-8D97-D93F8FB64FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EABACC-A46D-4B42-8D97-D93F8FB64FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EABACC-A46D-4B42-8D97-D93F8FB64FE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C65AE11A-6EE9-4C8E-9CC0-5E61CB69F9BA} = {80039F3A-82DF-4105-B72F-62248FCF9AE0}
@@ -160,5 +168,7 @@ Global
 		{C5FE62DE-630F-49CE-89EE-ADCD75F862C4} = {7177E3FD-C782-47C2-A1E4-FE4EC107BFEB}
 		{EC03BECB-A5C2-4810-ADD4-F0DDD80FCB1E} = {D1D01265-5C7B-4AE7-AD9A-2BEF43D96ADB}
 		{9F0B8BB9-EB8C-4AAB-BD38-E266DC1CD6D6} = {EC03BECB-A5C2-4810-ADD4-F0DDD80FCB1E}
+		{5C96D975-091E-4A52-9E87-3473220BB12B} = {559EC74B-E3E3-488C-B299-C3F3AEF90F46}
+		{73EABACC-A46D-4B42-8D97-D93F8FB64FE5} = {5C96D975-091E-4A52-9E87-3473220BB12B}
 	EndGlobalSection
 EndGlobal
