@@ -1,3 +1,4 @@
+using AutoMapper;
 using DealFortress.Modules.Categories.Core.Domain.Entities;
 using DealFortress.Modules.Categories.Core.Domain.Repositories;
 using DealFortress.Modules.Categories.Core.Domain.Services;
@@ -8,50 +9,39 @@ namespace DealFortress.Modules.Categories.Core.Services;
 public class CategoriesService : ICategoriesService
 {
     private readonly ICategoriesRepository _repo;
-    public CategoriesService(ICategoriesRepository repo)
+    private readonly IMapper _mapper;
+    public CategoriesService(ICategoriesRepository repo, IMapper mapper)
     {
         _repo = repo;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<CategoryResponse>> GetAllAsync()
     {
         var entities = await _repo.GetAllAsync();
 
-        return entities
-                .Select(ToCategoryResponseDTO)
-                .ToList();
+        return _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryResponse>>(entities.ToList());
     }
 
     public async Task<CategoryResponse?> GetByIdAsync(int id)
     {
-        var category = await _repo.GetByIdAsync(id);
+        var entity = await _repo.GetByIdAsync(id);
         
-        if (category is null)
+        if (entity is null)
         {
             return null;
         }
 
-        return ToCategoryResponseDTO(category);
+        return _mapper.Map<Category, CategoryResponse>(entity);
     }
 
     public async Task<CategoryResponse> PostAsync(CategoryRequest request) // Refactor for error handling
     {
-        var category = ToCategory(request);
+        var entity = _mapper.Map<CategoryRequest, Category>(request);
 
-        await _repo.AddAsync(category);
+        await _repo.AddAsync(entity);
         _repo.Complete();
 
-        return ToCategoryResponseDTO(category);
+        return _mapper.Map<Category, CategoryResponse>(entity);
     }
-
-    public CategoryResponse ToCategoryResponseDTO(Category category)
-    {
-        return new CategoryResponse()
-        {
-            Id = category.Id,
-            Name = category.Name,
-        };
-    }
-
-    public Category ToCategory(CategoryRequest request) => new Category() { Name = request.Name };
 }

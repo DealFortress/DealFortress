@@ -17,6 +17,6 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         public string? Warranty { get; set; }
         public required int CategoryId { get; set; }
         public required Condition Condition { get; set; }
-        public required List<ImageRequest> ImageRequests { get; set; }
+        public required IEnumerable<ImageRequest> ImageRequests { get; set; }
     }
 

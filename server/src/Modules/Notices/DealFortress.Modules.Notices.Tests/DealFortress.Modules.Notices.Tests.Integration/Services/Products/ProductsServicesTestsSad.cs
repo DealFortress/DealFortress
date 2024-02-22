@@ -8,6 +8,7 @@ using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Users.Api.Controllers;
 using DealFortress.Modules.Notices.Tests.Shared;
+using AutoMapper;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -16,15 +17,17 @@ public class ProductsServicesTestsSad
     private readonly IProductsService _service;
     private readonly ProductRequest _request;
     public NoticesFixture? Fixture;
+    private readonly IMapper _mapper;
+
 
     public ProductsServicesTestsSad()
     {
-        _service = CreateNewService();
-
+        _mapper = NoticesTestModels.CreateMapper(); 
+        _service = CreateNewService(_mapper);
         _request = NoticesTestModels.CreateNoticeRequest().ProductRequests.First();
     }
 
-    public IProductsService CreateNewService()
+    public IProductsService CreateNewService(IMapper mapper)
     {
         Fixture = new NoticesFixture();
 
@@ -32,9 +35,7 @@ public class ProductsServicesTestsSad
 
         var usersController = new Mock<UsersController>(null);
 
-        var imagesService = new Mock<IImagesService>();
-
-        return new ProductsService(repo, imagesService.Object, usersController.Object);
+        return new ProductsService(repo, usersController.Object, mapper);
 
     }
 

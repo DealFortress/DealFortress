@@ -21,6 +21,6 @@ namespace DealFortress.Modules.Notices.Core.DTO;
         [MinLength(1, ErrorMessage = "It needs to be at least one delivery method")]
         public required string[] DeliveryMethods { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public required List<ProductRequest> ProductRequests { get; set; }
+        public required IEnumerable<ProductRequest> ProductRequests { get; set; }
     }
 

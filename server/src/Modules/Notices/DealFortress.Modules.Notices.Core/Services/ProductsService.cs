@@ -11,16 +11,15 @@ namespace DealFortress.Modules.Notices.Core.Services;
 public class ProductsService: IProductsService
 {
     private readonly IProductsRepository _repo;
-    private readonly IImagesService _imagesService;
-    private readonly UsersController _usersController;
+    private UsersController _usersController;
     private readonly IMapper _mapper;
 
 
-    public ProductsService(IMapper _mapper, IProductsRepository repo, IImagesService imagesService, UsersController usersController)
+    public ProductsService(IProductsRepository repo, UsersController usersController, IMapper mapper)
     {
         _repo = repo;
-        _imagesService = imagesService;
         _usersController = usersController;
+        _mapper = mapper;
     }
 
 
@@ -51,13 +50,22 @@ public class ProductsService: IProductsService
         }
 
         _repo.Remove(product);
+<<<<<<< HEAD
         var updatedProduct = _mapper.Map<Product>(request);
+=======
+        var updatedProduct = _mapper.Map<ProductRequest, Product>(request);
+>>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
         updatedProduct.Id = product.Id;
 
         await _repo.AddAsync(updatedProduct);
         _repo.Complete();
 
+<<<<<<< HEAD
         return _mapper.Map<ProductResponse>(updatedProduct);
+=======
+
+        return _mapper.Map<Product, ProductResponse>(updatedProduct);
+>>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
     }
 
     public async Task<Product?> DeleteByIdAsync(int id)
@@ -103,52 +111,7 @@ public class ProductsService: IProductsService
         _repo.Update(product);
         _repo.Complete();
 
-        return ToProductResponseDTO(product);
-    }
-    
-    public ProductResponse ToProductResponseDTO(Product product)
-    {
-        var response = new ProductResponse()
-        {
-            Id = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-            HasReceipt = product.HasReceipt,
-            Warranty = product.Warranty,
-            CategoryId = product.CategoryId,
-            Condition = product.Condition,
-            SoldStatus = product.SoldStatus,
-            NoticeId = product.Notice.Id,
-            IsSoldSeparately = product.IsSoldSeparately
-        };
-
-        if (product.Images is not null)
-        {
-            response.Images = product.Images?.Select(_imagesService.ToImageResponseDTO).ToList();
-        }
-
-        return response;
-    }
-
-    public Product ToProduct(ProductRequest request, Notice notice)
-    {
-        var product = new Product()
-        {
-            Name = request.Name,
-            Price = request.Price,
-            HasReceipt = request.HasReceipt,
-            Warranty = request.Warranty,
-            CategoryId = request.CategoryId,
-            Condition = request.Condition,
-            SoldStatus = request.SoldStatus,
-            IsSoldSeparately = false,
-            Notice = notice,
-            Images = new List<Image>()
-        };
-
-        product.Images = request.ImageRequests.Select(image => _imagesService.ToImage(image, product)).ToList();
-        
-        return product;
+        return _mapper.Map<Product, ProductResponse>(product);
     }
 
 

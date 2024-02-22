@@ -24,6 +24,7 @@ See more about the project in our [pitch deck](https://docs.google.com/presentat
 
 Luc:
   - Conversation system with notifications
+  - Pagination
 
 ## Videos
 [2 minute video on the pitch deck](https://youtu.be/FD3JxMlWXQQ) 
@@ -39,7 +40,7 @@ Luc:
 
 ### Backend
 
-  -  .NET/C# REST API using a modular monolith architecture
+  - .NET/C# REST API using a modular monolith architecture
 
   - SignalR Library
 
@@ -52,7 +53,7 @@ Luc:
   - Angular 17
     
   - NGRX Store
-  - 
+    
   - SignalR
 
   - Azure static webpages

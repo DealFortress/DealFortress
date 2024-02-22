@@ -14,7 +14,4 @@ public interface IProductsService
 
     Task<ProductResponse?> PatchSoldStatusByIdAsync(int id, SoldStatus soldStatus);
 
-    ProductResponse ToProductResponseDTO(Product product);
-
-    Product ToProduct(ProductRequest request, Notice notice);
 }

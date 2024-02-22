@@ -7,6 +7,7 @@ using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Modules.Users.Api.Controllers;
+using AutoMapper;
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -15,15 +16,18 @@ public class NoticesServicesTestsSad
     private readonly INoticesService _service;
     private readonly NoticeRequest _request;
     public NoticesFixture? Fixture;
+    private readonly IMapper _mapper;
+
 
     public NoticesServicesTestsSad()
     {
-        _service = CreateNewService();
-
+        _mapper = NoticesTestModels.CreateMapper(); 
+        _service = CreateNewService(_mapper);
+    
         _request = NoticesTestModels.CreateNoticeRequest();
     }
 
-    public INoticesService CreateNewService()
+    public INoticesService CreateNewService(IMapper mapper)
     {
         Fixture?.Dispose();        
 
@@ -31,12 +35,12 @@ public class NoticesServicesTestsSad
 
         var noticesRepository = new NoticesRepository(Fixture.Context);
 
-        var productsService = new Mock<IProductsService>().Object;
+        
 
         var usersController = new Mock<UsersController>(null).Object;
 
 
-        return new NoticesService(productsService, noticesRepository, usersController);
+        return new NoticesService( noticesRepository, usersController, mapper);
     }
 
     [Fact]

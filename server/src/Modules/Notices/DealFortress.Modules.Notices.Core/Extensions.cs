@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Abstractions.Automapper;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Data;
@@ -15,15 +16,14 @@ internal static class Extensions
 {
     public static IServiceCollection AddCore(this IServiceCollection services, string connectionString)
     {
-        services
+        return services
             .AddDbContext<NoticesContext>(options =>
                 options.UseSqlServer(connectionString))
             .AddScoped<INoticesRepository, NoticesRepository>()
             .AddScoped<IProductsRepository, ProductsRepository>()
             .AddScoped<INoticesService, NoticesService>()
             .AddScoped<IProductsService, ProductsService>()
-            .AddScoped<IImagesService, ImagesService>();
-
-        return services;
+            .AddScoped<IImagesService, ImagesService>()
+            .AddAutoMapper(typeof(AutoMappingNoticeProfiles).Assembly);
     }
 }

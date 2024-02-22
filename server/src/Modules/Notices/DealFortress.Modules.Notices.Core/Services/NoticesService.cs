@@ -10,20 +10,23 @@ namespace DealFortress.Modules.Notices.Core.Services;
 
 public class NoticesService : INoticesService
 {
-    private readonly IProductsService _productsService;
     private readonly INoticesRepository _repo;
     private readonly UsersController _usersController;
     private readonly IMapper _mapper;
+<<<<<<< HEAD
     public NoticesService(IMapper mapper, IProductsService productsService, INoticesRepository repo, UsersController usersController)
+=======
+    public NoticesService(INoticesRepository repo, UsersController usersController, IMapper mapper)
+>>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
     {
         _usersController = usersController;
-        _productsService = productsService;
         _repo = repo;
         _mapper = mapper;
     }
     
     public PaginatedList<NoticeResponse> GetAllPaginated(int? userId, int pageIndex, int pageSize)
     {
+
         var paginatedList = _repo.GetAllPaginated(userId, pageIndex, pageSize);
                     
         var paginatedResponse = PaginatedList<NoticeResponse>
@@ -35,52 +38,52 @@ public class NoticesService : INoticesService
 
     public async Task<NoticeResponse?> GetByIdAsync(int id)
     {
-        var notice = await _repo.GetByIdAsync(id);
+        var entity = await _repo.GetByIdAsync(id);
 
-        if (notice is null)
+        if (entity is null)
         {
             return null;
         }
 
-        return ToNoticeResponseDTO(notice);
+        return _mapper.Map<Notice, NoticeResponse>(entity);
     } 
 
     public async Task<NoticeResponse?> PutByIdAsync(int id, NoticeRequest request)
     {
-        var notice = await _repo.GetByIdAsync(id);
+        var entity = await _repo.GetByIdAsync(id);
 
-        if (notice is null)
+        if (entity is null)
         {
             return null;
         }
 
-        var isCreator = await _usersController.IsUserEntityCreatorAsync(notice.UserId);
+        var isCreator = await _usersController.IsUserEntityCreatorAsync(entity.UserId);
 
         if (!isCreator)
         {
             return null;
         }
 
-        _repo.Remove(notice);
-        var updatedNotice = ToNotice(request);
-        updatedNotice.Id = notice.Id;
+        _repo.Remove(entity);
+        var updatedNotice = _mapper.Map<NoticeRequest, Notice>(request);
+        updatedNotice.Id = entity.Id;
 
         await _repo.AddAsync(updatedNotice);
         _repo.Complete();
 
 
-        return ToNoticeResponseDTO(updatedNotice);
+        return _mapper.Map<Notice, NoticeResponse>(updatedNotice);
     }
 
     public async Task<NoticeResponse> PostAsync(NoticeRequest request)
     {
-        var notice = ToNotice(request);
+        var notice = _mapper.Map<NoticeRequest, Notice>(request);
 
         await _repo.AddAsync(notice);
 
         _repo.Complete();
 
-        return ToNoticeResponseDTO(notice);
+        return _mapper.Map<Notice, NoticeResponse>(notice);
     }
 
     public async Task<Notice?> DeleteByIdAsync(int id)
@@ -105,6 +108,7 @@ public class NoticesService : INoticesService
         return notice;
     }
 
+<<<<<<< HEAD
 
     public NoticeResponse ToNoticeResponseDTO(Notice Notice)
     {
@@ -158,5 +162,7 @@ public class NoticesService : INoticesService
     }
 
 
+=======
+>>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
 }
 

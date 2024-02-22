@@ -7,6 +7,8 @@ using DealFortress.Modules.Users.Core.DAL.Repositories;
 using DealFortress.Modules.Users.Core.Domain.Services;
 using DealFortress.Modules.Users.Core.Domain.Repositories;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using DealFortress.Modules.Users.Tests.Shared;
 
 namespace DealFortress.Modules.Users.Tests.Integration;
 
@@ -15,21 +17,17 @@ public class UsersServicesTestsHappy
     private readonly IUsersService _service;
     private readonly UserRequest _request;
     public UsersFixture? Fixture;
+    private readonly IMapper _mapper;
+
 
     public UsersServicesTestsHappy()
     {
-        _service = CreateNewService();
-
-        _request = new UserRequest()
-        {
-            AuthId = "testauthid123",
-            Email = "testRequest@email.com",
-            Username = "testRequestUsername",
-            Avatar = "testRequestAvatar"
-        };
+        _mapper = UsersTestModels.CreateMapper(); 
+        _service = CreateNewService(_mapper);
+        _request = UsersTestModels.CreateUserRequest();
     }
 
-    public IUsersService CreateNewService()
+    public IUsersService CreateNewService(IMapper mapper)
     {
         Fixture?.Dispose();
 
@@ -39,7 +37,7 @@ public class UsersServicesTestsHappy
 
         var repo = new UsersRepository(Fixture.Context);
 
-        return new UsersService(repo, httpContext.Object);
+        return new UsersService(repo, httpContext.Object, mapper);
     }
 
     [Fact]
