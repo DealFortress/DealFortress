@@ -50,22 +50,13 @@ public class ProductsService: IProductsService
         }
 
         _repo.Remove(product);
-<<<<<<< HEAD
-        var updatedProduct = _mapper.Map<Product>(request);
-=======
         var updatedProduct = _mapper.Map<ProductRequest, Product>(request);
->>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
         updatedProduct.Id = product.Id;
 
         await _repo.AddAsync(updatedProduct);
         _repo.Complete();
 
-<<<<<<< HEAD
-        return _mapper.Map<ProductResponse>(updatedProduct);
-=======
-
         return _mapper.Map<Product, ProductResponse>(updatedProduct);
->>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
     }
 
     public async Task<Product?> DeleteByIdAsync(int id)

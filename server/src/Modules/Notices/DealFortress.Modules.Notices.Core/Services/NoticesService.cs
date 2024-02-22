@@ -13,11 +13,7 @@ public class NoticesService : INoticesService
     private readonly INoticesRepository _repo;
     private readonly UsersController _usersController;
     private readonly IMapper _mapper;
-<<<<<<< HEAD
-    public NoticesService(IMapper mapper, IProductsService productsService, INoticesRepository repo, UsersController usersController)
-=======
     public NoticesService(INoticesRepository repo, UsersController usersController, IMapper mapper)
->>>>>>> 91146aa41879127b0397d7d544c209a3d7582032
     {
         _usersController = usersController;
         _repo = repo;
