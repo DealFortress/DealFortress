@@ -1,5 +1,5 @@
 import { Component,OnChanges,OnInit, SimpleChanges } from '@angular/core';
-import { getNoticePageSize, getNotices, getNoticesStatus, getPaginatedNotices } from '@app/notices/data-access/store/notices.selectors';
+import { getNoticePageSize, getNotices, getNoticesStatus, getPagedNotices } from '@app/notices/data-access/store/notices.selectors';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store'
 import { loadNoticesRequest, setPageSize } from '@app/notices/data-access/store/notices.actions';
@@ -48,6 +48,6 @@ export class NoticeListComponent implements OnInit{
 
   fetchAndSetNotices(pagination : Pagination) {
     this.store.dispatch(loadNoticesRequest({pageIndex: pagination.pageIndex, pageSize: pagination.pageSize}));
-      this.notices$ = this.store.select(getPaginatedNotices({pageIndex: this.currentPage, pageSize: pagination.pageSize}))
+      this.notices$ = this.store.select(getPagedNotices({pageIndex: this.currentPage, pageSize: pagination.pageSize}))
   }
 }

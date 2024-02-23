@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
@@ -22,11 +23,11 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PaginatedList<NoticeResponse>),StatusCodes.Status200OK)]
-    public ActionResult<PaginatedList<NoticeResponse>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
+    [ProducesResponseType(typeof(PagedList<NoticeResponse>),StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedList<NoticeResponse>>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
     {
-        var paginatedEntities = _service.GetAllPaginated(new PaginatedParams(){FilterId = userId, PageIndex = pageIndex, PageSize = pageSize});
-        return Ok(paginatedEntities);
+        var pagedEntities = await _service.GetAllPagedAsync(new GetNoticesParams(){UserId = userId, PageIndex = pageIndex, PageSize = pageSize});
+        return Ok(pagedEntities.AsEnumerable<JsonObject>());
     }
 
     [HttpGet("{id}")]

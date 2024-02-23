@@ -38,9 +38,9 @@ public class ProductsServicesTestsHappy
     [Fact]
     public void GetAll_should_return_all_ProductsAsync()
     {
-        var parameters = NoticesTestModels.CreatePaginatedParams();
+        var parameters = NoticesTestModels.CreatePagedParams();
         // Act
-        var productResponses = _service.GetAllPaginated(parameters);
+        var productResponses = _service.GetAllPaged(parameters);
 
         // Assert 
         productResponses.Count().Should().Be(2);

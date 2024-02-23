@@ -38,8 +38,8 @@ export class NoticesEffects {
             ofType(loadNoticesRequest),
             mergeMap((action) => {
                 return this.noticesApiService.getAllNoticesAPI({pageIndex: action.pageIndex, pageSize: action.pageSize}).pipe(
-                    map((paginatedList) => {
-                        const notices = paginatedList.Entities;
+                    map((PagedList) => {
+                        const notices = PagedList.Entities;
                         notices.forEach(notice => {
                             this.usersService.loadUserById(notice.userId);
                         })

@@ -13,12 +13,12 @@ internal class ProductsRepository : Repository<Product>, IProductsRepository
     public ProductsRepository(NoticesContext context) : base(context)
     {}
 
-    public PaginatedList<Product> GetAllPaginated(PaginatedParams param){
+    public IQueryable<Product> GetAllPaged(GetProductsParams param){
         var entities = NoticesContext!.Products
                     .Include(product => product.Images)
-                    .Where(product => param.FilterId == null || product.Notice.Id == param.FilterId);   
+                    .Where(product => param.NoticeId == null || product.Notice.Id == param.NoticeId);   
 
-        return PaginatedList<Product>.Create(entities, param.PageIndex, param.PageSize);         
+        return entities;   
     }
 
     public new IQueryable<Notice> GetAll()

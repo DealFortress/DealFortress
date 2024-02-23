@@ -11,7 +11,7 @@ export const getNotices = createSelector(
     selectAll
 );
 
-export const getPaginatedNotices = (pagination : Pagination) => createSelector(
+export const getPagedNotices = (pagination : Pagination) => createSelector(
     getNotices,
     (state) => state.slice(pagination.pageIndex * pagination.pageSize, pagination.pageSize)
 );

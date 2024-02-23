@@ -6,5 +6,5 @@ namespace DealFortress.Modules.Notices.Core.Domain.Repositories;
 
 public interface IProductsRepository : IRepository<Product>
 {
-   PaginatedList<Product> GetAllPaginated(PaginatedParams param);
+   IQueryable<Product> GetAllPaged(GetProductsParams param);
 }

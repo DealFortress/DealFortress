@@ -21,10 +21,10 @@ public class ProductsController : ControllerBase
 
     
     [HttpGet]
-    [ProducesResponseType(typeof(PaginatedList<NoticeResponse>), StatusCodes.Status200OK)]
-    public ActionResult<PaginatedList<ProductResponse>> GetProducts(int? noticeId, int pageIndex = 0, int pageSize = 20)
+    [ProducesResponseType(typeof(PagedList<NoticeResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedList<ProductResponse>>> GetProductsAsync(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
-        return Ok(_service.GetAllPaginated(new PaginatedParams(){FilterId = noticeId, PageIndex = pageIndex, PageSize = pageSize}));
+        return Ok(await _service.GetAllPagedAsync(new GetProductsParams(){NoticeId = noticeId, PageIndex = pageIndex, PageSize = pageSize}));
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]

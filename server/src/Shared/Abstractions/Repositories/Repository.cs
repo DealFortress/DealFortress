@@ -13,11 +13,11 @@ public class Repository<T> : IRepository<T> where T : class
     {
         Context = context;
     }
-    public PaginatedList<T> GetAllPaginated(int pageIndex, int pageSize)
+    public async Task<PagedList<T>> GetAllPagedAsync(int pageIndex, int pageSize)
     {
-        var paginatedEntities = PaginatedList<T>.Create(Context!.Set<T>(), pageIndex, pageSize);   
+        var PagedEntities = await PagedList<T>.CreateAsync(Context!.Set<T>(), pageIndex, pageSize);   
 
-        return paginatedEntities;
+        return PagedEntities;
     }
 
     public async Task<IEnumerable<T>> GetAllAsync()

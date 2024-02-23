@@ -36,10 +36,10 @@ public class ProductControllersTestsHappy
     {
         // Arrange
         var entities = new List<ProductResponse>{_response};
-        var list = PaginatedList<ProductResponse>.Create(entities.AsQueryable(), 0, 20);
-        _service.Setup(service => service.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
+        var list = PagedList<ProductResponse>.Create(entities.AsQueryable(), 0, 20);
+        _service.Setup(service => service.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
         // Act
-        var httpResponses = _controller.GetProducts(null, 0, 20);
+        var httpResponses = _controller.GetProductsAsync(null, 0, 20);
         // Assert 
         httpResponses.Result.Should().BeOfType<OkObjectResult>();
     }
@@ -49,16 +49,16 @@ public class ProductControllersTestsHappy
     {
         // Arrange
         var entities = new List<ProductResponse>{_response};
-        var list = PaginatedList<ProductResponse>.Create(entities.AsQueryable(), 0, 20);
-        _service.Setup(service => service.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
+        var list = PagedList<ProductResponse>.Create(entities.AsQueryable(), 0, 20);
+        _service.Setup(service => service.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
         
         // Act
-        var httpResponses = _controller.GetProducts(null, 0, 20);
+        var httpResponses = _controller.GetProductsAsync(null, 0, 20);
         // Assert 
         httpResponses.Should().NotBeNull();
         var content = httpResponses.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType<PaginatedList<ProductResponse>>();
-        content.As<PaginatedList<ProductResponse>>().First().Should().Be(_response);
+        content.Should().BeOfType<PagedList<ProductResponse>>();
+        content.As<PagedList<ProductResponse>>().First().Should().Be(_response);
     }
 
     [Fact]

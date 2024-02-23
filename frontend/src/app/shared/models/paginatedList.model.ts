@@ -1,4 +1,4 @@
-export type PaginatedList<T> = {
+export type PagedList<T> = {
     pageIndex: number,
     pageSize: number,
     TotalCount : number,

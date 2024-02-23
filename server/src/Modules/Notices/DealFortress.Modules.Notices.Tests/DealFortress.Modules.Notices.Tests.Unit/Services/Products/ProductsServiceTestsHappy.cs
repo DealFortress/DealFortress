@@ -48,17 +48,17 @@ public class ProductsServiceTestsHappy
     {
         // arrange
         var entities = new List<Product>{_product};
-        var list = PaginatedList<Product>.Create(entities.AsQueryable(), 0, 20);
-        _repo.Setup(repo => repo.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
-        var parameters = NoticesTestModels.CreatePaginatedParams();
+        var list = PagedList<Product>.Create(entities.AsQueryable(), 0, 20);
+        _repo.Setup(repo => repo.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
+        var parameters = NoticesTestModels.CreatePagedParams();
 
         _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns(Task.FromResult<string?>("CPU"));
 
         // act
-        var response = _service.GetAllPaginated(parameters);
+        var response = _service.GetAllPaged(parameters);
 
         // assert
-        response.Should().BeOfType<PaginatedList<ProductResponse>>();
+        response.Should().BeOfType<PagedList<ProductResponse>>();
     }
 
     [Fact]

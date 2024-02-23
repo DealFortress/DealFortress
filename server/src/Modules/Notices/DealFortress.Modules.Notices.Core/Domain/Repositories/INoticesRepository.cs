@@ -6,5 +6,5 @@ namespace DealFortress.Modules.Notices.Core.Domain.Repositories;
 
 public interface INoticesRepository : IRepository<Notice>
 {
-    PaginatedList<Notice> GetAllPaginated(PaginatedParams param);
+    IQueryable<Notice> GetAllPaged(GetNoticesParams param);
 }

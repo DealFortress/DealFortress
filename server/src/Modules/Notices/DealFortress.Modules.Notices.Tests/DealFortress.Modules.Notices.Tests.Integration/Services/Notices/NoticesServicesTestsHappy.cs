@@ -43,11 +43,11 @@ public class NoticesServicesTestsHappy
     }
 
     [Fact]
-    public void GetAllPaginated_should_return_all_notices()
+    public void GetAllPaged_should_return_all_notices()
     {
-        var parameters = NoticesTestModels.CreatePaginatedParams();
+        var parameters = NoticesTestModels.CreatePagedParams();
         // Act
-        var noticeResponses = _service.GetAllPaginated(parameters);
+        var noticeResponses = _service.GetAllPaged(parameters);
 
         // Assert 
         noticeResponses.Count().Should().Be(2);

@@ -38,8 +38,8 @@ public class NoticeControllersTestsHappy
     {
         // Arrange
         var entities = new List<NoticeResponse>{_response};
-        var list = PaginatedList<NoticeResponse>.Create(entities.AsQueryable(), 0, 20);
-        _service.Setup(service => service.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
+        var list = PagedList<NoticeResponse>.Create(entities.AsQueryable(), 0, 20);
+        _service.Setup(service => service.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
         // Act
         var httpResponses = _controller.GetNotices(null, 0, 20);
         // Assert 
@@ -47,17 +47,17 @@ public class NoticeControllersTestsHappy
     }
 
     [Fact]
-    public void GetNotices_return_paginatedlist_of_response_when_server_returns_responses()
+    public void GetNotices_return_Pagedlist_of_response_when_server_returns_responses()
     {
         // Arrange
         var entities = new List<NoticeResponse>{_response};
-        var list = PaginatedList<NoticeResponse>.Create(entities.AsQueryable(), 0, 20);
-        _service.Setup(service => service.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
+        var list = PagedList<NoticeResponse>.Create(entities.AsQueryable(), 0, 20);
+        _service.Setup(service => service.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
         // Act
         var httpResponses = _controller.GetNotices(null, 0, 20);
         // Assert 
         var content = httpResponses.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType<PaginatedList<NoticeResponse>>();
+        content.Should().BeOfType<PagedList<NoticeResponse>>();
     }
     [Fact]
     public async Task GetNotice_return_ok_when_service_return_responseAsync()

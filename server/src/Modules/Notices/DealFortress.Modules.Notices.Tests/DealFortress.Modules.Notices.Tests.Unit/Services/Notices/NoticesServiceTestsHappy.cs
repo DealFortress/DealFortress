@@ -44,15 +44,15 @@ public class NoticesServiceTestsHappy
     {
         // arrange
         var entities = new List<Notice>{_notice};
-        var list = PaginatedList<Notice>.Create(entities.AsQueryable(), 0, 20);
-        _repo.Setup(repo => repo.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
-        var parameters = NoticesTestModels.CreatePaginatedParams();
+        var list = PagedList<Notice>.Create(entities.AsQueryable(), 0, 20);
+        _repo.Setup(repo => repo.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
+        var parameters = NoticesTestModels.CreatePagedParams();
 
         // act
-        var response =  _service.GetAllPaginated(parameters);
+        var response =  _service.GetAllPaged(parameters);
 
         // assert
-        response.Should().BeOfType<PaginatedList<NoticeResponse>>();
+        response.Should().BeOfType<PagedList<NoticeResponse>>();
     }
 
     [Fact]

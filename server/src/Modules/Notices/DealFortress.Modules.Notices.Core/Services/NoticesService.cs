@@ -21,15 +21,15 @@ public class NoticesService : INoticesService
         _mapper = mapper;
     }
     
-    public PaginatedList<NoticeResponse> GetAllPaginated(PaginatedParams param)
+    public async Task<PagedList<NoticeResponse>> GetAllPagedAsync(GetNoticesParams param)
     {
 
-        var paginatedList = _repo.GetAllPaginated(param);
+        var PagedList = _repo.GetAllPaged(param);
                     
-        var paginatedResponse = PaginatedList<NoticeResponse>
-            .Create<Notice>(paginatedList.AsQueryable(), param.PageIndex, param.PageSize, _mapper);     
+        var PagedResponse = await PagedList<NoticeResponse>
+            .CreateAsync(PagedList, param.PageIndex, param.PageSize, _mapper);     
 
-        return paginatedResponse;
+        return PagedResponse;
     }
 
 

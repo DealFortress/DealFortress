@@ -23,14 +23,14 @@ public class ProductsService: IProductsService
     }
 
 
-    public PaginatedList<ProductResponse> GetAllPaginated(PaginatedParams param)
+    public async Task<PagedList<ProductResponse>> GetAllPagedAsync(GetProductsParams param)
     {
-        var paginatedList = _repo.GetAllPaginated(param);
+        var PagedList = _repo.GetAllPaged(param);
                     
-        var paginatedResponse = PaginatedList<ProductResponse>
-            .Create<Product>(paginatedList.AsQueryable(), param.PageIndex, param.PageSize, _mapper);     
+        var PagedResponse = await PagedList<ProductResponse>
+            .CreateAsync(PagedList, param.PageIndex, param.PageSize, _mapper);     
 
-        return paginatedResponse;
+        return PagedResponse;
     }
 
     public async Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request)
