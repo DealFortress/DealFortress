@@ -28,7 +28,7 @@ public class ProductsService: IProductsService
         var paginatedList = _repo.GetAllPaginated(param);
                     
         var paginatedResponse = PaginatedList<ProductResponse>
-            .Create<Product>(paginatedList.Entities, param.PageIndex, param.PageSize, _mapper);     
+            .Create<Product>(paginatedList.AsQueryable(), param.PageIndex, param.PageSize, _mapper);     
 
         return paginatedResponse;
     }

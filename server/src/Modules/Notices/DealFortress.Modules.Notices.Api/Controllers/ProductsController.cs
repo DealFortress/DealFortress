@@ -21,7 +21,7 @@ public class ProductsController : ControllerBase
 
     
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginatedList<NoticeResponse>), StatusCodes.Status200OK)]
     public ActionResult<PaginatedList<ProductResponse>> GetProducts(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
         return Ok(_service.GetAllPaginated(new PaginatedParams(){FilterId = noticeId, PageIndex = pageIndex, PageSize = pageSize}));

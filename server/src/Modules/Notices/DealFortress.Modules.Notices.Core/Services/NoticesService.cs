@@ -27,7 +27,7 @@ public class NoticesService : INoticesService
         var paginatedList = _repo.GetAllPaginated(param);
                     
         var paginatedResponse = PaginatedList<NoticeResponse>
-            .Create<Notice>(paginatedList.Entities, param.PageIndex, param.PageSize, _mapper);     
+            .Create<Notice>(paginatedList.AsQueryable(), param.PageIndex, param.PageSize, _mapper);     
 
         return paginatedResponse;
     }

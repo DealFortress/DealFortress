@@ -19,8 +19,8 @@ export class CategoriesEffects {
             ofType(loadCategoriesRequest),
             mergeMap(() => {
                 return this.categoriesApiService.getAllCategoriesAPI().pipe(
-                    map((notices) => {
-                        return (loadCategoriesSuccess({notices: notices}));
+                    map((categories) => {
+                        return (loadCategoriesSuccess({categories: categories}));
                     }),
                     catchError((_error) => {
                         return of(loadCategoriesError({errorText: _error.message}));

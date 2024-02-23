@@ -5,6 +5,7 @@ using DealFortress.Shared.Abstractions.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
@@ -21,10 +22,11 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginatedList<NoticeResponse>),StatusCodes.Status200OK)]
     public ActionResult<PaginatedList<NoticeResponse>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
     {
-        return Ok(_service.GetAllPaginated(new PaginatedParams(){FilterId = userId, PageIndex = pageIndex, PageSize = pageSize}));
+        var paginatedEntities = _service.GetAllPaginated(new PaginatedParams(){FilterId = userId, PageIndex = pageIndex, PageSize = pageSize});
+        return Ok(paginatedEntities);
     }
 
     [HttpGet("{id}")]
