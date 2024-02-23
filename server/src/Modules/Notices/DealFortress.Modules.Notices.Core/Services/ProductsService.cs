@@ -23,12 +23,12 @@ public class ProductsService: IProductsService
     }
 
 
-    public PaginatedList<ProductResponse> GetAllPaginated(int? noticeId, int pageIndex, int pageSize)
+    public PaginatedList<ProductResponse> GetAllPaginated(PaginatedParams param)
     {
-        var paginatedList = _repo.GetAllPaginated(noticeId, pageIndex, pageSize);
+        var paginatedList = _repo.GetAllPaginated(param);
                     
         var paginatedResponse = PaginatedList<ProductResponse>
-            .Create<Product>(paginatedList.Entities, pageIndex, pageSize, _mapper);     
+            .Create<Product>(paginatedList.Entities, param.PageIndex, param.PageSize, _mapper);     
 
         return paginatedResponse;
     }

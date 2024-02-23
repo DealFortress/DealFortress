@@ -6,7 +6,7 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface INoticesService
 {
-    PaginatedList<NoticeResponse> GetAllPaginated(int? userId, int pageIndex, int pageSize);
+    PaginatedList<NoticeResponse> GetAllPaginated(PaginatedParams param);
     Task<NoticeResponse?> GetByIdAsync(int id);
 
     Task<NoticeResponse> PostAsync(NoticeRequest request);

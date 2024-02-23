@@ -24,7 +24,7 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<PaginatedList<NoticeResponse>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
     {
-        return Ok(_service.GetAllPaginated(userId, pageIndex, pageSize));
+        return Ok(_service.GetAllPaginated(new PaginatedParams(){FilterId = userId, PageIndex = pageIndex, PageSize = pageSize}));
     }
 
     [HttpGet("{id}")]

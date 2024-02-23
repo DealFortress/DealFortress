@@ -8,6 +8,7 @@ using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Modules.Users.Api.Controllers;
 using AutoMapper;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
@@ -39,17 +40,19 @@ public class NoticesServiceTestsHappy
     }
 
     [Fact]
-    public async void GetAll_returns_response()
+    public void GetAll_returns_response()
     {
         // arrange
-        var list = new List<Notice>() { _notice };
-        _repo.Setup(repo => repo.GetAllAsync()).Returns(Task.FromResult<IEnumerable<Notice>>(list));
+        var entities = new List<Notice>{_notice};
+        var list = PaginatedList<Notice>.Create(entities.AsQueryable(), 0, 20);
+        _repo.Setup(repo => repo.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
+        var parameters = NoticesTestModels.CreatePaginatedParams();
 
         // act
-        var response = await _service.GetAllAsync();
+        var response =  _service.GetAllPaginated(parameters);
 
         // assert
-        response.Should().BeOfType<List<NoticeResponse>>();
+        response.Should().BeOfType<PaginatedList<NoticeResponse>>();
     }
 
     [Fact]

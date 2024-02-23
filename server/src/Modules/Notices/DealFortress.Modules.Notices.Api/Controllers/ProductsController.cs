@@ -3,8 +3,8 @@ using DealFortress.Modules.Notices.Core.DTO;
 using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -22,9 +22,9 @@ public class ProductsController : ControllerBase
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<ProductResponse>> GetProducts(int? noticeId, int pageIndex = 0, int pageSize = 20)
+    public ActionResult<PaginatedList<ProductResponse>> GetProducts(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
-        return Ok(_service.GetAllPaginated(noticeId, pageIndex, pageSize));
+        return Ok(_service.GetAllPaginated(new PaginatedParams(){FilterId = noticeId, PageIndex = pageIndex, PageSize = pageSize}));
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]

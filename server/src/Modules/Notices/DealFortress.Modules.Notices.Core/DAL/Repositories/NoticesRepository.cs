@@ -14,13 +14,13 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public NoticesRepository(NoticesContext context) : base(context)
     {}
 
-    public PaginatedList<Notice> GetAllPaginated(int? userId, int pageIndex, int pageSize){
+    public PaginatedList<Notice> GetAllPaginated(PaginatedParams param){
         var entities = NoticesContext!.Notices
                     .Include(notice => notice.Products!)
                     .ThenInclude(product => product.Images)
-                    .Where(notice => userId == null || notice.UserId == userId);   
+                    .Where(notice => param.FilterId == null || notice.UserId == param.FilterId);   
 
-        return PaginatedList<Notice>.Create(entities, pageIndex, pageSize);               
+        return PaginatedList<Notice>.Create(entities, param.PageIndex, param.PageSize);               
     }
 
     public new IQueryable<Notice> GetAll()

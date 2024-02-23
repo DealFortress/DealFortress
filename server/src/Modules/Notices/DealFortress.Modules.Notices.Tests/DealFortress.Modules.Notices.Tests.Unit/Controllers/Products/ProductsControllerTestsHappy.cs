@@ -3,6 +3,7 @@ using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Tests.Shared;
+using DealFortress.Shared.Abstractions.Entities;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -31,28 +32,33 @@ public class ProductControllersTestsHappy
 
 
     [Fact]
-    public async void GetProducts_should_return_ok()
+    public void GetProducts_should_return_ok()
     {
         // Arrange
-        var list = new List<ProductResponse> { _response };
-        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<ProductResponse>>(list));
+        var entities = new List<ProductResponse>{_response};
+        var list = PaginatedList<ProductResponse>.Create(entities.AsQueryable(), 0, 20);
+        _service.Setup(service => service.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
         // Act
-        var httpResponses = await _controller.GetProductsAsync();
+        var httpResponses = _controller.GetProducts(null, 0, 20);
         // Assert 
         httpResponses.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public async Task GetProducts_return_list_of_response_when_server_returns_responsesAsync()
+    public void GetProducts_return_list_of_response_when_server_returns_responses()
     {
         // Arrange
-        var list = new List<ProductResponse> { _response };
-        _service.Setup(service => service.GetAllAsync()).Returns(Task.FromResult<IEnumerable<ProductResponse>>(list));
+        var entities = new List<ProductResponse>{_response};
+        var list = PaginatedList<ProductResponse>.Create(entities.AsQueryable(), 0, 20);
+        _service.Setup(service => service.GetAllPaginated(It.IsAny<PaginatedParams>())).Returns(list);
+        
         // Act
-        var httpResponses = await _controller.GetProductsAsync();
+        var httpResponses = _controller.GetProducts(null, 0, 20);
         // Assert 
+        httpResponses.Should().NotBeNull();
         var content = httpResponses.Result.As<OkObjectResult>().Value;
-        content.Should().BeOfType<List<ProductResponse>>();
+        content.Should().BeOfType<PaginatedList<ProductResponse>>();
+        content.As<PaginatedList<ProductResponse>>().First().Should().Be(_response);
     }
 
     [Fact]
