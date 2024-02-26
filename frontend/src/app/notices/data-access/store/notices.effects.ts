@@ -39,11 +39,11 @@ export class NoticesEffects {
             mergeMap((action) => {
                 return this.noticesApiService.getAllNoticesAPI({pageIndex: action.pageIndex, pageSize: action.pageSize}).pipe(
                     map((PagedList) => {
-                        const notices = PagedList.Entities;
+                        const notices = PagedList.items;
                         notices.forEach(notice => {
                             this.usersService.loadUserById(notice.userId);
                         })
-                        return (loadNoticesSuccess({notices: notices}));
+                        return (loadNoticesSuccess({notices: notices, metaData: PagedList.metaData}));
                     }),
                     catchError((_error) => {
                         return of(loadNoticesError({errorText: _error.message}));

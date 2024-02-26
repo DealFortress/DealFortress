@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DealFortress.Shared.Abstractions.Entities;
 
 public class PaginationMetaData {
-    [JsonIgnore]
     public int PageIndex  { get; set;}
-    [JsonIgnore]
     public int PageSize   { get; set;}
     public int TotalCount { get; set;}
     public int TotalPages { get; set;}    
@@ -29,7 +27,7 @@ public class PagedList<TResult> : List<TResult>
         MetaData.PageSize = pageSize;
         MetaData.TotalCount = totalCount;
         MetaData.TotalPages = (int) Math.Ceiling(totalCount / (double)pageSize);
-        
+
         JsonObject = new {items = Items, metadata = MetaData };
     }
     public static async Task<PagedList<TResult>> CreateAsync(

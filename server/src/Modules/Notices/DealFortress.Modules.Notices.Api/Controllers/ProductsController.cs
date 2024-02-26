@@ -5,7 +5,6 @@ using DealFortress.Modules.Notices.Core.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Shared.Abstractions.Entities;
-using Microsoft.CodeAnalysis;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -20,7 +19,6 @@ public class ProductsController : ControllerBase
         _service = service;
     }
 
-    
     [HttpGet]
     [ProducesResponseType(typeof(PagedList<NoticeResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<PagedList<ProductResponse>>> GetProductsAsync(int? noticeId, int pageIndex = 0, int pageSize = 20)
