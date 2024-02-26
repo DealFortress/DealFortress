@@ -1,22 +1,36 @@
+using System.Text.Json.Serialization;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace DealFortress.Shared.Abstractions.Entities;
+
+public class PaginationMetaData {
+    [JsonIgnore]
+    public int PageIndex  { get; set;}
+    [JsonIgnore]
+    public int PageSize   { get; set;}
+    public int TotalCount { get; set;}
+    public int TotalPages { get; set;}    
+    public bool HasPreviousPage => PageIndex > 1;
+    public bool HasNextPage => PageIndex < TotalPages;
+};
+
+
 public class PagedList<TResult> : List<TResult>
 {
     public List<TResult> Items { get;}
-    public int PageIndex  { get;}
-    public int PageSize   { get;}
-    public int TotalCount { get;}
-    public int TotalPages { get;}    
-    public bool HasPreviousPage => PageIndex > 1;
-    public bool HasNextPage => PageIndex < TotalPages;
+    public PaginationMetaData MetaData {get;}
+
+    public Object JsonObject {get;}
     public PagedList(List<TResult> items,int totalCount, int pageIndex, int pageSize) {
+        MetaData = new PaginationMetaData();
         Items = items;
-        PageIndex = pageIndex;
-        PageSize = pageSize;
-        TotalCount = totalCount;
-        TotalPages = (int) Math.Ceiling(TotalCount / (double)PageSize);
+        MetaData.PageIndex = pageIndex;
+        MetaData.PageSize = pageSize;
+        MetaData.TotalCount = totalCount;
+        MetaData.TotalPages = (int) Math.Ceiling(totalCount / (double)pageSize);
+        
+        JsonObject = new {items = Items, metadata = MetaData };
     }
     public static async Task<PagedList<TResult>> CreateAsync(
         IQueryable<TResult> source, int pageIndex, int pageSize)

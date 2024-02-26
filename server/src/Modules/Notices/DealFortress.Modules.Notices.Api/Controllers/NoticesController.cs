@@ -6,6 +6,7 @@ using DealFortress.Shared.Abstractions.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NuGet.Protocol;
 
 
@@ -26,8 +27,8 @@ public class NoticesController : ControllerBase
     [ProducesResponseType(typeof(PagedList<NoticeResponse>),StatusCodes.Status200OK)]
     public async Task<ActionResult<PagedList<NoticeResponse>>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
     {
-        var pagedEntities = await _service.GetAllPagedAsync(new GetNoticesParams(){UserId = userId, PageIndex = pageIndex, PageSize = pageSize});
-        return Ok(pagedEntities.AsEnumerable<JsonObject>());
+        var pagedList = await _service.GetAllPagedAsync(new GetNoticesParams(){UserId = userId, PageIndex = pageIndex, PageSize = pageSize});
+        return Ok(pagedList.JsonObject);
     }
 
     [HttpGet("{id}")]
