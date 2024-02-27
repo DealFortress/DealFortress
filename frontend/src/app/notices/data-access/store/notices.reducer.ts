@@ -1,5 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
-import { deleteNoticeError, deleteNoticeSuccess, loadNoticeByIdError, loadNoticeByIdRequest, loadNoticeByIdSuccess, loadNoticesError, loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusError, patchProductSoldStatusSuccess, postNoticeError, postNoticeSuccess, putNoticeError, putNoticeSuccess, setPageSize } from "./notices.actions";
+import { deleteNoticeError, deleteNoticeSuccess, loadNoticeByIdError, loadNoticeByIdRequest, loadNoticeByIdSuccess, loadNoticesError,
+    loadNoticesRequest, loadNoticesSuccess, patchProductSoldStatusError, patchProductSoldStatusSuccess,
+    postNoticeError, postNoticeSuccess, putNoticeError, putNoticeSuccess, setNoticesError, setNoticesRequest,
+    setNoticesSuccess, setPagination } from "./notices.actions";
 import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 import { Notice } from "@app/shared/models/notice/notice.model";
@@ -9,6 +12,26 @@ import { state } from "@angular/animations";
 
 export const noticesReducer = createReducer(
     initialState,
+    on(setNoticesRequest, (state) => {
+        return {
+            ...state,
+            status: Status.loading
+        };
+    }),
+    on(setNoticesSuccess,(state,action)=>{
+        return noticesAdapter.setAll(action.notices, {
+            ...state,
+            status: Status.success,
+            metaData: action.metaData
+          });
+    }),
+    on(setNoticesError,(state,action)=>{
+        return {
+            ...state,
+            errorMessage:action.errorText,
+            status: Status.error
+        }
+    }),
     on(loadNoticesRequest, (state) => {
         return {
             ...state,
@@ -16,9 +39,10 @@ export const noticesReducer = createReducer(
         };
     }),
     on(loadNoticesSuccess,(state,action)=>{
-        return noticesAdapter.setAll(action.notices, {
+        return noticesAdapter.addMany(action.notices, {
             ...state,
             status: Status.success,
+            metaData: action.metaData
           });
     }),
     on(loadNoticesError,(state,action)=>{
@@ -100,10 +124,10 @@ export const noticesReducer = createReducer(
             status: Status.error
         }
     }),
-    on(setPageSize, (state, action) => {
+    on(setPagination, (state, action) => {
         return {
             ...state,
-            pageSize: action.pageSize
+            pagination: action
         }
     })
 );

@@ -28,7 +28,7 @@ public class NoticesController : ControllerBase
     public async Task<ActionResult<PagedList<NoticeResponse>>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
     {
         var pagedList = await _service.GetAllPagedAsync(new GetNoticesParams(){UserId = userId, PageIndex = pageIndex, PageSize = pageSize});
-        return Ok(pagedList.JsonObject);
+        return Ok(pagedList);
     }
 
     [HttpGet("{id}")]

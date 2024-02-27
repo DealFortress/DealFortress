@@ -1,20 +1,18 @@
-<app-loader *ngIf="(status | async ) == Status.loading"></app-loader>
-<app-error *ngIf="(status | async ) == Status.error"></app-error>
-<ng-container *ngIf="(status | async ) == Status.success">
-    <div class="w-full h-[66vh] medieval-banner bg-cover flex justify-center items-center relative top-[-100px]">
-        <img src='assets/biglogo.png' alt="deal fortress logo" class="logo-xl"/>
-        <!-- <h2 class="absolute m-auto text-2xl md:text-6xl text-white bottom-5 ">THIS WEBSITE USES MOCK DATA</h2> -->
-    </div>
+<div *ngIf="pageIndex == 0" class="w-full h-[66vh] medieval-banner bg-cover flex justify-center items-center relative top-[-100px]">
+    <img src='assets/biglogo.png' alt="deal fortress logo" class="logo-xl"/>
+    <h2 class="absolute m-auto text-2xl md:text-4xl text-white bottom-5 ">SHOWCASE MODE, NO REAL DATA USED</h2>
+</div>
+<ng-container *ngIf="(status$ | async ) == Status.success">
     <app-main-container>
         <header>
             <div class="flex justify-between items-center w-full">
-                <h2 class="text-4xl medieval-font">Latest posts</h2>
-                <button routerLink="/notices/create" aria-label="create Notice" class="btn btn-square">
+                <h2 *ngIf="pageIndex == 0" class="text-4xl medieval-font">Latest posts</h2>
+                <button routerLink="/notices/create" aria-label="create Notice" class="btn btn-square" [ngClass]="pageIndex != 0 ? 'grow h-5' : ''">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
         </header>
-        <section *ngIf="(notices$ | async) as notices" class="flex flex-col gap-3">
+        <section *ngIf="(notices$ | async) as notices; else skeleton" class="flex flex-col gap-3">
             <ul class="flex flex-col gap-3"  >
               <li *ngFor="let notice of notices">
                 <app-notice-card [notice]="notice"></app-notice-card>
@@ -22,12 +20,31 @@
             </ul>
             <mat-paginator 
                 class=""
-                [length]="notices.length"
-                [pageSize]="pageSize | async"
-                [pageSizeOptions]="[20, 30, 40, 50]"
+                [length]="(metaData$ |async)?.totalCount"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                [pageSizeOptions]="[10, 20, 50, 100]"
+                [showFirstLastButtons]="true"
                 aria-label="Select page"
                 (page)="onPaginationEvent($event)">
             </mat-paginator>
         </section>
     </app-main-container>
 </ng-container>
+
+<ng-template #skeleton>
+    <ul class="flex flex-col gap-3"  >
+        <li *ngFor="let i for 3">
+            <div class="card bg-neutral text-neutral-content w-full animate-pulse">
+                <div class="card-body items-left text-left">
+                  <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div class="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
+                  <div class="card-actions justify-end">
+                    <div class="h-4 bg-gray-200 rounded w-1/5 inline-block"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/4 inline-block ml-4"></div>
+                  </div>
+                </div>
+            </div>
+        </li> 
+    </ul>
+</ng-template>

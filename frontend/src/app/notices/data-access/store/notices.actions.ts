@@ -7,6 +7,10 @@ import { SoldStatus } from '@app/shared/models/sold-status.model';
 import { createAction, props } from '@ngrx/store';
 
 // Notices
+export const SET_NOTICES_SUCCESS = '[Notices] set notices success';
+export const SET_NOTICES_ERROR = '[Notices] set notices error';
+export const SET_NOTICES_REQUEST = '[Notices] set notices request';
+
 export const LOAD_NOTICES_SUCCESS = '[Notices] load notices success';
 export const LOAD_NOTICES_ERROR = '[Notices] load notices error';
 export const LOAD_NOTICES_REQUEST = '[Notices] load notices request';
@@ -26,6 +30,11 @@ export const PUT_NOTICE_SUCCESS = '[Notices] put notice success';
 export const DELETE_NOTICE_REQUEST = '[Notices] Delete notice';
 export const DELETE_NOTICE_ERROR = '[Notices] delete notice error';
 export const DELETE_NOTICE_SUCCESS = '[Notices] Delete notice success';
+
+
+export const setNoticesRequest = createAction(SET_NOTICES_REQUEST, props<Pagination>());
+export const setNoticesSuccess = createAction(SET_NOTICES_SUCCESS, props<{notices: Notice[], metaData: Metadata}>());
+export const setNoticesError = createAction(SET_NOTICES_ERROR, props<{errorText: string}>());
 
 export const loadNoticesRequest = createAction(LOAD_NOTICES_REQUEST, props<Pagination>());
 export const loadNoticesSuccess = createAction(LOAD_NOTICES_SUCCESS, props<{notices: Notice[], metaData: Metadata}>());
@@ -49,9 +58,9 @@ export const deleteNoticeError = createAction(DELETE_NOTICE_ERROR, props<{errorT
 
 
 
-export const SET_PAGE_SIZE = '[Notices] set pageSize';
+export const SET_PAGINATION = '[Notices] set pageSize';
 
-export const setPageSize = createAction(SET_PAGE_SIZE, props<{pageSize: number}>());
+export const setPagination = createAction(SET_PAGINATION, props<Pagination>());
 
 
 // Products

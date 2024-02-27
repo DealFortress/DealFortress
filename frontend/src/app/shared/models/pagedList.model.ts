@@ -1,6 +1,6 @@
 export type PagedList<T> = {
     metaData : Metadata,
-    items : T[]
+    entities : T[]
 }
 
 export type Metadata = {

@@ -14,7 +14,7 @@ import {
             loadNoticesSuccess, 
             patchProductSoldStatusRequest, patchProductSoldStatusSuccess, 
             postNoticeRequest, postNoticeSuccess, 
-            putNoticeRequest, putNoticeSuccess 
+            putNoticeRequest, putNoticeSuccess, setNoticesError, setNoticesRequest, setNoticesSuccess 
         } from './notices.actions';
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
@@ -33,17 +33,37 @@ export class NoticesEffects {
         ) {}
 
 
+    setNotices$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(setNoticesRequest),
+            mergeMap((action) => {
+                return this.noticesApiService.getAllNoticesAPI({pageIndex: action.pageIndex, pageSize: action.pageSize}).pipe(
+                    map((pagedList) => {
+                        const notices = pagedList.entities;
+                        notices.forEach(notice => {
+                            this.usersService.loadUserById(notice.userId);
+                        })
+                        return (setNoticesSuccess({notices: notices, metaData: pagedList.metaData}));
+                    }),
+                    catchError((_error) => {
+                        return of(setNoticesError({errorText: _error.message}));
+                    })
+                );
+            })
+        );
+    })
+
     loadNotices$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadNoticesRequest),
             mergeMap((action) => {
                 return this.noticesApiService.getAllNoticesAPI({pageIndex: action.pageIndex, pageSize: action.pageSize}).pipe(
-                    map((PagedList) => {
-                        const notices = PagedList.items;
+                    map((pagedList) => {
+                        const notices = pagedList.entities;
                         notices.forEach(notice => {
                             this.usersService.loadUserById(notice.userId);
                         })
-                        return (loadNoticesSuccess({notices: notices, metaData: PagedList.metaData}));
+                        return (loadNoticesSuccess({notices: notices, metaData: pagedList.metaData}));
                     }),
                     catchError((_error) => {
                         return of(loadNoticesError({errorText: _error.message}));
@@ -52,6 +72,7 @@ export class NoticesEffects {
             })
         );
     })
+
 
     loadNotice$ = createEffect(() => {
         return this.actions$.pipe(

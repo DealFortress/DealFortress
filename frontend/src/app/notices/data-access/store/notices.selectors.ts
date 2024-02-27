@@ -11,9 +11,15 @@ export const getNotices = createSelector(
     selectAll
 );
 
-export const getPagedNotices = (pagination : Pagination) => createSelector(
+export const getNoticePagination = createSelector(
+    getNoticesState,
+    (state) => state.pagination
+)
+
+export const getPagedNotices = createSelector(
     getNotices,
-    (state) => state.slice(pagination.pageIndex * pagination.pageSize, pagination.pageSize)
+    getNoticePagination,
+    (notices, pag) =>  notices.slice(0 , pag.pageSize)
 );
 
 export const getLoggedInUserLatestNoticeId = createSelector(
@@ -26,6 +32,11 @@ export const getNoticesStatus = createSelector(
     (state) => state.status
 )
 
+export const getMetaData = createSelector(
+    getNoticesState,
+    (state) => state.metaData
+)
+
 export const getNoticeById = (id: number) =>  createSelector(
     getNoticesState,
     state => state.entities[id]
@@ -34,9 +45,4 @@ export const getNoticeById = (id: number) =>  createSelector(
 export const getUserIdByNoticeId = (noticeId: number) => createSelector(
     getNotices,
     notices => notices.find(notice => notice.id == noticeId)?.userId
-)
-
-export const getNoticePageSize = createSelector(
-    getNoticesState,
-    (state) => state.pageSize
 )

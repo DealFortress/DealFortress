@@ -18,7 +18,7 @@ export class NoticesApiService {
 
     getAllNoticesAPI(pagination : Pagination): Observable<PagedList<Notice>>{
         return this.httpClient
-            .get(`${this.noticesUrl}?page=${pagination.pageIndex}&pageSize=${pagination.pageSize}`)
+            .get(`${this.noticesUrl}?pageIndex=${pagination.pageIndex}&pageSize=${pagination.pageSize}`)
             .pipe(data => data as Observable<PagedList<Notice>>);
     }
 

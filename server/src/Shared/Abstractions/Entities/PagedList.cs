@@ -14,31 +14,28 @@ public class PaginationMetaData {
 };
 
 
-public class PagedList<TResult> : List<TResult>
+public class PagedList<TResult> 
 {
-    public List<TResult> Items { get;}
+    public List<TResult> Entities { get;}
     public PaginationMetaData MetaData {get;}
-
-    public Object JsonObject {get;}
-    public PagedList(List<TResult> items,int totalCount, int pageIndex, int pageSize) {
+    public PagedList(List<TResult> entities,int totalCount, int pageIndex, int pageSize) {
         MetaData = new PaginationMetaData();
-        Items = items;
+        Entities = entities;
         MetaData.PageIndex = pageIndex;
         MetaData.PageSize = pageSize;
         MetaData.TotalCount = totalCount;
         MetaData.TotalPages = (int) Math.Ceiling(totalCount / (double)pageSize);
 
-        JsonObject = new {items = Items, metadata = MetaData };
     }
     public static async Task<PagedList<TResult>> CreateAsync(
         IQueryable<TResult> source, int pageIndex, int pageSize)
     {
         var totalCount = await source.CountAsync();
-        var items = await source
+        var entities = await source
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
             .ToListAsync();
-        return new PagedList<TResult>(items, totalCount,  pageIndex, pageSize);
+        return new PagedList<TResult>(entities, totalCount,  pageIndex, pageSize);
     }
     
     public static async Task<PagedList<TResult>> CreateAsync<TSource>(

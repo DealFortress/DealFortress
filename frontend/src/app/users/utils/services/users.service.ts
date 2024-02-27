@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
   providedIn: 'root'
 })
 export class UsersService {
+  cache : number[] = [];
 
   constructor(private store: Store) { }
 
@@ -55,7 +56,6 @@ export class UsersService {
   }
 
   loadUserById(id: number) {
-    let cache : number[] = [];
 
     this.store.select(getUserById(id)).subscribe(recipient => {
       if (recipient) {
@@ -63,14 +63,15 @@ export class UsersService {
       }
 
       this.store.select(getLoggedInUserId).subscribe(loggedInUserId => {
-        if (loggedInUserId == id) {
+        if (loggedInUserId == id || this.cache.includes(id)) {
           return;
         }
-        cache.push(id)
+        this.cache.push(id)
 
-        if (cache.length > 4) {
-          cache.pop()
+        if (this.cache.length > 50) {
+          this.cache.pop()
         }
+        
         this.store.dispatch(loadUserByIdRequest({id :id}));
       })
     })

@@ -24,7 +24,7 @@ public class ProductsController : ControllerBase
     public async Task<ActionResult<PagedList<ProductResponse>>> GetProductsAsync(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
         var pagedList = await _service.GetAllPagedAsync(new GetProductsParams(){NoticeId = noticeId, PageIndex = pageIndex, PageSize = pageSize});
-        return Ok(pagedList.JsonObject);
+        return Ok(pagedList);
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]
