@@ -1,7 +1,6 @@
 
 export const pluralize = (num: number, word: string, plural = word + "s") => [1, -1].includes(Number(num)) ? word : plural;
 
-    
 export const convertMinutesToClosestTimeValue = (date: Date) => {
 const minutesSinceCreation = minutesBetweenTodayAndDate(date);
 const minutesInAYear = 525600;

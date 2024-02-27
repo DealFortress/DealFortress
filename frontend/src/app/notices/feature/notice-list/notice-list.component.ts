@@ -31,6 +31,11 @@ export class NoticeListComponent implements OnInit{
       }
     })
   }
+  
+  numSequence = (n : number) => {
+    return Array(n);
+  }
+    
 
 
   onPaginationEvent(event : PageEvent) {
