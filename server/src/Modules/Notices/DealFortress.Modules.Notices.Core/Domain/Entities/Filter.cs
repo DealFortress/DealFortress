@@ -1,7 +1,8 @@
 namespace DealFortress.Modules.Notices.Core.Domain.Entities
 {
-    public enum HTTPFilter
+    public enum Filter
     {
-        createdAt = 0,
+        CreatedAt = 0,
+        Location = 1
     }
 }

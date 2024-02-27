@@ -16,9 +16,10 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
 
     public IQueryable<Notice> GetAllPaged(GetNoticesParams param){
         var entities = NoticesContext!.Notices
+                    .OrderByDescending(notice => notice.CreatedAt)
                     .Include(notice => notice.Products!)
                     .ThenInclude(product => product.Images)
-                    .Where(notice => param.UserId == null || notice.UserId == param.UserId);   
+                    .Where(notice => param.UserId == null || notice.UserId == param.UserId);
 
         return entities;               
     }
@@ -26,6 +27,7 @@ internal class NoticesRepository : Repository<Notice>, INoticesRepository
     public new IQueryable<Notice> GetAll()
     {
         return NoticesContext!.Notices
+                    .OrderByDescending(notice => notice.CreatedAt)
                     .Include(notice => notice.Products!)
                     .ThenInclude(product => product.Images);
     }
