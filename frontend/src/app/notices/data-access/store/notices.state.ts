@@ -21,4 +21,4 @@ export const noticesAdapter: EntityAdapter<Notice> = createEntityAdapter<Notice>
     sortComparer: sortByDate
 })
 
-export const initialState : NoticesState = noticesAdapter.getInitialState({ errorMessage: '', status: Status.loading, pagination: {pageIndex: 0, pageSize: 2}});
+export const initialState : NoticesState = noticesAdapter.getInitialState({ errorMessage: '', status: Status.loading, pagination: {pageIndex: 0, pageSize: 20}});

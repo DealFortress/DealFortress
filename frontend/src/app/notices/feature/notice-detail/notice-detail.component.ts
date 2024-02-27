@@ -35,7 +35,6 @@ export class NoticeDetailComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    console.log('in')
     this.noticesService.loadNoticeById(this.id);
     this.notice$.subscribe(notice => {
       if (notice) {
