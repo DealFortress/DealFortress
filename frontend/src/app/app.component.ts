@@ -15,9 +15,7 @@ import { conversationHub } from './conversations/utils/conversation.hub';
 export class AppComponent implements OnInit{
   notices = this.store.select(getNotices);
 
-  constructor(private authService: AuthService, private usersService: UsersService, private store: Store) {
-
-  }
+  constructor(private authService: AuthService, private usersService: UsersService, private store: Store) {}
 
   async ngOnInit(): Promise<void> {
     this.store.dispatch(loadCategoriesRequest());

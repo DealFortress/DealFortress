@@ -3,9 +3,24 @@
         <div *ngIf="this.product.soldStatus !== SoldStatus.Sold" class="dropdown dropdown-hover">
             <div tabindex="0" role="button" class="btn btn-ghost m-1 px-4 py-2 min-h-min h-auto">STATUS</div>
             <ul  class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto">
-              <li *ngIf="this.product.soldStatus !== SoldStatus.Available" ><a ((keypress))="toggleSoldStatus(SoldStatus.Available)">Available</a></li>
-              <li *ngIf="this.product.soldStatus !== SoldStatus.Reserved"><a aria-hidden="true" ((keypress))="toggleSoldStatus(SoldStatus.Reserved)">Reserved</a></li>
-              <li><a  aria-hidden="true" ((keypress))="toggleSoldPopup = true">Sold</a></li>
+              <li *ngIf="this.product.soldStatus !== SoldStatus.Available" >
+                <a (click)="toggleSoldStatus(SoldStatus.Available)"
+                role="button" 
+                tabindex="0"
+                (keyup.enter)="toggleSoldStatus(SoldStatus.Available)"  >Available</a>
+              </li>
+              <li *ngIf="this.product.soldStatus !== SoldStatus.Reserved">
+                <a aria-hidden="true" (click)="toggleSoldStatus(SoldStatus.Reserved)"
+                role="button" 
+                tabindex="0"
+                (keyup.enter)="toggleSoldStatus(SoldStatus.Reserved)">Reserved</a>
+              </li>
+              <li>
+                <a  aria-hidden="true" (click)="toggleSoldPopup = true"
+                role="button" 
+                tabindex="0"
+                (keyup.enter)="toggleSoldPopup = true">Sold</a>
+              </li>
             </ul>
         </div> 
     </div>
@@ -34,10 +49,10 @@
 </div>
 
 <app-popup-card *ngIf="toggleSoldPopup" title="Congratulations on the sale!" body="This action cannot be reversed">
-    <button ((keypress))="toggleSoldStatus(SoldStatus.Sold)" class="btn btn-primary">
+    <button (click)="toggleSoldStatus(SoldStatus.Sold)" class="btn btn-primary">
         SOLD!
     </button>
-    <button ((keypress))="toggleSoldPopup = false" class="btn btn-ghost">
+    <button (click)="toggleSoldPopup = false" class="btn btn-ghost">
         CANCEL
     </button>
 </app-popup-card>

@@ -6,7 +6,7 @@
       <button routerLink="edit" class="top-0 right-20 btn btn-ghost btn-circle text-2xl md:text-4xl bg-darkblue md:btn-lg">
         <fa-icon [icon]="['fas', 'feather']"></fa-icon>
       </button>
-      <button class="right-0 btn btn-ghost btn-circle bg-red text-2xl md:text-4xl md:btn-lg" ((keypress))="showDeletePopup = true" >
+      <button class="right-0 btn btn-ghost btn-circle bg-red text-2xl md:text-4xl md:btn-lg" (click)="showDeletePopup = true" >
           <fa-icon [icon]="['fas', 'trash-can']"></fa-icon>
       </button>
     </div>
@@ -31,7 +31,12 @@
       </ng-container>
       <div class="flex flex-col gap-6">
         <ng-container *ngFor="let product of notice.products">
-          <a ((keypress))="selectedProduct = product" [class]="product === selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
+          <a 
+          role="button" 
+          tabindex="0"
+          (keyup.enter)="selectedProduct = product" 
+          (click)="selectedProduct = product" 
+          [class]="product === selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
             <app-product-card [product]="product"></app-product-card>
           </a>
         </ng-container>
@@ -41,10 +46,10 @@
 </app-main-container>
 
 <app-popup-card *ngIf="showDeletePopup">
-  <button ((keypress))="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
+  <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
     Abort!
   </button>
-  <button ((keypress))="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
+  <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
     Burn it!
   </button>
 </app-popup-card>
