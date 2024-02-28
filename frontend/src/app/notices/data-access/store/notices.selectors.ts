@@ -19,7 +19,7 @@ export const getNoticePagination = createSelector(
 export const getPagedNotices = createSelector(
     getNotices,
     getNoticePagination,
-    (notices, pag) =>  notices.slice(0 , pag.pageSize)
+    (notices, pag) =>  notices.slice(pag.pageIndex * pag.pageSize , (pag.pageIndex * pag.pageSize) + pag.pageSize)
 );
 
 export const getLoggedInUserLatestNoticeId = createSelector(

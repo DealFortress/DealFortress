@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { StringMappingType } from 'typescript';
 
 @Component({
   selector: 'app-popup-card',

@@ -58,7 +58,7 @@ export const deleteNoticeError = createAction(DELETE_NOTICE_ERROR, props<{errorT
 
 
 
-export const SET_PAGINATION = '[Notices] set pageSize';
+export const SET_PAGINATION = '[Notices] set pagination';
 
 export const setPagination = createAction(SET_PAGINATION, props<Pagination>());
 

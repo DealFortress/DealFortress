@@ -11,7 +11,7 @@ export class NoticesService {
   constructor(private store : Store) { }
 
   loadNoticeById(id: number) {
-    let cache : number[] = [];
+    const cache : number[] = [];
 
     this.store.select(getNoticeById(id)).subscribe(recipient => {
       if (recipient) {
