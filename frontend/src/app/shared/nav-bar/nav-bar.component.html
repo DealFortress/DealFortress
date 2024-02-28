@@ -18,10 +18,10 @@
     </div>
     <div class="navbar-end">
       <div class="flex gap-4 items-center flex-1 justify-end text-1xl md:text-2xl">
-        <ng-container *ngIf="isAuthenticated | async">
-            <app-conversations-notifications-dropdown *ngIf="(user | async) as user" [loggedInUser]="user"></app-conversations-notifications-dropdown>
+        <ng-container *ngIf="(isAuthenticated | async) === true && (user | async) as user ; else skeleton">
+            <app-conversations-notifications-dropdown [loggedInUser]="user"></app-conversations-notifications-dropdown>
             <div class="dropdown dropdown-end dropdown-hover">
-              <a  tabindex="0" role="button" class="hover:shadow-xl" ><img [src]="(user | async)?.avatar" alt="avatar" class='avatar rounded-full h-10 aspect-square hover:shadow-xl' /></a> 
+              <a  tabindex="0" role="button" class="hover:shadow-xl" ><img [src]="user.avatar" alt="avatar" class='avatar rounded-full h-10 aspect-square hover:shadow-xl' /></a> 
               <ul  class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto ">
                 <li><a routerLink="/conversations">messages</a></li>
                 <li><app-auth-logout-button></app-auth-logout-button></li>
@@ -35,3 +35,10 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #skeleton>
+  <div class="animate-pulse h-10 w-10">
+    <div class='avatar bg-base-200 rounded-full h-10 aspect-square'></div>
+  </div>
+</ng-template>
