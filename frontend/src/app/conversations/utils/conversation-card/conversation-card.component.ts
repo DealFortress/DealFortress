@@ -1,11 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges} from '@angular/core';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 import { User } from '@app/shared/models/user/user.model';
 import { getLoggedInUser, getUserById } from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ConversationsService } from '../services/conversation.services';
-import { last } from 'rxjs/operators';
+
 
 
 @Component({
@@ -21,8 +21,8 @@ export class ConversationCardComponent implements OnChanges {
  hasUnreadMessage : boolean = false;
 
  constructor(private store: Store) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    let recipientId = this.loggedInUser.id == this.conversation.buyerId ? this.conversation.sellerId : this.conversation.buyerId;
+  ngOnChanges(): void {
+    const recipientId = this.loggedInUser.id == this.conversation.buyerId ? this.conversation.sellerId : this.conversation.buyerId;
     this.recipient$ = this.store.select(getUserById(recipientId));
     this.hasUnreadMessage = this.setHasUnreadMessage(this.conversation, this.loggedInUser);
   }

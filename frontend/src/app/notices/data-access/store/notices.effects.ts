@@ -6,6 +6,7 @@ import { Notice } from '@app/shared/models/notice/notice.model';
 import { catchError, map, mergeMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {    
+    deleteNoticeError,
             deleteNoticeRequest, deleteNoticeSuccess, 
             loadNoticeByIdError, 
             loadNoticeByIdRequest, 
@@ -13,12 +14,13 @@ import {
             loadNoticesError, loadNoticesRequest, 
             loadNoticesSuccess, 
             patchProductSoldStatusRequest, patchProductSoldStatusSuccess, 
+            postNoticeError, 
             postNoticeRequest, postNoticeSuccess, 
+            putNoticeError, 
             putNoticeRequest, putNoticeSuccess, setNoticesError, setNoticesRequest, setNoticesSuccess 
         } from './notices.actions';
 import { of } from 'rxjs';
 import { ShowAlert } from '@app/shared/store/app.actions';
-import { Update } from '@ngrx/entity';
 import { Product } from '@app/shared/models/product/product.model';
 import { UsersService } from '@app/users/utils/services/users.service';
 
@@ -74,22 +76,22 @@ export class NoticesEffects {
     })
 
 
-    loadNotice$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(loadNoticeByIdRequest),
-            mergeMap((action) => {
-                return this.noticesApiService.getNoticeByIdAPI(action.id).pipe(
-                    map((notice) => {         
-                        this.usersService.loadUserById(notice.userId);
-                        return (loadNoticeByIdSuccess({notice: notice}));
-                    }),
-                    catchError((_error) => {
-                        return of(loadNoticeByIdError({errorText: _error.message}));
-                    })
-                );
-            })
-        );
-    })
+    loadNotice$ = createEffect(() => 
+        this.actions$.pipe(
+        ofType(loadNoticeByIdRequest),
+        mergeMap((action) => 
+            this.noticesApiService.getNoticeByIdAPI(action.id).pipe(
+                map((notice) => {         
+                    this.usersService.loadUserById(notice.userId);
+                    return (loadNoticeByIdSuccess({notice: notice}));
+                }),
+                catchError((_error) => {
+                    of(ShowAlert({ message: `Failed to load notice.`, actionresult: 'fail' }));
+                    return of(loadNoticeByIdError({errorText: _error.message}));
+                })
+            )
+        )
+    ))
 
     postNotice$ = createEffect(() =>
     this.actions$.pipe(
@@ -97,14 +99,16 @@ export class NoticesEffects {
         mergeMap(action =>
             this.noticesApiService.postNoticeAPI(action.request).pipe(
                 map(notice => {
-                    ShowAlert({ message: 'Created successfully.', actionresult: 'pass' });
+                    of(ShowAlert({ message: 'Created successfully.', actionresult: 'pass' }));
                     return postNoticeSuccess({ notice: notice as Notice });
                 }),
-                catchError((_error) => of(ShowAlert({ message: 'Failed to create notice.', actionresult: 'fail' }))),
-                )
+                catchError((_error) => {
+                    of(ShowAlert({ message: `Failed to post notice.`, actionresult: 'fail' }));
+                    return of(postNoticeError({errorText: _error.message}));
+                })
             )
         )
-    );
+    ));
 
     putNotice$ = createEffect(() =>
     this.actions$.pipe(
@@ -114,14 +118,14 @@ export class NoticesEffects {
                 map(notice => {
                     ShowAlert({ message: 'Updated successfully.', actionresult: 'pass' });                 
                     return putNoticeSuccess({ notice: notice as Notice });
-                }
-                    
-                ),
-                catchError((_error) => of(ShowAlert({ message: 'Failed to update notice.', actionresult: 'fail' }))),
-                )
+                }),
+                catchError((_error) => {
+                    of(ShowAlert({ message: `Failed to update notice.`, actionresult: 'fail' }));
+                    return of(putNoticeError({errorText: _error.message}));
+                })
             )
         )
-    );
+    ));
 
     deleteNotice$ = createEffect(() =>
     this.actions$.pipe(
@@ -132,11 +136,13 @@ export class NoticesEffects {
                     ShowAlert({ message: 'Deleted successfully.', actionresult: 'pass' });                   
                     return deleteNoticeSuccess({noticeId: action.noticeId});
                 }),
-                catchError((_error) => of(ShowAlert({ message: 'Failed to delete notice.', actionresult: 'fail' }))),
-                )
+                catchError((_error) => {
+                    of(ShowAlert({ message: `Failed to delete notice.`, actionresult: 'fail' }));
+                    return of(deleteNoticeError({errorText: _error.message}));
+                })
             )
         )
-    );
+    ))
 
     // Products
     patchProductSoldStatus$ = createEffect(() =>
@@ -148,9 +154,11 @@ export class NoticesEffects {
                     ShowAlert({ message: 'Updated sold status successfully.', actionresult: 'pass' });
                     return patchProductSoldStatusSuccess({ product: product as Product });
                 }),
-                catchError((_error) => of(ShowAlert({ message: 'Failed to update sold status.', actionresult: 'fail' }))),
-                )
+                catchError((_error) => {
+                    of(ShowAlert({ message: `Failed to update sold status.`, actionresult: 'fail' }));
+                    return of(deleteNoticeError({errorText: _error.message}));
+                })
             )
         )
-    );
+    ))
 }

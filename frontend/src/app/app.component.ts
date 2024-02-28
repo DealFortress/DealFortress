@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
-import { loadNoticesRequest } from './notices/data-access/store/notices.actions';
 import { UsersService } from './users/utils/services/users.service';
-import { getNotices, getNoticesStatus } from './notices/data-access/store/notices.selectors';
-import { Status } from './shared/models/state.model';
+import { getNotices } from './notices/data-access/store/notices.selectors';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
-import { createSignalRHub, startSignalRHub} from 'ngrx-signalr-core';
+import { createSignalRHub} from 'ngrx-signalr-core';
 import { conversationHub } from './conversations/utils/conversation.hub';
-import { loadUserByIdRequest } from './users/data-access/store/users.actions';
-import { getLoggedInUserStatusCode } from './users/data-access/store/users.selectors';
 
 @Component({
   selector: 'app-root',

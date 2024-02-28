@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector} from '@ngrx/store';
 import { NoticesState, noticesAdapter } from './notices.state';
-import { Pagination } from '@app/shared/models/pagination.model';
+
 
 const getNoticesState = createFeatureSelector<NoticesState>('noticesState');
  

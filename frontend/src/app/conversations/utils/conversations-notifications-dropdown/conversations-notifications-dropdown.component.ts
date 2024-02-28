@@ -1,10 +1,10 @@
-import { Component, Input,  OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input,  OnInit } from '@angular/core';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { User } from '@app/shared/models/user/user.model';
 import { Store } from '@ngrx/store';
 import { MessageNotification } from '@app/shared/models/message-notification.model';
 import { Observable } from 'rxjs';
-import { last, map } from 'rxjs/operators';
+import {  map } from 'rxjs/operators';
 import { Message } from '@app/shared/models/message/message.model';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 

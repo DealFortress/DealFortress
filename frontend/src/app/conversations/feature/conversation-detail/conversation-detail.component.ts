@@ -80,7 +80,7 @@ export class ConversationDetailComponent implements OnInit{
   }
 
   setRecipient(loggedInUser : User, conversation: Conversation) {
-    let recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
+    const recipientId = loggedInUser.id == conversation.buyerId ? conversation.sellerId : conversation.buyerId;
     
     this.recipient$ = this.store.select(getUserById(recipientId));
   }

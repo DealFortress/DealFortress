@@ -28,7 +28,7 @@
               </ul>
             </div>
         </ng-container>
-        <ng-container *ngIf="!(isAuthenticated | async)">
+        <ng-container *ngIf="(isAuthenticated | async) === undefined || (isAuthenticated | async) === false">
             <app-auth-login-button></app-auth-login-button>
         </ng-container>
       </div>

@@ -1,12 +1,12 @@
-<app-loader *ngIf="(status | async ) == Status.loading"></app-loader>
-<app-error *ngIf="(status | async ) == Status.error"></app-error>
-<app-main-container *ngIf="(status | async ) == Status.success">
+<app-loader *ngIf="(status | async ) === Status.loading"></app-loader>
+<app-error *ngIf="(status | async ) === Status.error"></app-error>
+<app-main-container *ngIf="(status | async ) === Status.success">
   <div *ngIf="(notice$ | async) as notice" class="relative justify-between grid lg:grid-cols-[3fr_2fr] grid-cols-1 lg:gap-20"  >
-    <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id == (currentUser$ | async)?.id">
+    <div class="absolute right-0 justify-end flex gap-4" *ngIf="(creator$ | async)?.id === (currentUser$ | async)?.id">
       <button routerLink="edit" class="top-0 right-20 btn btn-ghost btn-circle text-2xl md:text-4xl bg-darkblue md:btn-lg">
         <fa-icon [icon]="['fas', 'feather']"></fa-icon>
       </button>
-      <button class="right-0 btn btn-ghost btn-circle bg-red text-2xl md:text-4xl md:btn-lg" (click)="showDeletePopup = true" >
+      <button class="right-0 btn btn-ghost btn-circle bg-red text-2xl md:text-4xl md:btn-lg" ((keypress))="showDeletePopup = true" >
           <fa-icon [icon]="['fas', 'trash-can']"></fa-icon>
       </button>
     </div>
@@ -31,7 +31,7 @@
       </ng-container>
       <div class="flex flex-col gap-6">
         <ng-container *ngFor="let product of notice.products">
-          <a (click)="selectedProduct = product" [class]="product == selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
+          <a ((keypress))="selectedProduct = product" [class]="product === selectedProduct ? 'opacity-90 hover:opacity-100' : 'opacity-60 hover:opacity-100'" >
             <app-product-card [product]="product"></app-product-card>
           </a>
         </ng-container>
@@ -41,10 +41,10 @@
 </app-main-container>
 
 <app-popup-card *ngIf="showDeletePopup">
-  <button (click)="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
+  <button ((keypress))="showDeletePopup = false" class="hover:text-lighttexthover flex items-center gap-2 btn btn-primary">
     Abort!
   </button>
-  <button (click)="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
+  <button ((keypress))="deleteNotice()" class="hover:text-lighttexthover flex items-center gap-2 btn btn-ghost">
     Burn it!
   </button>
 </app-popup-card>

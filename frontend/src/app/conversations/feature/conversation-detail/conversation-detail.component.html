@@ -23,7 +23,7 @@
             <ng-container 
             *ngFor="let message of conversation.messages">
               <app-message-card [message]="message" [user]="user" [recipient]="recipient"></app-message-card>
-              <p *ngIf="recipientLastReadMessageId == message.id" class="text-xs text-end">Read</p>
+              <p *ngIf="recipientLastReadMessageId === message.id" class="text-xs text-end">Read</p>
             </ng-container>
           </div>
           <div #scrollTarget></div>

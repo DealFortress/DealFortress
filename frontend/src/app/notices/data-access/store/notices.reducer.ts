@@ -7,7 +7,6 @@ import { Status } from "@app/shared/models/state.model";
 import { initialState, noticesAdapter } from "./notices.state";
 import { Notice } from "@app/shared/models/notice/notice.model";
 import { Product } from "@app/shared/models/product/product.model";
-import { state } from "@angular/animations";
 
 
 export const noticesReducer = createReducer(
@@ -105,10 +104,10 @@ export const noticesReducer = createReducer(
         }
     }),
     on(patchProductSoldStatusSuccess,(state,action)=>{
-        let notice = {...state.entities[action.product.noticeId]} as Notice;
+        const notice = {...state.entities[action.product.noticeId]} as Notice;
         if (notice) {
             notice.products = notice?.products.map(product => {
-                let updatedProduct = {...product} as Product;
+                const updatedProduct = {...product} as Product;
                 if ( product.id == action.product.id) {
                     updatedProduct.soldStatus = action.product.soldStatus
                 }

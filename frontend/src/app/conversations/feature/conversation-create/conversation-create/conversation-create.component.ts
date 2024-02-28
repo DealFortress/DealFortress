@@ -1,16 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, MinLengthValidator, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input,  OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { postConversationRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
-import { getNoticeById } from '@app/notices/data-access/store/notices.selectors';
 import { ConversationRequest } from '@app/shared/models/conversation/conversation-request.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
 import { User } from '@app/shared/models/user/user.model';
-import { ShowAlert } from '@app/shared/store/app.actions';
-
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-conversation-create',
