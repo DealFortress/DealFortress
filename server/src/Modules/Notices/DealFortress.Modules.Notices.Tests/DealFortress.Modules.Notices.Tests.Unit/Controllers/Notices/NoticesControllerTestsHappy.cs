@@ -6,6 +6,7 @@ using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Shared.Abstractions.Entities;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using MockQueryable.Moq;
 using Moq;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
@@ -34,27 +35,27 @@ public class NoticeControllersTestsHappy
 
 
     [Fact]
-    public void GetNotices_should_return_ok()
+    public async Task GetNotices_should_return_okAsync()
     {
         // Arrange
-        var entities = new List<NoticeResponse>{_response};
-        var list = PagedList<NoticeResponse>.Create(entities.AsQueryable(), 0, 20);
-        _service.Setup(service => service.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
+        var entities = new List<NoticeResponse>{_response}.AsQueryable().BuildMock();
+        var list = PagedList<NoticeResponse>.CreateAsync(entities, 0, 20);
+        _service.Setup(service => service.GetAllPagedAsync(It.IsAny<GetNoticesParams>())).Returns(list);
         // Act
-        var httpResponses = _controller.GetNotices(null, 0, 20);
+        var httpResponses = await _controller.GetNotices(null, 0, 20);
         // Assert 
         httpResponses.Result.Should().BeOfType<OkObjectResult>();
     }
 
     [Fact]
-    public void GetNotices_return_Pagedlist_of_response_when_server_returns_responses()
+    public async void GetNotices_return_Pagedlist_of_response_when_server_returns_responses()
     {
         // Arrange
-        var entities = new List<NoticeResponse>{_response};
-        var list = PagedList<NoticeResponse>.Create(entities.AsQueryable(), 0, 20);
-        _service.Setup(service => service.GetAllPaged(It.IsAny<PagedParams>())).Returns(list);
+        var entities = new List<NoticeResponse>{_response}.AsQueryable().BuildMock();
+        var list = PagedList<NoticeResponse>.CreateAsync(entities, 0, 20);
+        _service.Setup(service => service.GetAllPagedAsync(It.IsAny<GetNoticesParams>())).Returns(list);
         // Act
-        var httpResponses = _controller.GetNotices(null, 0, 20);
+        var httpResponses = await _controller.GetNotices(null, 0, 20);
         // Assert 
         var content = httpResponses.Result.As<OkObjectResult>().Value;
         content.Should().BeOfType<PagedList<NoticeResponse>>();

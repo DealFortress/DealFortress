@@ -8,7 +8,7 @@ using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Tests.Shared;
 using DealFortress.Modules.Users.Api.Controllers;
 using AutoMapper;
-using DealFortress.Shared.Abstractions.Entities;
+
 
 namespace DealFortress.Modules.Notices.Tests.Integration;
 
@@ -43,14 +43,14 @@ public class NoticesServicesTestsHappy
     }
 
     [Fact]
-    public void GetAllPaged_should_return_all_notices()
+    public async Task GetAllPaged_should_return_all_noticesAsync()
     {
-        var parameters = NoticesTestModels.CreatePagedParams();
+        var parameters = NoticesTestModels.CreateNoticesParams();
         // Act
-        var noticeResponses = _service.GetAllPaged(parameters);
+        var noticeResponses = await _service.GetAllPagedAsync(parameters);
 
         // Assert 
-        noticeResponses.Count().Should().Be(2);
+        noticeResponses.Entities.Count().Should().Be(2);
     }
 
     [Fact]

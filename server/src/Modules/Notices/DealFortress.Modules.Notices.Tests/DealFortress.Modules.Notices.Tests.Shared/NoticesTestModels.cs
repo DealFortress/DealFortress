@@ -58,7 +58,11 @@ public static class NoticesTestModels
         return notice;
     }
 
-    public static PagedParams CreatePagedParams() => new PagedParams(){PageIndex= 0, PageSize= 20};
+    public static GetNoticesParams CreateNoticesParams() => new GetNoticesParams(){PageIndex= 0, PageSize= 20};
+
+    public static GetProductsParams CreateProductsParams() => new GetProductsParams(){PageIndex= 0, PageSize= 20};
+
+
 
      public static NoticeRequest CreateNoticeRequest()
     {
