@@ -4,6 +4,8 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Users.Api.Controllers;
+using DealFortress.Modules.Users.Core.Domain.Entities;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -19,12 +21,17 @@ public class NoticesService : INoticesService
         _mapper = mapper;
     }
     
-    public async Task<IEnumerable<NoticeResponse>> GetAllAsync()
+    public async Task<PagedList<NoticeResponse>> GetAllPagedAsync(GetNoticesParams param)
     {
-        var entities = await _repo.GetAllAsync();
-        
-        return _mapper.Map<IEnumerable<Notice>, IEnumerable<NoticeResponse>>(entities);
+
+        var PagedList = _repo.GetAllPaged(param);
+                    
+        var PagedResponse = await PagedList<NoticeResponse>
+            .CreateAsync(PagedList, param.PageIndex, param.PageSize, _mapper);     
+
+        return PagedResponse;
     }
+
 
     public async Task<NoticeResponse?> GetByIdAsync(int id)
     {
@@ -97,6 +104,5 @@ public class NoticesService : INoticesService
 
         return notice;
     }
-
 }
 

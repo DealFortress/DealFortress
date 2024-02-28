@@ -3,8 +3,8 @@ using DealFortress.Modules.Notices.Core.DTO;
 using Microsoft.AspNetCore.Http;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
 
@@ -20,11 +20,11 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsAsync()
+    [ProducesResponseType(typeof(PagedList<NoticeResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedList<ProductResponse>>> GetProductsAsync(int? noticeId, int pageIndex = 0, int pageSize = 20)
     {
-        return Ok(await _service.GetAllAsync());
+        var pagedList = await _service.GetAllPagedAsync(new GetProductsParams(){NoticeId = noticeId, PageIndex = pageIndex, PageSize = pageSize});
+        return Ok(pagedList);
     }
 
     [HttpPatch("{id}/soldstatus/{soldstatus}")]

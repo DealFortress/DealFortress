@@ -1,10 +1,10 @@
-import { Component, Input,  OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input,  OnInit } from '@angular/core';
 import { getConversations } from '@app/conversations/data-access/store/conversations.selectors';
 import { User } from '@app/shared/models/user/user.model';
 import { Store } from '@ngrx/store';
 import { MessageNotification } from '@app/shared/models/message-notification.model';
 import { Observable } from 'rxjs';
-import { last, map } from 'rxjs/operators';
+import {  map } from 'rxjs/operators';
 import { Message } from '@app/shared/models/message/message.model';
 import { Conversation } from '@app/shared/models/conversation/conversation.model';
 
@@ -27,9 +27,7 @@ export class ConversationsNotificationsDropdownComponent implements OnInit {
 
     this.notifications$ = this.conversations.pipe(map(conversations => {
       if (conversations) {
-        console.log('in')
         return conversations.map((conversation) => {
-          console.log(this.loggedInUser, conversation)
           const userLastReadMessage = this.getLoggedInUserLastReadMessage(this.loggedInUser, conversation);
           const lastReceivedMessage = this.getLastReceivedMessage(conversation, this.loggedInUser);
           

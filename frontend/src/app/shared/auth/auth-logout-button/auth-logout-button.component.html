@@ -1,3 +1,7 @@
-<a (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+<a 
+(click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })"
+role="button" 
+tabindex="0"
+(keyup.enter)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
   log out
 </a>

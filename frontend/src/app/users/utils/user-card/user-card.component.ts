@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { getConversationByNoticeId } from '@app/conversations/data-access/store/conversations.selectors';
 import { User } from '@app/shared/models/user/user.model';
-import { ShowAlert } from '@app/shared/store/app.actions';
 import { getLoggedInUser} from '@app/users/data-access/store/users.selectors';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
-import { EmitFlags } from 'typescript';
+
 
 
 

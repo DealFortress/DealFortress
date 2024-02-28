@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { postMessageRequest } from '@app/conversations/data-access/store/conversations.actions';
 import { MessageRequest } from '@app/shared/models/message/message-request.model';

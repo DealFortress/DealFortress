@@ -1,8 +1,13 @@
+using System.Text.Json.Nodes;
+using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Shared.Abstractions.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using NuGet.Protocol;
 
 
 namespace DealFortress.Modules.Notices.Api.Controllers;
@@ -19,10 +24,11 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<NoticeResponse>>> GetNoticesAsync()
+    [ProducesResponseType(typeof(PagedList<NoticeResponse>),StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedList<NoticeResponse>>> GetNotices(int? userId, int pageIndex = 0, int pageSize = 20)
     {
-        return  Ok(await _service.GetAllAsync());
+        var pagedList = await _service.GetAllPagedAsync(new GetNoticesParams(){UserId = userId, PageIndex = pageIndex, PageSize = pageSize});
+        return Ok(pagedList);
     }
 
     [HttpGet("{id}")]

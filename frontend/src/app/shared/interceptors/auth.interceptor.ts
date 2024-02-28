@@ -1,7 +1,7 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AuthService } from "@auth0/auth0-angular";
-import { switchMap, tap } from "rxjs/operators";
+import { switchMap } from "rxjs/operators";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor{

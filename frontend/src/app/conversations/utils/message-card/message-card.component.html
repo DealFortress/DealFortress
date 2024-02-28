@@ -1,7 +1,7 @@
-<div class="chat" [ngClass]="message.senderId == user.id ? 'chat-end' : 'chat-start' ">
+<div class="chat" [ngClass]="message.senderId === user.id ? 'chat-end' : 'chat-start' ">
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
-        <img alt="avatar" [src]="message.senderId == user.id ? user.avatar : recipient.avatar" />
+        <img alt="avatar" [src]="message.senderId === user.id ? user.avatar : recipient.avatar" />
       </div>
     </div>
     <div class="chat-bubble">{{message.text}}</div>

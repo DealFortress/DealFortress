@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import { postNoticeRequest } from '@app/notices/data-access/store/notices.actions';
 import { getLoggedInUserLatestNoticeId } from '@app/notices/data-access/store/notices.selectors';

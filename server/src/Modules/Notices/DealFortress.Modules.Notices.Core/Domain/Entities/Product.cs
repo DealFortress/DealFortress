@@ -7,7 +7,7 @@ public class Product
     [Key]
     public int Id { get; set; }
     
-    [StringLength(50, MinimumLength = 2 , ErrorMessage = "Name cannot be longer than 50 characters or less than 2 characters")]
+    [StringLength(80, MinimumLength = 2 , ErrorMessage = "Name cannot be longer than 80 characters or less than 2 characters")]
     public required string Name { get; set; }
 
     [Range(0, 100000, ErrorMessage = "The maximum price for a product is 100 000 SEK")]

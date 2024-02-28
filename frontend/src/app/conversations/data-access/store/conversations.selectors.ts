@@ -1,6 +1,5 @@
-import { createFeatureSelector, createSelector, select } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ConversationsState, conversationsAdapter } from './conversations.state';
-import { pipe } from 'rxjs';
 
 const getConversationsState = createFeatureSelector<ConversationsState>('conversationsState');
  

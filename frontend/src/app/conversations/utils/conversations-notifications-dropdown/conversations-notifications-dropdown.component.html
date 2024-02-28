@@ -26,11 +26,13 @@
 
 
 <ng-template #noNotifications>
-  <div class="dropdown-content z-[1]  menu p-2 shadow bg-base-100 rounded-box md:w-64 min-h-8 !fixed md:!absolute top-0 w-full">
+  <div class="dropdown-content z-[1]  menu p-2 shadow bg-base-100 rounded-lg md:w-64 min-h-8 !fixed md:!absolute top-0 w-full">
     <button  class="btn btn-square md:btn-sm" (click)="closeDropdown()">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
     </button>
-    <p class="text-lg border-b border-grey py-3">No new messages...</p>
-    <a [routerLink]="['conversations']" class="text-xl md:text-base pt-2 w-auto text-end hover:opacity-90">See all</a>
+    <div class="p-2 w-full h-auto flex flex-col gap-2">
+      <p class="text-xl border-b border-grey py-3">No new messages...</p>
+      <a [routerLink]="['conversations']" class="text-xl md:text-base text-end hover:opacity-90 w-full">See all</a>
+    </div>
   </div>
 </ng-template>

@@ -86,6 +86,10 @@ $frontend-theme: mat.define-dark-theme((
   width: 300px;
 }
 
+.break-word{
+  word-break: break-word;
+}
+
 .min-h-screen {
   min-height: calc(100vh - 150px);
 }
@@ -101,6 +105,12 @@ $frontend-theme: mat.define-dark-theme((
 .mat-mdc-checkbox label {
   font-size: 1rem;
   color: rgb(192, 192, 192);
+}
+
+.mat-mdc-paginator-container {
+  justify-content: center !important;
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
 }
 
 .green-snackbar button {

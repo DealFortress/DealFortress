@@ -3,6 +3,7 @@ using Abstractions.Automapper;
 using AutoMapper;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
+using DealFortress.Shared.Abstractions.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,6 +57,12 @@ public static class NoticesTestModels
 
         return notice;
     }
+
+    public static GetNoticesParams CreateNoticesParams() => new GetNoticesParams(){PageIndex= 0, PageSize= 20};
+
+    public static GetProductsParams CreateProductsParams() => new GetProductsParams(){PageIndex= 0, PageSize= 20};
+
+
 
      public static NoticeRequest CreateNoticeRequest()
     {

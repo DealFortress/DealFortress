@@ -77,8 +77,8 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(125)
+                        .HasColumnType("nvarchar(125)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -110,8 +110,8 @@ namespace DealFortress.Modules.Notices.Core.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<int>("NoticeId")
                         .HasColumnType("int");

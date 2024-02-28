@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
-import { loadNoticesRequest } from './notices/data-access/store/notices.actions';
 import { UsersService } from './users/utils/services/users.service';
-import { getNotices, getNoticesStatus } from './notices/data-access/store/notices.selectors';
-import { Status } from './shared/models/state.model';
+import { getNotices } from './notices/data-access/store/notices.selectors';
 import { loadCategoriesRequest } from './categories/data-access/store/categories.actions';
-import { createSignalRHub, startSignalRHub} from 'ngrx-signalr-core';
+import { createSignalRHub} from 'ngrx-signalr-core';
 import { conversationHub } from './conversations/utils/conversation.hub';
-import { loadUserByIdRequest } from './users/data-access/store/users.actions';
-import { getLoggedInUserStatusCode } from './users/data-access/store/users.selectors';
 
 @Component({
   selector: 'app-root',
@@ -17,17 +13,11 @@ import { getLoggedInUserStatusCode } from './users/data-access/store/users.selec
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  status = this.store.select(getNoticesStatus);
-  Status = Status;
   notices = this.store.select(getNotices);
-  
 
-  constructor(private authService: AuthService, private usersService: UsersService,private store: Store) {
-
-  }
+  constructor(private authService: AuthService, private usersService: UsersService, private store: Store) {}
 
   async ngOnInit(): Promise<void> {
-    this.store.dispatch(loadNoticesRequest());
     this.store.dispatch(loadCategoriesRequest());
 
     this.authService.isAuthenticated$.subscribe(isAuth => {
@@ -44,7 +34,7 @@ export class AppComponent implements OnInit{
 
     this.notices.subscribe(notices => {
       if (notices) {
-        notices.forEach(notice => this.store.dispatch(loadUserByIdRequest({id: notice.userId})))
+        notices.forEach(notice => this.usersService.loadUserById(notice.userId))
       }
     })
   }

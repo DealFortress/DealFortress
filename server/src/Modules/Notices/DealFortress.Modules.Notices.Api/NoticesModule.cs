@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using DealFortress.Api.Modules.Notices.Extensions;
 using DealFortress.Modules.Notices.Api.Controllers;
+using DealFortress.Modules.Notices.Core.Domain.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("DealFortress.Bootstrapper")]
@@ -17,5 +18,9 @@ internal static class NoticesModule
             .AddScoped<ProductsController>();
 
          return services;
+    }
+
+    public static void SeedNotices(this IServiceProvider serviceProvider) {
+        SeedData.Initialize(serviceProvider);
     }
 }

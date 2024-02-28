@@ -12,7 +12,7 @@ export const categoriesReducer = createReducer(
         };
     }),
     on(loadCategoriesSuccess,(state,action)=>{
-        return categoriesAdapter.setAll(action.notices,{
+        return categoriesAdapter.setAll(action.categories,{
             ...state,
             status: Status.success,
           });

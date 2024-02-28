@@ -9,6 +9,8 @@ using DealFortress.Modules.Categories.Api.Controllers;
 using DealFortress.Modules.Users.Api.Controllers;
 using DealFortress.Modules.Notices.Tests.Shared;
 using AutoMapper;
+using DealFortress.Shared.Abstractions.Entities;
+using MockQueryable.Moq;
 
 namespace DealFortress.Modules.Notices.Tests.Unit;
 
@@ -46,15 +48,17 @@ public class ProductsServiceTestsHappy
     public async Task GetAll_returns_responseAsync()
     {
         // arrange
-        var list = new List<Product>() { _product };
-        _repo.Setup(repo => repo.GetAllAsync()).Returns(Task.FromResult<IEnumerable<Product>>(list));
+        var entities = new List<Product>{_product}.AsQueryable().BuildMock();
+        _repo.Setup(repo => repo.GetAllPaged(It.IsAny<GetProductsParams>())).Returns(entities);
+        var parameters = NoticesTestModels.CreateProductsParams();
+
         _categoriesController.Setup(controller => controller.GetCategoryNameById(1)).Returns(Task.FromResult<string?>("CPU"));
 
         // act
-        var response = await _service.GetAllAsync();
+        var response = await _service.GetAllPagedAsync(parameters);
 
         // assert
-        response.Should().BeOfType<List<ProductResponse>>();
+        response.Should().BeOfType<PagedList<ProductResponse>>();
     }
 
     [Fact]

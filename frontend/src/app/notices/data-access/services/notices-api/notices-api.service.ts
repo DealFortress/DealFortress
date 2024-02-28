@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NoticeRequest } from "@app/shared/models/notice/notice-request.model";
 import { Injectable } from "@angular/core";
+import { PagedList } from "@app/shared/models/pagedList.model";
+import { Pagination } from "@app/shared/models/pagination.model";
 
 
 @Injectable()
@@ -14,10 +16,16 @@ export class NoticesApiService {
     constructor(private httpClient: HttpClient) {
     }
 
-    getAllNoticesAPI(): Observable<Notice[]>{
+    getAllNoticesAPI(pagination : Pagination): Observable<PagedList<Notice>>{
         return this.httpClient
-            .get(this.noticesUrl)
-            .pipe(data => data as Observable<Notice[]>);
+            .get(`${this.noticesUrl}?pageIndex=${pagination.pageIndex}&pageSize=${pagination.pageSize}`)
+            .pipe(data => data as Observable<PagedList<Notice>>);
+    }
+
+    getNoticeByIdAPI(id: number): Observable<Notice>{
+        return this.httpClient
+            .get(`${this.noticesUrl}/${id}`)
+            .pipe(data => data as Observable<Notice>);
     }
 
     postNoticeAPI(request: NoticeRequest): Observable<Notice> {

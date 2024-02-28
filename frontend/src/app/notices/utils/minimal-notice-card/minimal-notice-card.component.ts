@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { convertMinutesToClosestTimeValue } from '@app/shared/helper-functions/helper-functions';
 
 import { Notice } from '@app/shared/models/notice/notice.model';
@@ -8,7 +8,7 @@ import { Notice } from '@app/shared/models/notice/notice.model';
   templateUrl: './minimal-notice-card.component.html',
   styleUrl: './minimal-notice-card.component.css'
 })
-export class MinimalNoticeCardComponent {
+export class MinimalNoticeCardComponent implements OnInit {
   @Input({required: true}) notice!: Notice ;
   minutesSinceCreation: string = '';
 

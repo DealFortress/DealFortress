@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { getCategoryById } from '@app/categories/data-access/store/categories.selectors';
 import { Category } from '@app/shared/models/category.model';
 import { Condition } from '@app/shared/models/condition.model';
@@ -17,12 +17,11 @@ export class ProductDetailComponent implements OnChanges{
   toggleFullscreen = false;
   category$?: Observable<Category | undefined>;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.condition = Condition[this.product.condition];  
-    this.category$ = this.store.select(getCategoryById(this.product.categoryId));
+  constructor(private store: Store) {
   }
 
-
-  constructor(private store: Store) {
+  ngOnChanges(): void {
+    this.condition = Condition[this.product.condition];  
+    this.category$ = this.store.select(getCategoryById(this.product.categoryId));
   }
 }

@@ -4,6 +4,7 @@ using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Users.Api.Controllers;
+using DealFortress.Shared.Abstractions.Entities;
 
 namespace DealFortress.Modules.Notices.Core.Services;
 
@@ -22,11 +23,14 @@ public class ProductsService: IProductsService
     }
 
 
-    public async Task<IEnumerable<ProductResponse>> GetAllAsync()
+    public async Task<PagedList<ProductResponse>> GetAllPagedAsync(GetProductsParams param)
     {
-        var entities = await _repo.GetAllAsync();
+        var PagedList = _repo.GetAllPaged(param);
                     
-        return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(entities);             
+        var PagedResponse = await PagedList<ProductResponse>
+            .CreateAsync(PagedList, param.PageIndex, param.PageSize, _mapper);     
+
+        return PagedResponse;
     }
 
     public async Task<ProductResponse?> PutByIdAsync(int id, ProductRequest request)
@@ -51,7 +55,6 @@ public class ProductsService: IProductsService
 
         await _repo.AddAsync(updatedProduct);
         _repo.Complete();
-
 
         return _mapper.Map<Product, ProductResponse>(updatedProduct);
     }
@@ -101,4 +104,6 @@ public class ProductsService: IProductsService
 
         return _mapper.Map<Product, ProductResponse>(product);
     }
+
+
 }

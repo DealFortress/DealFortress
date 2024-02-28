@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from '@app/shared/modules/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { SearchBarComponent } from '@app/header/feature/search-bar/search-bar.component';
-import { NavBarComponent } from '@app/header/feature/nav-bar/nav-bar.component';
+import { SearchBarComponent } from '@app/shared/search-bar/search-bar.component';
 import { NoticeDetailComponent } from '@app/notices/feature/notice-detail/notice-detail.component';
 import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-list.component';
 import { ErrorComponent } from '@app/shared/error/error.component';
@@ -77,6 +76,8 @@ import { MinimalNoticeCardComponent } from './notices/utils/minimal-notice-card/
 import { MessageCardComponent } from './conversations/utils/message-card/message-card.component';
 import { ConversationsNotificationsDropdownComponent } from './conversations/utils/conversations-notifications-dropdown/conversations-notifications-dropdown.component';
 import { NotificationCardComponent } from './conversations/utils/notification-card/notification-card.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 
 @NgModule({
     declarations: [
@@ -129,6 +130,7 @@ import { NotificationCardComponent } from './conversations/utils/notification-ca
         FormsModule,
         HttpClientModule,
         AsyncPipe,
+        MatPaginatorModule,
         AuthModule.forRoot({
             domain: environment.auth0Domain!,
             clientId: environment.auth0ClientId!,

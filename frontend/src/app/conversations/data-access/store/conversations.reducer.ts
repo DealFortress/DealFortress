@@ -1,7 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { conversationsAdapter, initialState } from "./conversations.state";
-import { getConversationError, getConversationSuccess, getConversationsError, getConversationsSuccess, getMessageError, getMessageSuccess, getUpdatedConversationError, getUpdatedConversationSuccess, patchLastReadMessageSuccess, postConversationError, postConversationSuccess, postMessageError, postMessageSuccess} from "./conversations.actions";
-import { Conversation } from "@app/shared/models/conversation/conversation.model";
+import { getConversationError, getConversationSuccess, getConversationsError, getConversationsSuccess, getMessageError, getMessageSuccess, getUpdatedConversationError, getUpdatedConversationSuccess, postConversationError,  postMessageError} from "./conversations.actions";
 import { Status } from "@app/shared/models/state.model";
 
 export const conversationsReducer = createReducer(
@@ -22,7 +21,7 @@ export const conversationsReducer = createReducer(
     on(getMessageSuccess, (state, action) => {  
 
         const conversation = state.entities[action.message.conversationId]
-        let updatedConversation = {...conversation!};
+        const updatedConversation = {...conversation!};
         updatedConversation.messages = [...updatedConversation.messages, action.message];               
         return conversationsAdapter.upsertOne(updatedConversation,state);
     }),
