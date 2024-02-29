@@ -64,7 +64,7 @@ Luc:
 
   - Github Actions & Project
     
-  - Auth0
+  - Auth0 with Google authentication and authorization
 
   <!-- - Design sketch: [Figma prototype and components](https://www.figma.com/file/6pMA53jsPBJ6p0kguOzKba/Deal-Fortress-prototype?type=design&node-id=0-1&t=9esxib8YXRiofpYN-0) -->
   
