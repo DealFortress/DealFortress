@@ -4,9 +4,9 @@
 Deal Fortress is a full-stack web application 
 full pair programmed (until january 2024) by [Luc Siat](https://github.com/Luc-Siat) and [Atte Pitkänen](https://github.com/attepitkaenen) 
 
-<strong> 
-  Checkout the app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net/) (Please note that there is a cold start on the DB, give it 20 seconds on the first launch) 
-</strong>
+
+<strong>Checkout the deployed app [here](https://green-sand-04a2d9f03.3.azurestaticapps.net) (Please note that there is a cold start on the DB, give it 20 seconds on the first launch) </strong>
+
 
 ### Pitch
 
@@ -17,7 +17,7 @@ DealFortress aims to bridge the gap between the UI of first hand and the concept
 
 ## Project
 
-<strong>Github project board for DealFortress can be found <strong>[here](https://github.com/orgs/DealFortress/projects/2/views/1)  
+<strong> Our sprint kanban for DealFortress can be found <strong>[here](https://github.com/orgs/DealFortress/projects/2/views/1)  with all of our demo videos
 See more about the project in our [pitch deck](https://docs.google.com/presentation/d/1hlW0DBOonpe2wFysVZdgJIRN3Cm0_9keEeikIJLs-qU/edit?usp=sharing)
 
 #### Features that have been developed without pair programming:
