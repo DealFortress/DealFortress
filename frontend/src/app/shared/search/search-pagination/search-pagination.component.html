@@ -1,0 +1,9 @@
+<mat-paginator 
+    class=""
+    [length]="totalPages"
+    [pageSize]="1"
+    [pageSizeOptions]="[2, 10, 20, 50, 100]"
+    [showFirstLastButtons]="true"
+    aria-label="Select page"
+    (page)="pageChanged.emit($event)">
+</mat-paginator>

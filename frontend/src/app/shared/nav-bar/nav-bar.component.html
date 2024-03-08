@@ -18,6 +18,7 @@
     </div>
     <div class="navbar-end">
       <div class="flex gap-4 items-center flex-1 justify-end text-1xl md:text-2xl">
+        <fa-icon class="text-2xl" [icon]="['fas', 'magnifying-glass']" routerLink="/search"></fa-icon>
         <ng-container *ngIf="(isAuthenticated | async) === true && (user | async) as user ; else skeleton">
             <app-conversations-notifications-dropdown [loggedInUser]="user"></app-conversations-notifications-dropdown>
             <div class="dropdown dropdown-end dropdown-hover">

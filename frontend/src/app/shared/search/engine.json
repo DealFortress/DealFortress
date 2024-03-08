@@ -1,0 +1,37 @@
+{
+  "engineName": "notices",
+  "endpointBase": "https://dealfortress.ent.francecentral.azure.elastic-cloud.com",
+  "searchKey": "search-a715oxezv1fjmuznv2g1mhon",
+  "searchFields": ["title", "description", "city"],
+  "resultFields": [
+    "city",
+    "createdAt",
+    "deliveryMethods",
+    "description",
+    "payments",
+    "products.categoryId",
+    "products.condition",
+    "products.id",
+    "products.images.url",
+    "products.name",
+    "products.noticeId",
+    "products.price",
+    "products.soldStatus",
+    "products.warranty",
+    "title",
+    "userId",
+    "id"
+  ],
+  "sortFields": [
+
+  ],
+  "facets": [
+    "city",
+    "payments",
+    "deliveryMethods"
+  ],
+  "titleField": "title",
+  "querySuggestFields": ["title"],
+  "urlField": "nps_link",
+  "thumbnailField": "image_url"
+}

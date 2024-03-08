@@ -1,4 +1,3 @@
-using System.Text.Json.Nodes;
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Services;
 using DealFortress.Modules.Notices.Core.DTO;
@@ -6,8 +5,6 @@ using DealFortress.Shared.Abstractions.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using NuGet.Protocol;
 
 
 namespace DealFortress.Modules.Notices.Api.Controllers;

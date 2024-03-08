@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DealFortress.Modules.Notices.Core.Domain.Entities;
 

@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row mb-5 mt-5">
+      <!-- Search Bar -->
+      <form [formGroup]="searchForm">
+        <input type="text"
+               class="form-control "
+               placeholder="search"
+               formControlName="searchInputValue"
+        >
+      </form>
+      <!-- Search Bar -->
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <!-- Search Facet -->
+        <app-search-facet
+          [checked]="facets['title']"
+          [facet]="searchState.facets.title[0]"
+          (change)="handleFacetChange($event, 'title')"
+        ></app-search-facet>
+        <app-search-facet
+          [checked]="facets['description']"
+          [facet]="searchState.facets.description[0]"
+          (change)="handleFacetChange($event, 'description')"
+        ></app-search-facet>
+        <app-search-facet
+          [checked]="facets['city']"
+          [facet]="searchState.facets.city[0]"
+          (change)="handleFacetChange($event, 'city')"
+        ></app-search-facet>
+        <!-- Search Facet -->
+      </div>
+      <div class="col-10">
+        <!-- Search Content -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <ng-container *ngFor="let result of searchState.results">
+            <app-search-result [result]="result"></app-search-result>
+          </ng-container>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <app-search-pagination *ngIf="thereAreResults" [totalPages]="searchState.totalPages"
+                                 (pageChanged)="setCurrentPage($event)"></app-search-pagination>
+        </div>
+        <!-- Search Content -->
+      </div>
+    </div>
+  </div>

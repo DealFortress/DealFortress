@@ -1,3 +1,4 @@
+
 using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Shared.Abstractions.Entities;
@@ -6,6 +7,7 @@ namespace DealFortress.Modules.Notices.Core.Domain.Services;
 
 public interface INoticesService
 {
+    IEnumerable<NoticeResponse> GetAll();
     Task<PagedList<NoticeResponse>> GetAllPagedAsync(GetNoticesParams param);
     Task<NoticeResponse?> GetByIdAsync(int id);
 

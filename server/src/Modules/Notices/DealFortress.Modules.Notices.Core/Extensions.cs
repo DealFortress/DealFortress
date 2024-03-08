@@ -2,9 +2,10 @@ using System.Runtime.CompilerServices;
 using Abstractions.Automapper;
 using DealFortress.Modules.Notices.Core.DAL;
 using DealFortress.Modules.Notices.Core.DAL.Repositories;
-using DealFortress.Modules.Notices.Core.Domain.Data;
+using DealFortress.Modules.Notices.Core.Domain.Entities;
 using DealFortress.Modules.Notices.Core.Domain.Repositories;
 using DealFortress.Modules.Notices.Core.Domain.Services;
+using DealFortress.Modules.Notices.Core.DTO;
 using DealFortress.Modules.Notices.Core.Services;
 using Elasticsearch.Net;
 using Microsoft.EntityFrameworkCore;
@@ -34,10 +35,16 @@ internal static class Extensions
 
                 var settings = new ConnectionSettings(
                     config["elasticCloudId"], 
-                    new ApiKeyAuthenticationCredentials(config["elasticApiKey"])
+                    new ApiKeyAuthenticationCredentials(config["ELASTIC_API_KEY"])
                 );
+
+                settings
+                .DefaultIndex("notices-index")
+                .DefaultMappingFor<NoticeResponse>(i => i.IndexName("notices-index-v1"));
+
 
                 return new ElasticClient(settings);
             });
+            // .AddHostedService<NoticeIngestWorker>();
     }
 }

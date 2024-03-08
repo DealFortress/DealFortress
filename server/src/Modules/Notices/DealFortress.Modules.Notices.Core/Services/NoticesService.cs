@@ -32,6 +32,13 @@ public class NoticesService : INoticesService
         return PagedResponse;
     }
 
+    public IEnumerable<NoticeResponse> GetAll()
+    {
+        var entities = _repo.GetAll();
+
+        return _mapper.Map<IEnumerable<Notice>, IEnumerable<NoticeResponse>>(entities.ToList());
+    }
+
 
     public async Task<NoticeResponse?> GetByIdAsync(int id)
     {

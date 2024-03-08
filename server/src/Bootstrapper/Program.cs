@@ -63,7 +63,7 @@ if (app.Environment.IsDevelopment())
         .AllowAnyHeader();
     });
 
-    app.Services.SeedNotices();
+    // app.Services.SeedNotices();
 }
 
 app.UseAuthentication();

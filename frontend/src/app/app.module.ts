@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from '@app/shared/modules/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { SearchBarComponent } from '@app/shared/search-bar/search-bar.component';
 import { NoticeDetailComponent } from '@app/notices/feature/notice-detail/notice-detail.component';
 import { NoticeListComponent } from '@app/notices/feature/notice-list/notice-list.component';
 import { ErrorComponent } from '@app/shared/error/error.component';
@@ -36,6 +35,7 @@ import {
     faAngleLeft as fasAngleLeft,
     faAngleRight as fasAngleRight,
     faCircle as fasCircle,
+    faMagnifyingGlass as fasMagnifyingGlass
   } from '@fortawesome/free-solid-svg-icons';
 import {
     faMessage as farMessage
@@ -78,13 +78,17 @@ import { ConversationsNotificationsDropdownComponent } from './conversations/uti
 import { NotificationCardComponent } from './conversations/utils/notification-card/notification-card.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
+import { SearchPaginationComponent } from './shared/search/search-pagination/search-pagination.component';
+import { SearchResultComponent } from './shared/search/search-result/search-result.component';
+import { SearchFacetComponent } from './shared/search/search-facet/search-facet.component';
+import { SearchHeaderComponent } from './shared/search/search-header/search-header.component';
+import { SearchSectionComponent } from './shared/search/search-section/search-section.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NoticeListComponent,
         ErrorComponent,
-        SearchBarComponent,
         NavBarComponent,
         LoaderComponent,
         MainContainerComponent,
@@ -112,7 +116,12 @@ import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
         MinimalNoticeCardComponent,
         MessageCardComponent,
         ConversationsNotificationsDropdownComponent,
-        NotificationCardComponent
+        NotificationCardComponent,
+        SearchPaginationComponent,
+        SearchResultComponent,
+        SearchHeaderComponent,
+        SearchFacetComponent,
+        SearchSectionComponent
     ],
     providers: [
         NoticesApiService,
@@ -175,7 +184,8 @@ export class AppModule {
       fasAngleLeft,
       fasAngleRight,
       farMessage,
-      fasCircle
+      fasCircle,
+      fasMagnifyingGlass
     );
   }
  }
