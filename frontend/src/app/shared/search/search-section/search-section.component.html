@@ -2,13 +2,13 @@
   <div class="bg-base-0 rounded-lg min-h-screen flex flex-col gap-4 justify-between relative">
     <div class="row mb-5 mt-5 flex flex-col gap-6 p-4 pt-10">
       <!-- Search Bar -->
-      <form [formGroup]="searchForm" class=" rounded-full h-8 flex bg-[grey] justify-between  items-center text-2xl relative">
+      <form [formGroup]="searchForm" class=" rounded-full h-8 flex bg-darkblue py-6 justify-between items-center text-2xl relative">
           <input type="text"
-                 class="bg-[grey] form-control rounded-full grow px-4 py-1"
+                 class="bg-[transparent] form-control rounded-full grow px-4 py-2 "
                  placeholder="search"
                  formControlName="searchInputValue"
           >
-          <!-- <fa-icon [icon]="['fas', 'magnifying-glass']" class="absolute right-4"></fa-icon> -->
+          <a class="absolute right-4 cursor-pointer " ><fa-icon [icon]="['fas', 'magnifying-glass']" ></fa-icon></a>
       </form>
       <div class="col-2 flex gap-4">
         <!-- Search Facet -->
@@ -37,7 +37,7 @@
         <!-- Search Content -->
       </div>
     </div>
-    <app-search-pagination *ngIf="thereAreResults" [totalPages]="searchState.totalPages"
+    <app-search-pagination *ngIf="thereAreResults" [totalPages]="searchState.totalPages" [pageIndex]="searchState.pageIndex"
     (pageChanged)="setCurrentPage($event)" class=""></app-search-pagination>
   </div>
   </app-main-container>
