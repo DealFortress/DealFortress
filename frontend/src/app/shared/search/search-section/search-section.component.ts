@@ -75,6 +75,7 @@ export class SearchSectionComponent implements OnInit {
 
     this.driver.subscribeToStateChanges(state => {
       this.searchState = state;
+      console.log(state);
     });
     this.initialized = true;
   }

@@ -1,13 +1,13 @@
 <div *ngIf="facet" class="accordion-item">
-    <div class="accordion-title">
-      <a class="h6 mb-0">{{ facet.field }}</a>
+    <div class="accordion-title ">
+      <a class="h6 mb-0"><strong>{{ facet.field | uppercase }}</strong></a>
     </div>
-    <div class="collapse show"  >
-      <div class="accordion-content">
+    <div class="collapse show rounded-none"  >
+      <div class="accordion-content ">
         <ul>
           <li *ngFor="let facetItem of facet.data">
             <input
-            class="sui-multi-checkbox-facet__checkbox"
+            class=""
             type="checkbox"
             [value]="getValue(facetItem, facet.type)"
             [checked]="isChecked(getValue(facetItem, facet.type))"

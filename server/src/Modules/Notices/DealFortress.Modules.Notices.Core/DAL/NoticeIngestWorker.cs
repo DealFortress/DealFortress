@@ -47,7 +47,7 @@ public class NoticeIngestWorker : BackgroundService
 
             bulkAll.Wait(TimeSpan.FromMinutes(10), _ => Console.WriteLine("indexed"));
 
-            await _client.Indices.PutAliasAsync("notices-index-v1", "notices-index", ct: cancellationToken);
+            // await _client.Indices.PutAliasAsync("notices-index-v2", "notices-index", ct: cancellationToken);
         }
     }
     }

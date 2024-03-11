@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'notices/:id', component: NoticeDetailComponent },
   {path: 'conversations', component: ConversationListComponent },
   {path: 'conversations/:id', component: ConversationListComponent},
-  {path: 'notices/search', component:SearchSectionComponent},
+  {path: 'search', component:SearchSectionComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

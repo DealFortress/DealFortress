@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NoticeRequest } from "@app/shared/models/notice/notice-request.model";
 import { Injectable } from "@angular/core";
-import { PagedList } from "@app/shared/models/pagedList.model";
+import { PagedList } from "@app/shared/models/paged-list.model";
 import { Pagination } from "@app/shared/models/pagination.model";
 
 

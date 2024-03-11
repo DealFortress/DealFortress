@@ -1,6 +1,6 @@
 import { NoticeRequest } from '@app/shared/models/notice/notice-request.model';
 import { Notice } from '@app/shared/models/notice/notice.model';
-import { Metadata } from '@app/shared/models/pagedList.model';
+import { Metadata } from '@app/shared/models/paged-list.model';
 import { Pagination } from '@app/shared/models/pagination.model';
 import { Product } from '@app/shared/models/product/product.model';
 import { SoldStatus } from '@app/shared/models/sold-status.model';

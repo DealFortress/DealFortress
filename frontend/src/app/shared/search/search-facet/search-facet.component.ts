@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { capitalize } from '@app/shared/helper-functions/helper-functions';
 
 @Component({
   selector: 'app-search-facet',
@@ -26,7 +27,9 @@ export class SearchFacetComponent implements OnInit {
   }
 
   public getValue(facetItem: { value: { name: any; }; }, type: string) {
-    return type === "range" ? facetItem.value.name : facetItem.value;
+    const value =  type === "range" ? facetItem.value.name : facetItem.value;
+    
+    return capitalize(value);
   }
 
 }

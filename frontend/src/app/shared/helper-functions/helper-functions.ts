@@ -41,3 +41,5 @@ export const minutesBetweenTodayAndDate = (creationDate : Date) => {
     const utcToday = new Date(local.getTime() + offset * 60000);
     return convertDateToMinutes(new Date(utcToday)) - convertDateToMinutes(creationDate);
 }
+
+export const capitalize = (string : string) => string[0].toUpperCase() + string.slice(1);

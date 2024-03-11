@@ -1,47 +1,49 @@
-<div class="container">
-    <div class="row mb-5 mt-5">
+<app-main-container >
+  <div class="bg-base-0 rounded-lg min-h-screen flex flex-col gap-4 justify-between relative">
+    <div class="row mb-5 mt-5 flex flex-col gap-6 p-4 pt-10">
       <!-- Search Bar -->
-      <form [formGroup]="searchForm">
-        <input type="text"
-               class="form-control "
-               placeholder="search"
-               formControlName="searchInputValue"
-        >
+      <form [formGroup]="searchForm" class=" rounded-full h-8 flex bg-[grey] justify-between  items-center text-2xl relative">
+          <input type="text"
+                 class="bg-[grey] form-control rounded-full grow px-4 py-1"
+                 placeholder="search"
+                 formControlName="searchInputValue"
+          >
+          <!-- <fa-icon [icon]="['fas', 'magnifying-glass']" class="absolute right-4"></fa-icon> -->
       </form>
-      <!-- Search Bar -->
-    </div>
-    <div class="row">
-      <div class="col-2">
+      <div class="col-2 flex gap-4">
         <!-- Search Facet -->
-        <app-search-facet
-          [checked]="facets['title']"
-          [facet]="searchState.facets.title[0]"
-          (change)="handleFacetChange($event, 'title')"
-        ></app-search-facet>
-        <app-search-facet
-          [checked]="facets['description']"
-          [facet]="searchState.facets.description[0]"
-          (change)="handleFacetChange($event, 'description')"
-        ></app-search-facet>
         <app-search-facet
           [checked]="facets['city']"
           [facet]="searchState.facets.city[0]"
           (change)="handleFacetChange($event, 'city')"
         ></app-search-facet>
+        <!-- <app-search-facet
+          [checked]="facets['condition']"
+          [facet]="searchState.facets.condition [0]"
+          (change)="handleFacetChange($event, 'condition')"
+        ></app-search-facet> -->
         <!-- Search Facet -->
       </div>
-      <div class="col-10">
+      <!-- Search Bar -->
+    </div>
+    <div class="row flex grow">
+      <div class="col-10 flex grow">
         <!-- Search Content -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <ng-container *ngFor="let result of searchState.results">
+        <div class="row gap-4 flex flex-col p-4 w-full" *ngIf="searchState.results.length > 0; else loader">
+          <ng-container *ngFor="let result of searchState.results" >
             <app-search-result [result]="result"></app-search-result>
           </ng-container>
-        </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <app-search-pagination *ngIf="thereAreResults" [totalPages]="searchState.totalPages"
-                                 (pageChanged)="setCurrentPage($event)"></app-search-pagination>
         </div>
         <!-- Search Content -->
       </div>
     </div>
+    <app-search-pagination *ngIf="thereAreResults" [totalPages]="searchState.totalPages"
+    (pageChanged)="setCurrentPage($event)" class=""></app-search-pagination>
   </div>
+  </app-main-container>
+
+  <ng-template #loader>
+    <div class="grow w-full h-full flex justify-center items-center">
+      <app-loader></app-loader>
+    </div>
+  </ng-template>

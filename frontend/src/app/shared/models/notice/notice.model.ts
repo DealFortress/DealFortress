@@ -8,6 +8,6 @@ export type Notice = {
     city: string,
     payments: string[],
     products: Product[],
-    deliveryMethods: string,
+    deliveryMethods: string[],
     createdAt: Date
 }

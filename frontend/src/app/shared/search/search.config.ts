@@ -12,14 +12,8 @@ const config = {
   debug: true,
   apiConnector: connector,
   searchQuery: {
-    disjunctiveFacets: ["title", "description", "city"],
+    disjunctiveFacets: ["city"],
     facets: {
-      title: {
-        type: "value"
-      },
-      description: {
-        type: "value"
-      },
       city: {
         type: "value"
       },
